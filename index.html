@@ -82,7 +82,6 @@
   @keyframes blink { 50%{opacity:0} }
   .foot { color:var(--dim); font-size:11px; text-align:center; margin:18px 0 8px; }
 </style>
-<script>window.JOBRECON_API = "https://concentrations-hans-advertiser-gently.trycloudflare.com";</script>
 </head>
 <body>
 <div class="wrap">
@@ -145,7 +144,18 @@
 const $ = (id) => document.getElementById(id);
 // 백엔드 API 주소: 같은 서버면 "" (상대경로). GitHub Pages 등 분리 배포 시
 // window.JOBRECON_API = "https://api.jobrecon.100m1s.com" 로 지정.
-const API = (window.JOBRECON_API || "").replace(/\/+$/, "");
+// 백엔드 주소: window.JOBRECON_API(하드코딩) 우선, 없으면 api.txt(터널 URL 자동발행)에서 로드.
+// → 터널 재시작으로 URL이 바뀌어도 프론트가 자동으로 따라감(상시 운영 자가치유).
+let API = (window.JOBRECON_API || "").replace(/\/+$/, "");
+async function ensureAPI() {
+  if (API) return API;
+  try {
+    const r = await fetch("./api.txt", { cache: "no-store" });
+    if (r.ok) API = (await r.text()).trim().replace(/\/+$/, "");
+  } catch (e) { /* api.txt 없으면 상대경로(빈 문자열) 유지 */ }
+  return API;
+}
+ensureAPI();
 // 백엔드 접근 토큰(설정 시 요청 헤더에 포함) — 공개 배포 시 무단 호출 억제용
 function authHeaders() {
   const h = { "Content-Type": "application/json" };
@@ -237,6 +247,7 @@ async function analyze() {
   const job_url = $("url").value.trim();
   const profile = $("profile").value.trim();
   if (!job_url) { statusEl.innerHTML = '<span class="err">공고 URL을 입력해 주세요.</span>'; return; }
+  await ensureAPI();  // 백엔드 주소 확정(api.txt 자동발행 대응)
   const constraints = readConstraints();
   saveProfile(profile, constraints);  // 내 정보·조건 저장(다음 방문 자동 복원)
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
@@ -339,7 +350,7 @@ function initAds() {
     + (slot ? ' data-ad-slot="' + slot + '"' : "") + ' data-ad-format="auto" data-full-width-responsive="true"></ins>';
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
-window.addEventListener("DOMContentLoaded", () => { loadProfile(); loadCompare(); initAds(); });
+window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loadProfile(); loadCompare(); initAds(); });
 
 // --- US5: 이 공고용 이력서 초안 ---
 async function streamResume() {
