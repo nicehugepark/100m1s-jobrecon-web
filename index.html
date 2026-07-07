@@ -24,6 +24,17 @@
     background:linear-gradient(180deg,#141922,#12161d); color:var(--dim);
     text-align:center; padding:14px; font-size:12px; letter-spacing:.4px; }
   .ad b { color:#c3ccd6; }
+  /* 앵커: 광고+정찰대상(회사·직군)을 스크롤 중에도 고정. 토글로 해제 */
+  .anchor { background:var(--bg); }
+  .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -4px; padding:6px 4px 4px;
+    border-bottom:1px solid var(--line); box-shadow:0 6px 14px -8px rgba(0,0,0,.6); }
+  .anchor.pinned .ad { margin:8px 0 4px; padding:9px; }   /* 고정 시 광고 슬림 */
+  .anchor-row { display:flex; align-items:center; gap:8px; }
+  .anchor-row #meta { flex:1; margin:0; }
+  .pin { width:auto; margin:0; padding:5px 10px; font-size:11.5px; font-weight:700;
+    background:var(--card2); color:var(--dim); border:1px solid var(--line); border-radius:999px;
+    white-space:nowrap; cursor:pointer; flex:0 0 auto; }
+  .pin.on { background:var(--accent); color:#fff; border-color:var(--accent); }
 
   .card { background:var(--card); border:1px solid var(--line); border-radius:14px;
     padding:14px; margin:12px 0; }
@@ -83,8 +94,14 @@
   <!-- 알림 배너 슬롯: 평소 숨김, 실 운영 알림 시에만 노출. 개발용 문구는 라이브에 싣지 않음 -->
   <div id="notice" style="display:none; margin:12px 0; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card2); color:var(--dim); font-size:13px; line-height:1.5"></div>
 
-  <!-- 상시 광고 지면(FR-009): 스트리밍 대기 동안에도 항상 노출 -->
-  <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
+  <!-- 앵커(FR-009·FR-029): 광고 + 정찰대상(회사·직군)을 스크롤 중에도 상단 고정. 📌 토글로 해제 -->
+  <div class="anchor pinned" id="anchor">
+    <div class="anchor-row">
+      <div id="meta"></div>
+      <button id="pinToggle" class="pin on" type="button" title="스크롤 시 상단 고정/해제">📌 고정</button>
+    </div>
+    <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
+  </div>
 
   <div class="card">
     <label for="url">채용공고 URL</label>
@@ -105,8 +122,6 @@
   </div>
 
   <div class="status" id="status"></div>
-
-  <div id="meta"></div>
 
   <div class="verdict" id="verdict">
     <span class="badge" id="badge"></span>
@@ -140,8 +155,22 @@ function authHeaders() {
 const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
-      compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta");
+      compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta"),
+      anchorEl = $("anchor"), pinToggle = $("pinToggle");
 let lastJob = null, lastProfile = null;
+
+// 앵커 고정/해제 토글(광고+정찰대상 상단 고정). 기본 고정, 선택은 localStorage 유지.
+function applyPin(pinned) {
+  anchorEl.classList.toggle("pinned", pinned);
+  pinToggle.classList.toggle("on", pinned);
+  pinToggle.textContent = pinned ? "📌 고정" : "📌 고정 해제됨";
+}
+applyPin(localStorage.getItem("jr_pin") !== "0");
+pinToggle.addEventListener("click", () => {
+  const pinned = !anchorEl.classList.contains("pinned");
+  localStorage.setItem("jr_pin", pinned ? "1" : "0");
+  applyPin(pinned);
+});
 
 const TITLES = {1:"지원 판단", 2:"공고 핵심 요건", 3:"숨은 리스크·정찰", 4:"실제 조건 vs 공고", 5:"나와의 적합 & 면접·협상"};
 
