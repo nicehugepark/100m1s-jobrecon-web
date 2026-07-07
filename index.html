@@ -247,11 +247,13 @@ function updateVerdict(text) {
   }
 }
 function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+// 공유 텍스트 붙여넣기 대응 — "…지원해 보세요. http://wntd.co/xxx" 에서 URL만 발라냄
+function extractUrl(t){ const m=(t||"").match(/https?:\/\/[^\s<>"')]+/); return m ? m[0].replace(/[.,)\]}]+$/,"") : (t||"").trim(); }
 
 async function analyze() {
-  const job_url = $("url").value.trim();
+  const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
   const profile = $("profile").value.trim();
-  if (!job_url) { statusEl.innerHTML = '<span class="err">공고 URL을 입력해 주세요.</span>'; return; }
+  if (!job_url) { statusEl.innerHTML = '<span class="err">공고 링크를 입력해 주세요.</span>'; return; }
   await ensureAPI();  // 백엔드 주소 확정(api.txt 자동발행 대응)
   const constraints = readConstraints();
   saveProfile(profile, constraints);  // 내 정보·조건 저장(다음 방문 자동 복원)
