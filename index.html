@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JobRecon — 구직자 편 취업 정찰</title>
+<style>
+  :root {
+    --bg:#0f1216; --card:#171b22; --card2:#1e232c; --line:#2a313c;
+    --fg:#e8ecf1; --dim:#9aa6b2; --accent:#4f8cff;
+    --yes:#31c48d; --cond:#f6a609; --no:#8b95a1; --hold:#8b95a1;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",Segoe UI,Roboto,sans-serif;
+    line-height:1.6; }
+  .wrap { max-width:820px; margin:0 auto; padding:16px; }
+  header { padding:8px 2px 4px; }
+  .brand { font-size:20px; font-weight:800; letter-spacing:-.3px; }
+  .brand span { color:var(--accent); }
+  .tag { color:var(--dim); font-size:13px; margin-top:2px; }
+
+  .ad { margin:14px 0; border:1px dashed var(--line); border-radius:12px;
+    background:linear-gradient(180deg,#141922,#12161d); color:var(--dim);
+    text-align:center; padding:14px; font-size:12px; letter-spacing:.4px; }
+  .ad b { color:#c3ccd6; }
+
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px; margin:12px 0; }
+  label { display:block; font-size:13px; color:var(--dim); margin:8px 0 4px; }
+  input[type=url], textarea { width:100%; background:var(--card2); color:var(--fg);
+    border:1px solid var(--line); border-radius:10px; padding:11px 12px; font-size:15px; }
+  textarea { min-height:74px; resize:vertical; }
+  button { width:100%; margin-top:12px; background:var(--accent); color:#fff; border:0;
+    border-radius:10px; padding:13px; font-size:16px; font-weight:700; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:default; }
+  button.secondary { background:var(--card2); color:var(--fg); border:1px solid var(--line); margin-top:10px; }
+  #compare .row { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--card); border:1px solid var(--line); border-radius:10px; margin:6px 0; }
+  #compare .mini { font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; color:#08110c; white-space:nowrap; }
+  #compare .mini.YES{background:var(--yes)} #compare .mini.조건부{background:var(--cond)}
+  #compare .mini.NO{background:var(--no);color:#fff} #compare .mini.판단보류{background:var(--hold);color:#fff}
+  #compare a { color:var(--fg); text-decoration:none; font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #compare a:hover { color:var(--accent); }
+
+  .constraints { margin-top:10px; padding:10px 12px; background:var(--card2); border:1px solid var(--line); border-radius:10px; }
+  .crow { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:8px; }
+  .ck { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--fg); margin:0; cursor:pointer; }
+  .ck input { width:16px; height:16px; accent-color:var(--accent); }
+  .constraints input[type=number] { width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:9px 10px; font-size:14px; }
+  .clabel { font-size:12px; color:var(--dim); margin:2px 0 4px; }
+
+  .verdict { display:none; align-items:center; gap:10px; margin:12px 0; }
+  .badge { font-weight:800; font-size:14px; padding:6px 12px; border-radius:999px; color:#08110c; }
+  .badge.YES{background:var(--yes)} .badge.조건부{background:var(--cond)}
+  .badge.NO{background:var(--no);color:#fff} .badge.판단보류{background:var(--hold);color:#fff}
+  .verdict .vt { color:var(--dim); font-size:13px; }
+
+  .blocks .blk { background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin:10px 0; }
+  .blk h3 { margin:0 0 6px; font-size:15px; }
+  .blk .body { white-space:pre-wrap; font-size:14.5px; color:#dbe2ea; }
+  .status { color:var(--dim); font-size:13px; min-height:18px; padding:2px; }
+  .err { color:#ff6b6b; }
+  .cursor::after { content:"▋"; color:var(--accent); animation:blink 1s steps(1) infinite; }
+  @keyframes blink { 50%{opacity:0} }
+  .foot { color:var(--dim); font-size:11px; text-align:center; margin:18px 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Job<span>Recon</span></div>
+    <div class="tag">구직자 편 취업 정찰 · 공고 URL 하나로 "지원할 가치가 있나"를 답합니다</div>
+  </header>
+  <div style="background:#1e232c;border:1px solid #2a313c;border-radius:10px;padding:10px 12px;margin:12px 0;color:#9aa6b2;font-size:13px;line-height:1.5">🔎 <b style="color:#c3ccd6">UI 미리보기</b> — GitHub Pages 정적 배포. 실제 "정찰"은 백엔드(맥미니 실 브라우저+LLM)가 연결돼야 동작합니다. <a href="./privacy.html" style="color:#4f8cff">개인정보처리방침</a></div>
+
+
+  <!-- 상시 광고 지면(FR-009): 스트리밍 대기 동안에도 항상 노출 -->
+  <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
+
+  <div class="card">
+    <label for="url">채용공고 URL</label>
+    <input id="url" type="url" placeholder="https://www.wanted.co.kr/wd/... 또는 링크드인 공고" />
+    <label for="profile">내 경력 요약 (선택 — 입력하면 적합도까지 분석)</label>
+    <textarea id="profile" placeholder="예) 7년차 백엔드 개발자 · Java/Spring/Kafka · 커머스 도메인 (또는 마케터·PM·디자이너 등 무엇이든)"></textarea>
+
+    <div class="constraints">
+      <div class="clabel">내 조건 (평결에 반영·저장됩니다)</div>
+      <div class="crow">
+        <label class="ck"><input type="checkbox" id="c_eng"> 영어 인터뷰 불가</label>
+        <label class="ck"><input type="checkbox" id="c_coding"> 코딩테스트 회피</label>
+      </div>
+      <input id="c_tc" type="number" inputmode="numeric" placeholder="목표 연봉 TC (세전·만원, 선택) — 예) 8000" />
+    </div>
+
+    <button id="go">정찰 시작</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="verdict" id="verdict">
+    <span class="badge" id="badge"></span>
+    <span class="vt">지원가치 평결</span>
+  </div>
+
+  <div class="blocks" id="blocks"></div>
+
+  <button id="resumeBtn" class="secondary" style="display:none">이 공고용 이력서 초안 만들기</button>
+  <div class="blocks" id="resume"></div>
+
+  <div id="compareWrap" style="display:none">
+    <div class="clabel" style="margin-top:22px; font-size:13px;">비교 · 내가 정찰한 공고 (평결순)</div>
+    <div id="compare"></div>
+  </div>
+
+  <div class="foot">v0 프로토타입 · 기업 코멘트는 DART 공시·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다 · <a href="./privacy.html" style="color:var(--dim)">개인정보처리방침</a></div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+// 백엔드 API 주소: 같은 서버면 "" (상대경로). GitHub Pages 등 분리 배포 시
+// window.JOBRECON_API = "https://api.jobrecon.100m1s.com" 로 지정.
+const API = (window.JOBRECON_API || "").replace(/\/+$/, "");
+const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
+      verdictEl = $("verdict"), badgeEl = $("badge"),
+      resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
+      compareWrap = $("compareWrap"), compareEl = $("compare");
+let lastJob = null, lastProfile = null;
+
+const TITLES = {1:"공고 핵심 요건", 2:"적합도", 3:"기업 코멘트", 4:"지원가치 평결"};
+
+function renderBlocks(text) {
+  // "## 1." ~ "## 4." 헤더로 분리(텍스트 순서로 슬라이스)
+  const re = /^##\s*(\d)\.\s*(.*)$/gm;
+  let m, marks = [];
+  while ((m = re.exec(text)) !== null) marks.push({id:+m[1], idx:m.index, end:re.lastIndex});
+  if (marks.length === 0) {
+    blocksEl.innerHTML = `<div class="blk"><div class="body cursor">${esc(text)}</div></div>`;
+    return;
+  }
+  const lastId = marks[marks.length - 1].id;  // 현재 스트리밍 중인 블록(커서)
+  let blocks = marks.map((mk, i) => ({
+    id: mk.id,
+    body: text.slice(mk.end, i+1 < marks.length ? marks[i+1].idx : text.length).trim(),
+  }));
+  // tier1/tier2가 순서 뒤섞여 도착해도 항상 id 순으로 렌더(1→2→3→4)
+  blocks.sort((a, b) => a.id - b.id);
+  blocksEl.innerHTML = blocks.map(b =>
+    `<div class="blk"><h3>${b.id}. ${esc(TITLES[b.id]||"")}</h3>`
+    + `<div class="body${b.id===lastId?" cursor":""}">${esc(b.body)}</div></div>`
+  ).join("");
+  updateVerdict(text);
+}
+
+function updateVerdict(text) {
+  const m = text.match(/\[(YES|조건부|NO)\]/);
+  const level = m ? m[1] : null;
+  if (level) {
+    verdictEl.style.display = "flex";
+    badgeEl.className = "badge " + level;
+    badgeEl.textContent = level === "YES" ? "지원 추천" : level === "조건부" ? "조건부" : "지원 비추천";
+  }
+}
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+
+async function analyze() {
+  const job_url = $("url").value.trim();
+  const profile = $("profile").value.trim();
+  if (!job_url) { statusEl.innerHTML = '<span class="err">공고 URL을 입력해 주세요.</span>'; return; }
+  const constraints = readConstraints();
+  saveProfile(profile, constraints);  // 내 정보·조건 저장(다음 방문 자동 복원)
+  go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
+  resumeBtn.style.display = "none"; resumeEl.innerHTML = "";
+  lastJob = job_url; lastProfile = profile;
+  statusEl.textContent = "공고를 실제 브라우저로 여는 중… (스크롤·본문 수집)";
+
+  let buf = "", full = "";
+  try {
+    const res = await fetch(API + "/analyze", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ job_url, profile: profile || null, constraints, user_id: getUid() })
+    });
+    if (!res.ok || !res.body) throw new Error("서버 응답 오류");
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    statusEl.textContent = "정찰 분석 중…";
+    while (true) {
+      const {value, done} = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, {stream:true});
+      let sep;
+      while ((sep = buf.indexOf("\n\n")) !== -1) {
+        const line = buf.slice(0, sep); buf = buf.slice(sep + 2);
+        if (!line.startsWith("data: ")) continue;
+        let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
+        if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; go.disabled=false; return; }
+        if (ev.done) { statusEl.textContent = "정찰 완료."; if (lastProfile) resumeBtn.style.display = "block"; loadCompare(); break; }
+        if (ev.t) { full += ev.t; renderBlocks(full); }
+      }
+    }
+  } catch (e) {
+    statusEl.innerHTML = `<span class="err">오류: ${esc(String(e.message||e))}</span>`;
+  } finally {
+    go.disabled = false;
+  }
+}
+// --- 사용자 정보 저장/복원(US6): 익명 로컬 id ---
+const UID_KEY = "jobrecon_uid";
+function getUid() {
+  let u = localStorage.getItem(UID_KEY);
+  if (!u) { u = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+                : (""+Date.now()+Math.random().toString(16).slice(2));
+            localStorage.setItem(UID_KEY, u); }
+  return u;
+}
+function readConstraints() {
+  const tcMan = parseInt($("c_tc").value, 10);
+  return {
+    english_interview_ok: !$("c_eng").checked,   // 체크 = 영어 불가
+    avoid_coding_test: $("c_coding").checked,
+    target_tc: Number.isFinite(tcMan) ? tcMan * 10000 : null,  // 만원 → 원
+  };
+}
+async function loadProfile() {
+  try { const r = await fetch(API + "/profile/" + encodeURIComponent(getUid()));
+        const b = await r.json();
+        if (b && b.profile && !$("profile").value) $("profile").value = b.profile;
+        const c = b && b.constraints;
+        if (c) {
+          if (typeof c.english_interview_ok === "boolean") $("c_eng").checked = !c.english_interview_ok;
+          if (c.avoid_coding_test) $("c_coding").checked = true;
+          if (c.target_tc) $("c_tc").value = Math.round(c.target_tc / 10000);
+        }
+  } catch (e) {}
+}
+async function saveProfile(profile, constraints) {
+  try { await fetch(API + "/profile", { method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ id: getUid(), profile: (profile || $("profile").value.trim()) || null,
+                               constraints: constraints || readConstraints() }) });
+  } catch (e) {}
+}
+const CMP_LABEL = { "YES":"추천", "조건부":"조건부", "NO":"비추천", "판단보류":"보류" };
+async function loadCompare() {
+  try {
+    const r = await fetch(API + "/saved/" + encodeURIComponent(getUid()));
+    const b = await r.json();
+    const items = (b && b.items) || [];
+    if (!items.length) { compareWrap.style.display = "none"; return; }
+    compareEl.innerHTML = items.map(it => {
+      const lv = it.verdict_level || "판단보류";
+      const title = esc([it.company, it.position].filter(Boolean).join(" · ") || it.job_url);
+      return `<div class="row"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>`
+           + `<a href="${esc(it.job_url)}" target="_blank" rel="noopener">${title}</a></div>`;
+    }).join("");
+    compareWrap.style.display = "block";
+  } catch (e) {}
+}
+// --- 광고: Google AdSense (게시자 ID 설정 시 실제 광고, 없으면 placeholder 유지) ---
+// GitHub Pages 등에 window.JOBRECON_ADSENSE_CLIENT="ca-pub-XXXX" (+ _SLOT) 지정하면 활성화.
+function initAds() {
+  const client = window.JOBRECON_ADSENSE_CLIENT, slot = window.JOBRECON_ADSENSE_SLOT;
+  if (!client) return;
+  const s = document.createElement("script");
+  s.async = true; s.crossOrigin = "anonymous";
+  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(client);
+  document.head.appendChild(s);
+  $("ad").innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="' + client + '"'
+    + (slot ? ' data-ad-slot="' + slot + '"' : "") + ' data-ad-format="auto" data-full-width-responsive="true"></ins>';
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+}
+window.addEventListener("DOMContentLoaded", () => { loadProfile(); loadCompare(); initAds(); });
+
+// --- US5: 이 공고용 이력서 초안 ---
+async function streamResume() {
+  if (!lastJob || !lastProfile) return;
+  resumeBtn.disabled = true;
+  resumeEl.innerHTML = '<div class="blk"><h3>이력서 초안</h3><div class="body cursor"></div></div>';
+  const bodyEl = resumeEl.querySelector(".body");
+  let buf = "", full = "";
+  try {
+    const res = await fetch(API + "/resume", { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ job_url: lastJob, profile: lastProfile }) });
+    if (!res.ok || !res.body) throw new Error("서버 응답 오류");
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    while (true) {
+      const {value, done} = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, {stream:true});
+      let sep;
+      while ((sep = buf.indexOf("\n\n")) !== -1) {
+        const line = buf.slice(0, sep); buf = buf.slice(sep + 2);
+        if (!line.startsWith("data: ")) continue;
+        let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
+        if (ev.error) { bodyEl.className = "body err"; bodyEl.textContent = ev.error; return; }
+        if (ev.done) { bodyEl.classList.remove("cursor"); return; }
+        if (ev.t) { full += ev.t; bodyEl.textContent = full; }
+      }
+    }
+  } catch (e) {
+    bodyEl.className = "body err"; bodyEl.textContent = "오류: " + (e.message || e);
+  } finally { resumeBtn.disabled = false; }
+}
+resumeBtn.addEventListener("click", streamResume);
+
+go.addEventListener("click", analyze);
+$("url").addEventListener("keydown", e => { if (e.key === "Enter") analyze(); });
+</script>
+</body>
+</html>
