@@ -72,8 +72,6 @@
     <div class="brand">Job<span>Recon</span></div>
     <div class="tag">구직자 편 취업 정찰 · 공고 URL 하나로 "지원할 가치가 있나"를 답합니다</div>
   </header>
-  <div style="background:#1e232c;border:1px solid #2a313c;border-radius:10px;padding:10px 12px;margin:12px 0;color:#9aa6b2;font-size:13px;line-height:1.5">🔎 <b style="color:#c3ccd6">UI 미리보기</b> — GitHub Pages 정적 배포. 실제 "정찰"은 백엔드(맥미니 실 브라우저+LLM)가 연결돼야 동작합니다. <a href="./privacy.html" style="color:#4f8cff">개인정보처리방침</a></div>
-
 
   <!-- 상시 광고 지면(FR-009): 스트리밍 대기 동안에도 항상 노출 -->
   <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
@@ -121,6 +119,12 @@ const $ = (id) => document.getElementById(id);
 // 백엔드 API 주소: 같은 서버면 "" (상대경로). GitHub Pages 등 분리 배포 시
 // window.JOBRECON_API = "https://api.jobrecon.100m1s.com" 로 지정.
 const API = (window.JOBRECON_API || "").replace(/\/+$/, "");
+// 백엔드 접근 토큰(설정 시 요청 헤더에 포함) — 공개 배포 시 무단 호출 억제용
+function authHeaders() {
+  const h = { "Content-Type": "application/json" };
+  if (window.JOBRECON_TOKEN) h["X-JobRecon-Token"] = window.JOBRECON_TOKEN;
+  return h;
+}
 const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
@@ -177,10 +181,10 @@ async function analyze() {
   let buf = "", full = "";
   try {
     const res = await fetch(API + "/analyze", {
-      method:"POST", headers:{"Content-Type":"application/json"},
+      method:"POST", headers: authHeaders(),
       body: JSON.stringify({ job_url, profile: profile || null, constraints, user_id: getUid() })
     });
-    if (!res.ok || !res.body) throw new Error("서버 응답 오류");
+    if (!res.ok || !res.body) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
     const reader = res.body.getReader(), dec = new TextDecoder();
     statusEl.textContent = "정찰 분석 중…";
     while (true) {
@@ -233,7 +237,7 @@ async function loadProfile() {
   } catch (e) {}
 }
 async function saveProfile(profile, constraints) {
-  try { await fetch(API + "/profile", { method:"POST", headers:{"Content-Type":"application/json"},
+  try { await fetch(API + "/profile", { method:"POST", headers: authHeaders(),
         body: JSON.stringify({ id: getUid(), profile: (profile || $("profile").value.trim()) || null,
                                constraints: constraints || readConstraints() }) });
   } catch (e) {}
@@ -277,9 +281,9 @@ async function streamResume() {
   const bodyEl = resumeEl.querySelector(".body");
   let buf = "", full = "";
   try {
-    const res = await fetch(API + "/resume", { method:"POST", headers:{"Content-Type":"application/json"},
+    const res = await fetch(API + "/resume", { method:"POST", headers: authHeaders(),
       body: JSON.stringify({ job_url: lastJob, profile: lastProfile }) });
-    if (!res.ok || !res.body) throw new Error("서버 응답 오류");
+    if (!res.ok || !res.body) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
     const reader = res.body.getReader(), dec = new TextDecoder();
     while (true) {
       const {value, done} = await reader.read();
