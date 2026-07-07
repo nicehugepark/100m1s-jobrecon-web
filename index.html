@@ -283,6 +283,7 @@ async function analyze() {
         let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
         if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; go.disabled=false; return; }
         if (ev.done) { statusEl.textContent = "정찰 완료."; if (lastProfile) resumeBtn.style.display = "block"; loadCompare(); break; }
+        if (ev.status) { statusEl.textContent = ev.status; }
         if (ev.meta) { renderMeta(ev.meta); }
         if (ev.t) { full += ev.t; renderBlocks(full); }
       }
