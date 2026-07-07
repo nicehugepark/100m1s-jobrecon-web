@@ -135,6 +135,8 @@
   <div id="compareWrap" style="display:none">
     <div class="clabel" style="margin-top:22px; font-size:13px;">비교 · 내가 정찰한 공고 (평결순)</div>
     <div id="compare"></div>
+    <button id="compareBtn" class="secondary" style="display:none; margin-top:12px">⚖️ 내 기준으로 비교 인사이트 보기</button>
+    <div class="blocks" id="compareInsight"></div>
   </div>
 
   <div class="foot">v0 프로토타입 · 기업 코멘트는 DART 공시·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다 · <a href="./privacy.html" style="color:var(--dim)">개인정보처리방침</a></div>
@@ -166,7 +168,8 @@ const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
       compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta"),
-      anchorEl = $("anchor"), pinToggle = $("pinToggle");
+      anchorEl = $("anchor"), pinToggle = $("pinToggle"),
+      compareBtn = $("compareBtn"), compareInsight = $("compareInsight");
 let lastJob = null, lastProfile = null;
 
 // 앵커 고정/해제 토글(광고+정찰대상 상단 고정). 기본 고정, 선택은 localStorage 유지.
@@ -337,8 +340,35 @@ async function loadCompare() {
            + `<a href="${esc(it.job_url)}" target="_blank" rel="noopener">${title}</a></div>`;
     }).join("");
     compareWrap.style.display = "block";
+    compareBtn.style.display = items.length >= 2 ? "block" : "none";  // 2개+면 비교 인사이트 가능
   } catch (e) {}
 }
+
+// 개인 결정 축 기반 비교 인사이트(히츠 vs 윌로그式) — /compare SSE 스트림 렌더
+async function runCompare() {
+  await ensureAPI();
+  compareBtn.disabled = true;
+  compareInsight.innerHTML = '<div class="blk"><div class="body cursor">내 기준으로 회사들을 저울질하는 중…</div></div>';
+  let full = "", buf = "";
+  try {
+    const res = await fetch(API + "/compare/" + encodeURIComponent(getUid()), { headers: authHeaders() });
+    const reader = res.body.getReader(); const dec = new TextDecoder();
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i;
+      while ((i = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, i); buf = buf.slice(i + 1);
+        if (!line.startsWith("data:")) continue;
+        let ev; try { ev = JSON.parse(line.slice(5).trim()); } catch (e) { continue; }
+        if (ev.error) { compareInsight.innerHTML = '<div class="blk"><div class="body"><span class="err">' + esc(ev.error) + '</span></div></div>'; compareBtn.disabled = false; return; }
+        if (ev.done) { compareBtn.disabled = false; compareBtn.style.display = "none"; break; }
+        if (ev.t) { full += ev.t; compareInsight.innerHTML = '<div class="blk"><h3>⚖️ 내 기준 비교 인사이트</h3><div class="body cursor">' + renderMd(full) + '</div></div>'; }
+      }
+    }
+  } catch (e) { compareInsight.innerHTML = '<div class="blk"><div class="body"><span class="err">비교를 불러오지 못했습니다.</span></div></div>'; compareBtn.disabled = false; }
+}
+compareBtn.addEventListener("click", runCompare);
 // --- 광고: Google AdSense (게시자 ID 설정 시 실제 광고, 없으면 placeholder 유지) ---
 // GitHub Pages 등에 window.JOBRECON_ADSENSE_CLIENT="ca-pub-XXXX" (+ _SLOT) 지정하면 활성화.
 function initAds() {
