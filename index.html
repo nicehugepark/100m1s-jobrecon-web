@@ -58,7 +58,13 @@
   .blocks .blk { background:var(--card); border:1px solid var(--line); border-radius:14px;
     padding:14px 16px; margin:10px 0; }
   .blk h3 { margin:0 0 6px; font-size:15px; }
-  .blk .body { white-space:pre-wrap; font-size:14.5px; color:#dbe2ea; }
+  .blk .body { font-size:14.5px; color:#dbe2ea; }
+  .blk .body ul { margin:6px 0; padding-left:18px; }
+  .blk .body li { margin:3px 0; }
+  .blk .body .ln { margin:5px 0; }
+  .blk .body strong { color:#f0f4f8; font-weight:700; }
+  #meta { display:none; margin:12px 0 2px; font-size:15px; color:#e2e8ef; font-weight:600; }
+  #meta .chip { font-size:11px; font-weight:800; background:var(--accent); color:#fff; padding:3px 9px; border-radius:999px; margin-right:8px; vertical-align:middle; }
   .status { color:var(--dim); font-size:13px; min-height:18px; padding:2px; }
   .err { color:#ff6b6b; }
   .cursor::after { content:"▋"; color:var(--accent); animation:blink 1s steps(1) infinite; }
@@ -100,6 +106,8 @@
 
   <div class="status" id="status"></div>
 
+  <div id="meta"></div>
+
   <div class="verdict" id="verdict">
     <span class="badge" id="badge"></span>
     <span class="vt">지원가치 평결</span>
@@ -132,10 +140,35 @@ function authHeaders() {
 const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
-      compareWrap = $("compareWrap"), compareEl = $("compare");
+      compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta");
 let lastJob = null, lastProfile = null;
 
 const TITLES = {1:"지원 판단", 2:"공고 핵심 요건", 3:"숨은 리스크·정찰", 4:"실제 조건 vs 공고", 5:"나와의 적합 & 면접·협상"};
+
+// 경량 마크다운 렌더(이스케이프 후 안전한 인라인/불릿만) — **굵게**, - 불릿, 문단
+function renderMd(t) {
+  let s = esc(t).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  const lines = s.split("\n");
+  let html = "", inList = false;
+  for (const line of lines) {
+    const m = line.match(/^\s*[-•]\s+(.*)$/);
+    if (m) {
+      if (!inList) { html += "<ul>"; inList = true; }
+      html += "<li>" + m[1] + "</li>";
+    } else {
+      if (inList) { html += "</ul>"; inList = false; }
+      if (line.trim()) html += '<div class="ln">' + line + "</div>";
+    }
+  }
+  if (inList) html += "</ul>";
+  return html;
+}
+function renderMeta(m) {
+  const parts = [m && m.company, m && m.position].filter(Boolean);
+  if (!parts.length) return;
+  metaEl.innerHTML = '<span class="chip">🎯 정찰 대상</span>' + esc(parts.join(" · "));
+  metaEl.style.display = "block";
+}
 
 function renderBlocks(text) {
   // "## 1." ~ "## 4." 헤더로 분리(텍스트 순서로 슬라이스)
@@ -155,7 +188,7 @@ function renderBlocks(text) {
   blocks.sort((a, b) => a.id - b.id);
   blocksEl.innerHTML = blocks.map(b =>
     `<div class="blk"><h3>${b.id}. ${esc(TITLES[b.id]||"")}</h3>`
-    + `<div class="body${b.id===lastId?" cursor":""}">${esc(b.body)}</div></div>`
+    + `<div class="body${b.id===lastId?" cursor":""}">${renderMd(b.body)}</div></div>`
   ).join("");
   updateVerdict(text);
 }
@@ -178,6 +211,7 @@ async function analyze() {
   const constraints = readConstraints();
   saveProfile(profile, constraints);  // 내 정보·조건 저장(다음 방문 자동 복원)
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
+  metaEl.style.display = "none"; metaEl.innerHTML = "";
   resumeBtn.style.display = "none"; resumeEl.innerHTML = "";
   lastJob = job_url; lastProfile = profile;
   statusEl.textContent = "공고를 실제 브라우저로 여는 중… (스크롤·본문 수집)";
@@ -202,6 +236,7 @@ async function analyze() {
         let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
         if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; go.disabled=false; return; }
         if (ev.done) { statusEl.textContent = "정찰 완료."; if (lastProfile) resumeBtn.style.display = "block"; loadCompare(); break; }
+        if (ev.meta) { renderMeta(ev.meta); }
         if (ev.t) { full += ev.t; renderBlocks(full); }
       }
     }
