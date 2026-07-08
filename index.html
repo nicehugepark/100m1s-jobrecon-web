@@ -86,9 +86,10 @@
   .blk .body code { background:#0f1319; border:1px solid var(--line); border-radius:5px;
     padding:1px 5px; font-size:12.5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
   /* 텍스트 선택 → 추가분석 코멘트 */
-  #digBtn { position:absolute; display:none; z-index:60; width:auto; margin:0; padding:7px 13px;
-    font-size:13px; font-weight:700; border-radius:999px; background:var(--accent); color:#fff;
-    box-shadow:0 5px 16px -3px rgba(0,0,0,.6); cursor:pointer; white-space:nowrap; }
+  #digBtn { position:absolute; display:none; z-index:60; width:auto; margin:0; padding:10px 16px;
+    font-size:14px; font-weight:700; border-radius:999px; background:var(--accent); color:#fff;
+    box-shadow:0 6px 18px -3px rgba(0,0,0,.65); cursor:pointer; white-space:nowrap;
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
   .comment { margin:8px 0 12px; border-left:3px solid var(--accent); background:#141a24;
     border-radius:0 10px 10px 0; padding:10px 12px; }
   .comment .cq { font-size:12px; color:var(--dim); margin-bottom:7px; padding-bottom:7px;
@@ -521,7 +522,7 @@ digBtn.id = "digBtn"; digBtn.textContent = "🔍 더 파고들기";
 document.body.appendChild(digBtn);
 let _digSel = null;  // { text, blockEl }
 function clearDig() { digBtn.style.display = "none"; }
-function onSelChange() {
+function checkSelection() {
   const s = window.getSelection();
   const text = (s && s.toString ? s.toString() : "").trim();
   if (!text || text.length < 2 || !s.rangeCount) { clearDig(); return; }
@@ -531,23 +532,32 @@ function onSelChange() {
   const blockEl = anchor && anchor.closest ? anchor.closest("#blocks .blk") : null;
   if (!blockEl) { clearDig(); return; }  // 리포트 블록 안에서 선택한 것만
   _digSel = { text: text.slice(0, 600), blockEl };
-  const r = range.getBoundingClientRect();
+  // 선택 '끝' 지점 기준으로 아래에 배치(위쪽 네이티브 복사메뉴·핸들과 충돌 회피)
+  const rects = range.getClientRects();
+  const r = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
   digBtn.style.display = "block";
-  const w = digBtn.offsetWidth || 120;
+  const w = digBtn.offsetWidth || 132, vw = document.documentElement.clientWidth;
   let left = window.scrollX + r.left + r.width / 2 - w / 2;
-  left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 8));
+  left = Math.max(8, Math.min(left, window.scrollX + vw - w - 8));
   digBtn.style.left = left + "px";
-  digBtn.style.top = Math.max(8, window.scrollY + r.top - 44) + "px";
+  digBtn.style.top = (window.scrollY + r.bottom + 10) + "px";
 }
-document.addEventListener("mouseup", () => setTimeout(onSelChange, 10));
-document.addEventListener("touchend", () => setTimeout(onSelChange, 10));
-document.addEventListener("scroll", clearDig, { passive: true });
+// 🔴 모바일 핵심: selectionchange(핸들 드래그까지 포함)를 디바운스로 감지 → 버튼이 안정적으로 뜬다.
+let _selDebounce = null;
+function scheduleCheck(delay) { clearTimeout(_selDebounce); _selDebounce = setTimeout(checkSelection, delay); }
+document.addEventListener("selectionchange", () => scheduleCheck(320));
+document.addEventListener("mouseup", () => scheduleCheck(10));     // 데스크톱 즉시
+document.addEventListener("touchend", () => scheduleCheck(140));   // 모바일 보조
 function dismissHint() { $("digHint").style.display = "none"; localStorage.setItem("jr_dighint", "0"); }
 $("digHintX").addEventListener("click", dismissHint);
 
-digBtn.addEventListener("mousedown", (e) => e.preventDefault());  // 선택 유지
-digBtn.addEventListener("click", async (e) => {
-  e.preventDefault(); e.stopPropagation();
+// 버튼 탭이 선택을 지우지 않도록 + touchend/click 중복 방지(모바일 1탭 신뢰성)
+digBtn.addEventListener("mousedown", (e) => e.preventDefault());
+let _digLast = 0;
+async function runDig(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  if (Date.now() - _digLast < 800) return;   // touchend→click 중복 흡수
+  _digLast = Date.now();
   if (!_digSel) return;
   const sel = _digSel, blockEl = sel.blockEl;
   clearDig();
@@ -592,7 +602,9 @@ digBtn.addEventListener("click", async (e) => {
   } catch (err) {
     bodyEl.innerHTML = '<span class="err">추가 분석 실패 — 다시 시도해 주세요.</span>';
   }
-});
+}
+digBtn.addEventListener("click", runDig);
+digBtn.addEventListener("touchend", runDig);   // 모바일 1탭 신뢰성(중복은 _digLast로 흡수)
 // --- 사용자 정보 저장/복원(US6): 익명 로컬 id ---
 const UID_KEY = "jobrecon_uid";
 function getUid() {
