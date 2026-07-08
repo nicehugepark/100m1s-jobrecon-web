@@ -305,6 +305,12 @@ function authHeaders() {
   if (window.JOBRECON_TOKEN) h["X-JobRecon-Token"] = window.JOBRECON_TOKEN;
   return h;
 }
+// 🔴 multipart(FormData)용 — Content-Type 강제 금지(브라우저가 boundary 자동 설정). 토큰만.
+function tokenHeaders() {
+  const h = {};
+  if (window.JOBRECON_TOKEN) h["X-JobRecon-Token"] = window.JOBRECON_TOKEN;
+  return h;
+}
 const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
@@ -481,7 +487,7 @@ async function ingestSource(formData, fallbackLabel) {
   const busy = noteBusy(fallbackLabel);
   try {
     await ensureAPI();
-    const res = await fetch(API + "/profile/ingest", { method: "POST", headers: authHeaders(), body: formData });
+    const res = await fetch(API + "/profile/ingest", { method: "POST", headers: tokenHeaders(), body: formData });
     const d = await res.json().catch(() => ({ error: "응답 오류" }));
     busy.remove();
     if (!res.ok || d.error) { noteChip(d.error || "불러오지 못했습니다", true); return; }
