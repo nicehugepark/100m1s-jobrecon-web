@@ -80,8 +80,22 @@
     padding:14px 16px; margin:10px 0; }
   .blk h3 { margin:0 0 6px; font-size:15px; }
   .blk .body { font-size:14.5px; color:#dbe2ea; }
-  .blk .body ul { margin:6px 0; padding-left:18px; }
+  .blk .body ul, .blk .body ol { margin:6px 0; padding-left:20px; }
+  .blk .body ul ul, .blk .body ul ol, .blk .body ol ul, .blk .body ol ol { margin:2px 0; }
   .blk .body li { margin:3px 0; }
+  .blk .body code { background:#0f1319; border:1px solid var(--line); border-radius:5px;
+    padding:1px 5px; font-size:12.5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+  /* 텍스트 선택 → 추가분석 코멘트 */
+  #digBtn { position:absolute; display:none; z-index:60; width:auto; margin:0; padding:7px 13px;
+    font-size:13px; font-weight:700; border-radius:999px; background:var(--accent); color:#fff;
+    box-shadow:0 5px 16px -3px rgba(0,0,0,.6); cursor:pointer; white-space:nowrap; }
+  .comment { margin:8px 0 12px; border-left:3px solid var(--accent); background:#141a24;
+    border-radius:0 10px 10px 0; padding:10px 12px; }
+  .comment .cq { font-size:12px; color:var(--dim); margin-bottom:7px; padding-bottom:7px;
+    border-bottom:1px dashed var(--line); }
+  .comment .cq b { color:var(--accent); font-weight:700; }
+  .comment .cx { float:right; cursor:pointer; color:var(--dim); font-size:13px; margin-left:8px; }
+  .comment .cbody { font-size:14px; color:#dbe2ea; }
   .blk .body .ln { margin:5px 0; }
   .blk .body strong { color:#f0f4f8; font-weight:700; }
   #meta { display:none; margin:12px 0 2px; font-size:15px; color:#e2e8ef; font-weight:600; }
@@ -210,21 +224,33 @@ const TITLES = {1:"지원 판단", 2:"공고 핵심 요건", 3:"회사 서사·�
 const BLOCK_ORDER = {1:0, 2:1, 3:2, 4:3, 6:4, 5:5, 7:6};
 
 // 경량 마크다운 렌더(이스케이프 후 안전한 인라인/불릿만) — **굵게**, - 불릿, 문단
+// 마크다운 렌더 — bold·inline code·중첩 불릿(들여쓰기)·번호 리스트 지원
+function mdInline(s) {
+  return s
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+}
 function renderMd(t) {
-  let s = esc(t).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-  const lines = s.split("\n");
-  let html = "", inList = false;
-  for (const line of lines) {
-    const m = line.match(/^\s*[-•]\s+(.*)$/);
-    if (m) {
-      if (!inList) { html += "<ul>"; inList = true; }
-      html += "<li>" + m[1] + "</li>";
+  const lines = esc(t).split("\n");
+  let html = "", stack = [];  // 열린 리스트: {depth, tag}
+  const closeTo = (d) => { while (stack.length > d) html += "</" + stack.pop().tag + ">"; };
+  for (const raw of lines) {
+    const line = raw.replace(/\s+$/, "");
+    const bm = line.match(/^(\s*)[-•]\s+(.*)$/);       // 불릿
+    const nm = line.match(/^(\s*)\d+\.\s+(.*)$/);       // 번호
+    if (bm || nm) {
+      const indent = (bm ? bm[1] : nm[1]).replace(/\t/g, "  ").length;
+      const depth = indent >= 4 ? 3 : (indent >= 2 ? 2 : 1);
+      const tag = nm ? "ol" : "ul";
+      closeTo(depth);
+      if (stack.length < depth) { html += "<" + tag + ">"; stack.push({depth, tag}); }
+      html += "<li>" + mdInline(bm ? bm[2] : nm[2]) + "</li>";
     } else {
-      if (inList) { html += "</ul>"; inList = false; }
-      if (line.trim()) html += '<div class="ln">' + line + "</div>";
+      closeTo(0);
+      if (line.trim()) html += '<div class="ln">' + mdInline(line) + "</div>";
     }
   }
-  if (inList) html += "</ul>";
+  closeTo(0);
   return html;
 }
 function renderMeta(m) {
@@ -380,6 +406,82 @@ function activateAd(id) {
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
 function finalizeAds() { if (_adsFinalized) return; _adsFinalized = true; activateAd("adFeed1"); activateAd("adFeed2"); }
+
+// --- 텍스트 선택 → 추가 분석(빠른 즉답). 리포트 본체와 별개 ---
+const digBtn = document.createElement("button");
+digBtn.id = "digBtn"; digBtn.textContent = "🔍 더 파고들기";
+document.body.appendChild(digBtn);
+let _digSel = null;  // { text, blockEl }
+function clearDig() { digBtn.style.display = "none"; }
+function onSelChange() {
+  const s = window.getSelection();
+  const text = (s && s.toString ? s.toString() : "").trim();
+  if (!text || text.length < 2 || !s.rangeCount) { clearDig(); return; }
+  const range = s.getRangeAt(0);
+  const node = range.commonAncestorContainer;
+  const anchor = node.nodeType === 1 ? node : node.parentElement;
+  const blockEl = anchor && anchor.closest ? anchor.closest("#blocks .blk") : null;
+  if (!blockEl) { clearDig(); return; }  // 리포트 블록 안에서 선택한 것만
+  _digSel = { text: text.slice(0, 600), blockEl };
+  const r = range.getBoundingClientRect();
+  digBtn.style.display = "block";
+  const w = digBtn.offsetWidth || 120;
+  let left = window.scrollX + r.left + r.width / 2 - w / 2;
+  left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 8));
+  digBtn.style.left = left + "px";
+  digBtn.style.top = Math.max(8, window.scrollY + r.top - 44) + "px";
+}
+document.addEventListener("mouseup", () => setTimeout(onSelChange, 10));
+document.addEventListener("touchend", () => setTimeout(onSelChange, 10));
+document.addEventListener("scroll", clearDig, { passive: true });
+
+digBtn.addEventListener("mousedown", (e) => e.preventDefault());  // 선택 유지
+digBtn.addEventListener("click", async (e) => {
+  e.preventDefault(); e.stopPropagation();
+  if (!_digSel) return;
+  const sel = _digSel, blockEl = sel.blockEl;
+  clearDig();
+  try { window.getSelection().removeAllRanges(); } catch (x) {}
+  // 코멘트 카드 삽입(선택 블록 바로 아래)
+  const card = document.createElement("div");
+  card.className = "comment";
+  card.innerHTML = '<span class="cx">✕</span><div class="cq"><b>선택</b> “' + esc(sel.text) + '”</div>'
+    + '<div class="cbody">더 깊이 분석 중…</div>';
+  blockEl.insertAdjacentElement("afterend", card);
+  card.querySelector(".cx").addEventListener("click", () => card.remove());
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  const bodyEl = card.querySelector(".cbody");
+  const context = (blockEl.textContent || "").slice(0, 2000);
+  const company = (metaEl.textContent || "").replace("🎯 정찰 대상", "").trim();
+  try {
+    await ensureAPI();
+    const res = await fetch(API + "/expand", {
+      method: "POST", headers: authHeaders(),
+      body: JSON.stringify({ selected: sel.text, context, company })
+    });
+    if (!res.ok || !res.body) throw new Error("연결 실패");
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    let buf = "", full = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let sep;
+      while ((sep = buf.indexOf("\n\n")) !== -1) {
+        const line = buf.slice(0, sep); buf = buf.slice(sep + 2);
+        if (!line.startsWith("data: ")) continue;
+        let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
+        if (ev.error) { bodyEl.innerHTML = '<span class="err">' + esc(ev.error) + '</span>'; return; }
+        if (ev.status && !full) bodyEl.textContent = ev.status;
+        if (ev.t) { full += ev.t; bodyEl.innerHTML = renderMd(full); }
+        if (ev.done) return;
+      }
+    }
+    if (!full) bodyEl.innerHTML = '<span class="err">응답이 지연됩니다 — 다시 시도해 주세요.</span>';
+  } catch (err) {
+    bodyEl.innerHTML = '<span class="err">추가 분석 실패 — 다시 시도해 주세요.</span>';
+  }
+});
 // --- 사용자 정보 저장/복원(US6): 익명 로컬 id ---
 const UID_KEY = "jobrecon_uid";
 function getUid() {
