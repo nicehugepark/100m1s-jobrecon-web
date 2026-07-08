@@ -250,6 +250,12 @@ function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 // 공유 텍스트 붙여넣기 대응 — "…지원해 보세요. http://wntd.co/xxx" 에서 URL만 발라냄
 function extractUrl(t){ const m=(t||"").match(/https?:\/\/[^\s<>"')]+/); return m ? m[0].replace(/[.,)\]}]+$/,"") : (t||"").trim(); }
 
+// 🔴 정찰은 서버 백그라운드 job + 폴링(스트리밍 아님). 모바일에서 앱 전환/새로고침/탭 종료
+// 후 복귀해도 정찰이 유실되지 않는다(job은 서버에서 계속, 돌아오면 이어받음). FR-037.
+const JOB_KEY = "jr_active_job";
+let _pollTimer = null, _pollFull = "";
+function stopPoll() { if (_pollTimer) { clearTimeout(_pollTimer); _pollTimer = null; } }
+
 async function analyze() {
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
   const profile = $("profile").value.trim();
@@ -261,47 +267,67 @@ async function analyze() {
   metaEl.style.display = "none"; metaEl.innerHTML = "";
   resumeBtn.style.display = "none"; resumeEl.innerHTML = "";
   lastJob = job_url; lastProfile = profile;
-  statusEl.textContent = "공고를 실제 브라우저로 여는 중… (스크롤·본문 수집)";
-
-  let buf = "", full = "";
+  statusEl.textContent = "정찰을 시작하는 중…";
   try {
-    const res = await fetch(API + "/analyze", {
+    const res = await fetch(API + "/analyze/start", {
       method:"POST", headers: authHeaders(),
       body: JSON.stringify({ job_url, profile: profile || null, constraints, user_id: getUid() })
     });
-    if (!res.ok || !res.body) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
-    const reader = res.body.getReader(), dec = new TextDecoder();
-    statusEl.textContent = "정찰 분석 중…";
-    let gotDone = false;
-    while (true) {
-      const {value, done} = await reader.read();
-      if (done) break;
-      buf += dec.decode(value, {stream:true});
-      let sep;
-      while ((sep = buf.indexOf("\n\n")) !== -1) {
-        const line = buf.slice(0, sep); buf = buf.slice(sep + 2);
-        if (!line.startsWith("data: ")) continue;
-        let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
-        if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; go.disabled=false; return; }
-        if (ev.done) { gotDone = true; statusEl.textContent = "정찰 완료."; if (lastProfile) resumeBtn.style.display = "block"; loadCompare(); break; }
-        if (ev.status) { statusEl.textContent = ev.status; }
-        if (ev.meta) { renderMeta(ev.meta); }
-        if (ev.t) { full += ev.t; renderBlocks(full); }
-      }
-      if (gotDone) break;
-    }
-    // ev.done 없이 스트림 종료(연결 끊김) → 멈춘 듯 두지 않고 명확히 안내
-    if (!gotDone) {
-      statusEl.innerHTML = full
-        ? '<span class="err">연결이 중간에 끊겼습니다 — 결과 일부만 표시됩니다. 다시 시도해 주세요.</span>'
-        : '<span class="err">응답이 지연되어 연결이 끊겼습니다. 잠시 후 다시 시도해 주세요.</span>';
-    }
+    if (!res.ok) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
+    const data = await res.json();
+    if (data.error) { statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
+    // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음
+    localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url, ts: Date.now() }));
+    pollJob(data.job_id);
   } catch (e) {
     statusEl.innerHTML = `<span class="err">오류: ${esc(String(e.message||e))}</span>`;
-  } finally {
     go.disabled = false;
   }
 }
+
+// 서버 job 상태를 2초마다 조회 — 연결이 아니라 상태를 폴링하므로 모바일 백그라운드를 견딘다
+function pollJob(job_id) {
+  stopPoll(); _pollFull = "";
+  function endPoll() { stopPoll(); localStorage.removeItem(JOB_KEY); go.disabled = false; }
+  const tick = async () => {
+    let ev;
+    try {
+      const r = await fetch(API + "/analyze/poll/" + job_id, { cache:"no-store" });
+      ev = await r.json();
+    } catch (e) {
+      _pollTimer = setTimeout(tick, 2500); return;  // 일시 실패(백그라운드 등) → 중단 말고 재시도
+    }
+    if (ev.error === "unknown_job") {
+      statusEl.innerHTML = '<span class="err">정찰 결과가 만료됐습니다 — 다시 정찰해 주세요.</span>';
+      endPoll(); return;
+    }
+    if (ev.meta) renderMeta(ev.meta);
+    if (typeof ev.text === "string" && ev.text !== _pollFull) { _pollFull = ev.text; renderBlocks(_pollFull); }
+    if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; endPoll(); return; }
+    if (ev.status) statusEl.textContent = ev.status;
+    if (ev.done) {
+      statusEl.textContent = _pollFull ? "정찰 완료." : "정찰이 종료됐습니다.";
+      if (_pollFull && lastProfile) resumeBtn.style.display = "block";
+      loadCompare(); endPoll(); return;
+    }
+    _pollTimer = setTimeout(tick, 2000);
+  };
+  tick();
+}
+
+// 페이지 로드/복귀 시 진행 중이던 정찰 이어받기(앱 전환·새로고침·탭 종료 대응)
+function resumeActiveJob() {
+  if (_pollTimer) return;  // 이미 폴링 중이면 스킵
+  let saved; try { saved = JSON.parse(localStorage.getItem(JOB_KEY) || "null"); } catch (e) { saved = null; }
+  if (!saved || !saved.job_id) return;
+  if (Date.now() - (saved.ts || 0) > 20*60*1000) { localStorage.removeItem(JOB_KEY); return; }
+  if (saved.job_url) $("url").value = saved.job_url;
+  go.disabled = true;
+  statusEl.textContent = "진행 중이던 정찰을 이어받는 중…";
+  pollJob(saved.job_id);
+}
+// 앱에서 돌아오면(탭 가시성 복귀) 즉시 이어받기 확인
+document.addEventListener("visibilitychange", () => { if (!document.hidden) resumeActiveJob(); });
 // --- 사용자 정보 저장/복원(US6): 익명 로컬 id ---
 const UID_KEY = "jobrecon_uid";
 function getUid() {
@@ -393,7 +419,7 @@ function initAds() {
     + (slot ? ' data-ad-slot="' + slot + '"' : "") + ' data-ad-format="auto" data-full-width-responsive="true"></ins>';
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
-window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loadProfile(); loadCompare(); initAds(); });
+window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loadProfile(); loadCompare(); initAds(); resumeActiveJob(); });
 
 // --- US5: 이 공고용 이력서 초안 ---
 async function streamResume() {
