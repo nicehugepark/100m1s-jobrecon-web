@@ -136,15 +136,20 @@
     border-radius:10px; line-height:1.5; }
   .dighint b { color:var(--accent); font-weight:700; }
   .dighint .dx { position:absolute; top:8px; right:10px; cursor:pointer; color:var(--dim); font-size:13px; }
-  /* 다중 소스 프로필 입력 */
-  .dropzone { margin-top:10px; border:1.5px dashed var(--line); border-radius:12px; padding:15px 14px;
-    text-align:center; font-size:13px; color:var(--dim); cursor:pointer; transition:all .15s; background:#12161d; }
-  .dropzone:hover { border-color:var(--accent); color:var(--fg); }
-  .dropzone.drag { border-color:var(--accent); background:rgba(79,140,255,.12); color:var(--fg); }
-  .dropzone b { color:var(--fg); font-weight:700; } .dropzone .dz-ext { color:var(--accent); }
-  .linkrow { display:flex; gap:8px; margin-top:8px; }
-  .linkrow input { flex:1; margin:0; }
-  .linkbtn { width:auto; margin:0; padding:0 16px; white-space:nowrap; font-size:14px; }
+  /* 통합 입력 박스 하나(재설계) — 타이핑 / 링크 붙여넣기(자동 인식) / 파일 드롭·첨부 */
+  .pbox { position:relative; margin-top:6px; border:1px solid var(--line); border-radius:12px;
+    background:var(--card2); overflow:hidden; transition:border-color .12s, background .12s; }
+  .pbox.drag { border-color:var(--accent); background:rgba(79,140,255,.1); }
+  .pbox textarea#profile { border:0; background:transparent; border-radius:0; margin:0; min-height:90px; }
+  .pbox textarea#profile:focus { outline:none; }
+  .pbox-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:7px 9px; border-top:1px solid var(--line); background:var(--bg); }
+  .attach { display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
+    margin:0; padding:0 13px; font-size:13px; font-weight:600; color:#cdd6e2;
+    background:var(--card2); border:1px solid var(--line); border-radius:9px; cursor:pointer;
+    -webkit-tap-highlight-color:transparent; }
+  .attach:hover { border-color:var(--accent); color:var(--fg); }
+  .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
   .srcchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
   .srcchips:empty { margin-top:0; }
   .srcchip { display:inline-flex; align-items:center; gap:7px; font-size:12px; padding:5px 9px; border-radius:8px;
@@ -168,6 +173,51 @@
   }
   .blk .body .ln { margin:5px 0; }
   .blk .body strong { color:#f0f4f8; font-weight:700; }
+
+  /* 인라인 SVG 아이콘(이모지 대체) — currentColor·14px 기준. 냉정/날카로움 */
+  .ico { width:14px; height:14px; flex:0 0 auto; vertical-align:-2px; stroke:currentColor;
+    fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  .ico-sm { width:12px; height:12px; vertical-align:-1px; }
+
+  /* 프로필 카드(요구1·§4.1) — LLM 구조화 추출 결과 */
+  .pcard { margin:10px 0 6px; border:1px solid var(--line); border-radius:12px;
+    background:linear-gradient(180deg,#161b24,#12161d); padding:14px 15px; }
+  .pcard .ph { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+  .pcard .ph .years { font-size:16px; font-weight:800; color:var(--fg); }
+  .pcard .ph .role { font-size:14px; font-weight:700; color:#c3ccd6; }
+  .pcard .psum { font-size:14px; color:#cdd6e2; line-height:1.55; margin:2px 0 4px; }
+  .pcard .prow { display:flex; align-items:flex-start; gap:8px; margin-top:9px; }
+  .pcard .plab { flex:0 0 auto; font-size:12px; color:var(--dim); padding-top:4px;
+    min-width:44px; }
+  .pcard .pchips { display:flex; flex-wrap:wrap; gap:6px; flex:1; }
+  .pcard .pchip { font-size:12.5px; padding:4px 10px; border-radius:999px;
+    background:var(--card2); border:1px solid var(--line); color:#dbe2ea; }
+  .pcard .pchip.dom { background:rgba(79,140,255,.1); border-color:#31456b; color:#b7cbf0; }
+  .pcard ul.phl { margin:9px 0 2px; padding-left:18px; }
+  .pcard ul.phl li { font-size:13.5px; color:#dbe2ea; margin:3px 0; line-height:1.5; }
+  .pcard .porig { margin-top:11px; border-top:1px solid var(--line); padding-top:9px; }
+  .pcard .porig summary { cursor:pointer; font-size:12.5px; color:var(--dim);
+    list-style:none; user-select:none; display:flex; align-items:center; gap:6px; }
+  .pcard .porig summary::-webkit-details-marker { display:none; }
+  .pcard .porig .po-body { margin-top:8px; font-size:12.5px; color:#b8c2cd;
+    white-space:pre-wrap; max-height:300px; overflow:auto; line-height:1.55; }
+  .pcard .pbusy { font-size:13px; color:var(--dim); display:flex; align-items:center; gap:8px; }
+
+  /* 범용 조건 칩(요구3·§4.3 안 A) — 토글 칩 + 자유 추가. 터치 44px */
+  .condchips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .condchip { display:inline-flex; align-items:center; width:auto; margin:0; min-height:44px; padding:0 14px;
+    font-size:13px; color:#cdd6e2; background:var(--bg); border:1px solid var(--line);
+    border-radius:999px; cursor:pointer; user-select:none; transition:all .12s;
+    -webkit-tap-highlight-color:transparent; }
+  .condchip:hover { border-color:var(--accent); }
+  .condchip.on { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:700; }
+  .condchip.custom { gap:7px; }
+  .condchip.custom .cx { display:inline-flex; color:currentColor; opacity:.7; }
+  .condchip.custom .cx:hover { opacity:1; }
+  .condchip.add { color:var(--dim); border-style:dashed; gap:6px; }
+  .condchip.add:hover { color:var(--fg); }
+  .condadd-in { min-height:44px; padding:0 14px; font-size:13px; background:var(--bg);
+    color:var(--fg); border:1px solid var(--accent); border-radius:999px; width:150px; }
   #meta { display:none; margin:12px 0 2px; font-size:15px; color:#e2e8ef; font-weight:600; }
   #meta .chip { font-size:11px; font-weight:800; background:var(--accent); color:#fff; padding:3px 9px; border-radius:999px; margin-right:8px; vertical-align:middle; }
   .status { color:var(--dim); font-size:13px; min-height:18px; padding:2px; }
@@ -199,26 +249,21 @@
   <div class="card">
     <label for="url">채용공고 URL</label>
     <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
-    <label for="profile">내 정보 (선택 — 입력하면 적합도까지 분석 · 여러 소스 합쳐서)</label>
-    <textarea id="profile" placeholder="예) 7년차 백엔드 개발자 · Java/Spring/Kafka · 커머스 도메인 (또는 마케터·PM·디자이너 등 무엇이든)"></textarea>
-
-    <!-- 다중 소스: 파일 드래그앤드랍 + 링크(노션·구글독스·깃헙·웹) -->
-    <div id="dropzone" class="dropzone">
-      <span class="dz-ico">📎</span> 이력서·프로필 <b>파일을 끌어다 놓거나 클릭</b> — <span class="dz-ext">.pdf · .md · .txt</span> (여러 개 OK)
+    <label for="profile">내 정보 (선택 — 입력하면 적합도까지 분석 · 텍스트·링크·파일 무엇이든)</label>
+    <!-- 통합 입력 박스 하나(재설계): 타이핑 / 링크 붙여넣기(자동 인식) / 파일 드롭·📎첨부 → 소스 칩 -->
+    <div id="pbox" class="pbox">
+      <textarea id="profile" placeholder="이력서·경력을 붙여넣거나 · 노션·구글독스·깃헙·웹 링크를 붙여넣거나 · 파일을 끌어다 놓으세요 (개발자·마케터·PM·디자이너 등 무엇이든)"></textarea>
+      <div class="pbox-bar">
+        <button id="attachBtn" type="button" class="attach"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg> 파일 첨부</button>
+        <span class="pbox-hint">링크는 붙여넣으면 자동으로 불러와요 · 파일 pdf·md·txt</span>
+      </div>
       <input id="fileInput" type="file" accept=".pdf,.md,.markdown,.txt" multiple hidden />
-    </div>
-    <div class="linkrow">
-      <input id="srcUrl" type="url" placeholder="또는 링크 붙여넣기 — 노션·구글독스·깃헙·웹" />
-      <button id="srcUrlBtn" type="button" class="secondary linkbtn">불러오기</button>
     </div>
     <div id="srcChips" class="srcchips"></div>
 
     <div class="constraints">
-      <div class="clabel">내 조건 (평결에 반영·저장됩니다)</div>
-      <div class="crow">
-        <label class="ck"><input type="checkbox" id="c_eng"> 영어 인터뷰 불가</label>
-        <label class="ck"><input type="checkbox" id="c_coding"> 코딩테스트 회피</label>
-      </div>
+      <div class="clabel">내 조건 (평결에 반영·저장됩니다 — 눌러서 선택)</div>
+      <div class="condchips" id="condChips"></div>
       <input id="c_tc" type="number" inputmode="numeric" placeholder="목표 연봉 TC (세전·만원, 선택) — 예) 8000" />
     </div>
 
@@ -246,7 +291,10 @@
     <span class="vt">지원가치 평결</span>
   </div>
 
-  <!-- 결과: 접을 수 있는 '내 정보' 섹션 (길면 기본 접힘 — 회사 정찰이 주인공) -->
+  <!-- 결과: 프로필 카드(요구1·§4.1) — LLM 구조화 추출. 실패/빈 응답 시 아래 원문 접기로 폴백 -->
+  <div class="pcard" id="pcard" style="display:none"></div>
+
+  <!-- 폴백/원문: 접을 수 있는 '내 정보' 섹션 (카드 추출 실패 시 원문만) -->
   <details class="myinfo" id="myInfo" style="display:none">
     <summary id="myInfoSum">내가 입력한 정보</summary>
     <div class="mi-body" id="myInfoBody"></div>
@@ -254,8 +302,8 @@
 
   <!-- 확장 분석 사용법 힌트(리포트 완료 시 노출·발견성) -->
   <div class="dighint" id="digHint" style="display:none">
-    <span class="dx" id="digHintX">✕</span>
-    💡 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 “<b>🔍 더 파고들기</b>”가 떠요 — 그 부분만 더 깊이 분석해 드립니다.
+    <span class="dx" id="digHintX" title="닫기"><svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg> 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 “<b><svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> 더 파고들기</b>”가 떠요 — 그 부분만 더 깊이 분석해 드립니다.
   </div>
 
   <div class="blocks" id="blocks"></div>
@@ -270,13 +318,10 @@
     </div>
   </div>
 
-  <button id="resumeBtn" class="secondary" style="display:none">이 공고용 이력서 초안 만들기</button>
-  <div class="blocks" id="resume"></div>
-
   <div id="compareWrap" style="display:none">
     <div class="clabel" style="margin-top:22px; font-size:13px;">비교 · 내가 정찰한 공고 (평결순)</div>
     <div id="compare"></div>
-    <button id="compareBtn" class="secondary" style="display:none; margin-top:12px">⚖️ 내 기준으로 비교 인사이트 보기</button>
+    <button id="compareBtn" class="secondary" style="display:none; margin-top:12px"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M5 7h14M5 7l-2.5 5a3 3 0 0 0 5 0L5 7zm14 0l-2.5 5a3 3 0 0 0 5 0L19 7zM12 5l7 2M12 5L5 7"/></svg> 내 기준으로 비교 인사이트 보기</button>
     <div class="blocks" id="compareInsight"></div>
   </div>
 
@@ -313,7 +358,6 @@ function tokenHeaders() {
 }
 const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
-      resumeBtn = $("resumeBtn"), resumeEl = $("resume"),
       compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta"),
       anchorEl = $("anchor"), pinToggle = $("pinToggle"),
       compareBtn = $("compareBtn"), compareInsight = $("compareInsight");
@@ -505,19 +549,19 @@ function noteBusy(label) {
 function ingestFiles(files) {
   [...files].forEach(f => { const fd = new FormData(); fd.append("file", f, f.name); ingestSource(fd, f.name); });
 }
-const _dz = $("dropzone"), _fi = $("fileInput");
-_dz.addEventListener("click", () => _fi.click());
+// 통합 박스: 📎 첨부 / 박스에 드롭 / 링크 붙여넣기 자동 인식 → 소스 칩
+const _pbox = $("pbox"), _fi = $("fileInput");
+$("attachBtn").addEventListener("click", () => _fi.click());
 _fi.addEventListener("change", () => { if (_fi.files.length) ingestFiles(_fi.files); _fi.value = ""; });
-["dragenter", "dragover"].forEach(ev => _dz.addEventListener(ev, e => { e.preventDefault(); _dz.classList.add("drag"); }));
-["dragleave", "drop"].forEach(ev => _dz.addEventListener(ev, e => { e.preventDefault(); _dz.classList.remove("drag"); }));
-_dz.addEventListener("drop", e => { if (e.dataTransfer && e.dataTransfer.files.length) ingestFiles(e.dataTransfer.files); });
-function ingestUrl() {
-  const u = $("srcUrl").value.trim(); if (!u) return;
-  const fd = new FormData(); fd.append("url", u); ingestSource(fd, u);
-  $("srcUrl").value = "";
-}
-$("srcUrlBtn").addEventListener("click", ingestUrl);
-$("srcUrl").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); ingestUrl(); } });
+["dragenter", "dragover"].forEach(ev => _pbox.addEventListener(ev, e => { e.preventDefault(); _pbox.classList.add("drag"); }));
+["dragleave", "drop"].forEach(ev => _pbox.addEventListener(ev, e => { e.preventDefault(); _pbox.classList.remove("drag"); }));
+_pbox.addEventListener("drop", e => { if (e.dataTransfer && e.dataTransfer.files.length) ingestFiles(e.dataTransfer.files); });
+// 링크는 붙여넣으면 자동 인식(별도 '불러오기' 버튼 없음): 텍스트박스에 '순수 URL'을 붙이면 소스로 인제스트
+function isBareUrl(s) { return /^https?:\/\/\S+$/i.test(s) && !/\s/.test(s); }
+$("profile").addEventListener("paste", (e) => {
+  const t = ((e.clipboardData || window.clipboardData).getData("text") || "").trim();
+  if (isBareUrl(t)) { e.preventDefault(); const fd = new FormData(); fd.append("url", t); ingestSource(fd, t); }
+});
 // 병합: 텍스트박스 + 모든 소스 → 라벨 붙여 하나의 프로필(상한 적용)
 function buildProfile() {
   const parts = [];
@@ -538,6 +582,41 @@ function showMyInfo(combined) {
   el.style.display = "block";
 }
 
+// --- 프로필 구조화 카드(요구1·§4.1): /profile/extract → 예쁘게 렌더. 실패·빈 응답 시 원문(myInfo) 폴백 ---
+async function extractProfileCard(profile) {
+  const el = $("pcard"); const prof = (profile || "").trim();
+  if (prof.length < 2) { el.style.display = "none"; return; }
+  el.style.display = "block";
+  el.innerHTML = '<div class="pbusy">내 정보를 정리하는 중…</div>';
+  try {
+    await ensureAPI();
+    const res = await fetch(API + "/profile/extract", {
+      method: "POST", headers: authHeaders(), body: JSON.stringify({ profile: prof.slice(0, 20000) })
+    });
+    const d = await res.json().catch(() => ({ error: "응답 오류" }));
+    const empty = !d || d.error || (!d.summary && !d.years && !d.role
+      && !(d.skills || []).length && !(d.domains || []).length && !(d.highlights || []).length);
+    if (!res.ok || empty) { el.style.display = "none"; return; }  // 실패·빈 카드 → 원문(myInfo) 폴백
+    renderPcard(d);
+  } catch (e) { el.style.display = "none"; }
+}
+function renderPcard(d) {
+  const el = $("pcard");
+  const chip = (s, cls) => '<span class="pchip' + (cls ? " " + cls : "") + '">' + esc(s) + '</span>';
+  let h = "";
+  if (d.years || d.role)
+    h += '<div class="ph">' + (d.years ? '<span class="years">' + esc(d.years) + '</span>' : "")
+       + (d.role ? '<span class="role">' + esc(d.role) + '</span>' : "") + '</div>';
+  if (d.summary) h += '<div class="psum">' + esc(d.summary) + '</div>';
+  if ((d.skills || []).length)
+    h += '<div class="prow"><span class="plab">스킬</span><span class="pchips">' + d.skills.map(s => chip(s)).join("") + '</span></div>';
+  if ((d.domains || []).length)
+    h += '<div class="prow"><span class="plab">도메인</span><span class="pchips">' + d.domains.map(s => chip(s, "dom")).join("") + '</span></div>';
+  if ((d.highlights || []).length)
+    h += '<ul class="phl">' + d.highlights.map(s => '<li>' + esc(s) + '</li>').join("") + '</ul>';
+  el.innerHTML = h; el.style.display = h ? "block" : "none";
+}
+
 async function analyze() {
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
   const profileText = $("profile").value.trim();
@@ -549,7 +628,7 @@ async function analyze() {
   _lastCombined.v = profile;
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
   metaEl.style.display = "none"; metaEl.innerHTML = ""; $("digHint").style.display = "none"; $("myInfo").style.display = "none";
-  resumeBtn.style.display = "none"; resumeEl.innerHTML = "";
+  $("pcard").style.display = "none"; $("pcard").innerHTML = "";
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
   statusEl.textContent = ""; scanStart();
@@ -597,7 +676,7 @@ function pollJob(job_id) {
     if (ev.done) {
       statusEl.textContent = _pollFull ? "정찰 완료." : "정찰이 종료됐습니다.";
       if (_pollFull) showMyInfo(_lastCombined.v);        // 접을 수 있는 '내 정보' 섹션
-      if (_pollFull && lastProfile) resumeBtn.style.display = "block";
+      if (_pollFull) extractProfileCard(_lastCombined.v);  // 프로필 구조화 카드(요구1·§4.1)
       if (_pollFull) finalizeAds();                      // 트랙 B-1: 리포트 인피드 광고 활성화(AdSense 설정 시)
       if (_pollFull && localStorage.getItem("jr_dighint") !== "0") $("digHint").style.display = "block";  // 확장분석 힌트
       if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 광고 게이트
@@ -742,12 +821,61 @@ function getUid() {
             localStorage.setItem(UID_KEY, u); }
   return u;
 }
+// --- 범용 조건 칩(재설계): 프리셋 토글 + 자유 추가. 영어·코테=구조화 필드, 나머지=notes(평결 반영) ---
+const CONDITIONS = [
+  { key:"english",   label:"영어 인터뷰 불가" },
+  { key:"coding",    label:"코딩테스트 회피" },
+  { key:"remote",    label:"재택·원격 근무" },
+  { key:"worklife",  label:"워라밸" },
+  { key:"stock",     label:"스톡옵션·지분" },
+  { key:"growth",    label:"성장·최신 기술" },
+  { key:"culture",   label:"수평적 조직문화" },
+  { key:"stability", label:"고용 안정성" },
+  { key:"fulltime",  label:"정규직 희망" },
+];
+const _condOn = {}, _condCustom = [];
+function renderCond() {
+  const c = $("condChips"); if (!c) return; c.innerHTML = "";
+  CONDITIONS.forEach(cd => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "condchip" + (_condOn[cd.key] ? " on" : "");
+    b.textContent = cd.label;
+    b.addEventListener("click", () => { _condOn[cd.key] = !_condOn[cd.key]; b.classList.toggle("on"); });
+    c.appendChild(b);
+  });
+  _condCustom.forEach((s, i) => {
+    const b = document.createElement("span");
+    b.className = "condchip on custom"; b.textContent = s;
+    const x = document.createElement("span"); x.className = "cx"; x.title = "삭제";
+    x.innerHTML = '<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    x.addEventListener("click", () => { _condCustom.splice(i, 1); renderCond(); });
+    b.appendChild(x); c.appendChild(b);
+  });
+  const add = document.createElement("button");
+  add.type = "button"; add.className = "condchip add";
+  add.innerHTML = '<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> 직접 추가';
+  add.addEventListener("click", () => {
+    const inp = document.createElement("input");
+    inp.className = "condadd-in"; inp.placeholder = "조건 입력 후 Enter"; inp.maxLength = 40;
+    add.replaceWith(inp); inp.focus();
+    let done = false;
+    const commit = (save) => { if (done) return; done = true; const v = inp.value.trim(); if (save && v) _condCustom.push(v); renderCond(); };
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); commit(true); } else if (e.key === "Escape") commit(false); });
+    inp.addEventListener("blur", () => commit(true));
+  });
+  c.appendChild(add);
+}
+renderCond();
 function readConstraints() {
   const tcMan = parseInt($("c_tc").value, 10);
+  const notes = [];
+  CONDITIONS.forEach(cd => { if (cd.key !== "english" && cd.key !== "coding" && _condOn[cd.key]) notes.push(cd.label); });
+  _condCustom.forEach(s => notes.push(s));
   return {
-    english_interview_ok: !$("c_eng").checked,   // 체크 = 영어 불가
-    avoid_coding_test: $("c_coding").checked,
+    english_interview_ok: !_condOn.english,   // 켜짐 = 영어 불가
+    avoid_coding_test: !!_condOn.coding,
     target_tc: Number.isFinite(tcMan) ? tcMan * 10000 : null,  // 만원 → 원
+    notes: notes.length ? notes.join(", ") : null,
   };
 }
 async function loadProfile() {
@@ -756,9 +884,17 @@ async function loadProfile() {
         if (b && b.profile && !$("profile").value) $("profile").value = b.profile;
         const c = b && b.constraints;
         if (c) {
-          if (typeof c.english_interview_ok === "boolean") $("c_eng").checked = !c.english_interview_ok;
-          if (c.avoid_coding_test) $("c_coding").checked = true;
+          _condOn.english = c.english_interview_ok === false;
+          _condOn.coding = !!c.avoid_coding_test;
           if (c.target_tc) $("c_tc").value = Math.round(c.target_tc / 10000);
+          if (c.notes) {  // notes에서 프리셋 라벨 복원 + 자유 추가는 커스텀 칩으로
+            const known = {}; CONDITIONS.forEach(cd => { known[cd.label] = cd.key; });
+            c.notes.split(",").map(s => s.trim()).filter(Boolean).forEach(lb => {
+              if (known[lb] && known[lb] !== "english" && known[lb] !== "coding") _condOn[known[lb]] = true;
+              else if (!known[lb]) _condCustom.push(lb);
+            });
+          }
+          renderCond();
         }
   } catch (e) {}
 }
@@ -825,38 +961,6 @@ function initAds() {
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
 window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loadProfile(); loadCompare(); initAds(); resumeActiveJob(); });
-
-// --- US5: 이 공고용 이력서 초안 ---
-async function streamResume() {
-  if (!lastJob || !lastProfile) return;
-  resumeBtn.disabled = true;
-  resumeEl.innerHTML = '<div class="blk"><h3>이력서 초안</h3><div class="body cursor"></div></div>';
-  const bodyEl = resumeEl.querySelector(".body");
-  let buf = "", full = "";
-  try {
-    const res = await fetch(API + "/resume", { method:"POST", headers: authHeaders(),
-      body: JSON.stringify({ job_url: lastJob, profile: lastProfile }) });
-    if (!res.ok || !res.body) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
-    const reader = res.body.getReader(), dec = new TextDecoder();
-    while (true) {
-      const {value, done} = await reader.read();
-      if (done) break;
-      buf += dec.decode(value, {stream:true});
-      let sep;
-      while ((sep = buf.indexOf("\n\n")) !== -1) {
-        const line = buf.slice(0, sep); buf = buf.slice(sep + 2);
-        if (!line.startsWith("data: ")) continue;
-        let ev; try { ev = JSON.parse(line.slice(6)); } catch { continue; }
-        if (ev.error) { bodyEl.className = "body err"; bodyEl.textContent = ev.error; return; }
-        if (ev.done) { bodyEl.classList.remove("cursor"); return; }
-        if (ev.t) { full += ev.t; bodyEl.textContent = full; }
-      }
-    }
-  } catch (e) {
-    bodyEl.className = "body err"; bodyEl.textContent = "오류: " + (e.message || e);
-  } finally { resumeBtn.disabled = false; }
-}
-resumeBtn.addEventListener("click", streamResume);
 
 go.addEventListener("click", analyze);
 $("url").addEventListener("keydown", e => { if (e.key === "Enter") analyze(); });
