@@ -246,7 +246,7 @@
   <div class="anchor pinned" id="anchor">
     <div class="anchor-row">
       <div id="meta"></div>
-      <button id="pinToggle" class="pin on" type="button" title="스크롤 시 상단 고정/해제">📌 고정</button>
+      <button id="pinToggle" class="pin on" type="button" title="스크롤 시 상단 고정/해제"><svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 6 3 3v2H7v-2l3-3z"/><path d="M12 15v5"/></svg> 고정</button>
     </div>
     <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
   </div>
@@ -338,6 +338,17 @@
 
 <script>
 const $ = (id) => document.getElementById(id);
+// 인라인 SVG 아이콘(이모지 전부 대체 — 대표 지시). .ico=currentColor. 문자열 삽입용.
+const IC = {
+  pin:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 6 3 3v2H7v-2l3-3z"/><path d="M12 15v5"/></svg>',
+  target:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>',
+  search:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
+  scale:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M6 7h12M6 7l-2.5 5a2.6 2.6 0 0 0 5 0L6 7zm12 0l-2.5 5a2.6 2.6 0 0 0 5 0L18 7z"/></svg>',
+  check:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>',
+  x:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  warn:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17.5v.01"/></svg>',
+  busy:'<svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>',
+};
 // 백엔드 API 주소: 같은 서버면 "" (상대경로). GitHub Pages 등 분리 배포 시
 // window.JOBRECON_API = "https://api.jobrecon.100m1s.com" 로 지정.
 // 백엔드 주소: window.JOBRECON_API(하드코딩) 우선, 없으면 api.txt(터널 URL 자동발행)에서 로드.
@@ -375,7 +386,7 @@ let lastJob = null, lastProfile = null;
 function applyPin(pinned) {
   anchorEl.classList.toggle("pinned", pinned);
   pinToggle.classList.toggle("on", pinned);
-  pinToggle.textContent = pinned ? "📌 고정" : "📌 고정 해제됨";
+  pinToggle.innerHTML = IC.pin + (pinned ? " 고정" : " 고정 해제됨");
 }
 applyPin(localStorage.getItem("jr_pin") !== "0");
 pinToggle.addEventListener("click", () => {
@@ -421,7 +432,7 @@ function renderMd(t) {
 function renderMeta(m) {
   const parts = [m && m.company, m && m.position].filter(Boolean);
   if (!parts.length) return;
-  metaEl.innerHTML = '<span class="chip">🎯 정찰 대상</span>' + esc(parts.join(" · "));
+  metaEl.innerHTML = '<span class="chip">' + IC.target + ' 정찰 대상</span>' + esc(parts.join(" · "));
   metaEl.style.display = "block";
 }
 
@@ -522,7 +533,7 @@ function renderChips() {
   _profileParts.forEach((p, i) => {
     const chip = document.createElement("span");
     chip.className = "srcchip" + (p.warning ? " warn" : "");
-    chip.innerHTML = '<span class="st">✓ ' + esc(p.label) + ' · ' + p.chars + '자</span><span class="sx">✕</span>';
+    chip.innerHTML = '<span class="st">' + IC.check + ' ' + esc(p.label) + ' · ' + p.chars + '자</span><span class="sx">' + IC.x + '</span>';
     chip.title = p.warning ? p.warning : (p.label + " · " + p.chars + "자");
     chip.querySelector(".sx").addEventListener("click", () => { _profileParts.splice(i, 1); renderChips(); });
     c.appendChild(chip);
@@ -531,7 +542,7 @@ function renderChips() {
 function noteChip(msg, warn) {
   const chip = document.createElement("span");
   chip.className = "srcchip" + (warn ? " warn" : "");
-  chip.innerHTML = '<span class="st">' + (warn ? "⚠ " : "") + esc(msg) + '</span><span class="sx">✕</span>';
+  chip.innerHTML = '<span class="st">' + (warn ? IC.warn + " " : "") + esc(msg) + '</span><span class="sx">' + IC.x + '</span>';
   chip.querySelector(".sx").addEventListener("click", () => chip.remove());
   $("srcChips").appendChild(chip);
 }
@@ -551,7 +562,7 @@ async function ingestSource(formData, fallbackLabel) {
 }
 function noteBusy(label) {
   const chip = document.createElement("span");
-  chip.className = "srcchip"; chip.innerHTML = '<span class="st">⏳ ' + esc(label.slice(0, 40)) + ' 불러오는 중…</span>';
+  chip.className = "srcchip"; chip.innerHTML = '<span class="st">' + IC.busy + ' ' + esc(label.slice(0, 40)) + ' 불러오는 중…</span>';
   $("srcChips").appendChild(chip); return chip;
 }
 function ingestFiles(files) {
@@ -742,7 +753,7 @@ function finalizeAds() { if (_adsFinalized) return; _adsFinalized = true; activa
 
 // --- 텍스트 선택 → 추가 분석(빠른 즉답). 리포트 본체와 별개 ---
 const digBtn = document.createElement("button");
-digBtn.id = "digBtn"; digBtn.textContent = "🔍 더 파고들기";
+digBtn.id = "digBtn"; digBtn.innerHTML = IC.search + " 더 파고들기";
 document.body.appendChild(digBtn);
 let _digSel = null;  // { text, blockEl }
 function clearDig() { digBtn.style.display = "none"; }
@@ -790,14 +801,14 @@ async function runDig(e) {
   // 코멘트 카드 삽입(선택 블록 바로 아래)
   const card = document.createElement("div");
   card.className = "comment";
-  card.innerHTML = '<span class="cx">✕</span><div class="cq"><b>선택</b> “' + esc(sel.text) + '”</div>'
+  card.innerHTML = '<span class="cx">' + IC.x + '</span><div class="cq"><b>선택</b> “' + esc(sel.text) + '”</div>'
     + '<div class="cbody">더 깊이 분석 중…</div>';
   blockEl.insertAdjacentElement("afterend", card);
   card.querySelector(".cx").addEventListener("click", () => card.remove());
   card.scrollIntoView({ behavior: "smooth", block: "center" });
   const bodyEl = card.querySelector(".cbody");
   const context = (blockEl.textContent || "").slice(0, 2000);
-  const company = (metaEl.textContent || "").replace("🎯 정찰 대상", "").trim();
+  const company = (metaEl.textContent || "").replace("정찰 대상", "").trim();
   try {
     await ensureAPI();
     const res = await fetch(API + "/expand", {
@@ -960,7 +971,7 @@ async function runCompare() {
         let ev; try { ev = JSON.parse(line.slice(5).trim()); } catch (e) { continue; }
         if (ev.error) { compareInsight.innerHTML = '<div class="blk"><div class="body"><span class="err">' + esc(ev.error) + '</span></div></div>'; compareBtn.disabled = false; return; }
         if (ev.done) { compareBtn.disabled = false; compareBtn.style.display = "none"; break; }
-        if (ev.t) { full += ev.t; compareInsight.innerHTML = '<div class="blk"><h3>⚖️ 내 기준 비교 인사이트</h3><div class="body cursor">' + renderMd(full) + '</div></div>'; }
+        if (ev.t) { full += ev.t; compareInsight.innerHTML = '<div class="blk"><h3>' + IC.scale + ' 내 기준 비교 인사이트</h3><div class="body cursor">' + renderMd(full) + '</div></div>'; }
       }
     }
   } catch (e) { compareInsight.innerHTML = '<div class="blk"><div class="body"><span class="err">비교를 불러오지 못했습니다.</span></div></div>'; compareBtn.disabled = false; }
@@ -974,7 +985,7 @@ function shareToast(msg) {
   clearTimeout(shareToast._t); shareToast._t = setTimeout(() => t.classList.remove("on"), 2200);
 }
 async function shareResult() {
-  const company = (metaEl.textContent || "").replace("🎯 정찰 대상", "").trim() || "이 회사";
+  const company = (metaEl.textContent || "").replace("정찰 대상", "").trim() || "이 회사";
   const level = (badgeEl.textContent || "").trim();
   const title = "JobRecon 취업 정찰 — " + company + (level ? " · " + level : "");
   const url = location.origin + location.pathname;
