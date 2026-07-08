@@ -136,6 +136,32 @@
     border-radius:10px; line-height:1.5; }
   .dighint b { color:var(--accent); font-weight:700; }
   .dighint .dx { position:absolute; top:8px; right:10px; cursor:pointer; color:var(--dim); font-size:13px; }
+  /* 다중 소스 프로필 입력 */
+  .dropzone { margin-top:10px; border:1.5px dashed var(--line); border-radius:12px; padding:15px 14px;
+    text-align:center; font-size:13px; color:var(--dim); cursor:pointer; transition:all .15s; background:#12161d; }
+  .dropzone:hover { border-color:var(--accent); color:var(--fg); }
+  .dropzone.drag { border-color:var(--accent); background:rgba(79,140,255,.12); color:var(--fg); }
+  .dropzone b { color:var(--fg); font-weight:700; } .dropzone .dz-ext { color:var(--accent); }
+  .linkrow { display:flex; gap:8px; margin-top:8px; }
+  .linkrow input { flex:1; margin:0; }
+  .linkbtn { width:auto; margin:0; padding:0 16px; white-space:nowrap; font-size:14px; }
+  .srcchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .srcchips:empty { margin-top:0; }
+  .srcchip { display:inline-flex; align-items:center; gap:7px; font-size:12px; padding:5px 9px; border-radius:8px;
+    background:var(--card2); border:1px solid var(--line); color:#cdd6e2; max-width:100%; }
+  .srcchip.warn { border-color:#7a6a2f; background:#241f12; color:#e8d9a8; }
+  .srcchip .st { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .srcchip .sx { cursor:pointer; color:var(--dim); font-size:13px; flex:0 0 auto; }
+  .srcchip .sx:hover { color:var(--fg); }
+  /* 결과 — 접을 수 있는 '내 정보' 섹션 */
+  .myinfo { margin:10px 0 6px; border:1px solid var(--line); border-radius:12px; background:#12161d; }
+  .myinfo summary { cursor:pointer; padding:11px 14px; font-size:13.5px; font-weight:700; color:#cdd6e2;
+    list-style:none; user-select:none; }
+  .myinfo summary::-webkit-details-marker { display:none; }
+  .myinfo summary::before { content:"▸ "; color:var(--accent); }
+  .myinfo[open] summary::before { content:"▾ "; }
+  .myinfo .mi-body { padding:2px 14px 12px; font-size:13px; color:#b8c2cd; white-space:pre-wrap;
+    max-height:340px; overflow:auto; }
   @keyframes shimmer { to { background-position:-200% 0; } }
   @media (prefers-reduced-motion: reduce) {
     .radar::before,.scan-bar span,.scan-steps .st.active,.scan-skel .sk { animation:none; }
@@ -173,8 +199,19 @@
   <div class="card">
     <label for="url">채용공고 URL</label>
     <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
-    <label for="profile">내 경력 요약 (선택 — 입력하면 적합도까지 분석)</label>
+    <label for="profile">내 정보 (선택 — 입력하면 적합도까지 분석 · 여러 소스 합쳐서)</label>
     <textarea id="profile" placeholder="예) 7년차 백엔드 개발자 · Java/Spring/Kafka · 커머스 도메인 (또는 마케터·PM·디자이너 등 무엇이든)"></textarea>
+
+    <!-- 다중 소스: 파일 드래그앤드랍 + 링크(노션·구글독스·깃헙·웹) -->
+    <div id="dropzone" class="dropzone">
+      <span class="dz-ico">📎</span> 이력서·프로필 <b>파일을 끌어다 놓거나 클릭</b> — <span class="dz-ext">.pdf · .md · .txt</span> (여러 개 OK)
+      <input id="fileInput" type="file" accept=".pdf,.md,.markdown,.txt" multiple hidden />
+    </div>
+    <div class="linkrow">
+      <input id="srcUrl" type="url" placeholder="또는 링크 붙여넣기 — 노션·구글독스·깃헙·웹" />
+      <button id="srcUrlBtn" type="button" class="secondary linkbtn">불러오기</button>
+    </div>
+    <div id="srcChips" class="srcchips"></div>
 
     <div class="constraints">
       <div class="clabel">내 조건 (평결에 반영·저장됩니다)</div>
@@ -208,6 +245,12 @@
     <span class="badge" id="badge"></span>
     <span class="vt">지원가치 평결</span>
   </div>
+
+  <!-- 결과: 접을 수 있는 '내 정보' 섹션 (길면 기본 접힘 — 회사 정찰이 주인공) -->
+  <details class="myinfo" id="myInfo" style="display:none">
+    <summary id="myInfoSum">내가 입력한 정보</summary>
+    <div class="mi-body" id="myInfoBody"></div>
+  </details>
 
   <!-- 확장 분석 사용법 힌트(리포트 완료 시 노출·발견성) -->
   <div class="dighint" id="digHint" style="display:none">
@@ -413,15 +456,93 @@ function scanStart() {
 function scanVerdict() { _scanVerdict = true; renderScan(6); }   // 카드 완료(리포트 도착)→평결 단계
 function scanStop() { if (_scanTimer) { clearInterval(_scanTimer); _scanTimer = null; } $("scanner").classList.remove("on"); }
 
+// --- 다중 소스 프로필: 파일 드래그드랍 + 링크 인제스트 → 병합 (FR-041) ---
+const _profileParts = [];           // {label, source, text, chars, warning}
+const PROFILE_CAP = 20000, _lastCombined = { v: "" };
+function renderChips() {
+  const c = $("srcChips"); c.innerHTML = "";
+  _profileParts.forEach((p, i) => {
+    const chip = document.createElement("span");
+    chip.className = "srcchip" + (p.warning ? " warn" : "");
+    chip.innerHTML = '<span class="st">✓ ' + esc(p.label) + ' · ' + p.chars + '자</span><span class="sx">✕</span>';
+    chip.title = p.warning ? p.warning : (p.label + " · " + p.chars + "자");
+    chip.querySelector(".sx").addEventListener("click", () => { _profileParts.splice(i, 1); renderChips(); });
+    c.appendChild(chip);
+  });
+}
+function noteChip(msg, warn) {
+  const chip = document.createElement("span");
+  chip.className = "srcchip" + (warn ? " warn" : "");
+  chip.innerHTML = '<span class="st">' + (warn ? "⚠ " : "") + esc(msg) + '</span><span class="sx">✕</span>';
+  chip.querySelector(".sx").addEventListener("click", () => chip.remove());
+  $("srcChips").appendChild(chip);
+}
+async function ingestSource(formData, fallbackLabel) {
+  const busy = noteBusy(fallbackLabel);
+  try {
+    await ensureAPI();
+    const res = await fetch(API + "/profile/ingest", { method: "POST", headers: authHeaders(), body: formData });
+    const d = await res.json().catch(() => ({ error: "응답 오류" }));
+    busy.remove();
+    if (!res.ok || d.error) { noteChip(d.error || "불러오지 못했습니다", true); return; }
+    if (!d.text) { noteChip(d.warning || (fallbackLabel + " — 내용을 못 읽었습니다"), true); return; }
+    _profileParts.push({ label: d.label || fallbackLabel, source: d.source, text: d.text, chars: d.chars, warning: d.warning });
+    renderChips();
+    if (d.warning) noteChip(d.warning, true);
+  } catch (e) { busy.remove(); noteChip("불러오지 못했습니다 — 다시 시도해 주세요", true); }
+}
+function noteBusy(label) {
+  const chip = document.createElement("span");
+  chip.className = "srcchip"; chip.innerHTML = '<span class="st">⏳ ' + esc(label.slice(0, 40)) + ' 불러오는 중…</span>';
+  $("srcChips").appendChild(chip); return chip;
+}
+function ingestFiles(files) {
+  [...files].forEach(f => { const fd = new FormData(); fd.append("file", f, f.name); ingestSource(fd, f.name); });
+}
+const _dz = $("dropzone"), _fi = $("fileInput");
+_dz.addEventListener("click", () => _fi.click());
+_fi.addEventListener("change", () => { if (_fi.files.length) ingestFiles(_fi.files); _fi.value = ""; });
+["dragenter", "dragover"].forEach(ev => _dz.addEventListener(ev, e => { e.preventDefault(); _dz.classList.add("drag"); }));
+["dragleave", "drop"].forEach(ev => _dz.addEventListener(ev, e => { e.preventDefault(); _dz.classList.remove("drag"); }));
+_dz.addEventListener("drop", e => { if (e.dataTransfer && e.dataTransfer.files.length) ingestFiles(e.dataTransfer.files); });
+function ingestUrl() {
+  const u = $("srcUrl").value.trim(); if (!u) return;
+  const fd = new FormData(); fd.append("url", u); ingestSource(fd, u);
+  $("srcUrl").value = "";
+}
+$("srcUrlBtn").addEventListener("click", ingestUrl);
+$("srcUrl").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); ingestUrl(); } });
+// 병합: 텍스트박스 + 모든 소스 → 라벨 붙여 하나의 프로필(상한 적용)
+function buildProfile() {
+  const parts = [];
+  const txt = $("profile").value.trim();
+  if (txt) parts.push("[직접 입력]\n" + txt);
+  _profileParts.forEach(p => { if (p.text) parts.push("[" + p.label + "]\n" + p.text); });
+  let c = parts.join("\n\n");
+  if (c.length > PROFILE_CAP) c = c.slice(0, PROFILE_CAP);
+  return c;
+}
+// 결과: 접을 수 있는 '내 정보' (길면 기본 접힘)
+function showMyInfo(combined) {
+  const el = $("myInfo");
+  if (!combined) { el.style.display = "none"; return; }
+  $("myInfoBody").textContent = combined;
+  $("myInfoSum").textContent = "내가 입력한 정보 (" + combined.length + "자)";
+  el.open = combined.length <= 600;
+  el.style.display = "block";
+}
+
 async function analyze() {
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
-  const profile = $("profile").value.trim();
+  const profileText = $("profile").value.trim();
+  const profile = buildProfile();  // 🔴 텍스트 + 파일·링크 소스 병합
   if (!job_url) { statusEl.innerHTML = '<span class="err">공고 링크를 입력해 주세요.</span>'; return; }
   await ensureAPI();  // 백엔드 주소 확정(api.txt 자동발행 대응)
   const constraints = readConstraints();
-  saveProfile(profile, constraints);  // 내 정보·조건 저장(다음 방문 자동 복원)
+  saveProfile(profileText, constraints);  // 직접 입력만 저장(다음 방문 복원 — 병합본은 저장 안 함)
+  _lastCombined.v = profile;
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
-  metaEl.style.display = "none"; metaEl.innerHTML = ""; $("digHint").style.display = "none";
+  metaEl.style.display = "none"; metaEl.innerHTML = ""; $("digHint").style.display = "none"; $("myInfo").style.display = "none";
   resumeBtn.style.display = "none"; resumeEl.innerHTML = "";
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
@@ -469,6 +590,7 @@ function pollJob(job_id) {
     if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; endPoll(); return; }
     if (ev.done) {
       statusEl.textContent = _pollFull ? "정찰 완료." : "정찰이 종료됐습니다.";
+      if (_pollFull) showMyInfo(_lastCombined.v);        // 접을 수 있는 '내 정보' 섹션
       if (_pollFull && lastProfile) resumeBtn.style.display = "block";
       if (_pollFull) finalizeAds();                      // 트랙 B-1: 리포트 인피드 광고 활성화(AdSense 설정 시)
       if (_pollFull && localStorage.getItem("jr_dighint") !== "0") $("digHint").style.display = "block";  // 확장분석 힌트
