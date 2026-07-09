@@ -1116,10 +1116,10 @@ function shareToast(msg) {
 async function shareResult() {
   // 🔴 개인 평결(조건부/YES/NO)은 공유에 미포함 — 프라이버시(정찰 페이지와 동일). 회사·직무만.
   const meta = cleanCo((metaEl.textContent || "").replace("정찰 대상", "").trim());  // "회사 · 직무"
-  // 🔴 필수 정보(회사·분야·정체=취업 정찰) 제목 + 클릭 훅(지원 전·숨은 진실) 본문. 개인 평결 미포함.
-  // 대표 지시(2026-07-09): "무조건 짧게 X — 필수 정보 주면서 클릭할 수 있게".
+  // 🔴 제목=필수 정보(회사·분야·정체=취업 정찰, 카드 미표시 방어). 본문=브랜드 강화 훅(긴장→해소).
+  // 조니 2심 확정(2026-07-09, verdicts/jobrecon-share-text-jony.md): 나열 삭제(카드가 재무·리스크·서사를 짐)·개인 평결 미포함.
   const title = (meta ? meta + " " : "") + "취업 정찰";
-  const text = "지원 전 꼭 봐야 할, 회사가 안 알려주는 재무·리스크·평판.";
+  const text = "공고는 좋게만 쓴다. 지원 전, 회사의 진짜를 정찰한다.";
   const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL(FR-056)
   try {
     if (navigator.share) { await navigator.share({ title, text, url }); return; }
