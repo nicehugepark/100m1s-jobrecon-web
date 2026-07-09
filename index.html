@@ -150,6 +150,8 @@
     -webkit-tap-highlight-color:transparent; }
   .attach:hover { border-color:var(--accent); color:var(--fg); }
   .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
+  /* 공고 파일 업로드(FR-051) */
+  .jdrow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
   .srcchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
   .srcchips:empty { margin-top:0; }
   .srcchip { display:inline-flex; align-items:center; gap:7px; font-size:12px; padding:5px 9px; border-radius:8px;
@@ -254,6 +256,13 @@
   <div class="card">
     <label for="url">채용공고 URL</label>
     <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
+    <!-- 공고 문서 업로드(FR-051): URL 없이 JD 파일로 정찰 -->
+    <div class="jdrow">
+      <button id="jdBtn" type="button" class="attach"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> 또는 공고 파일 업로드</button>
+      <span class="pbox-hint">PDF·PPT·Word·HWP·txt — URL 없이 이 파일로 정찰</span>
+      <input id="jdFile" type="file" accept=".pdf,.pptx,.docx,.hwp,.hwpx,.txt,.md,.rtf" hidden />
+    </div>
+    <div id="jdChip" class="srcchips"></div>
     <label for="profile">내 정보 (선택 — 입력하면 적합도까지 분석 · 텍스트·링크·파일 무엇이든)</label>
     <!-- 통합 입력 박스 하나(재설계): 타이핑 / 링크 붙여넣기(자동 인식) / 파일 드롭·📎첨부 → 소스 칩 -->
     <div id="pbox" class="pbox">
@@ -581,6 +590,41 @@ $("profile").addEventListener("paste", (e) => {
   const t = ((e.clipboardData || window.clipboardData).getData("text") || "").trim();
   if (isBareUrl(t)) { e.preventDefault(); const fd = new FormData(); fd.append("url", t); ingestSource(fd, t); }
 });
+
+// --- 공고 문서 업로드(FR-051): URL 없이 JD 파일(pdf·ppt·word·hwp 등)로 정찰 ---
+let _jd = null;  // {text, company, position, label, chars}
+const _jf = $("jdFile");
+$("jdBtn").addEventListener("click", () => _jf.click());
+_jf.addEventListener("change", () => { if (_jf.files[0]) ingestPosting(_jf.files[0]); _jf.value = ""; });
+async function ingestPosting(f) {
+  const box = $("jdChip");
+  box.innerHTML = '<span class="srcchip"><span class="st">' + IC.busy + ' ' + esc(f.name.slice(0, 40)) + ' 읽는 중…</span></span>';
+  try {
+    await ensureAPI();
+    const fd = new FormData(); fd.append("file", f, f.name);
+    const res = await fetch(API + "/posting/ingest", { method: "POST", headers: tokenHeaders(), body: fd });
+    const d = await res.json().catch(() => ({ error: "응답 오류" }));
+    if (!res.ok || d.error || !d.text) { box.innerHTML = ""; jdWarn(d.error || d.warning || "공고를 읽지 못했습니다"); return; }
+    _jd = { text: d.text, company: d.company, position: d.position, label: d.label, chars: d.chars };
+    renderJdChip();
+    if (d.warning) jdWarn(d.warning);
+  } catch (e) { box.innerHTML = ""; jdWarn("불러오지 못했습니다 — 다시 시도해 주세요"); }
+}
+function renderJdChip() {
+  const box = $("jdChip"); box.innerHTML = "";
+  if (!_jd) return;
+  const meta = [_jd.company, _jd.position].filter(Boolean).join(" · ");
+  const el = document.createElement("span"); el.className = "srcchip";
+  el.innerHTML = '<span class="st">' + IC.check + ' 공고: ' + esc(_jd.label) + (meta ? " — " + esc(meta) : "") + ' · ' + _jd.chars + '자</span><span class="sx">' + IC.x + '</span>';
+  el.querySelector(".sx").addEventListener("click", () => { _jd = null; renderJdChip(); });
+  box.appendChild(el);
+}
+function jdWarn(msg) {
+  const el = document.createElement("span"); el.className = "srcchip warn";
+  el.innerHTML = '<span class="st">' + IC.warn + ' ' + esc(msg) + '</span><span class="sx">' + IC.x + '</span>';
+  el.querySelector(".sx").addEventListener("click", () => el.remove());
+  $("jdChip").appendChild(el);
+}
 // 병합: 텍스트박스 + 모든 소스 → 라벨 붙여 하나의 프로필(상한 적용)
 function buildProfile() {
   const parts = [];
@@ -649,7 +693,8 @@ async function analyze() {
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
   const profileText = $("profile").value.trim();
   const profile = buildProfile();  // 🔴 텍스트 + 파일·링크 소스 병합
-  if (!job_url) { statusEl.innerHTML = '<span class="err">공고 링크를 입력해 주세요.</span>'; return; }
+  const useFile = !!(_jd && _jd.text);  // 공고 파일 업로드 경로(FR-051) — URL보다 우선
+  if (!job_url && !useFile) { statusEl.innerHTML = '<span class="err">공고 링크를 입력하거나 공고 파일을 업로드해 주세요.</span>'; return; }
   await ensureAPI();  // 백엔드 주소 확정(api.txt 자동발행 대응)
   const constraints = readConstraints();
   saveProfile(profileText, constraints);  // 직접 입력만 저장(다음 방문 복원 — 병합본은 저장 안 함)
@@ -661,15 +706,17 @@ async function analyze() {
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
   statusEl.textContent = ""; scanStart();
   try {
+    const body = useFile
+      ? { posting_text: _jd.text, posting_company: _jd.company, posting_position: _jd.position, profile: profile || null, constraints, user_id: getUid() }
+      : { job_url, profile: profile || null, constraints, user_id: getUid() };
     const res = await fetch(API + "/analyze/start", {
-      method:"POST", headers: authHeaders(),
-      body: JSON.stringify({ job_url, profile: profile || null, constraints, user_id: getUid() })
+      method:"POST", headers: authHeaders(), body: JSON.stringify(body)
     });
     if (!res.ok) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
     const data = await res.json();
     if (data.error) { scanStop(); statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
-    // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음
-    localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url, ts: Date.now() }));
+    // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음(파일 모드는 URL 없음)
+    localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url: job_url || "", ts: Date.now() }));
     pollJob(data.job_id);
   } catch (e) {
     scanStop();
