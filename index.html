@@ -152,6 +152,11 @@
   .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
   /* 공고 파일 업로드(FR-051) */
   .jdrow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
+  /* 다직무 문서 직무 선택(FR-054) */
+  .jdrole { width:100%; margin-top:8px; }
+  .jdrole label { display:block; font-size:12px; color:var(--dim); margin:0 0 4px; }
+  .jdrole select { width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--accent);
+    border-radius:8px; padding:10px; font-size:14px; }
   /* 정찰 취소(FR-053) */
   .cancelbtn { margin-top:10px; color:#e8b4b4; border-color:#5a3a3a; }
   .cancelbtn:hover { border-color:#a05050; color:#f4cccc; }
@@ -610,7 +615,7 @@ async function ingestPosting(f) {
     const res = await fetch(API + "/posting/ingest", { method: "POST", headers: tokenHeaders(), body: fd });
     const d = await res.json().catch(() => ({ error: "응답 오류" }));
     if (!res.ok || d.error || !d.text) { box.innerHTML = ""; jdWarn(d.error || d.warning || "공고를 읽지 못했습니다"); return; }
-    _jd = { text: d.text, company: d.company, position: d.position, label: d.label, chars: d.chars };
+    _jd = { text: d.text, company: d.company, position: d.position, label: d.label, chars: d.chars, roles: d.roles || [] };
     renderJdChip();
     if (d.warning) jdWarn(d.warning);
   } catch (e) { box.innerHTML = ""; jdWarn("불러오지 못했습니다 — 다시 시도해 주세요"); }
@@ -618,11 +623,22 @@ async function ingestPosting(f) {
 function renderJdChip() {
   const box = $("jdChip"); box.innerHTML = "";
   if (!_jd) return;
-  const meta = [_jd.company, _jd.position].filter(Boolean).join(" · ");
+  const multi = _jd.roles && _jd.roles.length > 1;  // 다직무 문서(FR-054)
+  const desc = multi ? ((_jd.company ? esc(_jd.company) + " · " : "") + "직무 " + _jd.roles.length + "개")
+                     : [_jd.company, _jd.position].filter(Boolean).join(" · ");
   const el = document.createElement("span"); el.className = "srcchip";
-  el.innerHTML = '<span class="st">' + IC.check + ' 공고: ' + esc(_jd.label) + (meta ? " — " + esc(meta) : "") + ' · ' + _jd.chars + '자</span><span class="sx">' + IC.x + '</span>';
+  el.innerHTML = '<span class="st">' + IC.check + ' 공고: ' + esc(_jd.label) + (desc ? " — " + esc(desc) : "") + ' · ' + _jd.chars + '자</span><span class="sx">' + IC.x + '</span>';
   el.querySelector(".sx").addEventListener("click", () => { _jd = null; renderJdChip(); });
   box.appendChild(el);
+  if (multi) {  // 직무 선택 드롭다운 — 정찰할 직무 하나 고르기
+    const wrap = document.createElement("div"); wrap.className = "jdrole";
+    const lab = document.createElement("label"); lab.textContent = "이 문서에 직무가 여러 개예요 — 어느 직무로 정찰할까요?";
+    const sel = document.createElement("select");
+    _jd.roles.forEach(r => { const o = document.createElement("option"); o.value = r; o.textContent = r; sel.appendChild(o); });
+    sel.value = _jd.position || _jd.roles[0];
+    sel.addEventListener("change", () => { _jd.position = sel.value; });
+    wrap.appendChild(lab); wrap.appendChild(sel); box.appendChild(wrap);
+  }
 }
 function jdWarn(msg) {
   const el = document.createElement("span"); el.className = "srcchip warn";
