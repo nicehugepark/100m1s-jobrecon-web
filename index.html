@@ -726,18 +726,12 @@ async function analyze() {
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
   statusEl.textContent = ""; scanStart();
-  // URL 다직무 감지(FR-055): URL이고 아직 감지 안 했으면 직무 리스트 확인 → 여럿이면 파일과 동일한 직무 선택 UI
-  if (job_url && !useFile) {
+  // URL 다직무 감지(FR-055): 아직 이 URL을 감지 안 했으면(붙여넣기 자동감지 못 했으면) 확인 → 여럿이면 직무 선택 UI
+  if (job_url && !useFile && !(_jd && _jd.fromUrl === job_url)) {
     statusEl.textContent = "공고 확인 중…";
-    let det = null;
-    try {
-      const r = await fetch(API + "/posting/detect", { method: "POST", headers: authHeaders(), body: JSON.stringify({ job_url }) });
-      det = await r.json();
-    } catch (e) { det = null; }
+    const det = await detectPosting(job_url);
     if (det && det.roles && det.roles.length > 1 && det.text) {
-      _jd = { text: det.text, company: det.company, position: det.position, roles: det.roles,
-              label: hostLabel(job_url), chars: (det.text || "").length, fromUrl: job_url };
-      renderJdChip(); scanStop(); go.disabled = false;
+      scanStop(); go.disabled = false;
       statusEl.innerHTML = '이 공고에 <b>직무가 여러 개</b>예요 — 위에서 직무를 고른 뒤 다시 <b>정찰 시작</b>을 눌러 주세요.';
       $("jdChip").scrollIntoView({ behavior: "smooth", block: "center" });
       return;
@@ -1121,8 +1115,39 @@ window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loa
 
 go.addEventListener("click", analyze);
 $("url").addEventListener("keydown", e => { if (e.key === "Enter") analyze(); });
-// URL을 바꾸면 이전에 감지한 다직무 선택(URL 출처)을 초기화(FR-055) — 업로드 파일 _jd는 유지
+// URL을 바꾸면 이전에 감지한 것 초기화(업로드 파일 _jd는 유지)
 $("url").addEventListener("input", () => { if (_jd && _jd.fromUrl) { _jd = null; renderJdChip(); } });
+// 🔴 공고 URL 붙여넣기 = 즉시 감지(회사·직무 확인·다직무면 선택 UI). 붙여넣어도 반응 없던 문제 해결(대표 catch)
+$("url").addEventListener("paste", () => { setTimeout(() => {
+  const u = extractUrl($("url").value);
+  if (u && /^https?:\/\/\S+$/.test(u)) detectPosting(u);
+}, 60); });
+// 공고 URL 감지(붙여넣기·정찰 공용): /posting/detect → 회사·직무 피드백, 다직무면 드롭다운(FR-055)
+let _detSeq = 0;
+async function detectPosting(job_url) {
+  if (_jd && _jd.fromUrl === job_url) return _jd._det || null;  // 이미 감지함
+  const seq = ++_detSeq;
+  await ensureAPI();
+  $("jdChip").innerHTML = '<span class="srcchip"><span class="st">' + IC.busy + ' 공고 확인 중…</span></span>';
+  let det = null;
+  try {
+    const r = await fetch(API + "/posting/detect", { method: "POST", headers: authHeaders(), body: JSON.stringify({ job_url }) });
+    det = await r.json();
+  } catch (e) { det = null; }
+  if (seq !== _detSeq) return det;  // 그 사이 URL 바뀜 → 갱신 안 함
+  if (!det) { $("jdChip").innerHTML = ""; return null; }
+  if (det.roles && det.roles.length > 1 && det.text) {
+    _jd = { text: det.text, company: det.company, position: det.position, roles: det.roles,
+            label: hostLabel(job_url), chars: (det.text || "").length, fromUrl: job_url, _det: det };
+    renderJdChip();
+  } else {
+    _jd = { text: null, company: det.company, position: det.position, roles: det.roles || [],
+            label: hostLabel(job_url), chars: 0, fromUrl: job_url, _det: det };
+    const meta = [det.company, det.position].filter(Boolean).join(" · ");
+    $("jdChip").innerHTML = '<span class="srcchip"><span class="st">' + IC.check + ' ' + esc(meta || "공고 인식됨") + ' — 아래 정찰 시작</span></span>';
+  }
+  return det;
+}
 </script>
 </body>
 </html>
