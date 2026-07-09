@@ -1114,12 +1114,13 @@ function shareToast(msg) {
   clearTimeout(shareToast._t); shareToast._t = setTimeout(() => t.classList.remove("on"), 2200);
 }
 async function shareResult() {
-  const company = (metaEl.textContent || "").replace("정찰 대상", "").trim() || "이 회사";
-  const level = (badgeEl.textContent || "").trim();
-  const title = "JobRecon 취업 정찰 — " + company + (level ? " · " + level : "");
-  const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL 우선(FR-056)
+  // 🔴 개인 평결(조건부/YES/NO)은 공유에 미포함 — 프라이버시(정찰 페이지와 동일). 회사·직무만.
+  const meta = cleanCo((metaEl.textContent || "").replace("정찰 대상", "").trim());  // "회사 · 직무"
+  const title = (meta ? meta + " " : "") + "취업 정찰 — JobRecon";
+  const text = "회사가 안 알려주는 재무·리스크·평판, 구직자 편에서 정찰했어요.";
+  const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL(FR-056)
   try {
-    if (navigator.share) { await navigator.share({ title, text: title, url }); return; }  // 🔴 프로필 미포함
+    if (navigator.share) { await navigator.share({ title, text, url }); return; }
   } catch (e) { if (e && e.name === "AbortError") return; }
   try {
     await navigator.clipboard.writeText(title + "\n" + url);
