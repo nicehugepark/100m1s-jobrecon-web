@@ -1,0 +1,5 @@
+# JobRecon — 홈페이지는 검색 노출(색인), 개별 정찰 결과(/r/)는 각 페이지 noindex 메타로 검색 비노출.
+# 크롤은 허용해야 크롤러가 /r/의 noindex를 읽고 색인에서 제외한다(대표 결정 2026-07-09).
+User-agent: *
+Allow: /
+Sitemap: https://jobrecon.100m1s.com/sitemap.xml
