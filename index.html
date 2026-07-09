@@ -825,7 +825,7 @@ function pollJob(job_id) {
       if (_pollFull) extractProfileCard(_lastCombined.v);  // 프로필 카드(성공=원문 숨김/실패·얇으면 원문 폴백) FR-047
       if (_pollFull) $("shareBtn").style.display = "block";  // 공유 버튼(FR-048)
       if (_pollFull) finalizeAds();                      // 트랙 B-1: 리포트 인피드 광고 활성화(AdSense 설정 시)
-      if (_pollFull && localStorage.getItem("jr_dighint") !== "0") $("digHint").style.display = "block";  // 확장분석 힌트
+      if (_pollFull && !localStorage.getItem("jr_dug")) $("digHint").style.display = "block";  // 확장분석 힌트 — 실제 써볼 때까지 매 정찰 안내(디스커버빌리티)
       if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 광고 게이트
       loadCompare(); endPoll(); return;
     }
@@ -903,7 +903,7 @@ function scheduleCheck(delay) { clearTimeout(_selDebounce); _selDebounce = setTi
 document.addEventListener("selectionchange", () => scheduleCheck(320));
 document.addEventListener("mouseup", () => scheduleCheck(10));     // 데스크톱 즉시
 document.addEventListener("touchend", () => scheduleCheck(140));   // 모바일 보조
-function dismissHint() { $("digHint").style.display = "none"; localStorage.setItem("jr_dighint", "0"); }
+function dismissHint() { $("digHint").style.display = "none"; }  // X=이번 정찰만 숨김(다음 정찰 때 다시 안내). 영구 중단은 실제 사용 시에만.
 $("digHintX").addEventListener("click", dismissHint);
 
 // 버튼 탭이 선택을 지우지 않도록 + touchend/click 중복 방지(모바일 1탭 신뢰성)
@@ -916,7 +916,7 @@ async function runDig(e) {
   if (!_digSel) return;
   const sel = _digSel, blockEl = sel.blockEl;
   clearDig();
-  dismissHint();  // 처음 사용하면 힌트 숨김
+  dismissHint(); localStorage.setItem("jr_dug", "1");  // 실제 사용 = 학습 완료 → 이후 안내 중단
   try { window.getSelection().removeAllRanges(); } catch (x) {}
   // 코멘트 카드 삽입(선택 블록 바로 아래)
   const card = document.createElement("div");
