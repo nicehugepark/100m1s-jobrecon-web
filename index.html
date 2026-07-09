@@ -399,7 +399,7 @@ const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta"),
       anchorEl = $("anchor"), pinToggle = $("pinToggle"),
       compareBtn = $("compareBtn"), compareInsight = $("compareInsight");
-let lastJob = null, lastProfile = null;
+let lastJob = null, lastProfile = null, _pageUrl = null;
 
 // 앵커 고정/해제 토글(광고+정찰대상 상단 고정). 기본 고정, 선택은 localStorage 유지.
 function applyPin(pinned) {
@@ -722,7 +722,7 @@ async function analyze() {
   _lastCombined.v = profile;
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
   metaEl.style.display = "none"; metaEl.innerHTML = ""; $("digHint").style.display = "none"; $("myInfo").style.display = "none";
-  $("pcard").style.display = "none"; $("pcard").innerHTML = ""; $("shareBtn").style.display = "none";
+  $("pcard").style.display = "none"; $("pcard").innerHTML = ""; $("shareBtn").style.display = "none"; _pageUrl = null;
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
   statusEl.textContent = ""; scanStart();
@@ -794,6 +794,7 @@ function pollJob(job_id) {
     }
     if (ev.cancelled) { statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
     if (ev.meta) renderMeta(ev.meta);
+    if (ev.page && ev.page.url) _pageUrl = ev.page.url;  // Phase 2: 고정 URL 정찰 페이지(공유용, FR-056)
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
       _pollFull = ev.text; renderBlocks(_pollFull);
@@ -1088,7 +1089,7 @@ async function shareResult() {
   const company = (metaEl.textContent || "").replace("정찰 대상", "").trim() || "이 회사";
   const level = (badgeEl.textContent || "").trim();
   const title = "JobRecon 취업 정찰 — " + company + (level ? " · " + level : "");
-  const url = location.origin + location.pathname;
+  const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL 우선(FR-056)
   try {
     if (navigator.share) { await navigator.share({ title, text: title, url }); return; }  // 🔴 프로필 미포함
   } catch (e) { if (e && e.name === "AbortError") return; }
