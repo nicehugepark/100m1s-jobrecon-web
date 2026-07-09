@@ -276,21 +276,18 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   </linearGradient>
 </defs></svg>
 <div class="wrap">
-  <header>
-    <div class="brand">Job<span>Recon</span></div>
-    <div class="tag">구직자 편 취업 정찰 · 공고 URL 하나로 "지원할 가치가 있나"를 답합니다</div>
-  </header>
-
   <!-- 알림 배너 슬롯: 평소 숨김, 실 운영 알림 시에만 노출. 개발용 문구는 라이브에 싣지 않음 -->
   <div id="notice" style="display:none; margin:12px 0; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card2); color:var(--dim); font-size:13px; line-height:1.5"></div>
 
-  <!-- 앵커(FR-009·FR-029): 광고 + 정찰대상(회사·직군)을 스크롤 중에도 상단 상시 고정 -->
-  <div class="anchor pinned" id="anchor">
+  <!-- 앵커(FR-009·FR-029): 서비스명(JobRecon)+정찰대상(회사·직군)+광고를 하나의 sticky 단위로 스크롤 중 상단 상시 고정(대표 요구 2026-07-10). 태그라인은 브랜드 바로 밑에 함께 고정. -->
+  <header class="anchor pinned" id="anchor">
+    <div class="brand">Job<span>Recon</span></div>
+    <div class="tag">구직자 편 취업 정찰 · 공고 URL 하나로 "지원할 가치가 있나"를 답합니다</div>
     <div class="anchor-row">
       <div id="meta"></div>
     </div>
     <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
-  </div>
+  </header>
 
   <div class="card">
     <label for="url">채용공고 URL</label>
@@ -1062,7 +1059,8 @@ function hostLabel(u) { try { return new URL(u).hostname.replace(/^www\./, ""); 
 function cleanCo(n) { return ((n || "").replace(/㈜|\(주\)|\(유\)|\(재\)|주식회사|유한회사|유한책임회사/g, "").replace(/\s{2,}/g, " ").trim()) || (n || ""); }
 async function loadCompare() {
   try {
-    const r = await fetch(API + "/saved/" + encodeURIComponent(getUid()));
+    // no-store: 정찰 완료 직후 재조회 시 브라우저 HTTP 캐시가 page_key 없는 stale 응답을 돌려주는 것 차단(정찰 페이지 칩 즉시 노출)
+    const r = await fetch(API + "/saved/" + encodeURIComponent(getUid()), { cache: "no-store" });
     const b = await r.json();
     const items = (b && b.items) || [];
     if (!items.length) { compareWrap.style.display = "none"; return; }
