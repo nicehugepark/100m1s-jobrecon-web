@@ -152,6 +152,9 @@
   .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
   /* 공고 파일 업로드(FR-051) */
   .jdrow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
+  /* 정찰 취소(FR-053) */
+  .cancelbtn { margin-top:10px; color:#e8b4b4; border-color:#5a3a3a; }
+  .cancelbtn:hover { border-color:#a05050; color:#f4cccc; }
   .srcchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
   .srcchips:empty { margin-top:0; }
   .srcchip { display:inline-flex; align-items:center; gap:7px; font-size:12px; padding:5px 9px; border-radius:8px;
@@ -285,6 +288,8 @@
   </div>
 
   <div class="status" id="status"></div>
+  <!-- 정찰 취소(FR-053): 진행 중에만 노출 -->
+  <button id="cancelBtn" class="secondary cancelbtn" style="display:none"><svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg> 정찰 취소</button>
 
   <!-- 정찰 스캐너(다이나믹 진행) — 정찰 중 계속 움직이는 시각 피드백 -->
   <div class="scanner" id="scanner">
@@ -717,6 +722,7 @@ async function analyze() {
     if (data.error) { scanStop(); statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
     // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음(파일 모드는 URL 없음)
     localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url: job_url || "", ts: Date.now() }));
+    _curJobId = data.job_id; showCancel(true);   // 정찰 취소 버튼 노출(FR-053)
     pollJob(data.job_id);
   } catch (e) {
     scanStop();
@@ -725,10 +731,27 @@ async function analyze() {
   }
 }
 
+// --- 정찰 취소(FR-053): 폴링 중단 + UI 리셋 + 백엔드 task 취소(LLM 비용 중단) ---
+let _curJobId = null;
+function showCancel(on) { $("cancelBtn").style.display = on ? "block" : "none"; }
+async function cancelRecon() {
+  const jid = _curJobId; _curJobId = null;
+  stopPoll(); scanStop(); showCancel(false);
+  try { localStorage.removeItem(JOB_KEY); } catch (e) {}
+  go.disabled = false;
+  blocksEl.innerHTML = ""; verdictEl.style.display = "none";
+  metaEl.style.display = "none"; metaEl.innerHTML = "";
+  $("shareBtn").style.display = "none"; $("pcard").style.display = "none"; $("pcard").innerHTML = "";
+  $("digHint").style.display = "none"; $("myInfo").style.display = "none";
+  statusEl.textContent = "정찰을 취소했습니다.";
+  if (jid) { try { await ensureAPI(); await fetch(API + "/analyze/cancel/" + jid, { method: "POST", headers: tokenHeaders() }); } catch (e) {} }
+}
+$("cancelBtn").addEventListener("click", cancelRecon);
+
 // 서버 job 상태를 2초마다 조회 — 연결이 아니라 상태를 폴링하므로 모바일 백그라운드를 견딘다
 function pollJob(job_id) {
   stopPoll(); _pollFull = "";
-  function endPoll() { stopPoll(); scanStop(); localStorage.removeItem(JOB_KEY); go.disabled = false; }
+  function endPoll() { stopPoll(); scanStop(); showCancel(false); localStorage.removeItem(JOB_KEY); go.disabled = false; }
   const tick = async () => {
     let ev;
     try {
@@ -741,6 +764,7 @@ function pollJob(job_id) {
       statusEl.innerHTML = '<span class="err">정찰 결과가 만료됐습니다 — 다시 정찰해 주세요.</span>';
       endPoll(); return;
     }
+    if (ev.cancelled) { statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
     if (ev.meta) renderMeta(ev.meta);
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
@@ -772,6 +796,7 @@ function resumeActiveJob() {
   _leftDuringJob = true;  // 새 로드로 이어받음 = 자리를 비웠던 것 → 완료 시 게이트(트랙 B-2)
   go.disabled = true;
   statusEl.textContent = "진행 중이던 정찰을 이어받는 중…"; scanStart();
+  _curJobId = saved.job_id; showCancel(true);  // 이어받은 정찰도 취소 가능(FR-053)
   pollJob(saved.job_id);
 }
 // 탭 가시성: 정찰 중 숨겨지면 이탈 표시, 돌아오면 이어받기
