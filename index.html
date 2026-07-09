@@ -151,8 +151,10 @@
   .pbox { position:relative; margin-top:6px; border:1px solid var(--line); border-radius:12px;
     background:var(--card2); overflow:hidden; transition:border-color .12s, background .12s; }
   .pbox.drag { border-color:var(--accent); background:rgba(79,140,255,.1); }
-  .pbox textarea#profile { border:0; background:transparent; border-radius:0; margin:0; min-height:90px; }
-  .pbox textarea#profile:focus { outline:none; }
+  .pbox textarea#profile, .pbox #url { border:0; background:transparent; border-radius:0; margin:0; width:100%; }
+  .pbox textarea#profile { min-height:90px; }
+  .pbox #url { padding:12px 13px; font-size:15px; }
+  .pbox textarea#profile:focus, .pbox #url:focus { outline:none; box-shadow:none; }
   .pbox-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     padding:7px 9px; border-top:1px solid var(--line); background:var(--bg); }
   .attach { display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
@@ -274,11 +276,13 @@
 
   <div class="card">
     <label for="url">채용공고 URL</label>
-    <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
-    <!-- 공고 문서 업로드(FR-051): URL 없이 JD 파일로 정찰 -->
-    <div class="jdrow">
-      <button id="jdBtn" type="button" class="attach"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> 또는 공고 파일 업로드</button>
-      <span class="pbox-hint">PDF·PPT·Word·HWP·txt — URL 없이 이 파일로 정찰</span>
+    <!-- 통합 박스(내 정보와 동일 포맷): URL 입력 + 공고 파일 업로드(FR-051) -->
+    <div class="pbox">
+      <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
+      <div class="pbox-bar">
+        <button id="jdBtn" type="button" class="attach"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> 공고 파일 업로드</button>
+        <span class="pbox-hint">URL 없이 PDF·PPT·Word·HWP·txt 파일로도 정찰</span>
+      </div>
       <input id="jdFile" type="file" accept=".pdf,.pptx,.docx,.hwp,.hwpx,.txt,.md,.rtf" hidden />
     </div>
     <div id="jdChip" class="srcchips"></div>
