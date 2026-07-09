@@ -71,6 +71,8 @@
   #compare .mini.NO{background:var(--no);color:#fff} #compare .mini.판단보류{background:var(--hold);color:#fff}
   #compare a { color:var(--fg); text-decoration:none; font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   #compare a:hover { color:var(--accent); }
+  #compare .pgtag { flex:0 0 auto; font-size:10.5px; color:var(--accent); border:1px solid #31456b;
+    background:rgba(79,140,255,.08); border-radius:999px; padding:2px 8px; white-space:nowrap; }
 
   .constraints { margin-top:10px; padding:10px 12px; background:var(--card2); border:1px solid var(--line); border-radius:10px; }
   .crow { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:8px; }
@@ -1054,8 +1056,11 @@ async function loadCompare() {
     compareEl.innerHTML = items.map(it => {
       const lv = it.verdict_level || "판단보류";
       const title = esc([it.company, it.position].filter(Boolean).join(" · ") || hostLabel(it.job_url));
+      // Phase 2: 정찰 페이지(/r/)가 있으면 그쪽으로(공유 가능한 우리 정찰), 없으면 원 공고
+      const href = it.page_key ? ("/r/" + encodeURIComponent(it.page_key) + ".html") : esc(it.job_url);
+      const tag = it.page_key ? ' <span class="pgtag">정찰 페이지</span>' : '';
       return `<div class="row"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>`
-           + `<a href="${esc(it.job_url)}" target="_blank" rel="noopener">${title}</a></div>`;
+           + `<a href="${href}" target="_blank" rel="noopener">${title}</a>${tag}</div>`;
     }).join("");
     compareWrap.style.display = "block";
     compareBtn.style.display = items.length >= 2 ? "block" : "none";  // 2개+면 비교 인사이트 가능
