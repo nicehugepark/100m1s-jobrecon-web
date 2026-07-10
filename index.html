@@ -730,6 +730,7 @@ function renderPcard(d) {
 }
 
 async function analyze() {
+  _digCount = 0;  // 새 정찰 = 더파고들기 카운트 리셋(정찰당 3회)
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
   const profileText = $("profile").value.trim();
   const profile = buildProfile();  // 🔴 텍스트 + 파일·링크 소스 병합
@@ -908,7 +909,7 @@ $("digHintX").addEventListener("click", dismissHint);
 
 // 버튼 탭이 선택을 지우지 않도록 + touchend/click 중복 방지(모바일 1탭 신뢰성)
 digBtn.addEventListener("mousedown", (e) => e.preventDefault());
-let _digLast = 0;
+let _digLast = 0, _digCount = 0;  // _digCount = 정찰(리포트)당 더파고들기 횟수 — analyze()마다 리셋
 async function runDig(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
   if (Date.now() - _digLast < 800) return;   // touchend→click 중복 흡수
@@ -917,10 +918,8 @@ async function runDig(e) {
   const sel = _digSel, blockEl = sel.blockEl;
   clearDig();
   const company = (metaEl.textContent || "").replace("정찰 대상", "").trim();
-  // 정찰(회사)당 3회 제한 — 회사 정규화 키. 새 정찰(회사)마다 키가 바뀌어 새 카운트.
-  const _digKey = "jr_dig_" + (company || "unknown").toLowerCase().replace(/[^0-9a-z가-힣]+/g, "").slice(0, 64);
-  const _digUsed = parseInt(localStorage.getItem(_digKey) || "0", 10);
-  if (_digUsed >= 3) {  // 4번째부터: 실행 대신 소프트 안내
+  // 정찰(리포트)당 3회 — _digCount는 analyze()마다 0으로 리셋(재정찰=새 3회).
+  if (_digCount >= 3) {  // 4번째부터: 실행 대신 소프트 안내
     dismissHint();
     try { window.getSelection().removeAllRanges(); } catch (x) {}
     const note = document.createElement("div");
@@ -932,7 +931,7 @@ async function runDig(e) {
     note.scrollIntoView({ behavior: "smooth", block: "center" });
     return;
   }
-  localStorage.setItem(_digKey, String(_digUsed + 1));
+  _digCount++;
   dismissHint(); localStorage.setItem("jr_dug", "1");  // 실제 사용 = 학습 완료 → 이후 안내 중단
   try { window.getSelection().removeAllRanges(); } catch (x) {}
   // 코멘트 카드 삽입(선택 블록 바로 아래)
