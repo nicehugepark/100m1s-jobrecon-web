@@ -1150,13 +1150,17 @@ window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loa
 
 go.addEventListener("click", analyze);
 $("url").addEventListener("keydown", e => { if (e.key === "Enter") analyze(); });
-// URL을 바꾸면 이전에 감지한 것 초기화(업로드 파일 _jd는 유지)
-$("url").addEventListener("input", () => { if (_jd && _jd.fromUrl) { _jd = null; renderJdChip(); } });
-// 🔴 공고 URL 붙여넣기 = 즉시 감지(회사·직무 확인·다직무면 선택 UI). 붙여넣어도 반응 없던 문제 해결(대표 catch)
-$("url").addEventListener("paste", () => { setTimeout(() => {
-  const u = extractUrl($("url").value);
-  if (u && /^https?:\/\/\S+$/.test(u)) detectPosting(u);
-}, 60); });
+// 🔴 URL 입력/붙여넣기 = 자동 공고 감지(디바운스). 'input'은 값이 이미 반영된 뒤라 타이핑·붙여넣기 둘 다 안정적
+// (기존 paste+setTimeout 60ms hack은 타이핑 미지원 + 모바일 타이밍 불안정 → "몇 번 해야 되던" 문제. 대표 catch 2026-07-10)
+let _detDebounce = 0;
+$("url").addEventListener("input", () => {
+  if (_jd && _jd.fromUrl) { _jd = null; renderJdChip(); }   // URL 바뀜 → 이전 감지 초기화
+  clearTimeout(_detDebounce);
+  _detDebounce = setTimeout(() => {
+    const u = extractUrl($("url").value);
+    if (u && /^https?:\/\/\S+$/.test(u)) detectPosting(u);
+  }, 400);
+});
 // 공고 URL 감지(붙여넣기·정찰 공용): /posting/detect → 회사·직무 피드백, 다직무면 드롭다운(FR-055)
 let _detSeq = 0;
 async function detectPosting(job_url) {
