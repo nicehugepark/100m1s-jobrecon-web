@@ -47,6 +47,19 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
 .stickyhdr .ad{margin:0}
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만. */
+#digBtn{position:absolute;display:none;z-index:60;width:auto;margin:0;padding:10px 16px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 6px 18px -3px rgba(0,0,0,.65);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
+.comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
+.comment .cq b{color:#4f8cff;font-weight:700}
+.comment .cx{float:right;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1;margin-left:8px}
+.comment .cbody{font-size:14px;color:#dbe2ea;line-height:1.6}
+.comment .cbody .ln{margin:4px 0}
+.comment .cbody ul,.comment .cbody ol{margin:6px 0;padding-left:18px}
+.comment .cbody strong{color:#f0f4f8}
+.comment .cbody code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+.comment .err{color:#ff6b6b}
+.comment .cta-app{display:inline-block;margin-top:8px;color:#4f8cff;font-weight:700;text-decoration:none}
 </style>
 
 </head><body>
@@ -57,7 +70,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     <div class="meta"><span class="co">컬리</span><span class="fd">시니어 데이터 엔지니어</span><span class="ym">2026년 07월 정찰</span></div>
     <div class="ad">AD · 광고</div>
   </div>
-  <h2>공고 핵심 요건</h2>
+  <div id="report"><h2>공고 핵심 요건</h2>
 <ul>
 <li><strong>채용 직무</strong>: 시니어 데이터 엔지니어</li>
 <li><strong>경력</strong>: 7년 이상 데이터 엔지니어링 유관 경험. 소속은 전사 데이터의 생성·수집·저장·유통을 책임지는 <strong>데이터 플랫폼 조직</strong>.</li>
@@ -123,10 +136,126 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 <li><strong>AX(AI Transformation)센터</strong> — 컬리가 신설한 AI 내재화 전담 조직. 원지랩스 인수·곽근봉 센터장으로 운영 전반에 생성형 AI 적용을 추진.</li>
 <li><strong>시리즈 D/F</strong> — 후기 성장 단계 투자 라운드. F는 상당히 성숙한 후속 단계로, 대개 IPO 직전 자본 확충 성격.</li>
 <li><strong>PB (Private Brand)</strong> — 자체 브랜드 상품(KF365·컬리스 등). 마진과 차별화를 동시에 노리는 확장 전략.</li>
-</ul>
+</ul></div>
   <div class="ad">AD · 광고</div>
   <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
   <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
+<script>
+(function(){
+  var API=(window.JOBRECON_API||"").replace(/\/+$/,"");
+  function ensureAPI(){
+    if(API)return Promise.resolve(API);
+    return fetch("/api.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():"";})
+      .then(function(t){API=(t||"").trim().replace(/\/+$/,"");return API;}).catch(function(){return API;});
+  }
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function mdInline(s){return s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function renderMd(t){
+    var lines=esc(t).split("\n"),html="",stack=[];
+    function closeTo(d){while(stack.length>d)html+="</"+stack.pop()+">";}
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i].replace(/\s+$/,"");
+      var bm=line.match(/^(\s*)[-•]\s+(.*)$/),nm=line.match(/^(\s*)\d+\.\s+(.*)$/);
+      if(bm||nm){
+        var indent=(bm?bm[1]:nm[1]).replace(/\t/g,"  ").length;
+        var depth=indent>=4?3:(indent>=2?2:1),tag=nm?"ol":"ul";
+        closeTo(depth);
+        if(stack.length<depth){html+="<"+tag+">";stack.push(tag);}
+        html+="<li>"+mdInline(bm?bm[2]:nm[2])+"</li>";
+      }else{closeTo(0);if(line.trim())html+='<div class="ln">'+mdInline(line)+"</div>";}
+    }
+    closeTo(0);return html;
+  }
+  var JR_COMPANY="컬리",JR_APP="https://jobrecon.100m1s.com";
+  var report=document.getElementById("report");
+  if(!report)return;
+  var digBtn=document.createElement("button");
+  digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
+  document.body.appendChild(digBtn);
+  var _digSel=null;
+  function clearDig(){digBtn.style.display="none";}
+  function topBlock(node){
+    var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
+    while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
+    return (el&&el.parentElement===report)?el:null;
+  }
+  function checkSelection(){
+    var s=window.getSelection();
+    var text=(s&&s.toString?s.toString():"").trim();
+    if(!text||text.length<2||!s.rangeCount){clearDig();return;}
+    var range=s.getRangeAt(0);
+    var blockEl=topBlock(range.commonAncestorContainer);
+    if(!blockEl){clearDig();return;}
+    _digSel={text:text.slice(0,600),blockEl:blockEl};
+    var rects=range.getClientRects();
+    var r=rects.length?rects[rects.length-1]:range.getBoundingClientRect();
+    digBtn.style.display="block";
+    var w=digBtn.offsetWidth||132,vw=document.documentElement.clientWidth;
+    var left=window.scrollX+r.left+r.width/2-w/2;
+    left=Math.max(8,Math.min(left,window.scrollX+vw-w-8));
+    digBtn.style.left=left+"px";digBtn.style.top=(window.scrollY+r.bottom+10)+"px";
+  }
+  var _selDebounce=null;
+  function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
+  document.addEventListener("selectionchange",function(){scheduleCheck(320);});
+  document.addEventListener("mouseup",function(){scheduleCheck(10);});
+  document.addEventListener("touchend",function(){scheduleCheck(140);});
+  digBtn.addEventListener("mousedown",function(e){e.preventDefault();});
+  var _digLast=0;
+  function runDig(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    if(Date.now()-_digLast<800)return;
+    _digLast=Date.now();
+    if(!_digSel)return;
+    var sel=_digSel,blockEl=sel.blockEl;
+    clearDig();
+    try{window.getSelection().removeAllRanges();}catch(x){}
+    var used=parseInt(localStorage.getItem("jr_dig_r")||"0",10);
+    if(used>=3){
+      var note=document.createElement("div");note.className="comment";
+      note.innerHTML='<span class="cx">✕</span><div class="cbody">더 깊은 분석과 내 이력 기준 적합도는 앱에서 이어가세요 →<br><a class="cta-app" href="'+esc(JR_APP)+'">JobRecon 앱에서 계속하기 →</a></div>';
+      blockEl.insertAdjacentElement("afterend",note);
+      note.querySelector(".cx").addEventListener("click",function(){note.remove();});
+      note.scrollIntoView({behavior:"smooth",block:"center"});return;
+    }
+    localStorage.setItem("jr_dig_r",String(used+1));
+    var card=document.createElement("div");card.className="comment";
+    card.innerHTML='<span class="cx">✕</span><div class="cq"><b>선택</b> “'+esc(sel.text)+'”</div><div class="cbody">더 깊이 분석 중…</div>';
+    blockEl.insertAdjacentElement("afterend",card);
+    card.querySelector(".cx").addEventListener("click",function(){card.remove();});
+    card.scrollIntoView({behavior:"smooth",block:"center"});
+    var bodyEl=card.querySelector(".cbody");
+    var context=(blockEl.textContent||"").slice(0,2000);
+    ensureAPI().then(function(){
+      return fetch(API+"/expand",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({selected:sel.text,context:context,company:JR_COMPANY})});
+    }).then(function(res){
+      if(!res.ok||!res.body)throw new Error("연결 실패");
+      var reader=res.body.getReader(),dec=new TextDecoder(),buf="",full="";
+      function pump(){
+        return reader.read().then(function(r){
+          if(r.done){if(!full)bodyEl.innerHTML='<span class="err">응답이 지연됩니다 — 다시 시도해 주세요.</span>';return;}
+          buf+=dec.decode(r.value,{stream:true});
+          var sep;
+          while((sep=buf.indexOf("\n\n"))!==-1){
+            var line=buf.slice(0,sep);buf=buf.slice(sep+2);
+            if(line.indexOf("data: ")!==0)continue;
+            var ev;try{ev=JSON.parse(line.slice(6));}catch(x){continue;}
+            if(ev.error){bodyEl.innerHTML='<span class="err">'+esc(ev.error)+'</span>';return;}
+            if(ev.status&&!full)bodyEl.textContent=ev.status;
+            if(ev.t){full+=ev.t;bodyEl.innerHTML=renderMd(full);}
+            if(ev.done)return;
+          }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(){bodyEl.innerHTML='<span class="err">추가 분석 실패 — 다시 시도해 주세요.</span>';});
+  }
+  digBtn.addEventListener("click",runDig);
+  digBtn.addEventListener("touchend",runDig);
+})();
+</script>
 </body></html>
