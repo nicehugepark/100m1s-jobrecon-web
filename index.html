@@ -84,6 +84,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* 방금 정찰한 공고 — 평결순에서 아래로 밀려도 즉시 찾게: 강조 테두리+글로우(2.2s 후 정착)+지속 배경 틴트 */
   #compare .row.just { border-color:var(--accent); background:linear-gradient(90deg,rgba(79,140,255,.16),rgba(79,140,255,.05)); animation:jrJust 2.2s ease-out 1; }
   #compare .jbadge { flex:0 0 auto; font-size:10px; font-weight:800; color:#fff; background:var(--accent); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  /* 파일 업로드 공고 표식 — 원문 링크 없음을 조용히 알리는 중립 dim 배지(강조 아님) */
+  #compare .fbadge { flex:0 0 auto; font-size:10px; font-weight:700; color:var(--dim); background:var(--card2); border:1px solid var(--line); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
   @keyframes jrJust { 0%{box-shadow:0 0 0 2px var(--accent) inset,0 0 14px 2px rgba(79,140,255,.5);} 60%{box-shadow:0 0 0 2px var(--accent) inset,0 0 6px 1px rgba(79,140,255,.25);} 100%{box-shadow:0 0 0 1px var(--accent) inset;} }
 
   .constraints { margin-top:10px; padding:10px 12px; background:var(--card2); border:1px solid var(--line); border-radius:10px; }
@@ -766,6 +768,7 @@ async function analyze() {
     const body = useFile
       ? { posting_text: _jd.text, posting_company: _jd.company, posting_position: _jd.position, profile: profile || null, constraints, user_id: getUid() }
       : { job_url, profile: profile || null, constraints, user_id: getUid() };
+    if (useFile && job_url) body.source_url = job_url;  // 파일 업로드라도 붙여넣은 원문 URL은 표시·저장용으로 보존(MBC 등 JS렌더 공고 — 비교 리스트 링크가 upload:로 유실되던 버그 근원차단)
     const res = await fetch(API + "/analyze/start", {
       method:"POST", headers: authHeaders(), body: JSON.stringify(body)
     });
@@ -1100,16 +1103,22 @@ async function loadCompare(justLabel) {
       const isJust = !!justLabel && coLabel === justLabel;  // 방금 정찰한 공고와 일치
       // 🔴 원문·정찰 페이지 둘 다 접근(대표 catch): 타이틀=원문 공고(URL이면), 칩=정찰 페이지(있으면)
       const key = it.page_key, isUrl = it.job_url && /^https?:/i.test(it.job_url);
-      let titleHref = "", chip = "";
+      let titleHref = "", chip = "", fileBadge = "";
       if (isUrl) {
         titleHref = esc(it.job_url);
         if (key) chip = ` <a class="pgtag" href="/r/${encodeURIComponent(key)}.html" target="_blank" rel="noopener">정찰 페이지</a>`;
-      } else if (key) { titleHref = "/r/" + encodeURIComponent(key) + ".html"; }  // 파일 공고=원문 없음→정찰 페이지
+      } else if (key) {
+        // 파일 업로드 공고=원문 링크 없음 → 제목은 일반 텍스트로 두고, 정찰 페이지는 URL 행과 동일하게 버튼(pgtag)으로 노출.
+        // (기존엔 제목 자체가 /r/ 링크가 되고 버튼은 숨겨져 다른 행과 불일치·제목이 조용히 정찰 페이지로 가는 혼란)
+        chip = ` <a class="pgtag" href="/r/${encodeURIComponent(key)}.html" target="_blank" rel="noopener">정찰 페이지</a>`;
+        fileBadge = '<span class="fbadge">파일</span>';
+      }
+      // key도 URL도 없는 극단 케이스(정찰 페이지 없음)는 titleHref/chip 모두 빈 값 → 제목 일반 텍스트(기존 동작 유지)
       const titleEl = titleHref
         ? `<a href="${titleHref}" target="_blank" rel="noopener">${title}</a>`
         : `<span class="ttl">${title}</span>`;
       const justBadge = isJust ? '<span class="jbadge">방금</span>' : "";
-      return `<div class="row${isJust ? " just" : ""}"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>${justBadge}${titleEl}${chip}</div>`;
+      return `<div class="row${isJust ? " just" : ""}"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>${justBadge}${fileBadge}${titleEl}${chip}</div>`;
     }).join("");
     compareWrap.style.display = "block";
     compareBtn.style.display = items.length >= 2 ? "block" : "none";  // 2개+면 비교 인사이트 가능
