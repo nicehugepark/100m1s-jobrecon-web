@@ -81,6 +81,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     background:rgba(79,140,255,.08); border-radius:999px; padding:3px 9px; white-space:nowrap; text-decoration:none; }
   #compare .pgtag:hover { background:rgba(79,140,255,.18); }
   #compare .ttl { color:var(--fg); font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  /* 방금 정찰한 공고 — 평결순에서 아래로 밀려도 즉시 찾게: 강조 테두리+글로우(2.2s 후 정착)+지속 배경 틴트 */
+  #compare .row.just { border-color:var(--accent); background:linear-gradient(90deg,rgba(79,140,255,.16),rgba(79,140,255,.05)); animation:jrJust 2.2s ease-out 1; }
+  #compare .jbadge { flex:0 0 auto; font-size:10px; font-weight:800; color:#fff; background:var(--accent); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  @keyframes jrJust { 0%{box-shadow:0 0 0 2px var(--accent) inset,0 0 14px 2px rgba(79,140,255,.5);} 60%{box-shadow:0 0 0 2px var(--accent) inset,0 0 6px 1px rgba(79,140,255,.25);} 100%{box-shadow:0 0 0 1px var(--accent) inset;} }
 
   .constraints { margin-top:10px; padding:10px 12px; background:var(--card2); border:1px solid var(--line); border-radius:10px; }
   .crow { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:8px; }
@@ -828,7 +832,7 @@ function pollJob(job_id) {
       if (_pollFull) finalizeAds();                      // 트랙 B-1: 리포트 인피드 광고 활성화(AdSense 설정 시)
       if (_pollFull && !localStorage.getItem("jr_dug")) $("digHint").style.display = "block";  // 확장분석 힌트 — 실제 써볼 때까지 매 정찰 안내(디스커버빌리티)
       if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 광고 게이트
-      loadCompare(); endPoll(); return;
+      loadCompare(curScoutLabel()); endPoll(); return;  // 방금 정찰한 공고를 비교 리스트에서 강조+스크롤
     }
     _pollTimer = setTimeout(tick, 2000);
   };
@@ -1073,7 +1077,16 @@ const CMP_LABEL = { "YES":"추천", "조건부":"조건부", "NO":"비추천", "
 function hostLabel(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } }
 // 이력 표시 회사명 정리(옛 저장 레코드 대응) — 서버 _clean_company와 동일 취지(㈜·주식회사 등 제거)
 function cleanCo(n) { return ((n || "").replace(/㈜|\(주\)|\(유\)|\(재\)|주식회사|유한회사|유한책임회사/g, "").replace(/\s{2,}/g, " ").trim()) || (n || ""); }
-async function loadCompare() {
+// 방금 정찰한 회사·직무 라벨 — 아래 loadCompare의 row 라벨(cleanCo(company)·position)과 동일 규칙으로 계산해 매칭
+function curScoutLabel() {
+  const cur = (metaEl.textContent || "").replace("정찰 대상", "").trim();  // "회사 · 직무" 또는 "회사"
+  if (!cur) return "";
+  const i = cur.indexOf(" · ");
+  const co = i >= 0 ? cur.slice(0, i) : cur, pos = i >= 0 ? cur.slice(i + 3) : "";
+  return [cleanCo(co), pos].filter(Boolean).join(" · ");
+}
+// justLabel 전달 시(정찰 완료 직후) 해당 공고 row를 "방금" 뱃지+강조+스크롤로 즉시 찾게 함. 평결순 정렬은 유지(비교 목적).
+async function loadCompare(justLabel) {
   try {
     // no-store: 정찰 완료 직후 재조회 시 브라우저 HTTP 캐시가 page_key 없는 stale 응답을 돌려주는 것 차단(정찰 페이지 칩 즉시 노출)
     const r = await fetch(API + "/saved/" + encodeURIComponent(getUid()), { cache: "no-store" });
@@ -1082,7 +1095,9 @@ async function loadCompare() {
     if (!items.length) { compareWrap.style.display = "none"; return; }
     compareEl.innerHTML = items.map(it => {
       const lv = it.verdict_level || "판단보류";
-      const title = esc([cleanCo(it.company), it.position].filter(Boolean).join(" · ") || hostLabel(it.job_url));
+      const coLabel = [cleanCo(it.company), it.position].filter(Boolean).join(" · ");
+      const title = esc(coLabel || hostLabel(it.job_url));
+      const isJust = !!justLabel && coLabel === justLabel;  // 방금 정찰한 공고와 일치
       // 🔴 원문·정찰 페이지 둘 다 접근(대표 catch): 타이틀=원문 공고(URL이면), 칩=정찰 페이지(있으면)
       const key = it.page_key, isUrl = it.job_url && /^https?:/i.test(it.job_url);
       let titleHref = "", chip = "";
@@ -1093,10 +1108,15 @@ async function loadCompare() {
       const titleEl = titleHref
         ? `<a href="${titleHref}" target="_blank" rel="noopener">${title}</a>`
         : `<span class="ttl">${title}</span>`;
-      return `<div class="row"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>${titleEl}${chip}</div>`;
+      const justBadge = isJust ? '<span class="jbadge">방금</span>' : "";
+      return `<div class="row${isJust ? " just" : ""}"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>${justBadge}${titleEl}${chip}</div>`;
     }).join("");
     compareWrap.style.display = "block";
     compareBtn.style.display = items.length >= 2 ? "block" : "none";  // 2개+면 비교 인사이트 가능
+    if (justLabel) {  // 방금 정찰한 공고로 스크롤 — 평결순에서 아래로 밀려도 놓치지 않게
+      const jr = compareEl.querySelector(".row.just");
+      if (jr) jr.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   } catch (e) {}
 }
 
