@@ -916,6 +916,23 @@ async function runDig(e) {
   if (!_digSel) return;
   const sel = _digSel, blockEl = sel.blockEl;
   clearDig();
+  const company = (metaEl.textContent || "").replace("정찰 대상", "").trim();
+  // 정찰(회사)당 3회 제한 — 회사 정규화 키. 새 정찰(회사)마다 키가 바뀌어 새 카운트.
+  const _digKey = "jr_dig_" + (company || "unknown").toLowerCase().replace(/[^0-9a-z가-힣]+/g, "").slice(0, 64);
+  const _digUsed = parseInt(localStorage.getItem(_digKey) || "0", 10);
+  if (_digUsed >= 3) {  // 4번째부터: 실행 대신 소프트 안내
+    dismissHint();
+    try { window.getSelection().removeAllRanges(); } catch (x) {}
+    const note = document.createElement("div");
+    note.className = "comment";
+    note.innerHTML = '<span class="cx">' + IC.x + '</span>'
+      + '<div class="cbody">이 리포트에선 <b>3번</b>까지 더 파고들 수 있어요.</div>';
+    blockEl.insertAdjacentElement("afterend", note);
+    note.querySelector(".cx").addEventListener("click", () => note.remove());
+    note.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  localStorage.setItem(_digKey, String(_digUsed + 1));
   dismissHint(); localStorage.setItem("jr_dug", "1");  // 실제 사용 = 학습 완료 → 이후 안내 중단
   try { window.getSelection().removeAllRanges(); } catch (x) {}
   // 코멘트 카드 삽입(선택 블록 바로 아래)
@@ -928,7 +945,7 @@ async function runDig(e) {
   card.scrollIntoView({ behavior: "smooth", block: "center" });
   const bodyEl = card.querySelector(".cbody");
   const context = (blockEl.textContent || "").slice(0, 2000);
-  const company = (metaEl.textContent || "").replace("정찰 대상", "").trim();
+  // company는 위 3회 가드에서 이미 계산됨
   try {
     await ensureAPI();
     const res = await fetch(API + "/expand", {
