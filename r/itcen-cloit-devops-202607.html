@@ -234,7 +234,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     var sel=_digSel,blockEl=sel.blockEl;
     clearDig();
     try{window.getSelection().removeAllRanges();}catch(x){}
-    var used=parseInt(localStorage.getItem("jr_dig_r")||"0",10);
+    var _dk="jr_dig_r_"+location.pathname; var used=parseInt(localStorage.getItem(_dk)||"0",10);
     if(used>=3){
       var note=document.createElement("div");note.className="comment";
       note.innerHTML='<span class="cx">✕</span><div class="cbody">더 깊은 분석과 내 이력 기준 적합도는 앱에서 이어가세요 →<br><a class="cta-app" href="'+esc(JR_APP)+'">JobRecon 앱에서 계속하기 →</a></div>';
@@ -242,7 +242,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
       note.querySelector(".cx").addEventListener("click",function(){note.remove();});
       note.scrollIntoView({behavior:"smooth",block:"center"});return;
     }
-    localStorage.setItem("jr_dig_r",String(used+1));
+    localStorage.setItem(_dk,String(used+1));
     var card=document.createElement("div");card.className="comment";
     card.innerHTML='<span class="cx">✕</span><div class="cq"><b>선택</b> “'+esc(sel.text)+'”</div><div class="cbody">더 깊이 분석 중…</div>';
     blockEl.insertAdjacentElement("afterend",card);
