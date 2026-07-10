@@ -269,6 +269,83 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .cursor::after { content:"▋"; color:var(--accent); animation:blink 1s steps(1) infinite; }
   @keyframes blink { 50%{opacity:0} }
   .foot { color:var(--dim); font-size:11px; text-align:center; margin:18px 0 8px; }
+
+  /* === 라운드1 반영(조니 2심 P0-b·P1-4·P1-6·P1-10) — 결과 위계·착지·목차·접기·마감·모바일 === */
+  /* 정찰 시작 = 입력폼 접기(결과 모드). 정찰대상 칩(#meta)만 sticky 헤더에 잔존 → 결과가 상단 승격 */
+  body.scouting .card { display:none; }
+  /* 접힌 입력폼 복귀 수단(결과 모드에서만 노출) */
+  .reopen { display:none; width:auto; margin:12px 0 2px; padding:9px 14px; font-size:13.5px; font-weight:700;
+    color:#cdd6e2; background:var(--card2); border:1px solid var(--line); border-radius:10px; cursor:pointer;
+    align-items:center; gap:7px; -webkit-tap-highlight-color:transparent; }
+  body.scouting .reopen { display:inline-flex; }
+  .reopen:hover { border-color:var(--accent); color:var(--fg); }
+  .reopen svg { width:1.05em; height:1.05em; }
+
+  /* 마감 배너(BE posting_status 기반) — 결과 최상단. closed=경고 / 기간=D-day / 상시 */
+  .dbanner { display:none; align-items:flex-start; gap:9px; margin:12px 0 2px; padding:11px 13px;
+    border-radius:12px; font-size:14px; line-height:1.5; border:1px solid var(--line); background:var(--card2); color:#cdd6e2; }
+  .dbanner.on { display:flex; }
+  .dbanner.closed { border-color:#7a3f3f; background:#241416; color:#f1cccc; }
+  .dbanner.soon { border-color:#7a6a2f; background:#241f12; color:#ece0b4; }
+  .dbanner .di { flex:0 0 auto; margin-top:1px; }
+  .dbanner b { font-weight:800; }
+  .dbanner .dd { font-weight:800; }
+
+  /* 평결 "왜" 요지 — 배지 바로 아래 고정(지원 판단 앞부분 3줄 추출) */
+  .vwhy { display:none; margin:2px 0 6px; padding:11px 14px; border-left:3px solid var(--accent);
+    background:#141a24; border-radius:0 10px 10px 0; font-size:14.5px; line-height:1.55; color:#dbe2ea; }
+  .vwhy.on { display:block; }
+  .vwhy strong { color:#f0f4f8; font-weight:700; }
+
+  /* 목차 앵커칩 — 8섹션 빠른 이동(결과 상단, sticky 헤더 아래) */
+  .toc { display:none; flex-wrap:wrap; gap:6px; margin:8px 0 4px; }
+  .toc.on { display:flex; }
+  .tocchip { font-size:12.5px; padding:5px 11px; border-radius:999px; cursor:pointer;
+    color:#cdd6e2; background:var(--card2); border:1px solid var(--line); user-select:none;
+    -webkit-tap-highlight-color:transparent; transition:border-color .12s,color .12s; }
+  .tocchip:hover { border-color:var(--accent); color:var(--fg); }
+
+  /* 섹션 접기 — 리포트 blk를 details로(기본 펼침). div.blk(비교·코멘트)는 기존 유지 */
+  details.blk { padding:0; }
+  details.blk > summary { list-style:none; cursor:pointer; padding:13px 16px 6px; margin:0;
+    font-size:15px; font-weight:700; color:var(--fg); user-select:none; display:flex; align-items:baseline; gap:8px;
+    -webkit-tap-highlight-color:transparent; }
+  details.blk > summary::-webkit-details-marker { display:none; }
+  details.blk > summary::before { content:"▾"; color:var(--accent); font-size:11px; flex:0 0 auto;
+    transform:translateY(-1px); transition:transform .15s; }
+  details.blk:not([open]) > summary::before { transform:translateY(-1px) rotate(-90deg); }
+  details.blk:not([open]) > summary { padding-bottom:13px; }
+  details.blk > summary .tnum { color:var(--dim); font-weight:800; flex:0 0 auto; }
+  details.blk > .body { padding:0 16px 14px; }
+
+  /* 완료 착지·목차 이동 시 sticky 헤더에 안 가리도록(JS 스크롤과 이중 안전) */
+  .dbanner, .verdict, details.blk { scroll-margin-top:150px; }
+
+  /* 🔴 P1-6 모바일(390px 우선·대표 주 사용자) — 본문 하한 15px·메타 하한 12px + iOS 자동줌 방지(input≥16px) */
+  @media (max-width: 480px) {
+    .wrap { padding:13px; }
+    .blk .body { font-size:15px; }
+    details.blk > summary { font-size:15.5px; }
+    .vwhy { font-size:15px; }
+    .tag { font-size:12.5px; }
+    .ad { font-size:12px; }
+    .pbox-hint { font-size:12px; }
+    .srcchip { font-size:12px; }
+    .scan-steps .st { font-size:12px; }
+    .scan-sub { font-size:12.5px; }
+    .clabel, .pcard .plab, .pcard .porig summary { font-size:12px; }
+    .pcard .pchip { font-size:12.5px; }
+    #meta .chip { font-size:12px; }
+    #compare .mini { font-size:12px; }
+    #compare .pgtag { font-size:12px; }
+    #compare .jbadge, #compare .fbadge { font-size:12px; }
+    #compare a, #compare .ttl { font-size:14px; }
+    .foot { font-size:12px; }
+    .blk .body code { font-size:13px; }
+    .tocchip { font-size:13px; }
+    .condchip { font-size:13.5px; }
+    input[type=url], .pbox #url, .pbox textarea#profile { font-size:16px; }
+  }
 </style>
 </head>
 <body>
@@ -328,6 +405,9 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     <button id="go">정찰 시작</button>
   </div>
 
+  <!-- 결과 모드 복귀(입력폼 접힘 시): 다른 공고 정찰 재진입 -->
+  <button class="reopen" id="reopenBar" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><circle cx="12" cy="12" r="8.8" fill="url(#jrico)" opacity=".15"/><circle cx="12" cy="12" r="8.8" stroke="url(#jrico)" stroke-width="1.5"/><path d="M12 7.8v8.4M7.8 12h8.4" stroke="url(#jrico)" stroke-width="1.7" stroke-linecap="round"/></svg> 다른 공고 정찰</button>
+
   <div class="status" id="status"></div>
   <!-- 정찰 취소(FR-053): 진행 중에만 노출 -->
   <button id="cancelBtn" class="secondary cancelbtn" style="display:none"><svg class="ico ico-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.8" fill="url(#jrico)" opacity=".15"/><circle cx="12" cy="12" r="8.8" fill="none" stroke="url(#jrico)" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="url(#jrico)" stroke-width="1.7" stroke-linecap="round"/></svg> 정찰 취소</button>
@@ -346,10 +426,17 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     <div class="scan-skel"><div class="sk"></div><div class="sk"></div><div class="sk w80"></div><div class="sk w60"></div></div>
   </div>
 
+  <!-- 마감 배너(BE posting_status 필드 기반) — 결과 최상단. 필드 없으면 미노출(graceful) -->
+  <div class="dbanner" id="dbanner"></div>
+
   <div class="verdict" id="verdict">
     <span class="badge" id="badge"></span>
     <span class="vt">지원가치 평결</span>
   </div>
+  <!-- 평결 "왜" 요지(지원 판단 앞부분) — 배지 바로 아래 고정 -->
+  <div class="vwhy" id="vwhy"></div>
+  <!-- 8섹션 목차 앵커칩 -->
+  <div class="toc" id="toc"></div>
 
   <!-- 결과: 프로필 카드(요구1·§4.1) — LLM 구조화 추출. 실패/빈 응답 시 아래 원문 접기로 폴백 -->
   <div class="pcard" id="pcard" style="display:none"></div>
@@ -374,10 +461,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   <!-- 트랙 B-2: 이탈 후 복귀 사용자 완료 게이트(광고 1회 후 리포트 공개) -->
   <div class="gate" id="doneGate">
     <div class="gcard">
-      <div class="gtitle">정찰 완료 — 리포트가 준비됐어요</div>
-      <div class="gsub">자리를 비운 사이 정찰이 끝났습니다. 아래에서 리포트를 확인하세요.</div>
+      <div class="gtitle">정찰 완료 — 지원가치 평결이 나왔어요</div>
+      <div class="gsub">자리를 비운 사이 정찰이 끝났습니다. 평결부터 확인하세요.</div>
       <div class="ad ad-infeed" id="gateAd"><b>AD</b> · 광고</div>
-      <button id="gateBtn">리포트 보기</button>
+      <button id="gateBtn">평결 보기</button>
     </div>
   </div>
 
@@ -434,11 +521,14 @@ const go = $("go"), statusEl = $("status"), blocksEl = $("blocks"),
       verdictEl = $("verdict"), badgeEl = $("badge"),
       compareWrap = $("compareWrap"), compareEl = $("compare"), metaEl = $("meta"),
       compareBtn = $("compareBtn"), compareInsight = $("compareInsight");
+const reopenBar = $("reopenBar"), dbannerEl = $("dbanner"), vwhyEl = $("vwhy"), tocEl = $("toc"), anchorEl = $("anchor");
 let lastJob = null, lastProfile = null, _pageUrl = null;
 
 const TITLES = {1:"지원 판단", 2:"공고 핵심 요건", 3:"회사 서사·궤적", 4:"실체 점검·리스크", 8:"산업·시장·경쟁 지형", 6:"경영진·투자자 정렬", 5:"나와의 적합 & 면접·협상", 7:"용어·개념 풀이"};
 // 표시 순서(내부 id와 무관): 판단→요건→서사→실체점검→산업·경쟁→경영진→적합→용어풀이(참고)
 const BLOCK_ORDER = {1:0, 2:1, 3:2, 4:3, 8:4, 6:5, 5:6, 7:7};
+// P1-4: 목차 앵커칩 라벨(짧게) — 지원판단·요건·서사·리스크·시장·경영진·적합·용어
+const TOC_LABEL = {1:"지원판단", 2:"요건", 3:"서사", 4:"리스크", 8:"시장", 6:"경영진", 5:"적합", 7:"용어"};
 
 // 경량 마크다운 렌더(이스케이프 후 안전한 인라인/불릿만) — **굵게**, - 불릿, 문단
 // 마크다운 렌더 — bold·inline code·중첩 불릿(들여쓰기)·번호 리스트 지원
@@ -478,7 +568,7 @@ function renderMeta(m) {
 }
 
 function renderBlocks(text) {
-  // "## 1." ~ "## 4." 헤더로 분리(텍스트 순서로 슬라이스)
+  // "## 1." ~ "## 8." 헤더로 분리(텍스트 순서로 슬라이스)
   const re = /^##\s*(\d)\.\s*(.*)$/gm;
   let m, marks = [];
   while ((m = re.exec(text)) !== null) marks.push({id:+m[1], idx:m.index, end:re.lastIndex});
@@ -491,19 +581,106 @@ function renderBlocks(text) {
     id: mk.id,
     body: text.slice(mk.end, i+1 < marks.length ? marks[i+1].idx : text.length).trim(),
   }));
-  // tier1/tier2가 순서 뒤섞여 도착해도 정해진 표시 순서로 렌더(판단→요건→리스크→실제조건→경영진→적합)
+  // tier1/tier2가 순서 뒤섞여 도착해도 정해진 표시 순서로 렌더(판단→요건→서사→리스크→시장→경영진→적합→용어)
   blocks.sort((a, b) => (BLOCK_ORDER[a.id] ?? 99) - (BLOCK_ORDER[b.id] ?? 99));
   // 트랙 B-1: 리포트 인피드 광고 — 1번째 블록 뒤(상단) + 중간. 이탈·복귀 사용자도 결과와 함께 노출.
   const mid = blocks.length >= 5 ? 3 : (blocks.length >= 3 ? 1 : -1);
   let out = "";
   blocks.forEach((b, i) => {
-    out += `<div class="blk"><h3>${i+1}. ${esc(TITLES[b.id]||"")}</h3>`
-      + `<div class="body${b.id===lastId?" cursor":""}">${renderMd(b.body)}</div></div>`;
+    const streaming = b.id === lastId;   // 스트리밍 중 블록은 접기 열림 유지
+    // P1-4: 섹션 접기(details·기본 펼침) + id 앵커(목차 이동 타깃)
+    out += `<details class="blk" id="sec-${b.id}" open><summary><span class="tnum">${i+1}.</span> ${esc(TITLES[b.id]||"")}</summary>`
+      + `<div class="body${streaming?" cursor":""}">${renderMd(b.body)}</div></details>`;
     if (i === 0) out += '<div class="ad ad-infeed" id="adFeed1"><b>AD</b> · 광고</div>';
     if (i === mid) out += '<div class="ad ad-infeed" id="adFeed2"><b>AD</b> · 광고</div>';
   });
   blocksEl.innerHTML = out;
+  renderToc(blocks);        // P1-4: 목차 앵커칩
   updateVerdict(text);
+  renderVwhy(blocks);       // P1-4: 평결 "왜" 요지(지원 판단 앞부분)
+}
+
+// P1-4: 목차 앵커칩 — 8섹션 빠른 이동
+function renderToc(blocks) {
+  if (!blocks || !blocks.length) { tocEl.className = "toc"; tocEl.innerHTML = ""; return; }
+  tocEl.innerHTML = blocks.map(b =>
+    `<span class="tocchip" data-sec="sec-${b.id}">${esc(TOC_LABEL[b.id] || TITLES[b.id] || "")}</span>`
+  ).join("");
+  tocEl.className = "toc on";
+}
+// P1-4: 평결 "왜" 요지 — 지원 판단(id=1) 앞 3줄. 배지 바로 아래 고정.
+function renderVwhy(blocks) {
+  const j = blocks.find(b => b.id === 1);
+  if (!j || !j.body) { vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; return; }
+  const body = j.body.replace(/\[(YES|조건부|NO)\]/g, "").trim();
+  const lines = body.split("\n")
+    .map(s => s.replace(/^\s*[-•*]\s*/, "").replace(/^\s*\d+\.\s*/, "").trim())
+    .filter(Boolean);
+  const top3 = lines.slice(0, 3);
+  if (!top3.length) { vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; return; }
+  vwhyEl.innerHTML = top3.map(l => mdInline(esc(l))).join("<br>");
+  vwhyEl.className = "vwhy on";
+}
+// sticky 헤더 높이를 뺀 위치로 스크롤(목차 이동·완료 착지 공용)
+function scrollToEl(t, openDetails) {
+  if (!t) return;
+  if (openDetails && t.tagName === "DETAILS") t.open = true;
+  requestAnimationFrame(() => {
+    const hh = anchorEl ? anchorEl.offsetHeight : 0;
+    const y = t.getBoundingClientRect().top + window.scrollY - hh - 10;
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+  });
+}
+// 🔴 P0-b: 완료 착지 = 결과 최상단(마감배너 있으면 배너, 없으면 평결)
+function landOnVerdict() {
+  scrollToEl(dbannerEl.classList.contains("on") ? dbannerEl : verdictEl, false);
+}
+// 목차 칩 클릭 → 해당 섹션 열고 이동(이벤트 위임)
+tocEl.addEventListener("click", (e) => {
+  const chip = e.target.closest(".tocchip"); if (!chip) return;
+  scrollToEl($(chip.dataset.sec), true);
+});
+
+// --- 마감 배너(BE 인터페이스): posting_status·deadline·posted_date·job_title. 필드 없으면 no-op(graceful, mock 금지) ---
+function pickPosting(ev) {  // BE 필드 위치 관대 수용(top-level / ev.meta / ev.posting)
+  const src = ev || {}, meta = src.meta || {}, posting = src.posting || {};
+  const g = (k) => (src[k] ?? meta[k] ?? posting[k] ?? null);
+  return { status: g("posting_status"), deadline: g("deadline"), posted_date: g("posted_date"), job_title: g("job_title") };
+}
+function ddayFrom(s) {  // deadline 문자열 → 오늘 기준 잔여일(파싱 실패 시 null)
+  const str = String(s);
+  const m = str.match(/(\d{4})[.\-\/년\s]+(\d{1,2})[.\-\/월\s]+(\d{1,2})/);
+  let d = null;
+  if (m) d = new Date(+m[1], +m[2]-1, +m[3]);
+  else { const t = Date.parse(str); if (!isNaN(t)) d = new Date(t); }
+  if (!d || isNaN(d.getTime())) return null;
+  const today = new Date(); today.setHours(0,0,0,0); d.setHours(0,0,0,0);
+  return Math.round((d - today) / 86400000);
+}
+function renderDeadlineBanner(ev) {
+  const p = pickPosting(ev);
+  if (!p.status && !p.deadline) { return; }  // 필드 전무 → 그대로 둠(BE 미배포 시 아무 것도 안 함)
+  const dl = (p.deadline || "").trim();
+  const isAlways = /상시|수시|채용\s*시|충원\s*시/.test(dl) || (p.status === "open" && !dl);
+  let cls = "dbanner on", html = "";
+  if (p.status === "closed") {   // CTA 스왑: 마감 → "참고용" 프레이밍
+    cls += " closed";
+    html = '<span class="di">' + IC.warn + '</span><div><b>마감된 공고</b> — '
+      + (dl ? esc(dl) + ' 마감 · ' : '') + '지원은 마감됐어요. 참고용으로만 확인하세요.</div>';
+  } else if (isAlways) {
+    html = '<span class="di">' + IC.check + '</span><div><b>상시채용</b> — 마감일 없이 상시 지원할 수 있어요.</div>';
+  } else if (dl) {
+    const dday = ddayFrom(dl);
+    const soon = dday != null && dday >= 0 && dday <= 3;
+    if (soon) cls += " soon";
+    const ddText = dday == null ? ''
+      : dday < 0 ? ' · <span class="dd">마감 지남 · 참고용</span>'
+      : dday === 0 ? ' · <span class="dd">오늘 마감</span>'
+      : ' · <span class="dd">마감 D-' + dday + '</span>';
+    html = '<span class="di">' + IC.check + '</span><div><b>모집 중</b> — ' + esc(dl) + ' 마감' + ddText + '</div>';
+  } else { dbannerEl.className = "dbanner"; return; }  // status만 있고 정보 부족 → 미노출
+  dbannerEl.className = cls;
+  dbannerEl.innerHTML = html;
 }
 
 function updateVerdict(text) {
@@ -743,6 +920,12 @@ function renderPcard(d) {
   el.innerHTML = h; el.style.display = h ? "block" : "none";
 }
 
+// P0-b: 결과 모드(입력폼 접기) 진입/이탈 + 재진입("다른 공고 정찰")
+function enterResultMode() { document.body.classList.add("scouting"); }
+function exitResultMode() { document.body.classList.remove("scouting"); }
+function reopenForm() { exitResultMode(); window.scrollTo({ top:0, behavior:"smooth" }); const u=$("url"); if (u) setTimeout(()=>u.focus({preventScroll:true}),300); }
+reopenBar.addEventListener("click", reopenForm);
+
 async function analyze() {
   _digCount = 0;  // 새 정찰 = 더파고들기 카운트 리셋(정찰당 3회)
   const job_url = extractUrl($("url").value);  // 공유 텍스트 붙여넣기 → URL만 발라냄
@@ -757,6 +940,9 @@ async function analyze() {
   go.disabled = true; blocksEl.innerHTML = ""; verdictEl.style.display = "none";
   metaEl.style.display = "none"; metaEl.innerHTML = ""; $("digHint").style.display = "none"; $("myInfo").style.display = "none";
   $("pcard").style.display = "none"; $("pcard").innerHTML = ""; $("shareBtn").style.display = "none"; _pageUrl = null;
+  dbannerEl.className = "dbanner"; dbannerEl.innerHTML = "";           // 마감배너 리셋
+  vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; tocEl.className = "toc"; tocEl.innerHTML = "";
+  enterResultMode();                                                  // P0-b: 입력폼 접기(결과 상단 승격)
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
   statusEl.textContent = ""; scanStart();
@@ -766,7 +952,7 @@ async function analyze() {
     const det = await detectPosting(job_url);
     const detUrls = det && det.role_urls && Object.keys(det.role_urls).length > 0;
     if (det && det.roles && det.roles.length > 1 && (det.text || detUrls)) {
-      scanStop(); go.disabled = false;
+      scanStop(); go.disabled = false; exitResultMode();   // 직무 선택 필요 → 폼 다시 펼침(jdChip은 폼 안)
       statusEl.innerHTML = '이 공고에 <b>직무가 여러 개</b>예요 — 위에서 직무를 고른 뒤 다시 <b>정찰 시작</b>을 눌러 주세요.';
       $("jdChip").scrollIntoView({ behavior: "smooth", block: "center" });
       return;
@@ -790,13 +976,13 @@ async function analyze() {
     });
     if (!res.ok) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
     const data = await res.json();
-    if (data.error) { scanStop(); statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
+    if (data.error) { scanStop(); exitResultMode(); statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
     // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음(파일 모드는 URL 없음). 목록 URL은 선택 공고 URL로 이어받음.
     localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url: reconUrl || job_url || "", ts: Date.now() }));
     _curJobId = data.job_id; showCancel(true);   // 정찰 취소 버튼 노출(FR-053)
     pollJob(data.job_id);
   } catch (e) {
-    scanStop();
+    scanStop(); exitResultMode();
     statusEl.innerHTML = `<span class="err">오류: ${esc(String(e.message||e))}</span>`;
     go.disabled = false;
   }
@@ -814,6 +1000,9 @@ async function cancelRecon() {
   metaEl.style.display = "none"; metaEl.innerHTML = "";
   $("shareBtn").style.display = "none"; $("pcard").style.display = "none"; $("pcard").innerHTML = "";
   $("digHint").style.display = "none"; $("myInfo").style.display = "none";
+  dbannerEl.className = "dbanner"; dbannerEl.innerHTML = "";
+  vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; tocEl.className = "toc"; tocEl.innerHTML = "";
+  exitResultMode();   // 취소 = 입력폼 복귀
   statusEl.textContent = "정찰을 취소했습니다.";
   if (jid) { try { await ensureAPI(); await fetch(API + "/analyze/cancel/" + jid, { method: "POST", headers: tokenHeaders() }); } catch (e) {} }
 }
@@ -822,8 +1011,20 @@ $("cancelBtn").addEventListener("click", cancelRecon);
 // 서버 job 상태를 2초마다 조회 — 연결이 아니라 상태를 폴링하므로 모바일 백그라운드를 견딘다
 function pollJob(job_id) {
   stopPoll(); _pollFull = "";
+  const _pollT0 = Date.now();                 // P1-10: 이 폴링 세션 시작(무한 로딩 차단)
+  const POLL_TIMEOUT_MS = 90000;              // 90초 초과 → 지연 안내 + 재시도
   function endPoll() { stopPoll(); scanStop(); showCancel(false); localStorage.removeItem(JOB_KEY); go.disabled = false; }
+  function pollTimedOut() {                    // P1-10: 무한 회전 금지. job_id·JOB_KEY는 유지 → 재시도로 폴링 재개.
+    stopPoll(); scanStop(); showCancel(false); go.disabled = false;
+    statusEl.innerHTML = '<span class="err">정찰이 예상보다 지연됩니다.</span> '
+      + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
+    const rp = $("retryPoll");
+    if (rp) rp.addEventListener("click", (e) => {
+      e.preventDefault(); statusEl.textContent = ""; scanStart(); showCancel(true); go.disabled = true; pollJob(job_id);
+    });
+  }
   const tick = async () => {
+    if (Date.now() - _pollT0 > POLL_TIMEOUT_MS) { pollTimedOut(); return; }
     let ev;
     try {
       const r = await fetch(API + "/analyze/poll/" + job_id, { cache:"no-store" });
@@ -832,26 +1033,32 @@ function pollJob(job_id) {
       _pollTimer = setTimeout(tick, 2500); return;  // 일시 실패(백그라운드 등) → 중단 말고 재시도
     }
     if (ev.error === "unknown_job") {
+      exitResultMode();
       statusEl.innerHTML = '<span class="err">정찰 결과가 만료됐습니다 — 다시 정찰해 주세요.</span>';
       endPoll(); return;
     }
-    if (ev.cancelled) { statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
-    if (ev.meta) renderMeta(ev.meta);
+    if (ev.cancelled) { exitResultMode(); statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
+    if (ev.meta) { renderMeta(ev.meta); renderDeadlineBanner(ev); }   // 마감배너(필드 있으면·graceful)
     if (ev.page && ev.page.url) _pageUrl = ev.page.url;  // Phase 2: 고정 URL 정찰 페이지(공유용, FR-056)
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
       _pollFull = ev.text; renderBlocks(_pollFull);
       if (_pollFull) { $("scanner").classList.add("has-content"); if (wasEmpty) scanVerdict(); }  // 카드 도착 → 평결 단계
     }
-    if (ev.error) { statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; endPoll(); return; }
+    if (ev.error) { exitResultMode(); statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; endPoll(); return; }
     if (ev.done) {
       statusEl.textContent = _pollFull ? "정찰 완료." : "정찰이 종료됐습니다.";
+      if (!_pollFull) exitResultMode();                  // 결과 없이 종료 → 폼 복귀
       if (_pollFull) extractProfileCard(_lastCombined.v);  // 프로필 카드(성공=원문 숨김/실패·얇으면 원문 폴백) FR-047
       if (_pollFull) $("shareBtn").style.display = "block";  // 공유 버튼(FR-048)
       if (_pollFull) finalizeAds();                      // 트랙 B-1: 리포트 인피드 광고 활성화(AdSense 설정 시)
-      if (_pollFull && !localStorage.getItem("jr_dug")) $("digHint").style.display = "block";  // 확장분석 힌트 — 실제 써볼 때까지 매 정찰 안내(디스커버빌리티)
-      if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 광고 게이트
-      loadCompare(curScoutLabel()); endPoll(); return;  // 방금 정찰한 공고를 비교 리스트에서 강조+스크롤
+      if (_pollFull && !localStorage.getItem("jr_dug")) $("digHint").style.display = "block";  // 확장분석 힌트
+      renderDeadlineBanner(ev);                          // 마감배너(done 시 최종 확인·graceful)
+      if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 게이트(게이트 버튼이 착지 담당)
+      loadCompare(curScoutLabel());                      // 비교 리스트 갱신(방금 공고 강조만·자동 스크롤 X)
+      endPoll();
+      if (_pollFull && !_leftDuringJob) landOnVerdict(); // 🔴 P0-b: 완료 착지 = 결과 최상단(평결/마감배너)
+      return;
     }
     _pollTimer = setTimeout(tick, 2000);
   };
@@ -866,6 +1073,7 @@ function resumeActiveJob() {
   if (Date.now() - (saved.ts || 0) > 20*60*1000) { localStorage.removeItem(JOB_KEY); return; }
   if (saved.job_url) $("url").value = saved.job_url;
   _leftDuringJob = true;  // 새 로드로 이어받음 = 자리를 비웠던 것 → 완료 시 게이트(트랙 B-2)
+  enterResultMode();      // 이어받는 정찰도 결과 모드(입력폼 접힘 일관)
   go.disabled = true;
   statusEl.textContent = "진행 중이던 정찰을 이어받는 중…"; scanStart();
   _curJobId = saved.job_id; showCancel(true);  // 이어받은 정찰도 취소 가능(FR-053)
@@ -880,7 +1088,7 @@ document.addEventListener("visibilitychange", () => {
 // 트랙 B-2: 완료 게이트(이탈 후 복귀 사용자에게 광고 1회 후 리포트)
 function showDoneGate() { const g = $("doneGate"); if (g) { activateAd("gateAd"); g.classList.add("on"); } }
 function hideDoneGate() { const g = $("doneGate"); if (g) g.classList.remove("on"); const ga=$("gateAd"); if (ga) delete ga.dataset.done; }
-$("gateBtn").addEventListener("click", () => { hideDoneGate(); blocksEl.scrollIntoView({behavior:"smooth", block:"start"}); });
+$("gateBtn").addEventListener("click", () => { hideDoneGate(); landOnVerdict(); });   // P0-b: 게이트 닫으면 평결로 착지
 
 // 트랙 B-1/B-2: AdSense 슬롯 활성화 — window.JOBRECON_ADSENSE_CLIENT 설정 시 placeholder→실제 광고. 미설정 시 placeholder 유지.
 let _adsFinalized = false;
@@ -1138,10 +1346,8 @@ async function loadCompare(justLabel) {
     }).join("");
     compareWrap.style.display = "block";
     compareBtn.style.display = items.length >= 2 ? "block" : "none";  // 2개+면 비교 인사이트 가능
-    if (justLabel) {  // 방금 정찰한 공고로 스크롤 — 평결순에서 아래로 밀려도 놓치지 않게
-      const jr = compareEl.querySelector(".row.just");
-      if (jr) jr.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    // 🔴 P0-b: 방금 공고는 강조(.row.just 테두리·뱃지)로만 표시. 자동 스크롤 제거 —
+    // 완료 착지는 평결(landOnVerdict)이 담당(비교 리스트 최하단 자동 착지 근원 차단).
   } catch (e) {}
 }
 
