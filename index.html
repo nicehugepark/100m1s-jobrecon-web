@@ -659,9 +659,17 @@ function renderJdChip() {
     const wrap = document.createElement("div"); wrap.className = "jdrole";
     const lab = document.createElement("label"); lab.textContent = "이 문서에 직무가 여러 개예요 — 어느 직무로 정찰할까요?";
     const sel = document.createElement("select");
-    _jd.roles.forEach(r => { const o = document.createElement("option"); o.value = r; o.textContent = r; sel.appendChild(o); });
+    _jd.roles.forEach(r => {
+      const o = document.createElement("option"); o.value = r; o.textContent = r;
+      if (_jd.roleUrls && _jd.roleUrls[r]) o.dataset.url = _jd.roleUrls[r];  // 선택 시 그 직무의 특정 상세 URL로 정찰
+      sel.appendChild(o);
+    });
     sel.value = (_jd._picked && _jd.position) || _jd.roles[0];
-    sel.addEventListener("change", () => { _jd.position = sel.value; _jd._picked = true; renderJdChip(); });
+    sel.addEventListener("change", () => {
+      _jd.position = sel.value; _jd._picked = true;
+      _jd.selectedUrl = (_jd.roleUrls && _jd.roleUrls[sel.value]) || null;
+      renderJdChip();
+    });
     wrap.appendChild(lab); wrap.appendChild(sel); box.appendChild(wrap);
   }
 }
@@ -756,7 +764,8 @@ async function analyze() {
   if (job_url && !useFile && !(_jd && _jd.fromUrl === job_url)) {
     statusEl.textContent = "공고 확인 중…";
     const det = await detectPosting(job_url);
-    if (det && det.roles && det.roles.length > 1 && det.text) {
+    const detUrls = det && det.role_urls && Object.keys(det.role_urls).length > 0;
+    if (det && det.roles && det.roles.length > 1 && (det.text || detUrls)) {
       scanStop(); go.disabled = false;
       statusEl.innerHTML = '이 공고에 <b>직무가 여러 개</b>예요 — 위에서 직무를 고른 뒤 다시 <b>정찰 시작</b>을 눌러 주세요.';
       $("jdChip").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -765,9 +774,16 @@ async function analyze() {
     statusEl.textContent = "";
   }
   try {
+    // 목록 URL에서 직무를 골랐으면 그 직무의 특정 상세 URL로 정찰 → 백엔드 케이스 판별 → 이미지 비전 도달.
+    // (목록 텍스트 file_mode 정찰은 케이스 판별을 건너뛰어 이미지 공고를 못 읽던 결함 근원 fix.)
+    let reconUrl = job_url;
+    if (!useFile && _jd && _jd.fromUrl === job_url && _jd.roleUrls) {
+      const picked = (_jd._picked && _jd.position) || _jd.roles[0];
+      if (_jd.roleUrls[picked]) reconUrl = _jd.roleUrls[picked];
+    }
     const body = useFile
       ? { posting_text: _jd.text, posting_company: _jd.company, posting_position: _jd.position, profile: profile || null, constraints, user_id: getUid() }
-      : { job_url, profile: profile || null, constraints, user_id: getUid() };
+      : { job_url: reconUrl, profile: profile || null, constraints, user_id: getUid() };
     if (useFile && job_url) body.source_url = job_url;  // 파일 업로드라도 붙여넣은 원문 URL은 표시·저장용으로 보존(MBC 등 JS렌더 공고 — 비교 리스트 링크가 upload:로 유실되던 버그 근원차단)
     const res = await fetch(API + "/analyze/start", {
       method:"POST", headers: authHeaders(), body: JSON.stringify(body)
@@ -775,8 +791,8 @@ async function analyze() {
     if (!res.ok) throw new Error("백엔드에 연결할 수 없습니다 — 백엔드 연결이 필요합니다.");
     const data = await res.json();
     if (data.error) { scanStop(); statusEl.innerHTML = `<span class="err">${esc(data.error)}</span>`; go.disabled=false; return; }
-    // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음(파일 모드는 URL 없음)
-    localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url: job_url || "", ts: Date.now() }));
+    // job_id 저장 → 앱 전환·새로고침·탭 종료 후 복귀해도 이어받음(파일 모드는 URL 없음). 목록 URL은 선택 공고 URL로 이어받음.
+    localStorage.setItem(JOB_KEY, JSON.stringify({ job_id: data.job_id, job_url: reconUrl || job_url || "", ts: Date.now() }));
     _curJobId = data.job_id; showCancel(true);   // 정찰 취소 버튼 노출(FR-053)
     pollJob(data.job_id);
   } catch (e) {
@@ -1220,8 +1236,11 @@ async function detectPosting(job_url) {
   } catch (e) { det = null; }
   if (seq !== _detSeq) return det;  // 그 사이 URL 바뀜 → 갱신 안 함
   if (!det) { $("jdChip").innerHTML = ""; return null; }
-  if (det.roles && det.roles.length > 1 && det.text) {
-    _jd = { text: det.text, company: det.company, position: det.position, roles: det.roles,
+  const rurls = det.role_urls || null;
+  const hasUrls = rurls && Object.keys(rurls).length > 0;  // 목록 URL → 직무별 특정 상세 URL 매핑
+  if (det.roles && det.roles.length > 1 && (det.text || hasUrls)) {
+    _jd = { text: det.text || null, company: det.company, position: det.position, roles: det.roles,
+            roleUrls: rurls,
             label: hostLabel(job_url), chars: (det.text || "").length, fromUrl: job_url, _det: det };
     renderJdChip();
   } else {
