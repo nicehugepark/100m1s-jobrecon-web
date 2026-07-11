@@ -838,13 +838,12 @@ function renderJdChip() {
     const sel = document.createElement("select");
     _jd.roles.forEach(r => {
       const o = document.createElement("option"); o.value = r; o.textContent = r;
-      if (_jd.roleUrls && _jd.roleUrls[r]) o.dataset.url = _jd.roleUrls[r];  // 선택 시 그 직무의 특정 상세 URL로 정찰
       sel.appendChild(o);
     });
     sel.value = (_jd._picked && _jd.position) || _jd.roles[0];
     sel.addEventListener("change", () => {
       _jd.position = sel.value; _jd._picked = true;
-      _jd.selectedUrl = (_jd.roleUrls && _jd.roleUrls[sel.value]) || null;
+      _jd.focusLabel = sel.value;  // URL 정찰 시 이 분야 탭을 눌러 그 JD를 캡처(파일은 미사용 — position 프리픽스로 정찰)
       renderJdChip();
     });
     wrap.appendChild(lab); wrap.appendChild(sel); box.appendChild(wrap);
@@ -950,26 +949,25 @@ async function analyze() {
   if (job_url && !useFile && !(_jd && _jd.fromUrl === job_url)) {
     statusEl.textContent = "공고 확인 중…";
     const det = await detectPosting(job_url);
-    const detUrls = det && det.role_urls && Object.keys(det.role_urls).length > 0;
-    if (det && det.roles && det.roles.length > 1 && (det.text || detUrls)) {
-      scanStop(); go.disabled = false; exitResultMode();   // 직무 선택 필요 → 폼 다시 펼침(jdChip은 폼 안)
-      statusEl.innerHTML = '이 공고에 <b>직무가 여러 개</b>예요 — 위에서 직무를 고른 뒤 다시 <b>정찰 시작</b>을 눌러 주세요.';
+    if (det && (det.multi || (det.roles && det.roles.length > 1))) {  // 🔴 비전이 다분야로 판정
+      scanStop(); go.disabled = false; exitResultMode();   // 분야 선택 필요 → 폼 다시 펼침(jdChip은 폼 안)
+      statusEl.innerHTML = '이 공고에 <b>분야가 여러 개</b>예요 — 위에서 분야를 고른 뒤 다시 <b>정찰 시작</b>을 눌러 주세요.';
       $("jdChip").scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     statusEl.textContent = "";
   }
   try {
-    // 목록 URL에서 직무를 골랐으면 그 직무의 특정 상세 URL로 정찰 → 백엔드 케이스 판별 → 이미지 비전 도달.
-    // (목록 텍스트 file_mode 정찰은 케이스 판별을 건너뛰어 이미지 공고를 못 읽던 결함 근원 fix.)
-    let reconUrl = job_url;
-    if (!useFile && _jd && _jd.fromUrl === job_url && _jd.roleUrls) {
-      const picked = (_jd._picked && _jd.position) || _jd.roles[0];
-      if (_jd.roleUrls[picked]) reconUrl = _jd.roleUrls[picked];
+    // 🔴 다분야 URL 공고: 고른 분야를 focus_label로 넘긴다 — 정찰이 원본 url을 파라미터 그대로 render한 뒤
+    //   그 분야 탭(라벨)을 눌러 해당 JD를 캡처한다. anchor URL 매핑 폐기(사람이 그 분야를 눌러 보는 방식·대표 "눈으로").
+    let reconUrl = job_url;   // URL은 원본 그대로(스코프 파라미터 보존 — company·sub_position_id 등)
+    let focusLabel = null;
+    if (!useFile && _jd && _jd.fromUrl === job_url && _jd.multi) {
+      focusLabel = (_jd._picked && _jd.position) || _jd.focusLabel || _jd.roles[0];
     }
     const body = useFile
       ? { posting_text: _jd.text, posting_company: _jd.company, posting_position: _jd.position, profile: profile || null, constraints, user_id: getUid() }
-      : { job_url: reconUrl, profile: profile || null, constraints, user_id: getUid() };
+      : { job_url: reconUrl, focus_label: focusLabel, profile: profile || null, constraints, user_id: getUid() };
     if (useFile && job_url) body.source_url = job_url;  // 파일 업로드라도 붙여넣은 원문 URL은 표시·저장용으로 보존(MBC 등 JS렌더 공고 — 비교 리스트 링크가 upload:로 유실되던 버그 근원차단)
     const res = await fetch(API + "/analyze/start", {
       method:"POST", headers: authHeaders(), body: JSON.stringify(body)
@@ -1442,12 +1440,11 @@ async function detectPosting(job_url) {
   } catch (e) { det = null; }
   if (seq !== _detSeq) return det;  // 그 사이 URL 바뀜 → 갱신 안 함
   if (!det) { $("jdChip").innerHTML = ""; return null; }
-  const rurls = det.role_urls || null;
-  const hasUrls = rurls && Object.keys(rurls).length > 0;  // 목록 URL → 직무별 특정 상세 URL 매핑
-  if (det.roles && det.roles.length > 1 && (det.text || hasUrls)) {
-    _jd = { text: det.text || null, company: det.company, position: det.position, roles: det.roles,
-            roleUrls: rurls,
-            label: hostLabel(job_url), chars: (det.text || "").length, fromUrl: job_url, _det: det };
+  const isMulti = det.multi || (det.roles && det.roles.length > 1);  // 🔴 비전이 다분야로 판정(화면에 보이는 분야 수)
+  if (isMulti) {
+    _jd = { text: null, company: det.company, position: det.position, roles: det.roles || [],
+            multi: true,   // 정찰 시 고른 분야를 focus_label로 넘겨 그 탭을 눌러 캡처(anchor URL 매핑 폐기)
+            label: hostLabel(job_url), chars: 0, fromUrl: job_url, _det: det };
     renderJdChip();
   } else {
     _jd = { text: null, company: det.company, position: det.position, roles: det.roles || [],
