@@ -747,15 +747,29 @@ function renderVwhy(blocks) {
   vwhyEl.innerHTML = top3.map(l => mdInline(esc(l))).join("<br>");
   vwhyEl.className = "vwhy on";
 }
-// sticky 헤더 높이를 뺀 위치로 스크롤(목차 이동·완료 착지 공용)
+// sticky 앵커(JobRecon+정찰대상+AD 통합) 높이는 매 스크롤마다 실측 — AD async 로드/리사이즈로 변하므로 하드코딩·캐시 금지
+function _anchorH() { return anchorEl ? anchorEl.getBoundingClientRect().height : 0; }
+let _scrollReTarget = null, _scrollReUntil = 0, _lastAnchorH = anchorEl ? anchorEl.getBoundingClientRect().height : 0;
+// 🔴 AD 슬롯이 늦게 채워지거나 리사이즈되면 sticky 높이가 변해 착지 타겟이 밀림(또는 브라우저 scroll-anchoring이 상쇄) → 착지 직후 window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준이라 scroll-anchoring 유무 무관하게 정확)
+if (window.ResizeObserver && anchorEl) {
+  new ResizeObserver(() => {
+    const h = _anchorH(), dh = h - _lastAnchorH; _lastAnchorH = h;
+    if (_scrollReTarget && Date.now() < _scrollReUntil && Math.abs(dh) > 0.5) {
+      const diff = _scrollReTarget.getBoundingClientRect().top - (h + 10);
+      if (Math.abs(diff) > 1) window.scrollBy({ top: diff, behavior: "auto" });
+    }
+  }).observe(anchorEl);
+}
+// sticky 헤더 높이를 뺀 위치로 스크롤(목차 이동·완료 착지·원문 근거 공용)
+// 🔴 double-rAF: 모드전환(story→report의 display 복원)·details 열림 리플로우가 정착한 다음 프레임에 측정해야 타겟이 스티키 바로 아래 정확히 착지
 function scrollToEl(t, openDetails) {
   if (!t) return;
   if (openDetails && t.tagName === "DETAILS") t.open = true;
-  requestAnimationFrame(() => {
-    const hh = anchorEl ? anchorEl.offsetHeight : 0;
-    const y = t.getBoundingClientRect().top + window.scrollY - hh - 10;
+  requestAnimationFrame(() => { requestAnimationFrame(() => {
+    const y = t.getBoundingClientRect().top + window.scrollY - _anchorH() - 10;
     window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-  });
+    _scrollReTarget = t; _scrollReUntil = Date.now() + 1500;
+  }); });
 }
 // 🔴 P0-b: 완료 착지 = 결과 최상단(마감배너 있으면 배너, 없으면 평결)
 function landOnVerdict() {
