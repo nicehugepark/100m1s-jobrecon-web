@@ -110,11 +110,16 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .blk .body li { margin:3px 0; }
   .blk .body code { background:#0f1319; border:1px solid var(--line); border-radius:5px;
     padding:1px 5px; font-size:12.5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
-  /* 텍스트 선택 → 추가분석 코멘트 */
-  #digBtn { position:absolute; display:none; z-index:60; width:auto; margin:0; padding:10px 16px;
-    font-size:14px; font-weight:700; border-radius:999px; background:var(--accent); color:#fff;
-    box-shadow:0 6px 18px -3px rgba(0,0,0,.65); cursor:pointer; white-space:nowrap;
+  /* 텍스트 선택 → 추가분석. 🔴 하단 중앙 고정 플로팅 — 선택지점 팝업을 버려 iOS/Android
+     네이티브 선택메뉴(복사·찾기 callout)와 구조적 비겹침(#2), 하단 고정이라 상단 sticky 헤더와
+     위치 자체가 안 겹침(#3). 네이티브 callout 억제는 OS 제어 불가 → '위치 분리'가 유일 견고책. */
+  #digBtn { position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 18px);
+    transform:translateX(-50%); display:none; z-index:90; width:auto; margin:0; padding:11px 20px;
+    font-size:14px; font-weight:700; border:0; border-radius:999px; background:var(--accent); color:#fff;
+    box-shadow:0 10px 30px -6px rgba(0,0,0,.7); cursor:pointer; white-space:nowrap;
     -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  #digBtn.on { display:block; animation:digUp .18s cubic-bezier(.2,.7,.2,1); }
+  @keyframes digUp { from{opacity:0;transform:translateX(-50%) translateY(12px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
   .comment { margin:8px 0 12px; border-left:3px solid var(--accent); background:#141a24;
     border-radius:0 10px 10px 0; padding:10px 12px; }
   .comment .cq { font-size:12px; color:var(--dim); margin-bottom:7px; padding-bottom:7px;
@@ -206,7 +211,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     max-height:340px; overflow:auto; }
   @keyframes shimmer { to { background-position:-200% 0; } }
   @media (prefers-reduced-motion: reduce) {
-    .radar::before,.scan-bar span,.scan-steps .st.active,.scan-skel .sk { animation:none; }
+    .radar::before,.scan-bar span,.scan-steps .st.active,.scan-skel .sk,#digBtn.on { animation:none; }
   }
   .blk .body .ln { margin:5px 0; }
   .blk .body strong { color:#f0f4f8; font-weight:700; }
@@ -1471,7 +1476,7 @@ const digBtn = document.createElement("button");
 digBtn.id = "digBtn"; digBtn.innerHTML = IC.search + " 더 파고들기";
 document.body.appendChild(digBtn);
 let _digSel = null;  // { text, blockEl }
-function clearDig() { digBtn.style.display = "none"; }
+function clearDig() { digBtn.classList.remove("on"); }
 function checkSelection() {
   const s = window.getSelection();
   const text = (s && s.toString ? s.toString() : "").trim();
@@ -1482,15 +1487,8 @@ function checkSelection() {
   const blockEl = anchor && anchor.closest ? anchor.closest("#blocks .blk") : null;
   if (!blockEl) { clearDig(); return; }  // 리포트 블록 안에서 선택한 것만
   _digSel = { text: text.slice(0, 600), blockEl };
-  // 선택 '끝' 지점 기준으로 아래에 배치(위쪽 네이티브 복사메뉴·핸들과 충돌 회피)
-  const rects = range.getClientRects();
-  const r = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
-  digBtn.style.display = "block";
-  const w = digBtn.offsetWidth || 132, vw = document.documentElement.clientWidth;
-  let left = window.scrollX + r.left + r.width / 2 - w / 2;
-  left = Math.max(8, Math.min(left, window.scrollX + vw - w - 8));
-  digBtn.style.left = left + "px";
-  digBtn.style.top = (window.scrollY + r.bottom + 10) + "px";
+  // 🔴 하단 중앙 고정(CSS)으로 노출 — 선택지점 좌표계산 제거(네이티브 선택메뉴·sticky 헤더와 비겹침).
+  digBtn.classList.add("on");
 }
 // 🔴 모바일 핵심: selectionchange(핸들 드래그까지 포함)를 디바운스로 감지 → 버튼이 안정적으로 뜬다.
 let _selDebounce = null;
