@@ -60,6 +60,58 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .comment .cbody code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
 .comment .err{color:#ff6b6b}
 .comment .cta-app{display:inline-block;margin-top:8px;color:#4f8cff;font-weight:700;text-decoration:none}
+/* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
+.deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
+.ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:54vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 
 </head><body>
@@ -69,6 +121,17 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
     <div class="meta"><span class="co">ITCEN CLOIT</span><span class="fd">Pre-Sales</span><span class="ym">2026년 07월 정찰</span></div>
     <div class="ad">AD · 광고</div>
+  </div>
+  
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
   </div>
   <div id="report"><h2>공고 핵심 요건</h2>
 <p><strong>채용 직무</strong>: 인프라TA · CE · BD · Pre-Sales</p>
@@ -176,9 +239,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 </ul>
 <p>---</p>
 <p><strong>한 줄 요약</strong>: 스타트업이 아니라 <strong>그룹이 만든 합병 MSP</strong> — SI 근육과 공공·스포츠 IT 레퍼런스는 두텁고 그룹 우산으로 안정적이나, 재무·연봉·인력 지표가 비공개·상충이고 AI 제품(AgentGo)은 아직 증명 전. <strong>안정성은 있되 업사이드와 실제 처우는 면접에서 반드시 캐야 하는 회사.</strong></p></div>
-  <div class="ad">AD · 광고</div>
-  <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-  <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
 <script>
@@ -295,6 +360,66 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
   }
   digBtn.addEventListener("click",runDig);
   digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="## 2. 공고 핵심 요건\n\n**채용 직무**: 인프라TA · CE · BD · Pre-Sales\n\n- ITCEN CLOIT(아이티센클로잇)의 Business Strategy·Cloud 영역 **경력직 정규직** 통합 채용. 근무지는 서울/수도권, 지원 마감 2026-08-31.\n- 지원 포지션인 **Pre-Sales**는 클라우드 MSP에서 영업(BD)과 엔지니어(인프라TA·CE) 사이를 잇는 기술영업 역할 — 고객 요구를 아키텍처로 번역하고, PoC·제안(RFP 대응)·기술 검증을 주도하는 자리다. 이 회사에선 GCP·NCP·AWS·NHN·KT·카카오클라우드 멀티클라우드 제안과 최근 밀고 있는 AI 에이전트 제품(AgentGo·CEN AI) 제안까지 걸칠 가능성이 높다.\n- 공고 자체는 요건·연차·스택을 구체적으로 명시하지 않았다(통합 배너형 공고). **필수 경력 연차, 요구 클라우드 자격증(GCP/AWS Professional 등), Pre-Sales 담당 제품군의 범위는 반드시 면접·리크루터 문의로 확인 필요.**\n\n## 3. 회사 서사 · 궤적\n\n**이 회사는 스타트업이 아니다. 그룹 재편이 낳은 합병 법인이다.** — 서사의 출발점을 여기서 잡아야 한다.\n\n- **설립 동기(2023)**: 개인의 페인포인트가 아니라 **아이티센그룹의 사업 포트폴리오 정리**에서 나왔다. 쌍용정보통신에서 클라우드 전문 조직 '클로잇'을 물적분할해 신규법인화하고, 같은 해 그룹에 편입된 LG히다찌(사명 변경 후 '클로센')와 합병해 탄생했다. 즉 **SI·인프라 역량(구 쌍용정보통신) + 스토리지·HCI 역량(구 LG히다찌)** 을 한 몸에 묶어 \"멀티클라우드 MSP\"로 재포장한 구조다. CEO 김우성의 메시지도 이를 명시한다 — \"아이티센엔텍의 클라우드 전문성과 전문 스토리지 장비 및 솔루션을 포함한 SI/Infra 경험을 집약\"한다고 밝힌다. **지원자 관점에서 이곳은 \"0→1\"이 아니라 \"기존 대형 SI 자산을 클라우드·AI로 재정의하는 곳\"이다.**\n\n- **미션·비전의 일관성**: 비전은 **\"No.1 Cloud Native Company\"**, \"주주·고객·직원을 위한 품질 Driven First Mover\". 반복 서사는 **\"DX를 넘어 AX(AI Transformation)를 완성한다\"** — CEO 메시지·회사소개·비전 페이지에서 일관되게 등장한다. \"Enterprise AI Solution Enabler\", \"Digital & Cloud Transformation 선도\"도 반복어. 설립 3년차라 \"수년 관통\"을 논하긴 이르지만, **클라우드 MSP → 데이터·AI → AX** 라는 단일 축으로 모든 공식 문구가 정렬돼 있다. 메시지 일관성 자체는 높다(다만 신생이라 검증 기간이 짧다는 뜻이기도 하다).\n\n- **연도별 전환점(인과로 연결)**:\n  - **2023(설립)**: 물적분할→편입→합병으로 몸을 만들자마자 실적을 쌓았다. NCP·NHN·KT·가비아·카카오클라우드 파트너십 체결, **네이버 클라우드 50개·AWS 40개 MSP 사업 수행**. 레퍼런스도 굵다 — EBS 통합운영, 에어프레미아 ERP, 현대차 모빌리티 DevOps(AMS), 기아 이태리 ICDB 구축, **2023 항저우 아시안게임·장애인 아시안게임 GMS 구축·운영**. 같은 해 ITCEN Japan 설립, 디지포머싸스랩 흡수합병.\n  - **2024(인증·격상)**: **구글 클라우드 프리미어 파트너** 자격 취득 → 단순 재판매가 아니라 최상위 파트너 등급을 확보했다는 신호. '클로잇 클라우드 센터'를 서초로 이전.\n  - **2025(제품화·글로벌 스포츠)**: ASOCIO 글로벌 비즈니스 서비스상 수상(11월), STEG ITSM 협력, 하이브리드 AI 제조 AX, **2027 충청 유니버시아드 대회통합관리시스템 수주(9월)**. MSP를 넘어 자체 솔루션·글로벌 스포츠 IT로 무게를 옮긴다.\n  - **2026(AI 에이전트 전환)**: **에이전트고(AgentGo) 출시**(공공·금융 겨냥, 1월), 업스테이지·반야에이아이 제휴, 화성 AI 자율주행 허브 공로상. 블로터(2026-01-28)는 \"클라우드 MSP 아이티센클로잇, 왜 'AI 에이전트'로 전환했나\"로 이 방향 전환을 정면으로 다뤘다.\n\n- **판정**: 버즈워드 나열이 아니라 **인과로 연결된 서사**다. 인프라 MSP(2023)로 현금흐름·레퍼런스를 만들고 → 파트너십·인증(2024)으로 신뢰도를 격상하고 → AI 제품화·글로벌 스포츠 IT(2025~26)로 차별화를 노린다. 다만 **최신 축(AgentGo·CEN AI, 글로벌 AI)은 아직 \"지향\"이지 \"증명\"이 아니다** — 여기가 리스크 챕터로 이어진다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n**✅ 검증된 실적**\n- 대형 레퍼런스는 실제 수행 이력이다: 현대차·기아(유럽/이태리), EBS, IBK, 에어프레미아, **항저우 아시안게임 GMS 운영**. 신생 법인치고 매우 두터운 포트폴리오 — 사실상 쌍용정보통신 시절의 SI 근육을 그대로 물려받았다.\n- **Google Cloud Premier 파트너**, \"국내 최대 GCP Billing 규모\" 주장.\n- **공공클라우드 전환 사업 수주율 71.4%**, 고객 100+ 사. 공공·교육 클라우드가 이 회사의 실질 강점 축이다.\n\n**⚠️ 주장 vs 증명의 간극(선택적 공개 패턴)**\n- **재무는 비공개다.** 매출·영업이익·인당 생산성을 공개하지 않는다(비상장 계열사, DART 개별 공시 미확인). 강조하는 건 수주율·파트너 등급·스포츠 이벤트뿐. 신생 합병법인 특유의 **재무 통합 상황이 가려진 상태** — 지원자로선 회사 자체의 손익 체력을 외부에서 검증할 방법이 없다.\n- **AgentGo·CEN AI는 2026년 출시된 신규 라인으로 매출 기여·시장 점유 검증 전.** \"AI 에이전트 기업으로 전환\"이라는 서사와, 매출의 실제 다수가 여전히 MSP·SI에서 나올 현실 사이의 간극을 면접에서 캐야 한다.\n- **인력 지표가 엇갈린다**: 메인 페이지는 \"200+ Certified Cloud Professionals\", 회사소개는 \"약 165명 + 엔지니어 풀 300여 명\". 같은 회사 자료 안에서 숫자가 상충한다 — 실제 규모·조직 통합 정도를 반드시 확인.\n\n**자산 기반 안정성**\n- ITCEN CLOIT 개별 자산(사옥·현금유보)은 공개 근거 미확인. 다만 **그룹 우산이 두껍다** — 모그룹 아이티센(현 아이티센글로벌)은 **2024년 1분기 연결 매출 9,107억 원(역대 1분기 최대)**, \"3년 연속 조 단위 매출\"을 기록했고 금거래소 등 비IT 현금창출원까지 보유. 즉 개별 법인 적자가 나도 **그룹 차원의 체력이 버팀목**이 될 여지가 있다. 반대로 말하면, 이 법인의 운명은 자체 손익보다 **그룹의 포트폴리오 판단**에 크게 좌우된다.\n- **함의**: 대기업 SI 수준의 '망하지 않을 안정성'은 있으나, '내 성과가 곧 내 보상'인 스타트업식 업사이드는 기대하기 어렵다. Pre-Sales로서 딜을 키워도 그 과실이 개인에게 어떻게 돌아오는지(인센티브 구조)를 면접에서 못 박아야 한다.\n\n**실질 보상 · 복리후생**\n- **공개된 연봉·성과급·복지 수치가 없다.** ITCEN CLOIT 고유의 신뢰할 만한 재직자 평점·리뷰도 확인되지 않는다. 연봉·인센티브·근무제(재택·유연근무)·교육지원·스톡옵션 모두 **면접·처우 협상 단계에서 직접 확인 필요** — 지어낼 수 없는 공백이다.\n- Pre-Sales 직군 특성상 **기본급 + 수주 연동 인센티브** 구조가 흔하니, 인센티브 산정 기준(개인 딜 vs 팀 목표)·지급 시점·상한을 구체적으로 물어라.\n\n**숨은 리스크(그룹 유산)**\n- 그룹 자회사 쌍용정보통신은 **2022년 6월 1,274억 원 규모 한국교육학술정보원 '4세대 나이스' 사업에서 오류 및 '입찰계약 비리' 논란**에 휘말린 이력이 있다. 이 회사(ITCEN CLOIT) 자체의 논란은 아니나, **공공 SI 특유의 대형 프로젝트 리스크(오류·분쟁·감사)** 가 그룹 DNA에 있다는 점은 인지할 것. 공공 비중이 높은 만큼 Pre-Sales가 제안하는 사업도 이런 리스크에 노출된다.\n- 지배구조 과제: \"창업주 중심 구조 → 이사회 중심 투명 경영·승계·거버넌스 체계화\"가 그룹의 지적 과제로 남아 있다.\n\n**사업 구조상 진짜 해자와 위험**\n- **해자**: ① 공공·교육 클라우드 전환의 높은 수주율(71.4%)과 레퍼런스 록인, ② 남들이 안 하는 **글로벌 스포츠 IT(아시안게임·유니버시아드 통합관리시스템)** 라는 니치, ③ GCP Premier 등급. 이 셋은 쉽게 복제되지 않는다.\n- **위험**: MSP는 본질적으로 **클라우드 원벤더(구글·네이버·AWS)의 마진에 얹혀가는 중개 구조** — 자체 IP가 없으면 마진이 얇고 원벤더 정책에 휘둘린다. 그래서 AgentGo·CEN AI로 **자체 제품 마진**을 만들려는 것. 이 제품화가 성공하면 마진 방향이 위로 꺾이지만(해자 강화), 실패하면 여전히 저마진 인력 장사에 머문다. **무엇이 확인되면 판단이 바뀌나: AgentGo·CEN AI의 실제 유료 고객·매출 기여, 그리고 프로덕트 전담 인력이 SI 인력의 겸업인지 별도 조직인지.**\n\n## 8. 산업·시장·경쟁 지형\n\n- **산업 규모·성장성**: 국내 클라우드 MSP·AX 시장은 **커지는 파이**다. 공공부문 클라우드 전환(행정·교육), 제조 AX, 기업 AI 에이전트 도입이 동시에 수요를 만든다. 순풍 산업이라는 점은 지원자에게 유리 — 파이가 늘면 수주 기회·조직 확장 여지가 크다.\n- **이 회사의 실질 지위**: **팔로워~강한 니치 플레이어**. 국내 MSP 최상위권은 **메가존클라우드·베스핀글로벌**, 그 뒤로 **SK·LG 계열** MSP가 버틴다. ITCEN CLOIT은 규모로 1위군은 아니나, **① 공공·교육 클라우드 강세, ② 글로벌 스포츠 IT(항저우 아시안게임·2027 충청 유니버시아드), ③ GCP Premier 파트너십** 이라는 남들과 겹치지 않는 축으로 자기 자리를 판다. 정확한 점유율·순위 수치는 공개 자료 미확인 — **확인 필요**.\n- **경쟁 격차의 방향**: 규모·브랜드에서는 메가존·베스핀에 뒤진다. 하지만 이들이 잘 안 가는 **글로벌 스포츠 이벤트·공공 통합관리시스템** 영역에선 앞선다. AI 에이전트(AgentGo)로의 전환은 메가존·베스핀도 동시에 뛰어드는 레드오션이라, 여기서의 격차는 아직 미지수 — 제품 완성도·레퍼런스가 갈림길.\n- **시장 구조**: 소수 대형 MSP + 다수 중견의 **느슨한 과점**. 강자(메가존·베스핀)가 대형 엔터프라이즈를 흡수하는 구조라, 중견은 **특화 영역(공공·스포츠·특정 클라우드)** 으로 생존한다. 지원자 양면 해석 — **니치가 견고하면 안정적이나, 대형 MSP가 공공·AI로 진격하면 파이를 뺏길 압박**이 상존.\n- **정성 판정**: 이 회사는 **전면전에선 밀리지만 자기 링(공공·교육·스포츠 IT)에선 이기는** 포지션이다. 발목은 규모·자체 IP의 얇음, 해자는 복제 어려운 레퍼런스와 GCP 등급. **면접 질문으로**: \"메가존·베스핀 대비 우리의 승리 방정식은 무엇이고, AgentGo가 그 차별화에 어떻게 기여하나?\" — 이 회사의 전략적 자의식을 검증할 수 있다.\n\n## 6. 경영진 · 투자자·소유 구조\n\n**지원 회사의 리더십**\n- **대표집행임원 김우성** — ITCEN CLOIT 대표. 2026년 1월 27일 서울 강남 그랜드인터컨티넨탈 파르나스 기자간담회에서 \"클라우드 사업을 앞으로 어떻게 (끌어갈지)\"를 놓고 **AI 에이전트 기업으로의 전환**을 직접 발표한, 이 회사의 방향을 대외적으로 규정하는 인물이다. 회사가 기업의 AI 도입 시 가장 고민하는 **투자 지점·ROI 문제를 플랫폼(AgentGo) 차원에서 해결**하겠다는 메시지가 그의 입에서 나왔다. 구체 이전 이력은 공개 정보 미확인 — 면접에서 배경 확인 권장.\n- **이규진 본부장** — 언론 인터뷰(아이뉴스24 2026-02)에 등장하는 대외 사업 스포크스퍼슨.\n- '**대표집행임원**'이라는 직함은 지주·집행임원 체계를 시사한다 — 실질 의사결정권이 그룹과 법인 사이에 어떻게 나뉘는지가 실무에 직접 영향. **면접 확인 항목.**\n\n**상위 소유주체 — 강진모 회장(그룹 총수)**\n- **강진모** 아이티센그룹 회장은 1968년 경북 상주 출생, 아주대 물리학과 졸업·연세대 대학원. **2017년 회장에 올라 대표이사에서 물러났다가 2024년 3월 경영 일선에 복귀**, 복귀 1년 만에 아이티센글로벌의 역대급 성장을 이끌었다. 공격적 M&A로 몸집을 키운 인물로, 포브스코리아(2022) 인터뷰에서 \"회사 인수보다 고급 기술 보유 경력 개발자 여러 명을 채용하는 편이 낫다\"는 시각(M&A는 경력자 확보 수단)을 드러냈다 — **인재 중심 확장 철학**의 단서.\n- 그의 방향키는 **▲'원 아이티센(ONE ITCEN)' 운영 강화 ▲고부가가치 포트폴리오 전환 가속 ▲AI**(지디넷 2025-01). 쌍용정보통신을 'ITCEN CLOIT'으로 재편한 것도 그의 주도다.\n\n**소유·자본 구조(비상장 계열사 모델)**\n- ITCEN CLOIT은 **독립 VC 라운드가 아니라 아이티센그룹 계열사**로 운영된다. 외부 벤처 투자 정보는 확인되지 않는다.\n- 그룹 정점: 강진모 회장 — 2024.3.31 기준 아이티센 지분 **12.34%(285만7,587주)**, 특수관계인 합산 **25.38%**(2025년 아이티센글로벌 기준 특수관계인 6인 합산 약 25.28%)로 그룹 지배. 그룹은 **2025.6.30 기준 39개 계열사**를 두며, 상장사는 아이티센글로벌(옛 아이티센). 계열엔 콤텍시스템·시큐센·씨플랫폼·쌍용정보통신·투케이엠시스템즈·크레더·피엠엑스·ITCEN Japan(IT), **한국금거래소·한국금거래소디지털에셋(비IT)** 이 혼재.\n- **자본 성격 해석**: \"벤처식 초고속 확장\"이 아니라 **오너십 강한 그룹 내재화 모델**. 회수 전략도 개별 VC 엑싯이 아니라 **그룹 차원의 사업 재편·상장 흐름에 종속**된다. 스톡옵션 대박 시나리오보다 **그룹 안정성 기반의 고용**으로 기대치를 잡는 게 현실적.\n\n**정렬 인사이트**\n- 경영진 비전(\"No.1 Cloud Native\", AX 전환)과 오너 전략(고부가가치 전환·AI·ONE ITCEN)은 **대체로 정렬**된다. 단 두 가지 긴장:\n  1. \"창업주 중심 구조 → 이사회 중심 투명 경영·승계·거버넌스\"가 그룹의 미완 과제 — **개인 성과가 그룹 정치·오너 판단에 영향받을 수 있는 구조**.\n  2. 그룹 포트폴리오가 **금거래소 등 비IT까지 혼재**해, ITCEN CLOIT의 자원 배분·투자 우선순위가 그룹 사정에 종속될 수 있다. **면접에서**: 그룹-법인 간 의사결정 권한 분담, AI 제품(AgentGo/CEN AI) 투자가 법인 자체 예산인지 그룹 승인 사안인지를 확인하라.\n\n## 7. 용어 · 개념 풀이\n\n- **MSP(Managed Service Provider)** — 클라우드 도입·운영·최적화를 대행하는 관리형 서비스 사업자. 원벤더(구글·AWS·네이버)와 고객 사이의 중개·운영을 맡아 수수료·운영비로 매출을 낸다. ITCEN CLOIT의 본업.\n- **Pre-Sales** — 영업(BD)과 엔지니어 사이에서 고객 요구를 기술 솔루션·아키텍처로 번역하고 제안·PoC·기술검증을 주도하는 기술영업 역할.\n- **인프라TA / CE** — 인프라TA(Technical Architect)는 클라우드 인프라 설계·아키텍처 담당, CE(Cloud Engineer)는 실제 구축·운영 엔지니어.\n- **DX → AX** — DX(Digital Transformation)는 디지털 전환, AX(AI Transformation)는 그다음 단계로 회사가 자체 포지셔닝한 'AI 전환'. 이 회사의 핵심 슬로건.\n- **AgentGo(에이전트고)** — 2026년 1월 출시한 **AI 에이전트 관리 플랫폼**. \"데이터 주권과 전사 거버넌스를 갖춘 중앙 집중형 관리\"로 기업 보안 장벽을 정조준, 공공·금융 겨냥.\n- **CEN AI** — 구글 Vertex AI·Gemini 기반 엔터프라이즈 챗봇 플랫폼.\n- **GCP Premier(프리미어) 파트너** — 구글 클라우드 파트너 등급 중 최상위권. 기술 역량·매출 규모를 인정받아야 부여되는 자격(2024 취득).\n- **하이브리드 AI / 온프레미스** — 퍼블릭 클라우드와 기업 자체 서버(온프레미스)를 결합한 AI 구성. 보안·데이터 통제가 중요한 제조·공공 AX의 핵심 프레임.\n- **GMS / 대회통합관리시스템** — 스포츠 이벤트(아시안게임·유니버시아드) 운영을 총괄하는 통합 IT 시스템. 이 회사의 글로벌 스포츠 IT 차별화 무기(브랜드명 CENSPO).\n- **물적분할** — 기존 회사가 특정 사업부를 떼어 100% 자회사로 신설하는 방식. 2023년 쌍용정보통신이 '클로잇'을 이렇게 분할해 ITCEN CLOIT의 모태를 만들었다.\n- **ONE ITCEN** — 그룹 계열사 간 시너지·통합 운영을 강조하는 강진모 회장의 그룹 통합 전략 슬로건.\n\n---\n\n**한 줄 요약**: 스타트업이 아니라 **그룹이 만든 합병 MSP** — SI 근육과 공공·스포츠 IT 레퍼런스는 두텁고 그룹 우산으로 안정적이나, 재무·연봉·인력 지표가 비공개·상충이고 AI 제품(AgentGo)은 아직 증명 전. **안정성은 있되 업사이드와 실제 처우는 면접에서 반드시 캐야 하는 회사.**", CO="ITCEN CLOIT", POS="Pre-Sales", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?]|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  var PAL={hook:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],2:['#34d399','#bff3da','rgba(52,211,153,.15)'],3:['#a78bfa','#e0d7ff','rgba(167,139,250,.16)'],4:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],8:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],allmore:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  var TOC={2:"요건",3:"서사",4:"리스크",8:"시장",6:"경영진"};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  var cards=[];
+  var hookLine=null,best=0;[4,2,3,8,6].forEach(function(id){if(!byId[id])return;lines(byId[id].body).forEach(function(l){var c=clean(l);if(c.length<14||c.length>128)return;if(/^\*\*(판정|종합|결론)\*\*/.test(c))return;var v=impact(c);if(v>best){best=v;hookLine=clip(c,1);}});});
+  if(!hookLine&&byId[3]){var c3=lines(byId[3].body).map(clean).filter(function(s){return s.length>10;})[0];if(c3)hookLine=clip(c3,1);}
+  cards.push({kind:"hook",line:hookLine});
+  [2,3,4,8,6].forEach(function(id){var b=byId[id];if(!b)return;var ls=lines(b.body);var hl=headline(ls,id===4);if(!hl)return;cards.push({kind:"core",secId:id,headline:hl,evidence:evidence(ls,hl)});});
+  var gapRe=/(주장\s*vs\s*증명|증명\s*간극|괴리|말뿐|말과\s*행동|선택적\s*(공개|IR)|공언|과장(?:하|한|된|해))/;var gap=null;[4,3].forEach(function(id){if(gap||!byId[id])return;var hit=lines(byId[id].body).filter(function(l){return gapRe.test(clean(l))&&clean(l).length>12;})[0];if(hit)gap=clip(clean(hit),2);});
+  if(gap)cards.push({kind:"gap",line:gap});
+  cards.push({kind:"allmore"});
+  function card(c,i){
+    var p=PAL[c.kind==="core"?c.secId:c.kind]||PAL.allmore,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    var anc=(c.secId?'<button class="story-anchor" data-sec="sec-'+c.secId+'">'+ICs+' 원문 근거 보기</button>':"");
+    // 표지 — 회사명 대형 타이포가 지배, 상단정렬(위 spacer 제거)로 dead band 소멸. /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="hook")return '<div class="story-card hook" style="'+sv+'">'+g+'<div class="story-kicker">'+ICt+' 회사 정찰</div><div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':"")+(c.line?'<div class="story-ev">'+kw(c.line)+'</div>':"")+'<div class="spacer"></div><div class="story-tease">넘겨서 정찰 근거 보기 →</div></div>';
+    if(c.kind==="core")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+esc(TOC[c.secId]||"")+'</div><div class="story-hl">'+kw(c.headline)+'</div>'+(c.evidence?'<div class="story-ev">'+kw(c.evidence)+'</div>':"")+'<div class="spacer"></div>'+anc+'</div>';
+    if(c.kind==="gap")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+ICw+' 말 vs 행동</div><div class="story-hl" style="font-size:19px">'+kw(c.line)+'</div><div class="spacer"></div></div>';
+    if(c.kind==="allmore")return '<div class="story-card allmore" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">내 이력으론 지원할 가치가 있을까?</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 카드는 회사 정찰 요약입니다. 내 이력 기준 적합도·평결은 앱에서.</div><a class="story-cta" href="'+esc(APP)+'">앱에서 내 적합도 보기 →</a></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  function active(i){dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());}
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
 })();
 </script>
 </body></html>

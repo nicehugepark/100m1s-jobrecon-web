@@ -60,6 +60,58 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .comment .cbody code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
 .comment .err{color:#ff6b6b}
 .comment .cta-app{display:inline-block;margin-top:8px;color:#4f8cff;font-weight:700;text-decoration:none}
+/* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
+.deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
+.ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:54vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 
 </head><body>
@@ -69,6 +121,17 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
     <div class="meta"><span class="co">삼양식품</span><span class="fd">AX 데이터 인텔리전스 팀장</span><span class="ym">2026년 07월 정찰</span></div>
     <div class="ad">AD · 광고</div>
+  </div>
+  
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
   </div>
   <div id="report"><h2>공고 핵심 요건</h2>
 <ul>
@@ -162,9 +225,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 <li><strong>지주-사업회사 구조</strong> — 지주사(삼양라운드스퀘어)가 사업회사(삼양식품) 지분을 보유·지배하는 구조. 오너가 적은 지분으로 그룹 전체를 지배하는 지렛대.</li>
 <li><strong>우지 헤리티지</strong> — 소기름(牛脂)으로 면을 튀기는 삼양 고유 제조 기술. 1989 우지 파동의 상처이자, 지금은 &#x27;삼양1963&#x27;·&#x27;짜르르&#x27; 등 프리미엄 라인의 정면 승부 카드.</li>
 </ul></div>
-  <div class="ad">AD · 광고</div>
-  <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-  <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
 <script>
@@ -281,6 +346,66 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
   }
   digBtn.addEventListener("click",runDig);
   digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="## 2. 공고 핵심 요건\n- **채용 직무**: AX 데이터 인텔리전스 팀장\n- **한 줄 정의**: 신설 AX(AI Transformation) 전담 부서 산하 데이터인텔리전스팀을 **0→1로 세우는 팀장**. 전사 데이터 거버넌스·표준·품질 체계 구축과 도메인별 데이터/AI 과제 발굴·실증(PoC)을 총괄.\n- **경력**: 총 15년 이상 선호(유관 10년 이상 지원 가능), 학사 이상. 데이터 관리·분석 실무 또는 생산/SCM/영업 등 **현업 도메인** 기반으로 팀을 이끌어본 경험.\n- **핵심 역량**: SQL 등 데이터 조회·분석 기본기 + 비즈니스와 데이터 구조를 잇는 시야 + **부서 간 상충 요구 조율** 능력.\n- **우대**: 데이터 거버넌스·MDM(마스터데이터관리)·데이터 품질 PM/파트리더 경험, 식품·제조업 도메인 지식, BI 도구·멘토링 경험.\n- **전형**: 서류 → 1차 실무(화상/대면) → 2차 임원(대면) → 평판조회 → 처우협의·검진 → 최종. 경력직 3개월 수습(급여 동일). 근무지 서울 중구(명동 삼양라운드스퀘어빌딩), 연봉 협의.\n\n한마디로 **\"코드 짜는 자리가 아니라, 없던 데이터 조직을 정치·조율로 세우는 자리\"**다. 15년 선호·팀장 타이틀·거버넌스 강조가 그 성격을 못박는다.\n\n## 3. 회사 서사 · 궤적\n삼양식품의 서사는 **두 번의 현장 관찰이 만든 회사**다. 책상 기획이 아니라 오너의 직관이 히트를 만든 DNA가 핵심이다.\n\n**1세대(식량난 해결)**: 창업자 전중윤은 식품 도메인 출신이 아니라 보험사(동방생명) 창립 멤버였다. 그러나 1960년대 식량난에 \"미군이 버린 음식을 끓인 꿀꿀이죽으로 끼니를 때우는\" 사람들을 보고 라면을 해법으로 떠올렸다. 일본 묘조식품(明星食品)을 직접 찾아가 기술을 무상 원조받고, 라인 발주비 6만 달러는 중앙정보부 인맥(김종필 독대)을 거쳐 미 농림부 차관 자금으로 마련해 **1963년 9월 국내 최초 라면 '삼양라면'** 을 생산했다.\n\n**연혁의 뼈대와 전환점**:\n- **1961** 삼양제유(식용유) 설립 → 삼양공업 → **1963** 삼양라면 → **1969** 업계 최초 베트남 수출(160만 불)\n- **1980년대** 농심에 1위 역전당함(농심 60% vs 삼양 20%) — 이 열세는 지금도 국내 시장에 그대로 남았다\n- **1989 우지 파동** — 이미지 치명타. **1997 대법원 무죄** 확정됐으나 이미 브랜드가 크게 훼손됨\n- **1997~1998** 외환위기로 화의신청(사실상 부도 위기) → **2005** 화의종결\n- **2010** 전중윤 은퇴, 2세 전인장 취임(영업익 2010년 141억→2012년 76억으로 반토막날 만큼 침체)\n- **2012 불닭볶음면 출시** — 이 회사를 되살린 결정적 전환점. 창업주 며느리 **김정수**가 2010년 고교생 딸과 명동 산책 중 매운 볶음밥을 기다리는 인파를 보고 착안, 1년간 매운 소스 2톤·닭 1,200마리를 써가며 개발\n- **2022** 밀양 신공장 준공(수출 전용) → **2023** 지주사 **삼양라운드스퀘어**로 개칭, '맵탱' 출시\n- **2025** 시가총액 10조 돌파, **식품업계 시총 1위** → **2026.1** 본사 하월곡동→명동 이전 → **2026.5** 김정수 회장 승진, 1분기 매출 7,144억·영업익 1,771억 분기 최대\n\n**미션·비전의 일관성**: 창업정신 **\"정직과 신용\"**(1961년부터 60여 년 반복), 선대 유지 \"식품으로 인간 백세시대를 열겠다\", 현재 슬로건 **\"Delicious Together\"**·그룹 슬로건 **\"Round Square\"**. 다만 \"정직과 신용\"은 1989 우지 파동으로 한 번 정면 훼손된 문구이고, \"글로벌 종합식품기업 도약\"은 2023년 리브랜딩과 함께 나온 **최신 버전**이지 오래된 뿌리가 아니다.\n\n**판정**: 껍데기 버즈워드가 아니라 **부도 위기(1998)→창업 60년 만에 식품 시총 1위(2025)** 로 이어지는 인과가 뚜렷한 탄탄한 서사다. 단 그 반등이 **불닭 단일 제품에 압도적으로 얹혀** 있다는 점이 다음 블록의 핵심이며, 이번 AX 부서 신설·데이터 거버넌스 0→1 채용은 바로 그 \"불닭 이후\"를 대비한 체질 전환의 일부로 읽어야 한다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n**검증된 실적(재무 체력은 최상위권)**:\n- 2025년 **매출 2조 3,518억 원, 영업이익 5,242억 원**(DART). 순익 3,886억 규모. 매출 궤적 2022 9,090억→2023 1.19조→2024 1.73조→2025 2.35조로 3년 폭증\n- **영업이익률 21%대**(2025 상반기 21.7%). 농심 추정 4.7%·국내 평균 6% 대비 압도적. 매출원가율 56%(농심 71%·오뚜기 82%)\n- **해외 비중 급등**: 2020년 57%→2024년 77%→2026년 1분기 약 80%. 2026 상반기 K라면 수출 9.35억 달러(전년 대비 +28%, 반기 역대 최대)로 삼양이 견인\n- 최근 이벤트(면접 인용 재료): **우지 헤리티지 프리미엄 라인 확장** — '삼양1963', 짜장라면 **'짜르르'**, '큰컵 우지파개장' 등을 잇달아 출시해 불닭 편중을 국내에서 보완 시도. **2027년 중국 신공장 가동** 예정(증권가 목표주가 188만~195만원, \"식음료 최선호주\")\n\n**자산 기반 안정성**: 밀양 2공장(수출 전용)·원주·익산 생산설비, 2026년 이전한 명동 삼양라운드스퀘어빌딩(자가 사옥), 두꺼운 이익잉여금, 로가(식물성 콜라겐)·스콘·마크비전 등 전략적 투자 지분. **불황·적자에도 버틸 체력은 확실 → 고용 안정성 토대는 강함.** 단 실적이 불닭·환율·미주 경쟁에 크게 좌우되는 구조적 변동성이 상존한다.\n\n**실질 보상 · 복리후생(지원자 즉시 팩터 — 여기가 반전)**:\n- 삼양식품 **직원 평균 급여 2021년 4,290만→2024년 5,424만 원**(3년 26.4% 증가). 그러나 **2024년 증가율은 3.7%로 라면 3사 중 최저**(농심 8.2%·오뚜기 6.1%). 언론 표현 그대로 **\"실적은 1위, 직원 보상은 꼴찌\"**\n- 반면 오너 보상은 급증 — 김정수 회장 2024년 연봉 **32억 2,200만원(전년 대비 71.7%↑)**, 직원 평균의 약 35배\n- 경력직 우대로 연봉이 오르나 **\"경력직만 높게 쳐줘 기존 장기근속자 불만\"**·\"착시 현상\"이라는 지적 존재\n- 🔴 위 평균 5,424만원은 **전 직급·생산직 포함 '회사 지표'** 로, 이 공고(15년+ 팀장급)의 개인 실수령과는 괴리가 크다. 팀장 처우는 **협의(공고상 연봉 '협의')** 이므로 별도 밴드로 봐야 한다. 실제 팀장급 연봉·성과급·복지는 **공개 자료 미확인 → 처우협의 단계에서 반드시 확인**.\n\n**숨은 리스크**:\n- **고용의 질 악화 신호**: 정규직 비중 2024년 81.4%→2025년 73.3%로 하락(농심 98.1%·오뚜기 99%), 계약직이 임직원 4명 중 1명, **이직·계약직 라면 3사 중 최고**. 급성장의 이면. 단 이는 주로 생산직 증설 영향이라 본사 사무·전문직에 그대로 적용되진 않으므로 면접에서 직군별로 확인 필요\n- **불닭 단일 제품 리스크**: 불닭볶음면이 전체 매출의 약 70%(약 1.6조). 대체 브랜드 '맵탱'은 \"시장 관심을 못 얻는\" 상황. 중국의 카피 제품 범람도 리스크\n- **국내 열세**: 국내 점유율 여전히 10%대 초반(2024년 11.4%, 농심 56.3%·오뚜기 23.5%에 이어 3위)\n- **지배구조 이슈**: 내부거래 비중 47.7%(식품사 2위), 지주사 체제 후에도 사익편취 구조 미해소 지적 → 코리아 디스카운트 요인\n\n**주장 vs 증명 간극**: 회사는 해외 성장·불닭 누적판매(100억 개)·수출 실적을 전면에 내세우지만, **불닭 초집중 단일 제품 리스크와 국내 열세는 강조하지 않는다.** \"종합식품기업\" 서사가 실체인지는 헬스케어 브랜드 '스핀들'(2026.5 론칭)·'탱글' 프로틴 파스타의 2~3년 매출로 확인해야 한다.\n\n**사업 구조상 진짜 위험/해자와 이 자리의 의미**: 삼양의 해자는 **불닭이라는 글로벌 IP 하나**다. 이 자리(AX 데이터 인텔리전스)의 존재 이유가 바로 여기 있다 — 회사는 \"불닭 한 방\"의 오너 직관 의존에서 벗어나 **데이터 기반 의사결정으로 다음 히트와 SCM·생산 효율을 만들려는 체질 전환** 중이고, 이 팀은 그 0→1 엔진이다. **기회**: 전사 데이터 표준이 없는 백지 상태 → 성과를 남기면 커리어 임팩트가 크다. **위험**: 오너·현장 직관이 여전히 강한 조직에서 데이터 조직의 정치적 입지가 약할 수 있다 → \"경영진이 데이터 기반 의사결정에 실제로 얼마나 권한을 실어주는가\"가 이 자리 성패의 갈림길. 무엇이 확인되면 판단이 바뀌나: **AX 부서의 보고라인·예산·경영진 스폰서십**이 강하게 확인되면 매력도 급상승.\n\n## 8. 산업·시장·경쟁 지형\n**산업 규모·성장성**: K라면 수출은 커지는 파이다. 2026 상반기 수출 9.35억 달러(+28%, 반기 최대), 연 10억 달러를 눈앞에 뒀다. **글로벌 성장 산업의 순풍을 받는 위치 → 고용·성장 전망에 긍정.** 단 국내 라면 시장 자체는 정체 구조(짜파게티 42년 1위 등 고착).\n\n**이 회사의 실질 순위·지위 — 이중적**:\n- **국내**: 3위 팔로워. 2024년 점유율 11.4%(농심 56.3%·오뚜기 23.5%에 이어), 35년 이어진 농심 아성에 눌려 있음\n- **글로벌·수익성**: 리더급. 미주 시장 성장·21%대 영업이익률로 경쟁사 압도. \"기타(Others)\" 분류에서 5~6위권 진입, 일본 닛신 3위 자리를 위협\n- 해외 매출 약 2조 원(2024 추정)으로, 농심의 해외 매출(약 1.4조 추정)을 **해외 영업 실적만 보면 삼양이 앞선다**\n\n**주요 경쟁사·격차**: 국내 3사 구도(농심·오뚜기·삼양). 삼양은 **성장·수익성에서 앞서고 국내 점유·제품 다양성에서 뒤진다.** 글로벌에선 일본 도요수산·닛신·농심과 미주에서 경쟁 — 2분기 삼양 미주 매출 +35.2%인 반면 도요수산·닛신·농심은 하락. **격차 방향은 삼양에 유리하게 벌어지는 중.** 국내에선 오뚜기와 '프리미엄 짜장·틈새'에서 2위 격전.\n\n**시장 구조**: 국내는 3사 과점(짜파게티 42년 1위 등 강자 고착). 🔴 구직자 양면 — **과점은 강자에 속하면 든든하나 삼양은 국내에선 3위 팔로워**라 이 안정성의 수혜를 국내에선 덜 받는다. 대신 **글로벌에선 역동적 성장 국면**의 승자 쪽에 서 있다. (특정 담합 등 확정 규제 사실 근거 없음 — 언급 안 함.)\n\n**정성 판정**: 삼양은 **\"국내 3위·글로벌 신흥 승자\"** 라는 비대칭 포지션이다. 해자는 **불닭이라는 대체 불가 글로벌 매운맛 IP + 21%대 초격차 수익성**, 발목은 **국내 열세와 불닭 단일 의존**. 지원자에겐: 배가 순풍(글로벌 수출·중국 신공장)을 받고 재무 체력이 최상위권이라 **고용 안정·회사 성장 기대는 강한 편**이다. 다만 성장의 열매가 직원 보상으로 잘 안 내려오는 점(블록4)이 병존한다. 무엇이 확인되면 판단이 바뀌나: **불닭 외 신제품(우지 프리미엄·스핀들 헬스케어)이 매출로 검증되면** 구조적 취약성이 완화되고 이 데이터 조직의 전략적 무게도 커진다 — 면접에서 \"탈불닭 포트폴리오의 실제 성과와 조직 투자 강도\"를 물어라.\n\n## 6. 경영진 · 투자자·소유 구조\n**대표·경영진**:\n- **김정수 (대표이사 회장)** — 창업주 전중윤의 며느리, 전인장 부인. 1994년 결혼, 1998년 외환위기·우지파동 위기 때 시아버지 권유로 입사. 전업주부 출신이나 영업본부장·부사장을 거치며 **입사 초기 전국 영업소를 직접 돌고 소비자 경험을 무기로** 불닭볶음면 개발을 주도. 2021년 부회장, **2026년 5월 회장 승진**. WSJ가 \"500억 달러 인스턴트 라면 산업을 뒤흔드는 여성\"으로 조명. 2024년 연봉 32.2억. 최근 한경협 '갓생한끼' 등 청년 멘토로도 활동\n- **김동찬 (대표이사)** — 각자대표(전문경영인). 2025 대한민국 신성장경영대상 시상식에서 \"1억 달러 수출탑으로 시작해 9억 달러 수출탑까지 받았다\"며 글로벌 개발 의지 표명. 상세 배경은 공개 정보 미확인 → **면접 확인 권장**\n- **전병우 (COO 전무)** — 삼양家 3세(1994년생). 2019년 해외사업본부 부장 입사→2020 이사→2023 상무→2025 전무(COO)로 6년 만에 핵심 경영진. **헬스케어비즈니스유닛장 겸 미토믹스(Mitomics) 연구소장.** 김정수 회장이 취임 사흘 만에 20만 주 증여로 승계 시동. **헬스케어 브랜드 '스핀들'(첫 제품 '근력엔 아커만시아')의 성과가 경영능력 시험대**\n- **전인장** — 2세 회장(김정수 남편), 지분 보유 지배구조 등장\n\n특징: **오너 일가 중심의 강한 가족경영.** 김정수(2세 부인)→전병우(3세) 승계 진행 중, 전문경영인 김동찬이 각자대표로 병존. \"고점 승계 베팅\"이라는 시장 평가가 있음.\n\n**소유·자본 구조(코스피 상장사 003230, 1975년 상장)**:\n- **최대주주: 지주사 삼양라운드스퀘어 34.92%**(특수관계인 포함 46.14%). 엠디유니콘제일차 8.76%, **국민연금 11.36%**, 김정수 4.33%, 전인장 3.13%, 삼양이건장학재단 1.68%\n- 오너 일가가 **지주사를 통해 간접 지배**하는 전형적 \"지주-사업회사\" 구조. 국민연금 등 기관은 안정 지분\n- 리스크: **내부거래 47.7%(식품사 2위), 중복상장 디스카운트** — 코리아 디스카운트 요인. 소액주주 이익과 오너 승계 재원이 충돌할 수 있는 긴장(\"고점 승계 베팅\")\n\n**정렬 인사이트**: 경영진 비전(\"글로벌 종합식품기업\"·헬스케어·데이터 기반 지능화)과 소유 구조(안정적 오너·지주 지배 + 국민연금)는 **큰 틀에선 정렬** — 급격한 M&A 회수보다 안정적 장기 지배·승계가 무게중심이다. 지원자 관점: **의사결정이 오너로 집중**돼 있어 이 AX 데이터 조직이 힘을 받으려면 **오너·3세(전병우가 이끄는 헬스케어·데이터 신사업)의 스폰서십**이 관건이다. 안정성은 높으나(재무·지분 모두), **성과 보상은 오너에 후하고 직원에 박한 패턴**이 확인되니 처우는 협의 단계에서 냉정하게 따져라. 이 자리는 신설 조직 팀장이므로 **보고라인이 CEO/COO 어디로 붙는지**가 곧 조직의 정치적 무게이자 당신의 실행력이다 — 반드시 물어라.\n\n## 7. 용어 · 개념 풀이\n- **AX (AI Transformation)** — AI를 전사 업무·프로세스에 이식해 체질을 바꾸는 전환. 삼양이 신설한 전담 부서명이며, 이 팀은 그 산하 데이터 축.\n- **데이터 거버넌스** — 데이터의 표준·품질·소유·접근을 규정하고 관리하는 전사 체계. 이 자리의 핵심 미션(0→1 구축).\n- **MDM (Master Data Management)** — 고객·제품·거래처 등 핵심 '기준정보'를 전사에서 하나의 신뢰본으로 통합 관리하는 것. 우대사항.\n- **PoC (Proof of Concept)** — 실증. 아이디어·기술이 실제 작동·가치를 내는지 소규모로 검증하는 단계.\n- **데이터 인벤토리** — 회사가 보유한 데이터 자산의 목록·소재·의미를 정리한 '데이터 지도'.\n- **Data-driven Decision** — 경험·직관이 아닌 실시간 데이터에 근거한 의사결정. 이 조직의 존재 이유.\n- **SCM (Supply Chain Management)** — 원자재→생산→물류→판매 공급망 관리. 식품·제조 도메인 데이터 과제의 핵심 영역.\n- **BI 도구** — Tableau·Power BI 등 데이터를 시각화·분석하는 비즈니스 인텔리전스 툴. 우대.\n- **각자대표** — 두 명 이상의 대표가 각각 단독으로 회사를 대표·결정할 수 있는 체제. 삼양은 김정수(오너)·김동찬(전문경영인) 병존.\n- **지주-사업회사 구조** — 지주사(삼양라운드스퀘어)가 사업회사(삼양식품) 지분을 보유·지배하는 구조. 오너가 적은 지분으로 그룹 전체를 지배하는 지렛대.\n- **우지 헤리티지** — 소기름(牛脂)으로 면을 튀기는 삼양 고유 제조 기술. 1989 우지 파동의 상처이자, 지금은 '삼양1963'·'짜르르' 등 프리미엄 라인의 정면 승부 카드.", CO="삼양식품", POS="AX 데이터 인텔리전스 팀장", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?]|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  var PAL={hook:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],2:['#34d399','#bff3da','rgba(52,211,153,.15)'],3:['#a78bfa','#e0d7ff','rgba(167,139,250,.16)'],4:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],8:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],allmore:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  var TOC={2:"요건",3:"서사",4:"리스크",8:"시장",6:"경영진"};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  var cards=[];
+  var hookLine=null,best=0;[4,2,3,8,6].forEach(function(id){if(!byId[id])return;lines(byId[id].body).forEach(function(l){var c=clean(l);if(c.length<14||c.length>128)return;if(/^\*\*(판정|종합|결론)\*\*/.test(c))return;var v=impact(c);if(v>best){best=v;hookLine=clip(c,1);}});});
+  if(!hookLine&&byId[3]){var c3=lines(byId[3].body).map(clean).filter(function(s){return s.length>10;})[0];if(c3)hookLine=clip(c3,1);}
+  cards.push({kind:"hook",line:hookLine});
+  [2,3,4,8,6].forEach(function(id){var b=byId[id];if(!b)return;var ls=lines(b.body);var hl=headline(ls,id===4);if(!hl)return;cards.push({kind:"core",secId:id,headline:hl,evidence:evidence(ls,hl)});});
+  var gapRe=/(주장\s*vs\s*증명|증명\s*간극|괴리|말뿐|말과\s*행동|선택적\s*(공개|IR)|공언|과장(?:하|한|된|해))/;var gap=null;[4,3].forEach(function(id){if(gap||!byId[id])return;var hit=lines(byId[id].body).filter(function(l){return gapRe.test(clean(l))&&clean(l).length>12;})[0];if(hit)gap=clip(clean(hit),2);});
+  if(gap)cards.push({kind:"gap",line:gap});
+  cards.push({kind:"allmore"});
+  function card(c,i){
+    var p=PAL[c.kind==="core"?c.secId:c.kind]||PAL.allmore,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    var anc=(c.secId?'<button class="story-anchor" data-sec="sec-'+c.secId+'">'+ICs+' 원문 근거 보기</button>':"");
+    // 표지 — 회사명 대형 타이포가 지배, 상단정렬(위 spacer 제거)로 dead band 소멸. /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="hook")return '<div class="story-card hook" style="'+sv+'">'+g+'<div class="story-kicker">'+ICt+' 회사 정찰</div><div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':"")+(c.line?'<div class="story-ev">'+kw(c.line)+'</div>':"")+'<div class="spacer"></div><div class="story-tease">넘겨서 정찰 근거 보기 →</div></div>';
+    if(c.kind==="core")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+esc(TOC[c.secId]||"")+'</div><div class="story-hl">'+kw(c.headline)+'</div>'+(c.evidence?'<div class="story-ev">'+kw(c.evidence)+'</div>':"")+'<div class="spacer"></div>'+anc+'</div>';
+    if(c.kind==="gap")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+ICw+' 말 vs 행동</div><div class="story-hl" style="font-size:19px">'+kw(c.line)+'</div><div class="spacer"></div></div>';
+    if(c.kind==="allmore")return '<div class="story-card allmore" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">내 이력으론 지원할 가치가 있을까?</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 카드는 회사 정찰 요약입니다. 내 이력 기준 적합도·평결은 앱에서.</div><a class="story-cta" href="'+esc(APP)+'">앱에서 내 적합도 보기 →</a></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  function active(i){dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());}
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
 })();
 </script>
 </body></html>

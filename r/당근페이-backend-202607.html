@@ -63,6 +63,55 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:54vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 
 </head><body>
@@ -74,88 +123,90 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     <div class="ad">AD · 광고</div>
   </div>
   
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
+  </div>
   <div id="report"><h2>공고 핵심 요건</h2>
-<p><strong>채용 직무</strong>: 백엔드 개발(Offline Payment · Payment Core · Service Core)</p>
+<p><strong>채용 직무</strong>: Backend 개발(당근페이)</p>
 <ul>
-<li><strong>경력</strong>: 3년 이상의 서버 개발 경험 또는 이에 준하는 역량 (공고 명시)</li>
-<li><strong>필수 스택</strong>: Kotlin·Spring Boot·Spring Batch·JPA 기반 JVM 환경, REST API·gRPC(서비스 간 고속 통신 프로토콜)·GraphQL·TCP 등 다양한 네트워크 인터페이스 (공고 명시)</li>
-<li><strong>핵심 역량</strong>: MSA(마이크로서비스 아키텍처 — 서비스를 잘게 쪼개 독립 배포하는 구조)에서의 분산 트랜잭션 처리, 동시성 환경 금융 데이터 정합성 유지, 내결함성(Fault Tolerance — 일부가 고장나도 전체가 버티는 성질)·탄력성(Resilience) 설계 (공고 명시)</li>
-<li><strong>인프라 스택</strong>: MySQL·Redis(인메모리 캐시/저장소)·Kafka(대용량 이벤트 스트리밍)·Central Dogma(라인이 만든 설정 관리 저장소)·Apache Flink(실시간 스트림 처리), AWS·Kubernetes·Argo CD/Workflow, Grafana·Sentry·Datadog(모니터링·에러추적) (공고 명시)</li>
-<li><strong>우대</strong>: 대규모 트래픽·동시성 문제 이해, 금융·핀테크 서비스 경험, 사용자 중심 프로덕트 사고 (공고 명시)</li>
-<li><strong>프로세스 특이점</strong>: 직무 인터뷰 단계에 <strong>시스템 디자인 인터뷰</strong> 포함, 3개월 수습 (공고 명시)</li>
+<li><strong>경력</strong>: 3년 이상 서버 개발 경험 또는 준하는 역량. 신입·초저연차용은 아니고, 이미 프로덕션 서버를 굴려본 미드레벨 이상을 노린다.</li>
+<li><strong>핵심 스택</strong>: Kotlin/Spring Boot·Spring Batch·JPA 중심의 JVM 환경. MySQL·Redis·Kafka·Apache Flink, gRPC·GraphQL·Netty·TCP, AWS·Kubernetes·Argo CD/Workflow·GitHub Actions, 관측은 Grafana·Sentry·Datadog. 형상관리형 설정에 <strong>Central Dogma</strong>(LINE이 만든 설정 저장소)까지 쓰는 게 특징.</li>
+<li><strong>실질 난이도</strong>: MSA 분산 트랜잭션·동시성 하에서 <strong>금융 데이터 정합성(&quot;단 1원의 오차도 없이&quot;)</strong>, 내결함성·탄력성, 급증 트래픽 대응이 핵심. 결제 코어는 &quot;한 번의 장애가 전사 파급&quot;이라 명시 — 그만큼 온콜·장애대응 부담이 실재하는 자리다.</li>
+<li><strong>팀 3택</strong>: Offline Payment(현장결제·혜택·CRM), Payment Core(결제·정산·뱅킹 코어), Service Core(계정·인증·API Gateway·메시지 플랫폼). 지원 시 <strong>어느 팀인지</strong>가 업무 성격을 완전히 가른다.</li>
+<li><strong>절차</strong>: 서류 → 화상 → 직무 인터뷰(시스템 디자인 인터뷰 포함) → 컬처핏+레퍼런스 체크 → 처우협의 → 입사. 3개월 수습. <strong>시스템 디자인 준비는 필수.</strong></li>
 </ul>
-<p>---</p>
 <h2>회사 서사 · 궤적</h2>
-<p><strong>출발점 — 결제 시장 정복이 아니라 모회사 마찰 제거.</strong> 당근페이는 독립 창업이 아니라 당근(옛 당근마켓)이 자기 거래 인프라를 내재화하려 만든 100% 자회사입니다. 첫 기능이 &quot;중고거래중인 이웃과 간편 송금&quot;, 즉 <strong>채팅방 안 송금 버튼</strong>이었다는 점이 정체성을 규정합니다. 결제 일반이 아니라 <strong>당근의 채팅·중고거래 플로우에 종속된 결제</strong>에서 시작했습니다. 지원자는 이 회사를 스탠드얼론 핀테크가 아니라 <strong>모회사 전략의 실행 팔(arm)</strong>로 이해하는 데서 출발해야 합니다.</p>
-<p><strong>연혁의 사다리(인과로 연결):</strong></p>
+<p><strong>출발점은 독립 창업이 아니라 모회사의 필요다.</strong> 당근페이는 당근(옛 당근마켓)의 100% 자회사로, 중고거래 채팅방에서 &quot;계좌 부르고, 이체하고, 확인하는&quot; 현금 주고받기의 마찰을 없애려고 태어났다. &quot;이제는 현금 챙길 필요가 없어요&quot;라는 초기 문구가 페인포인트를 그대로 드러낸다. 즉 세상을 바꾸겠다는 서사가 아니라 <strong>&quot;모회사 거래를 결제로 잠근다&quot;는 도구적 미션</strong>에서 시작했다. 관통하는 키워드는 2021년부터 지금까지 일관되게 <strong>하이퍼로컬(동네 기반)</strong> — 모회사의 &#x27;지역생활 커뮤니티&#x27; 정체성과 정확히 맞물린다. 미션은 흔들리지 않지만 그만큼 좁다.</p>
+<p>연도별 궤적:</p>
 <ul>
-<li><strong>2021.03</strong> 자회사로 출범, <strong>2021.11</strong> 제주에서 첫 공개하며 &quot;연내 전국 확대&quot; 선언</li>
-<li><strong>2022.02~03</strong> &#x27;시작해요 당근페이&#x27; 캠페인으로 전국 확대 → <strong>2022.09</strong> 계좌송금 출시(공과금·학원비까지, 송금을 중고거래 밖으로 확장) → <strong>2022.10</strong> 출시 7개월 만에 가입자 320만 돌파</li>
-<li><strong>2023.11</strong> 하나은행·하나카드와 지역 기반 금융 협약 → <strong>2024.07</strong> &#x27;당근머니 하나 체크카드&#x27; 출시(동네가게 결제 시 월 3만원 적립) → <strong>2024.09</strong> 선불충전금(사용자가 미리 충전해둔 돈)이 은행이자를 받는 <strong>혁신금융서비스로 지정</strong>(규제 당국이 특례로 인정)</li>
-<li><strong>2025.10</strong> 더벤티 등 외부 가맹점으로 간편결제 확대 → <strong>당근 생태계 밖 결제처 확보 시작</strong></li>
-<li><strong>2025</strong> 창업자 <strong>김재현 대표가 5년간 유지하던 당근페이 대표직을 이진우 대표에게 넘김</strong> — 후임 발탁 자체가 수익다각화·실적개선 &#x27;특명&#x27;의 신호로 읽힙니다</li>
-<li><strong>2026.03</strong> &quot;결제액 30배 성장&quot; 내세우며 전 직군 공개 채용</li>
+<li><strong>2021.03</strong> 당근페이 법인 출범(자회사).</li>
+<li><strong>2021.11</strong> 제주에서 첫 공개, &quot;연내 전국 확대&quot; 예고 — 하이퍼로컬 결제 파일럿.</li>
+<li><strong>2022.02~03</strong> 전국 확대, &quot;시작해요 당근페이&quot; 캠페인.</li>
+<li><strong>2022.09</strong> 계좌송금 출시(공과금·학원비 등 일상 송금으로 확장).</li>
+<li><strong>2022.10</strong> <strong>출시 7개월 만에 누적 가입자 320만명 돌파</strong> — 초기 견인 지표.</li>
+<li><strong>2023.07</strong> &#x27;사기 의심 계좌 알림&#x27; 도입(중고거래 신뢰 강화).</li>
+<li><strong>2023.11</strong> 당근·당근페이가 <strong>하나은행·하나카드와 지역 기반 금융 협약</strong>.</li>
+<li><strong>2024.07</strong> <strong>&#x27;당근머니 하나 체크카드&#x27; 출시</strong>(동네가게 결제 시 월 3만원 적립) — 제휴사와 실물 카드 진입.</li>
+<li><strong>2024.09</strong> 당근머니 등 <strong>선불충전금이 은행이자를 받는 혁신금융서비스로 지정</strong>(규제 샌드박스 활용).</li>
+<li><strong>2025.10</strong> 더벤티 등 외부 가맹점으로 간편결제 확산.</li>
+<li><strong>2026.02</strong> &#x27;당근부동산 안심송금&#x27;(NH농협은행 제휴 에스크로), 선불충전금 3년 만 8배 성장(역대 최대) 보도.</li>
+<li><strong>2026.03</strong> <strong>전 직군 공개 채용</strong> + &quot;결제액 30배 성장&quot; 마케팅 — 이번 공고가 여기 속한다.</li>
 </ul>
-<p>궤적은 <strong>송금 → 계좌송금 → 카드/제휴 → 규제 인가 → 외부 가맹</strong>으로, 전형적 결제사업 확장 사다리를 정직하게 밟고 있습니다. 다만 폭발적 속도가 아니라 <strong>제휴(하나금융·농협)·규제 인가 중심의 &#x27;느리고 안전한&#x27; 확장</strong>입니다. 이진우 대표는 최근 인터뷰에서 &quot;당근온도(매너온도 — 이용자 신뢰 점수)를 신용 척도로 삼는 포용금융&quot;과 &quot;간편결제를 넘어선 <strong>하이퍼로컬(지역 밀착) 금융 생태계</strong>&quot;를 청사진으로 제시했습니다.</p>
-<p><strong>판정</strong>: 버즈워드 나열이 아니라 <strong>전환점이 인과로 연결된 탄탄한 서사</strong>입니다. 단, 그 서사의 주어는 늘 &quot;당근을 위해&quot;로 귀결됩니다 — 독자적 비전 언어가 약한 게 구조적 한계입니다.</p>
-<p>---</p>
+<p><strong>핵심 전환</strong>: 초기 폭발(320만명) 후 궤적은 단독 돌파가 아니라 <strong>하나은행·하나카드·NH농협은행 제휴 + 규제 샌드박스</strong>로 이동했다. 제도권 파트너에 올라타는 &#x27;결합형 확장&#x27; 노선이다. 그리고 지배구조 측면의 결정적 사건 — <strong>2025년 창업자 김재현 대표가 5년간 겸직하던 당근페이 대표직을 내려놓고 이진우를 후임으로 앉혔다.</strong> 초기 서비스를 설계한 안중현 부사장(네이버페이 초기→토스뱅크 오픈멤버 CPO)은 <strong>2025년 7월 넥써쓰(스테이블코인 TF)로 이직</strong>했다. 설계자는 떠났고 새 대표에게 &#x27;수익 다각화·실적 개선&#x27; 특명이 걸린 국면이다.</p>
+<p><strong>판정</strong>: 궤적 자체는 연도·제휴·규제 사건이 인과로 이어지는 <strong>실체 있는 서사</strong>다. 다만 그 서사의 성장 벡터가 대부분 모회사 트래픽과 은행 제휴에 기대어 있다는 점에서, &quot;독립 핀테크의 도약 스토리&quot;라기보다 <strong>&quot;모회사 생태계를 결제로 심화하는 인프라 서사&quot;</strong>로 읽는 게 정확하다.</p>
 <h2>실체 점검 · 숨은 리스크 · 실질 보상</h2>
-<p><strong>검증된 실적 — 모회사는 단단, 당근페이 단독은 적자.</strong></p>
+<p><strong>검증된 것 vs 말뿐인 것을 분리하는 게 이 회사의 핵심이다.</strong></p>
 <ul>
-<li><strong>모회사 당근</strong>(2025년 실적, 2026.03 발표): 매출 <strong>2,706억(+43%)</strong>, 영업이익 <strong>670억(+78%)</strong>, 순이익 <strong>230억(+172%)</strong> — 2년 연속 흑자에 첫 법인세 대상. 매출의 <strong>99% 이상이 광고</strong>(로컬 디스플레이·검색광고)입니다.</li>
-<li><strong>당근페이 포함 종속기업</strong>(캐롯 캐나다·재팬·당근페이·당근서비스): 합산 <strong>영업손실 525억</strong>(대부분 캐나다). 당근페이는 <strong>모회사가 반복 수혈하는 구조</strong> — 2024년 150억, 2025년 1~2월 추가 150억 출자.</li>
-<li>홍보 지표는 &quot;가입자 320만&quot;·&quot;결제액 30배 성장&quot;을 강조하나, <strong>거래액(TPV)·매출·MAU·단독 손익은 침묵</strong>합니다. 초기 성장 지표는 크게 말하되 수익성 지표는 비공개 — <strong>결제 자체의 단독 수익성을 아직 자신 있게 내세우지 못한다는 신호</strong>로 읽힙니다. (참고: 30배는 낮은 초기 기저에서의 배수일 수 있어, 면접에서 절대 거래액을 물어 실체를 확인하세요.)</li>
+<li><strong>검증된 실적</strong>: 채팅방 송금·계좌송금 실서비스, 하나 체크카드 실물 출시, 선불충전금 이자(혁신금융서비스 지정), 부동산 안심송금(NH 제휴) — 여기까지는 실행됐다. 선불충전금이 3년 만 8배로 역대 최대라는 보도(2026.02)도 있다. 마케팅에서 &quot;결제액 30배&quot;를 반복하는데, 이건 <strong>작은 기저에서의 배수</strong>일 가능성이 크므로 절대액으로 검증해야 한다.</li>
+<li><strong>결정적 공백 — 단독 손익</strong>: <strong>당근페이 단독 매출·거래액(TPV)·손익은 공개되지 않는다.</strong> 오히려 드러난 숫자는 반대 신호다. 뉴스토마토(2026)에 따르면 <strong>캐롯 캐나다·캐롯 재팬·당근페이·당근서비스 등 종속기업 합산 영업손실 525억원</strong> — 대부분은 해외지만 당근페이도 이 적자 우산 안에 있다. 모회사는 2024~2025년 페이·글로벌에 <strong>수백억을 반복 수혈</strong>(2025년 당근페이에 150억, 2026년 1~2월 추가 150억 출자). 즉 <strong>당근페이는 아직 자기 발로 서지 못하고 모회사 자본으로 굴러간다.</strong></li>
+<li><strong>자산 기반 안정성</strong>: 당근페이 자체 자산은 얇다(실물 카드·선불충전금 운용은 제휴사 인프라 기반). 대신 <strong>고용 안정의 진짜 토대는 모회사 당근의 체력</strong>이다 — 모회사는 2024년 흑자전환 후 2025년 연결 매출 2,706억(+43%), 영업이익 670억(+78%), 순이익 230억(+172%)으로 첫 법인세 대상이 됐고 현금창출이 안정적이다. <strong>모회사가 두껍기 때문에 페이 적자를 감내하며 수혈할 여력이 있다</strong> → 단기 고용 안정성은 오히려 여기서 나온다. 다만 이는 <strong>&quot;내 사업이 벌어서&quot;가 아니라 &quot;모회사가 광고로 벌어서 버텨준다&quot;</strong>는 종속적 안정임을 직시해야 한다.</li>
+<li><strong>실질 보상·복리후생</strong>: 공고에 <strong>연봉·성과급·스톡옵션·복지 수치 없음.</strong> &quot;근무조건·복지는 당근마켓과 동일&quot;이라고만 명시 → 당근 본사 처우 벤치마크가 유효하다. 다만 <strong>당근페이 특정 연봉·평점(잡플래닛/블라인드/크레딧잡)은 공개 확인 불가 → 처우협의 단계와 면접에서 직접 확인 필요.</strong> (검색에 뜨는 &#x27;카카오페이 연봉 1000만원 인상&#x27; 등은 다른 회사 얘기로, 당근페이와 무관하니 참고치로 삼지 말 것.)</li>
+<li><strong>숨은 리스크 — 선불충전금 운용 논란</strong>: 2026.05 뉴스토마토가 <strong>&quot;당근의 거대 예치금 — 임의 대금 동결·사적 운용 논란&quot;</strong>을 보도했다. 선불충전금은 회계상 부채지만 실질은 당근이 운용 가능한 현금성 자산에 가깝다는 지적이다. 이는 <strong>전자금융업 규제 리스크의 핵심 뇌관</strong> — 규제가 조이면 사업모델 일부가 흔들린다. 백엔드 지원자에겐 곧 <strong>&quot;규제·정합성·감사 대응 부담이 큰 도메인&quot;</strong>이라는 뜻이고, 동시에 이 회사가 왜 &quot;1원의 오차도 없이&quot;를 강조하는지의 배경이다.</li>
+<li><strong>사업 구조상 진짜 해자/위험</strong>: 유일한 해자는 <strong>모회사 트래픽(4개국 1,400여 지역 중고거래 4천만 사용자)</strong>이라는, 다른 페이가 못 가진 채널이다. 하지만 위험은 마진 구조 — 간편결제는 원래 수수료 박한 사업이고, 혜택·적립(월 3만원 등)을 뿌려 사용자를 끌면 <strong>비용이 매출을 앞선다.</strong> 규모가 커진다고 자동으로 이익이 나는 구조가 아니다. <strong>무엇이 확인되면 판단이 바뀌나: 당근페이 단독 TPV·수수료 매출·손익이 공개되고 흑자 궤도가 보이면, &#x27;종속 인프라 팀&#x27;에서 &#x27;독립 성장 옵션&#x27;으로 재평가할 수 있다.</strong> 그 전엔 &#x27;핀테크 유니콘&#x27;으로 오인하지 말 것.</li>
 </ul>
-<p><strong>자산 기반 안정성.</strong> 당근페이의 체력은 자기 유보가 아니라 <strong>모회사 당근의 현금창출력</strong>에 걸려 있습니다. 모회사는 광고로 매년 수백억 흑자를 내고 그 일부를 당근페이에 붓는 구조 — 당근페이 단독 런웨이(버틸 자금)는 사실상 <strong>당근 광고 실적의 함수</strong>입니다. 또 하나 주목할 자산은 <strong>선불충전금</strong>(당근머니 충전 잔액): 3년 만에 8배로 역대 최대이며 회계상 부채지만 실질은 운용 가능한 현금성 자산에 가깝습니다. 이게 당근페이의 진짜 지렛대이자 동시에 리스크입니다.</p>
-<p><strong>실질 보상 · 복리후생.</strong> 당근페이 단독의 연봉·복지·평점 공개 수치는 <strong>확인 필요</strong>입니다. 공고상 &quot;근무 조건·복지는 당근마켓과 동일&quot;이라 명시돼 있어 모회사 처우에 준합니다. <strong>핵심 협상 포인트</strong>: 채용은 당근페이 소속으로 이뤄지므로 스톡옵션이 <strong>당근페이 법인 기준인지 모회사 당근 기준인지</strong> 반드시 확인하세요. IPO·구주거래 업사이드는 모회사 당근에 연동될 가능성이 높습니다(모회사 구주거래 기업가치 2.4~2.5조원 거론). 당근페이 단독 지분은 100% 자회사라 개인 옵션의 회수 경로가 불투명할 수 있습니다.</p>
-<p><strong>숨은 리스크(구체):</strong></p>
-<p>1. <strong>선불충전금 운용 논란</strong>(2026.05, 뉴스토마토): 당근의 거대 예치금을 임의 대금 동결·사적 운용한다는 지적. 규제 강화 시 당근페이 사업모델(충전금 이자 혁신금융)의 핵심을 건드릴 수 있습니다.</p>
-<p>2. <strong>방문 인증 없는 리뷰 논란</strong>(2026.03): 당근페이 보상으로 리뷰를 활성화하는 과정에서 경쟁 업체 악의적 리뷰 우려 — 오프라인 결제팀 CRM 설계와 직결되는 이슈입니다.</p>
-<p>3. <strong>핵심 리더 이탈</strong>: 제품을 세운 안중현 전 부사장(네이버페이 초기 → 토스뱅크 오픈 멤버 CPO → 당근페이)이 2025년 7월 넥써쓰로 이직. 공백을 누가 채웠는지, 이진우 대표 체제의 제품 리더십 구성을 면접에서 확인하세요.</p>
-<p><strong>사업 구조상 진짜 해자/위험.</strong> 당근페이의 해자는 자체 결제 규모가 <strong>아닙니다</strong>(그건 빅3에 한참 밀립니다). 진짜 해자는 <strong>당근이라는 4천만 하이퍼로컬 트래픽과 지역 상권 접점</strong>, 그리고 <strong>결제 데이터 → 로컬 광고 시너지</strong>입니다. 즉 당근페이는 결제로 직접 돈을 버는 회사라기보다 <strong>모회사 광고 매출을 강화하는 데이터 레이어</strong>로 재정의되는 중입니다(모회사가 소상공인 POS 업체 페이히어에 80억 투자한 것도 같은 맥락 — 동네 상권 데이터 확보). <strong>함의</strong>: 당근페이의 성장은 결제 마진이 아니라 모회사 광고 시너지로 정당화되므로, 지원자는 &quot;이 조직이 독립 P&amp;L(손익)로 성장을 요구받는가, 아니면 광고 시너지 부속으로 운영되는가&quot;를 물어 <strong>커리어 성장의 천장</strong>을 가늠해야 합니다. 이 답에 따라 오너십의 크기와 기술적 도전의 지속성이 갈립니다.</p>
-<p>---</p>
 <h2>산업·시장·경쟁 지형</h2>
-<p><strong>시장 — 커지지만 이미 승자가 정해진 파이.</strong> 간편결제 시장은 성장 중이나 <strong>전자금융업자 40여 곳 중 빅3(네이버페이·카카오페이·토스페이)가 약 90%를 점유</strong>하는 과점 구조입니다. 당근페이는 쓱페이·무신사페이·컬리페이 등과 함께 <strong>나머지 10%를 나누는 비주류군</strong>입니다. TAM(전체 간편결제 시장)은 크지만, 당근페이가 실제 노릴 SAM은 &quot;당근 트래픽 안에서 발생하는 지역 상권 결제&quot;로 좁혀지고, SOM(현실적 몫)은 그중 오프라인 동네가게 결제 — 아직 더벤티 등 외부 가맹이 이제 막 시작 단계라 절대 규모는 <strong>확인 필요</strong>합니다.</p>
-<p><strong>실질 지위 — 결제 순위로는 팔로워, 하지만 다른 링에서 싸움.</strong> 정면 결제액 경쟁에서 당근페이는 명백한 팔로워입니다. 다만 이 회사의 전략은 빅3와 같은 링(범용 온라인 결제)에서 싸우지 않고 <strong>하이퍼로컬 오프라인 동네 결제</strong>라는 니치를 파는 것입니다. 여기서 경쟁 상대는 오히려 <strong>토스 &#x27;페이스페이&#x27;(오프라인 얼굴인식 결제)·삼성페이·네이버</strong>, 그리고 중고거래 쪽에서는 <strong>번개장터(&#x27;번개머니&#x27;로 판매금 묶어두기)</strong>입니다.</p>
-<p><strong>앞서는 곳 vs 뒤처지는 곳.</strong></p>
 <ul>
-<li><strong>앞선다</strong>: 지역 상권 접점·동네가게 데이터·중고거래 락인(당근 안에서 송금·결제가 자연 발생). 하나은행·농협 등 전통 금융과의 제휴로 안전·신뢰 이미지 확보.</li>
-<li><strong>뒤처진다</strong>: 결제 인프라 규모·범용 온라인 커버리지·브랜드 결제 인지도. 빅3의 자본·가맹망과 격차는 크고, 오프라인 결제는 삼성페이·토스가 이미 선점.</li>
+<li><strong>산업 규모·성장성</strong>: 국내 간편결제는 여전히 커지는 파이지만, <strong>네이버페이·카카오페이·토스페이 빅3가 약 90%를 과점</strong>하는 성숙·고착 시장이다. 파이는 크지만 <strong>신규 진입자가 가져갈 여백은 나머지 10%권</strong>이다. 지원자에게: 순풍보다 <strong>강자 사이 틈새 싸움</strong>이라는 뜻 → 폭발 성장 기대보다 안정·심화 전략에 기대치를 맞춰야 한다.</li>
+<li><strong>실질 순위·지위</strong>: 당근페이는 <strong>후발·니치 플레이어</strong>다. 쓱페이·무신사페이·컬리페이·번개장터(번개머니)와 함께 나머지 10%권에 묶인다. 다만 이들과 결정적으로 다른 점은 <strong>&quot;동네·중고거래&quot;라는 고유 맥락과 4천만 트래픽</strong> — 범용 결제로는 빅3에 못 이겨도, <strong>하이퍼로컬 결제라는 좁은 링에선 독보적 위치</strong>를 잡을 수 있다.</li>
+<li><strong>경쟁 구도</strong>: 정면 경쟁은 두 층위다. ①범용 간편결제(네이버페이·카카오페이·토스페이) — 여기선 밀린다. ②동네·중고거래 결제 — 번개장터 &#x27;번개머니&#x27;가 판매금 2.5% 추가 적립으로 이용자 묶기에 나섰고, 네이버는 3.3% 수수료 안전거래·분쟁조정센터로 중고거래 신뢰 인프라를 파고든다. 오프라인 현장결제에선 <strong>토스(페이스페이·얼굴인식)·삼성페이</strong>가 이미 앞서 있고, 가맹점 POS 층위에선 <strong>페이히어</strong>(당근이 80억 전략투자한 파트너이자 잠재 경쟁 접점)가 있다. 격차 방향: 범용 결제는 좁히기 어렵고, <strong>동네 결제는 당근이 벌릴 수 있는 쪽</strong>.</li>
+<li><strong>시장 구조</strong>: 소수 과점. 양면 해석 — <strong>당근페이는 그 과점의 강자가 아니라 도전자</strong>이므로, &quot;강자에 속해 안정적&quot;인 포지션이 아니다. 대신 모회사 트래픽이라는 비대칭 무기가 있어 <strong>틈새에서만큼은 방어력이 있다</strong>. (여기서 &#x27;담합&#x27; 등 규제 확정 사실은 근거에 없음 — 사실 기반으로는 &#x27;빅3 과점·후발 도전자 구도&#x27;로만 규정.)</li>
+<li><strong>판정</strong>: 당근페이는 <strong>범용 결제 시장에선 밀리는 쪽, 하이퍼로컬 결제에선 이길 여지가 있는 쪽</strong>이다. 발목은 &#x27;빅3 과점 + 단독 수익 미검증&#x27;이고, 해자는 &#x27;모회사 4천만 트래픽 + 동네 데이터&#x27;다. 지원자에게: 이 회사의 성장 상방은 <strong>&quot;범용 페이로의 확장&quot;이 아니라 &quot;동네 결제를 얼마나 독점하느냐&quot;</strong>에 달렸다. <strong>면접에서 물어라 — &quot;향후 3년 성장 전략이 모회사 내 결제 심화인가, 외부 가맹점 확장인가? 빅3와 정면 경쟁할 생각인가, 하이퍼로컬에 집중할 것인가?&quot;</strong> 답이 후자로 명확하면 이 회사의 전략적 자기인식이 건강한 것이다.</li>
 </ul>
-<p><strong>시장 구조 — 양면 해석.</strong> 과점 구조라 빅3에 속하면 든든하지만 당근페이는 그 바깥입니다. 다만 &quot;동네 상권 결제&quot;라는 세부 시장은 아직 지배자가 확정되지 않은 <strong>역동적 빈틈</strong>입니다. 강자에 붙은 안정이 아니라, <strong>미개척 니치를 선점하려는 도전자 포지션</strong> — 성장 여지는 크나 생존·수익화 압박도 상존합니다.</p>
-<p><strong>정성 판정</strong>: 당근페이는 결제 산업 전체로 보면 <strong>밀리는 쪽</strong>이지만, 자기가 정의한 하이퍼로컬 결제 링에서는 <strong>선점을 노리는 도전자</strong>입니다. 발목은 단독 수익성 미증명과 빅3와의 규모 격차, 해자는 모회사의 4천만 트래픽과 지역 데이터입니다. <strong>지원자 관점</strong>: 고용 안정은 당근페이 결제 실적이 아니라 <strong>모회사 당근 광고 실적</strong>에 더 크게 걸려 있습니다. 면접에서 &quot;외부 가맹 결제(더벤티 등)의 실제 거래액과 확장 로드맵&quot;, &quot;결제 데이터가 모회사 광고와 어떻게 연결되는지&quot;를 물으면 이 회사의 진짜 성장 엔진을 짚었다는 인상을 줄 수 있습니다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 당근페이 단독 TPV가 유의미한 규모로 공개되고 외부 가맹 결제가 빠르게 늘면, &#x27;광고 부속&#x27;에서 &#x27;독립 성장 사업&#x27;으로 재평가할 수 있습니다.</p>
-<p>---</p>
 <h2>경영진 · 투자자·소유 구조</h2>
-<p><strong>당근페이 대표 — 이진우.</strong> 2025년 창업자 김재현이 5년간 겸직하던 당근페이 대표직을 이진우 대표에게 넘겼습니다. 창업자가 자기 후임으로 내세웠다는 점에서 신뢰와 기대가 실린 인선입니다. 그에게 부여된 과제는 명확히 <strong>수익다각화·실적개선</strong>으로 언급되며, 본인은 &quot;간편결제를 넘어선 하이퍼로컬 금융 생태계&quot;, &quot;당근온도(매너온도)를 신용 척도로 삼는 포용금융&quot;을 비전으로 제시했습니다. (이진우 대표의 상세 전 직장·학력 이력은 근거에 없어 <strong>확인 필요</strong> — 면접 전 링크드인 등으로 보강 권장.)</p>
-<p><strong>핵심 인력 공백.</strong> 제품을 밑바닥부터 세운 <strong>안중현 전 부사장</strong>(네이버페이 초기 오픈 → 토스뱅크 오픈 멤버 CPO → 당근페이 부사장)이 2025년 7월 넥써쓰(스테이블코인 TF 총괄)로 이직했습니다. 국내 핀테크 제품 구축 경력이 두꺼운 인물의 이탈은 확인된 사실이며, 현재 제품/기술 리더십(CTO·CPO)의 실명 구성은 <strong>공개 정보 미확인 — 면접 확인 항목</strong>입니다.</p>
-<p><strong>모회사 지배 구조.</strong> 당근페이는 <strong>당근(당근마켓) 100% 자회사</strong>입니다. 별도 외부 라운드 없이 모회사 자본에 의존하며, 실제로 모회사가 반복 출자(2024년 150억, 2025년 초 150억)로 적자를 메우고 있습니다.</p>
 <ul>
-<li><strong>모회사 당근 소유·투자자</strong>: 최대주주는 창업자 <strong>김재현 이사(21.74%, 일가 합산 약 22%)</strong>. 창업자 <strong>김용현 대표</strong>는 캐나다에 직접 이주해 북미 법인을 이끄는 중입니다. 2021년 시리즈D에서 약 3조원 기업가치, 리드 <strong>DST글로벌</strong>, 기존 <strong>캡스톤파트너스·카카오벤처스·소프트뱅크벤처스</strong>. 2025년 구주거래에서 미국계 <strong>스텝스톤</strong>이 2.4조 밸류로 매입, 카카오벤처스 지분 일부가 해외 세컨더리로 정리됐습니다.</li>
+<li><strong>당근페이 대표 — 이진우</strong>: 2025년 창업자 김재현으로부터 대표직을 승계했다. 창업자가 5년간 직접 쥐고 있던 자리를 넘겼다는 것은 페이 부문을 <strong>독립 사업으로 키우겠다는 의지 + 그에게 건 기대</strong>를 동시에 뜻한다. 이 대표에게 걸린 특명은 <strong>수익 다각화·실적 개선</strong>. 그는 언론 인터뷰에서 <strong>&quot;당근온도(매너온도)를 하나의 신용 척도로 삼아 금융 접근성을 높이는 포용금융&quot;</strong>, <strong>&quot;간편결제를 넘어선 하이퍼로컬 금융 생태계&quot;</strong>라는 청사진을 반복해 밝혔다. (면접 인용 재료: &quot;귀사가 그리는 &#x27;당근온도 기반 신뢰 = 신용 척도&#x27; 비전을 백엔드가 어떻게 데이터로 구현하는지&quot; 물으면 회사 방향을 깊이 봤다는 신호가 된다.)</li>
+<li><strong>떠난 설계자</strong>: 초기 320만 가입자를 설계한 <strong>안중현 부사장(네이버페이 초기→토스뱅크 오픈멤버 CPO)이 2025년 7월 넥써쓰로 이직</strong>. 초기 제품 DNA의 핵심 인물이 빠진 뒤 로드맵 연속성은 확인 필요 항목이다. <strong>면접에서 물어라 — &quot;안중현 이후 제품 방향이 유지되는가, 새 대표 체제에서 코어 아키텍처 로드맵이 어떻게 바뀌었나?&quot;</strong> 마침 공고에 &quot;당근페이 백엔드 아키텍처가 걸어온 여정&quot; 기술 블로그가 걸려 있으니, 읽고 들어가면 시스템 디자인 인터뷰에서도 유리하다.</li>
+<li><strong>당근페이 C레벨(대표 외)</strong>: 공개 정보 미확인 — 면접 확인.</li>
+<li><strong>모회사 경영진</strong>: 당근은 <strong>김용현·김재현 공동 창업</strong> 체제. 창업자 <strong>김용현은 삼성물산·네이버 출신</strong>으로 &quot;매일 한 번은 켜보는 앱이 성공한다&quot;는 철학을 세웠고, <strong>현재 캐나다에 직접 이주해 북미 법인(캐롯 캐나다)을 이끈다.</strong> 최대주주는 <strong>김재현 이사(21.74%, 배우자·자녀 합산 22%)</strong>. 즉 창업자들이 여전히 회사를 실질 지배한다.</li>
+<li><strong>소유·자본 구조 — 이게 지원자에게 가장 중요하다</strong>: 당근페이는 <strong>100% 자회사라 독립 투자 라운드가 없다.</strong> 자본 논리는 전적으로 모회사를 따른다. 모회사 당근은 2021년 시리즈D에서 <strong>약 3조원 기업가치</strong>, 리드 <strong>DST글로벌</strong>, 참여 <strong>캡스톤파트너스·카카오벤처스·소프트뱅크벤처스</strong>. 이후 구주거래에서 <strong>스텝스톤(美 VC) 2조4천억 수준</strong>, 카카오벤처스 지분 일부가 해외 세컨더리에 2조5천억 안팎 매각. 회수 시나리오로 <strong>나스닥 상장</strong>이 거론되나 회사는 &quot;급할 것 없다&quot;며 주관사 미선정.</li>
+<li><strong>정렬 인사이트</strong>: 여기 <strong>구조적 긴장</strong>이 있다. 투자자 무게중심은 <strong>DST글로벌·스텝스톤 등 공격적 글로벌 VC</strong>이고 출구는 <strong>나스닥 상장 = 해외 성장 스토리로 밸류 키우기</strong>다. 그런데 당근페이의 미션은 <strong>&quot;천천히 동네 금융을 키운다&quot;</strong>는 로컬 서사다. 자본 요구와 사업 정체성이 어긋난다. 당근페이는 상장 서사에서 <strong>&#x27;핀테크 옵션&#x27;으로 활용될 여지</strong>가 크지만, 정작 페이 단독 실적이 상장 밸류에 얼마나 실릴지는 불확실하다. <strong>지원자 함의</strong>: ①스톡옵션이 있더라도 그 가치는 당근페이가 아니라 <strong>모회사 당근의 상장·해외 성과에 종속</strong>된다 → 대박 기대보다 &#x27;모회사 상장 시나리오&#x27;로 기대치를 잡아라. ②고용 안정성도 마찬가지 — <strong>모회사가 페이 적자를 언제까지 수혈하느냐</strong>에 달렸다. 모회사 광고 실적이 좋은 지금은 든든하지만, 해외(캐롯) 적자가 커지고 페이 손익이 계속 베일에 싸이면 <strong>자회사 구조조정 1순위</strong>가 될 수도 있다. 면접에서 &quot;당근페이 단독 매출·거래액·손익&quot;과 &quot;모회사 나스닥 상장 시 페이 부문의 역할(독립 상장 여부)&quot;을 반드시 확인하라.</li>
 </ul>
-<p><strong>자본 성격 해석.</strong> DST글로벌·스텝스톤 등 <strong>글로벌 성장·세컨더리 자본</strong> 중심이라 <strong>나스닥 상장을 통한 회수</strong>를 염두에 둔 공격적 프로파일입니다. 다만 회사는 &quot;상장에 급할 것 없다, 주관사 미선정&quot; 입장으로, 밸류에이션은 2021년 3조 → 2025년 2.4~2.5조로 오히려 <strong>소폭 낮아진 정체 국면</strong>입니다(성장 프리미엄이 눌린 상태 — 고평가 부담보다는 &#x27;증명 대기&#x27; 신호). 지원자에게 이는 <strong>폭발적 스톡옵션 대박보다 안정적 IPO 시나리오로 기대치를 잡으라</strong>는 뜻입니다.</p>
-<p><strong>정렬 인사이트.</strong> 이진우 대표가 그리는 미래(독립적 하이퍼로컬 금융 생태계)와 소유 구조가 시사하는 방향(<strong>100% 자회사 = 모회사 밸류에이션에 기여하는 부속</strong>) 사이에는 <strong>긴장</strong>이 있습니다. 당근페이 인력의 커리어 업사이드(IPO·매각)는 당근페이 단독이 아니라 <strong>모회사 당근에 연동</strong>됩니다. <strong>지원자 행동</strong>: ① 스톡옵션이 당근페이 법인 기준인지 모회사 기준인지, ② 당근페이가 독립 성장 P&amp;L 목표를 갖는지 아니면 광고/데이터 시너지 부속으로만 운영되는지 — 이 두 질문이 처우협의·직무 인터뷰의 핵심입니다.</p>
-<p>---</p>
 <h2>용어 · 개념 풀이</h2>
 <ul>
-<li><strong>MSA(마이크로서비스 아키텍처)</strong> — 하나의 큰 서비스를 독립 배포 가능한 작은 서비스로 쪼갠 구조. 당근페이는 결제·정산·쿠폰·뱅킹을 각각 서비스로 나눠 운영하며, 그래서 <strong>분산 트랜잭션</strong>이 핵심 난제입니다.</li>
-<li><strong>분산 트랜잭션 / 정합성</strong> — 여러 서비스에 걸친 하나의 거래에서 &#x27;단 1원의 오차도 없이&#x27; 데이터를 일치시키는 것. 금융 백엔드의 최대 난이도 영역이자 이 공고의 핵심 요구.</li>
-<li><strong>내결함성(Fault Tolerance)·탄력성(Resilience)</strong> — 일부 장애가 나도 전체 서비스가 버티고 빠르게 복구되는 성질. 결제는 한 번의 장애가 전사에 파급되므로 필수.</li>
-<li><strong>gRPC</strong> — 구글이 만든 서비스 간 고속 통신 프로토콜. REST보다 빠르고 계약이 엄격.</li>
-<li><strong>Kafka</strong> — 대용량 이벤트를 실시간으로 흘려보내는 메시징 시스템. 결제·정산 이벤트 스트리밍에 사용.</li>
-<li><strong>Redis</strong> — 메모리에 데이터를 올려 초고속으로 읽고 쓰는 캐시/저장소.</li>
-<li><strong>Apache Flink</strong> — 실시간 스트림 데이터 처리 엔진. 결제 패턴 분석·맞춤 혜택 산출에 활용될 수 있음.</li>
-<li><strong>Central Dogma</strong> — 라인(LINE)이 만든 설정·정책 관리용 저장소.</li>
-<li><strong>Argo CD / Argo Workflow</strong> — 쿠버네티스에서 배포(CD)와 작업 흐름을 자동화하는 도구.</li>
-<li><strong>TPV(Total Payment Volume)</strong> — 총 결제 거래액. 결제사의 실질 규모를 보여주는 핵심 지표이나 당근페이는 비공개.</li>
-<li><strong>MAU</strong> — 월간 활성 이용자 수.</li>
-<li><strong>선불충전금</strong> — 이용자가 미리 충전해둔 잔액(당근머니). 회계상 부채지만 실질은 운용 가능한 현금성 자산 — 당근페이의 핵심 지렛대이자 규제 논란 지점.</li>
-<li><strong>혁신금융서비스</strong> — 규제 특례로 기존 금융법에 없던 서비스를 한시 허용하는 제도. 당근머니 선불충전금 이자 지급이 이에 지정됨.</li>
-<li><strong>하이퍼로컬</strong> — 동네·지역 밀착. 당근·당근페이 전략의 관통 키워드.</li>
-<li><strong>세컨더리(구주거래)</strong> — 신주 발행이 아니라 기존 주주 지분을 사고파는 거래. 스텝스톤의 당근 지분 매입이 이에 해당.</li>
+<li><strong>하이퍼로컬(Hyperlocal)</strong> — 동네·생활반경 단위의 초지역 밀착 서비스. 당근·당근페이의 정체성 그 자체이자, 빅3 범용 페이와 차별화하는 유일한 축.</li>
+<li><strong>선불충전금(선불전자지급수단)</strong> — 사용자가 미리 충전해 둔 돈(당근머니·당근포인트). 회계상 회사 부채지만 실질은 운용 가능한 현금성 자산 → 규모가 클수록 &#x27;고객 록인 지표&#x27;이자 &#x27;규제·운용 논란&#x27;의 뇌관.</li>
+<li><strong>혁신금융서비스(규제 샌드박스)</strong> — 기존 규제 예외를 한시 허용하는 금융위 지정 제도. 당근페이는 이걸로 &#x27;선불충전금에 은행이자 지급&#x27;을 가능케 했다.</li>
+<li><strong>TPV(Total Payment Volume)</strong> — 총 결제·거래액. 페이 사업의 진짜 규모 지표. 당근페이는 이걸 공개하지 않는다(가입자 수만 강조) → 검증의 핵심 공백.</li>
+<li><strong>MSA / 분산 트랜잭션</strong> — 서비스를 잘게 쪼갠 마이크로서비스 아키텍처. 여러 서비스에 걸친 결제를 &#x27;전부 성공 or 전부 취소&#x27;로 맞추는 게 분산 트랜잭션 → 금융 정합성의 난제.</li>
+<li><strong>내결함성(Fault Tolerance)·탄력성(Resilience)</strong> — 일부 장애에도 서비스가 죽지 않고 버티는(FT)·빠르게 회복하는(Resilience) 설계. 결제 코어의 필수 역량.</li>
+<li><strong>Central Dogma</strong> — LINE이 오픈소스로 공개한 설정·형상 저장소(버전 관리형 config). 실시간 설정 변경을 안전하게 배포하는 데 쓴다.</li>
+<li><strong>Apache Flink</strong> — 실시간 스트림 데이터 처리 엔진. 결제 패턴 분석·맞춤 혜택 산출 같은 실시간 처리에 쓰였을 가능성.</li>
+<li><strong>Feature Toggle</strong> — 코드 배포와 기능 노출을 분리하는 스위치. &quot;매일 배포하는 팀&quot; 문화의 기반(공고 연관 블로그에 등장).</li>
+<li><strong>에스크로(Escrow)</strong> — 제3자가 대금을 잡아뒀다 거래 검증 후 지급하는 안전거래. &#x27;당근부동산 안심송금&#x27;(NH 제휴)의 구조.</li>
+<li><strong>시스템 디자인 인터뷰</strong> — 대규모·고신뢰 시스템을 어떻게 설계할지 화이트보드로 겨루는 면접. 이 채용의 직무 인터뷰 단계에 포함 → <strong>반드시 준비.</strong></li>
 </ul></div>
-  <div class="ad">AD · 광고</div>
-  <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-  <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
 <script>
@@ -272,6 +323,66 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
   }
   digBtn.addEventListener("click",runDig);
   digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="## 2. 공고 핵심 요건\n\n**채용 직무**: Backend 개발(당근페이)\n\n- **경력**: 3년 이상 서버 개발 경험 또는 준하는 역량. 신입·초저연차용은 아니고, 이미 프로덕션 서버를 굴려본 미드레벨 이상을 노린다.\n- **핵심 스택**: Kotlin/Spring Boot·Spring Batch·JPA 중심의 JVM 환경. MySQL·Redis·Kafka·Apache Flink, gRPC·GraphQL·Netty·TCP, AWS·Kubernetes·Argo CD/Workflow·GitHub Actions, 관측은 Grafana·Sentry·Datadog. 형상관리형 설정에 **Central Dogma**(LINE이 만든 설정 저장소)까지 쓰는 게 특징.\n- **실질 난이도**: MSA 분산 트랜잭션·동시성 하에서 **금융 데이터 정합성(\"단 1원의 오차도 없이\")**, 내결함성·탄력성, 급증 트래픽 대응이 핵심. 결제 코어는 \"한 번의 장애가 전사 파급\"이라 명시 — 그만큼 온콜·장애대응 부담이 실재하는 자리다.\n- **팀 3택**: Offline Payment(현장결제·혜택·CRM), Payment Core(결제·정산·뱅킹 코어), Service Core(계정·인증·API Gateway·메시지 플랫폼). 지원 시 **어느 팀인지**가 업무 성격을 완전히 가른다.\n- **절차**: 서류 → 화상 → 직무 인터뷰(시스템 디자인 인터뷰 포함) → 컬처핏+레퍼런스 체크 → 처우협의 → 입사. 3개월 수습. **시스템 디자인 준비는 필수.**\n\n## 3. 회사 서사 · 궤적\n\n**출발점은 독립 창업이 아니라 모회사의 필요다.** 당근페이는 당근(옛 당근마켓)의 100% 자회사로, 중고거래 채팅방에서 \"계좌 부르고, 이체하고, 확인하는\" 현금 주고받기의 마찰을 없애려고 태어났다. \"이제는 현금 챙길 필요가 없어요\"라는 초기 문구가 페인포인트를 그대로 드러낸다. 즉 세상을 바꾸겠다는 서사가 아니라 **\"모회사 거래를 결제로 잠근다\"는 도구적 미션**에서 시작했다. 관통하는 키워드는 2021년부터 지금까지 일관되게 **하이퍼로컬(동네 기반)** — 모회사의 '지역생활 커뮤니티' 정체성과 정확히 맞물린다. 미션은 흔들리지 않지만 그만큼 좁다.\n\n연도별 궤적:\n- **2021.03** 당근페이 법인 출범(자회사).\n- **2021.11** 제주에서 첫 공개, \"연내 전국 확대\" 예고 — 하이퍼로컬 결제 파일럿.\n- **2022.02~03** 전국 확대, \"시작해요 당근페이\" 캠페인.\n- **2022.09** 계좌송금 출시(공과금·학원비 등 일상 송금으로 확장).\n- **2022.10** **출시 7개월 만에 누적 가입자 320만명 돌파** — 초기 견인 지표.\n- **2023.07** '사기 의심 계좌 알림' 도입(중고거래 신뢰 강화).\n- **2023.11** 당근·당근페이가 **하나은행·하나카드와 지역 기반 금융 협약**.\n- **2024.07** **'당근머니 하나 체크카드' 출시**(동네가게 결제 시 월 3만원 적립) — 제휴사와 실물 카드 진입.\n- **2024.09** 당근머니 등 **선불충전금이 은행이자를 받는 혁신금융서비스로 지정**(규제 샌드박스 활용).\n- **2025.10** 더벤티 등 외부 가맹점으로 간편결제 확산.\n- **2026.02** '당근부동산 안심송금'(NH농협은행 제휴 에스크로), 선불충전금 3년 만 8배 성장(역대 최대) 보도.\n- **2026.03** **전 직군 공개 채용** + \"결제액 30배 성장\" 마케팅 — 이번 공고가 여기 속한다.\n\n**핵심 전환**: 초기 폭발(320만명) 후 궤적은 단독 돌파가 아니라 **하나은행·하나카드·NH농협은행 제휴 + 규제 샌드박스**로 이동했다. 제도권 파트너에 올라타는 '결합형 확장' 노선이다. 그리고 지배구조 측면의 결정적 사건 — **2025년 창업자 김재현 대표가 5년간 겸직하던 당근페이 대표직을 내려놓고 이진우를 후임으로 앉혔다.** 초기 서비스를 설계한 안중현 부사장(네이버페이 초기→토스뱅크 오픈멤버 CPO)은 **2025년 7월 넥써쓰(스테이블코인 TF)로 이직**했다. 설계자는 떠났고 새 대표에게 '수익 다각화·실적 개선' 특명이 걸린 국면이다.\n\n**판정**: 궤적 자체는 연도·제휴·규제 사건이 인과로 이어지는 **실체 있는 서사**다. 다만 그 서사의 성장 벡터가 대부분 모회사 트래픽과 은행 제휴에 기대어 있다는 점에서, \"독립 핀테크의 도약 스토리\"라기보다 **\"모회사 생태계를 결제로 심화하는 인프라 서사\"**로 읽는 게 정확하다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n**검증된 것 vs 말뿐인 것을 분리하는 게 이 회사의 핵심이다.**\n\n- **검증된 실적**: 채팅방 송금·계좌송금 실서비스, 하나 체크카드 실물 출시, 선불충전금 이자(혁신금융서비스 지정), 부동산 안심송금(NH 제휴) — 여기까지는 실행됐다. 선불충전금이 3년 만 8배로 역대 최대라는 보도(2026.02)도 있다. 마케팅에서 \"결제액 30배\"를 반복하는데, 이건 **작은 기저에서의 배수**일 가능성이 크므로 절대액으로 검증해야 한다.\n- **결정적 공백 — 단독 손익**: **당근페이 단독 매출·거래액(TPV)·손익은 공개되지 않는다.** 오히려 드러난 숫자는 반대 신호다. 뉴스토마토(2026)에 따르면 **캐롯 캐나다·캐롯 재팬·당근페이·당근서비스 등 종속기업 합산 영업손실 525억원** — 대부분은 해외지만 당근페이도 이 적자 우산 안에 있다. 모회사는 2024~2025년 페이·글로벌에 **수백억을 반복 수혈**(2025년 당근페이에 150억, 2026년 1~2월 추가 150억 출자). 즉 **당근페이는 아직 자기 발로 서지 못하고 모회사 자본으로 굴러간다.**\n- **자산 기반 안정성**: 당근페이 자체 자산은 얇다(실물 카드·선불충전금 운용은 제휴사 인프라 기반). 대신 **고용 안정의 진짜 토대는 모회사 당근의 체력**이다 — 모회사는 2024년 흑자전환 후 2025년 연결 매출 2,706억(+43%), 영업이익 670억(+78%), 순이익 230억(+172%)으로 첫 법인세 대상이 됐고 현금창출이 안정적이다. **모회사가 두껍기 때문에 페이 적자를 감내하며 수혈할 여력이 있다** → 단기 고용 안정성은 오히려 여기서 나온다. 다만 이는 **\"내 사업이 벌어서\"가 아니라 \"모회사가 광고로 벌어서 버텨준다\"**는 종속적 안정임을 직시해야 한다.\n- **실질 보상·복리후생**: 공고에 **연봉·성과급·스톡옵션·복지 수치 없음.** \"근무조건·복지는 당근마켓과 동일\"이라고만 명시 → 당근 본사 처우 벤치마크가 유효하다. 다만 **당근페이 특정 연봉·평점(잡플래닛/블라인드/크레딧잡)은 공개 확인 불가 → 처우협의 단계와 면접에서 직접 확인 필요.** (검색에 뜨는 '카카오페이 연봉 1000만원 인상' 등은 다른 회사 얘기로, 당근페이와 무관하니 참고치로 삼지 말 것.)\n- **숨은 리스크 — 선불충전금 운용 논란**: 2026.05 뉴스토마토가 **\"당근의 거대 예치금 — 임의 대금 동결·사적 운용 논란\"**을 보도했다. 선불충전금은 회계상 부채지만 실질은 당근이 운용 가능한 현금성 자산에 가깝다는 지적이다. 이는 **전자금융업 규제 리스크의 핵심 뇌관** — 규제가 조이면 사업모델 일부가 흔들린다. 백엔드 지원자에겐 곧 **\"규제·정합성·감사 대응 부담이 큰 도메인\"**이라는 뜻이고, 동시에 이 회사가 왜 \"1원의 오차도 없이\"를 강조하는지의 배경이다.\n- **사업 구조상 진짜 해자/위험**: 유일한 해자는 **모회사 트래픽(4개국 1,400여 지역 중고거래 4천만 사용자)**이라는, 다른 페이가 못 가진 채널이다. 하지만 위험은 마진 구조 — 간편결제는 원래 수수료 박한 사업이고, 혜택·적립(월 3만원 등)을 뿌려 사용자를 끌면 **비용이 매출을 앞선다.** 규모가 커진다고 자동으로 이익이 나는 구조가 아니다. **무엇이 확인되면 판단이 바뀌나: 당근페이 단독 TPV·수수료 매출·손익이 공개되고 흑자 궤도가 보이면, '종속 인프라 팀'에서 '독립 성장 옵션'으로 재평가할 수 있다.** 그 전엔 '핀테크 유니콘'으로 오인하지 말 것.\n\n## 8. 산업·시장·경쟁 지형\n\n- **산업 규모·성장성**: 국내 간편결제는 여전히 커지는 파이지만, **네이버페이·카카오페이·토스페이 빅3가 약 90%를 과점**하는 성숙·고착 시장이다. 파이는 크지만 **신규 진입자가 가져갈 여백은 나머지 10%권**이다. 지원자에게: 순풍보다 **강자 사이 틈새 싸움**이라는 뜻 → 폭발 성장 기대보다 안정·심화 전략에 기대치를 맞춰야 한다.\n- **실질 순위·지위**: 당근페이는 **후발·니치 플레이어**다. 쓱페이·무신사페이·컬리페이·번개장터(번개머니)와 함께 나머지 10%권에 묶인다. 다만 이들과 결정적으로 다른 점은 **\"동네·중고거래\"라는 고유 맥락과 4천만 트래픽** — 범용 결제로는 빅3에 못 이겨도, **하이퍼로컬 결제라는 좁은 링에선 독보적 위치**를 잡을 수 있다.\n- **경쟁 구도**: 정면 경쟁은 두 층위다. ①범용 간편결제(네이버페이·카카오페이·토스페이) — 여기선 밀린다. ②동네·중고거래 결제 — 번개장터 '번개머니'가 판매금 2.5% 추가 적립으로 이용자 묶기에 나섰고, 네이버는 3.3% 수수료 안전거래·분쟁조정센터로 중고거래 신뢰 인프라를 파고든다. 오프라인 현장결제에선 **토스(페이스페이·얼굴인식)·삼성페이**가 이미 앞서 있고, 가맹점 POS 층위에선 **페이히어**(당근이 80억 전략투자한 파트너이자 잠재 경쟁 접점)가 있다. 격차 방향: 범용 결제는 좁히기 어렵고, **동네 결제는 당근이 벌릴 수 있는 쪽**.\n- **시장 구조**: 소수 과점. 양면 해석 — **당근페이는 그 과점의 강자가 아니라 도전자**이므로, \"강자에 속해 안정적\"인 포지션이 아니다. 대신 모회사 트래픽이라는 비대칭 무기가 있어 **틈새에서만큼은 방어력이 있다**. (여기서 '담합' 등 규제 확정 사실은 근거에 없음 — 사실 기반으로는 '빅3 과점·후발 도전자 구도'로만 규정.)\n- **판정**: 당근페이는 **범용 결제 시장에선 밀리는 쪽, 하이퍼로컬 결제에선 이길 여지가 있는 쪽**이다. 발목은 '빅3 과점 + 단독 수익 미검증'이고, 해자는 '모회사 4천만 트래픽 + 동네 데이터'다. 지원자에게: 이 회사의 성장 상방은 **\"범용 페이로의 확장\"이 아니라 \"동네 결제를 얼마나 독점하느냐\"**에 달렸다. **면접에서 물어라 — \"향후 3년 성장 전략이 모회사 내 결제 심화인가, 외부 가맹점 확장인가? 빅3와 정면 경쟁할 생각인가, 하이퍼로컬에 집중할 것인가?\"** 답이 후자로 명확하면 이 회사의 전략적 자기인식이 건강한 것이다.\n\n## 6. 경영진 · 투자자·소유 구조\n\n- **당근페이 대표 — 이진우**: 2025년 창업자 김재현으로부터 대표직을 승계했다. 창업자가 5년간 직접 쥐고 있던 자리를 넘겼다는 것은 페이 부문을 **독립 사업으로 키우겠다는 의지 + 그에게 건 기대**를 동시에 뜻한다. 이 대표에게 걸린 특명은 **수익 다각화·실적 개선**. 그는 언론 인터뷰에서 **\"당근온도(매너온도)를 하나의 신용 척도로 삼아 금융 접근성을 높이는 포용금융\"**, **\"간편결제를 넘어선 하이퍼로컬 금융 생태계\"**라는 청사진을 반복해 밝혔다. (면접 인용 재료: \"귀사가 그리는 '당근온도 기반 신뢰 = 신용 척도' 비전을 백엔드가 어떻게 데이터로 구현하는지\" 물으면 회사 방향을 깊이 봤다는 신호가 된다.)\n- **떠난 설계자**: 초기 320만 가입자를 설계한 **안중현 부사장(네이버페이 초기→토스뱅크 오픈멤버 CPO)이 2025년 7월 넥써쓰로 이직**. 초기 제품 DNA의 핵심 인물이 빠진 뒤 로드맵 연속성은 확인 필요 항목이다. **면접에서 물어라 — \"안중현 이후 제품 방향이 유지되는가, 새 대표 체제에서 코어 아키텍처 로드맵이 어떻게 바뀌었나?\"** 마침 공고에 \"당근페이 백엔드 아키텍처가 걸어온 여정\" 기술 블로그가 걸려 있으니, 읽고 들어가면 시스템 디자인 인터뷰에서도 유리하다.\n- **당근페이 C레벨(대표 외)**: 공개 정보 미확인 — 면접 확인.\n- **모회사 경영진**: 당근은 **김용현·김재현 공동 창업** 체제. 창업자 **김용현은 삼성물산·네이버 출신**으로 \"매일 한 번은 켜보는 앱이 성공한다\"는 철학을 세웠고, **현재 캐나다에 직접 이주해 북미 법인(캐롯 캐나다)을 이끈다.** 최대주주는 **김재현 이사(21.74%, 배우자·자녀 합산 22%)**. 즉 창업자들이 여전히 회사를 실질 지배한다.\n- **소유·자본 구조 — 이게 지원자에게 가장 중요하다**: 당근페이는 **100% 자회사라 독립 투자 라운드가 없다.** 자본 논리는 전적으로 모회사를 따른다. 모회사 당근은 2021년 시리즈D에서 **약 3조원 기업가치**, 리드 **DST글로벌**, 참여 **캡스톤파트너스·카카오벤처스·소프트뱅크벤처스**. 이후 구주거래에서 **스텝스톤(美 VC) 2조4천억 수준**, 카카오벤처스 지분 일부가 해외 세컨더리에 2조5천억 안팎 매각. 회수 시나리오로 **나스닥 상장**이 거론되나 회사는 \"급할 것 없다\"며 주관사 미선정.\n- **정렬 인사이트**: 여기 **구조적 긴장**이 있다. 투자자 무게중심은 **DST글로벌·스텝스톤 등 공격적 글로벌 VC**이고 출구는 **나스닥 상장 = 해외 성장 스토리로 밸류 키우기**다. 그런데 당근페이의 미션은 **\"천천히 동네 금융을 키운다\"**는 로컬 서사다. 자본 요구와 사업 정체성이 어긋난다. 당근페이는 상장 서사에서 **'핀테크 옵션'으로 활용될 여지**가 크지만, 정작 페이 단독 실적이 상장 밸류에 얼마나 실릴지는 불확실하다. **지원자 함의**: ①스톡옵션이 있더라도 그 가치는 당근페이가 아니라 **모회사 당근의 상장·해외 성과에 종속**된다 → 대박 기대보다 '모회사 상장 시나리오'로 기대치를 잡아라. ②고용 안정성도 마찬가지 — **모회사가 페이 적자를 언제까지 수혈하느냐**에 달렸다. 모회사 광고 실적이 좋은 지금은 든든하지만, 해외(캐롯) 적자가 커지고 페이 손익이 계속 베일에 싸이면 **자회사 구조조정 1순위**가 될 수도 있다. 면접에서 \"당근페이 단독 매출·거래액·손익\"과 \"모회사 나스닥 상장 시 페이 부문의 역할(독립 상장 여부)\"을 반드시 확인하라.\n\n## 7. 용어 · 개념 풀이\n\n- **하이퍼로컬(Hyperlocal)** — 동네·생활반경 단위의 초지역 밀착 서비스. 당근·당근페이의 정체성 그 자체이자, 빅3 범용 페이와 차별화하는 유일한 축.\n- **선불충전금(선불전자지급수단)** — 사용자가 미리 충전해 둔 돈(당근머니·당근포인트). 회계상 회사 부채지만 실질은 운용 가능한 현금성 자산 → 규모가 클수록 '고객 록인 지표'이자 '규제·운용 논란'의 뇌관.\n- **혁신금융서비스(규제 샌드박스)** — 기존 규제 예외를 한시 허용하는 금융위 지정 제도. 당근페이는 이걸로 '선불충전금에 은행이자 지급'을 가능케 했다.\n- **TPV(Total Payment Volume)** — 총 결제·거래액. 페이 사업의 진짜 규모 지표. 당근페이는 이걸 공개하지 않는다(가입자 수만 강조) → 검증의 핵심 공백.\n- **MSA / 분산 트랜잭션** — 서비스를 잘게 쪼갠 마이크로서비스 아키텍처. 여러 서비스에 걸친 결제를 '전부 성공 or 전부 취소'로 맞추는 게 분산 트랜잭션 → 금융 정합성의 난제.\n- **내결함성(Fault Tolerance)·탄력성(Resilience)** — 일부 장애에도 서비스가 죽지 않고 버티는(FT)·빠르게 회복하는(Resilience) 설계. 결제 코어의 필수 역량.\n- **Central Dogma** — LINE이 오픈소스로 공개한 설정·형상 저장소(버전 관리형 config). 실시간 설정 변경을 안전하게 배포하는 데 쓴다.\n- **Apache Flink** — 실시간 스트림 데이터 처리 엔진. 결제 패턴 분석·맞춤 혜택 산출 같은 실시간 처리에 쓰였을 가능성.\n- **Feature Toggle** — 코드 배포와 기능 노출을 분리하는 스위치. \"매일 배포하는 팀\" 문화의 기반(공고 연관 블로그에 등장).\n- **에스크로(Escrow)** — 제3자가 대금을 잡아뒀다 거래 검증 후 지급하는 안전거래. '당근부동산 안심송금'(NH 제휴)의 구조.\n- **시스템 디자인 인터뷰** — 대규모·고신뢰 시스템을 어떻게 설계할지 화이트보드로 겨루는 면접. 이 채용의 직무 인터뷰 단계에 포함 → **반드시 준비.**", CO="당근페이", POS="백엔드 개발", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?]|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  var PAL={hook:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],2:['#34d399','#bff3da','rgba(52,211,153,.15)'],3:['#a78bfa','#e0d7ff','rgba(167,139,250,.16)'],4:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],8:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],allmore:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  var TOC={2:"요건",3:"서사",4:"리스크",8:"시장",6:"경영진"};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  var cards=[];
+  var hookLine=null,best=0;[4,2,3,8,6].forEach(function(id){if(!byId[id])return;lines(byId[id].body).forEach(function(l){var c=clean(l);if(c.length<14||c.length>128)return;if(/^\*\*(판정|종합|결론)\*\*/.test(c))return;var v=impact(c);if(v>best){best=v;hookLine=clip(c,1);}});});
+  if(!hookLine&&byId[3]){var c3=lines(byId[3].body).map(clean).filter(function(s){return s.length>10;})[0];if(c3)hookLine=clip(c3,1);}
+  cards.push({kind:"hook",line:hookLine});
+  [2,3,4,8,6].forEach(function(id){var b=byId[id];if(!b)return;var ls=lines(b.body);var hl=headline(ls,id===4);if(!hl)return;cards.push({kind:"core",secId:id,headline:hl,evidence:evidence(ls,hl)});});
+  var gapRe=/(주장\s*vs\s*증명|증명\s*간극|괴리|말뿐|말과\s*행동|선택적\s*(공개|IR)|공언|과장(?:하|한|된|해))/;var gap=null;[4,3].forEach(function(id){if(gap||!byId[id])return;var hit=lines(byId[id].body).filter(function(l){return gapRe.test(clean(l))&&clean(l).length>12;})[0];if(hit)gap=clip(clean(hit),2);});
+  if(gap)cards.push({kind:"gap",line:gap});
+  cards.push({kind:"allmore"});
+  function card(c,i){
+    var p=PAL[c.kind==="core"?c.secId:c.kind]||PAL.allmore,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    var anc=(c.secId?'<button class="story-anchor" data-sec="sec-'+c.secId+'">'+ICs+' 원문 근거 보기</button>':"");
+    // 표지 — 회사명 대형 타이포가 지배, 상단정렬(위 spacer 제거)로 dead band 소멸. /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="hook")return '<div class="story-card hook" style="'+sv+'">'+g+'<div class="story-kicker">'+ICt+' 회사 정찰</div><div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':"")+(c.line?'<div class="story-ev">'+kw(c.line)+'</div>':"")+'<div class="spacer"></div><div class="story-tease">넘겨서 정찰 근거 보기 →</div></div>';
+    if(c.kind==="core")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+esc(TOC[c.secId]||"")+'</div><div class="story-hl">'+kw(c.headline)+'</div>'+(c.evidence?'<div class="story-ev">'+kw(c.evidence)+'</div>':"")+'<div class="spacer"></div>'+anc+'</div>';
+    if(c.kind==="gap")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+ICw+' 말 vs 행동</div><div class="story-hl" style="font-size:19px">'+kw(c.line)+'</div><div class="spacer"></div></div>';
+    if(c.kind==="allmore")return '<div class="story-card allmore" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">내 이력으론 지원할 가치가 있을까?</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 카드는 회사 정찰 요약입니다. 내 이력 기준 적합도·평결은 앱에서.</div><a class="story-cta" href="'+esc(APP)+'">앱에서 내 적합도 보기 →</a></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  function active(i){dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());}
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
 })();
 </script>
 </body></html>

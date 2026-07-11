@@ -63,6 +63,55 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:54vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-anchor,.story-card .story-cta{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 
 </head><body>
@@ -74,6 +123,16 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
     <div class="ad">AD · 광고</div>
   </div>
   <div class="ddaybn">D-15</div>
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
+  </div>
   <div id="report"><h2>공고 핵심 요건</h2>
 <p><strong>채용 직무</strong>: 조명 콘솔 운용 · 조명 시스템 설계·유지보수 보조 · 스튜디오 조명 세팅 보조</p>
 <ul>
@@ -171,9 +230,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 <li><strong>수신료</strong> — 시청자에게 걷는 공영방송 재원(KBS). MBC는 이것이 없어 <strong>광고 100% 의존</strong>이며, 이 차이가 재무 방어력의 구조적 격차를 만듭니다.</li>
 <li><strong>TAM/SAM/SOM</strong> — 전체 시장 규모(TAM)·실제로 노리는 유효 시장(SAM)·현실적으로 먹을 수 있는 몫(SOM). FAST 47조원은 TAM 성격이며, MBC의 실제 몫(SAM·SOM)은 별도 확인이 필요합니다.</li>
 </ul></div>
-  <div class="ad">AD · 광고</div>
-  <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-  <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+  </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
 <script>
@@ -290,6 +351,66 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
   }
   digBtn.addEventListener("click",runDig);
   digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="## 2. 공고 핵심 요건\n\n**채용 직무**: 조명 콘솔 운용 · 조명 시스템 설계·유지보수 보조 · 스튜디오 조명 세팅 보조\n\n- **고용 형태**: 계약직 1년, 평가 후 1년 연장 가능 (공고 명시). 정규직 전환 언급이 없다는 점이 핵심 — \"연장 가능\"까지가 회사가 약속한 상한선입니다.\n- **근무 형태**: 조명 콘솔 운용에 **숙직 교대 근무** 포함 (공고 명시). 보도(뉴스) 스튜디오는 밤·새벽 방송이 있어 야간 상주가 상수라는 뜻입니다.\n- **필수 자격**: 병역필/면제, 대한민국 국적자, 해외여행 결격사유 없음 (공고 명시). 직무 기술요건이 아닌 신원·결격 조건만 필수로 걸린 점이 특이 — 즉 **경력·자격증을 필수로 잠그지 않았습니다**.\n- **우대**: 방송기술 조명 1년 이상 경력, 지상파·관련방송사 **조명 콘솔 운용 유경험**, 취업보호대상자·장애인 (공고 명시). 실무의 무게중심은 '콘솔 운용 경험'에 있습니다.\n- **연봉**: 경력·사내 기준에 따라 책정, **지원서에 희망연봉 기재** (공고 명시) — 밴드가 공개되지 않아 본인이 먼저 숫자를 던져야 하는 구조입니다.\n\n---\n\n## 3. 회사 서사 · 궤적\n\nMBC(문화방송)는 스타트업식 \"페인포인트 해결\"로 태어난 회사가 아니라, **한국 방송사(史)의 정치적 굴곡 그 자체**로 출발한 조직입니다. 뿌리는 두 갈래입니다.\n\n- **1959년 4월 15일**, 개인사업가 김상용과 방송기술자 정환옥이 한국 최초의 상업 라디오 **부산문화방송**을 개국했습니다(계열 최초 방송국).\n- **1961년**, 김지태가 서울에서 '서울민간방송'을 세운 뒤 한국방송(HBC)→라디오서울→한국문화방송으로 사명을 바꿔 12월 2일 라디오를 개국했습니다. 그러나 김지태는 **5·16 군사정변 후 부정축재자로 적발돼 1962년 한국문화방송·부산문화방송·부산일보 전 재산을 5·16장학회(현 정수장학회)에 헌납**했습니다.\n\n즉 창업 서사의 핵심은 \"민간 상업방송으로 태어났으나 정권에 의해 소유구조가 강제로 재편된 역사\"입니다. 지원자 관점에서 이 회사의 정체성·리스크는 시장 경쟁이 아니라 **정치·지배구조에 뿌리를 둔다**는 뜻입니다. 창업자 개인의 비전이 조직 DNA로 이어지는 구조가 아닙니다.\n\n**연혁의 전환점**(계기 → 무엇이 바뀌었나):\n\n- **1969.8.8 TV 개국**(상업광고방송 실시): 라디오 사업자에서 종합 방송사로 전환. 이후 1971년 FM 개국, 《새엄마》 등 드라마 히트로 시청률 우위를 잡았습니다.\n- **1974년**, 박정희 지시로 경향신문과 통합 → '문화방송·경향신문' — 정권 개입이 소유·조직을 직접 재편한 사건.\n- **1980년 언론통폐합**: 대기업 지분 회수, KBS가 주식 관리, 컬러방송 시작. 이 시점에 **민영 → 공영으로 전환**됐습니다.\n- **1988.12.26 방송문화진흥법 제정 → 방송문화진흥회(방문진)가 주식 70% 관리**: 오늘날의 지배구조가 여기서 확립됐습니다. 이것이 MBC를 이해하는 뼈대입니다.\n- **상암 시대**: 서울 마포구 상암동 글로벌미디어센터로 본사 이전(이번 조명 직무의 물리적 근무지가 될 가능성이 높은 곳). 일산에 MBC 드림센터 별도 보유.\n- **2020년대 OTT 대응**: **《피지컬 100》을 제작해 넷플릭스에 공급**하며 공중파를 넘어 글로벌 히트를 냈고, **《21세기 대군부인》으로 2026년 4월 칸 국제 시리즈 페스티벌 투자설명회**에 참가했습니다.\n\n**미션·비전의 일관성**: 사시(자유·책임·품위·단합)는 **2018년 이후 홈페이지에서 사라졌고**, 현재는 Vision \"콘텐츠 중심의 글로벌 미디어 그룹\", Mission \"상상력과 창의성으로 시청자의 삶을 더 풍성하게\", Values(시청자 first·창의성·공정성·공영성)를 내겁니다. 슬로건은 \"만나면 좋은 친구\"(2022~현재)로 회귀했으나, 연중 캠페인 문구는 거의 매년 바뀝니다(2018 \"다시 좋은 친구\" → 2021 \"GO! MBC\" → 2025 \"평화와 미래\" → 2026 \"사람이 소중한 사회\"). **정권·사장 교체마다 톤이 흔들려 온 흔적**입니다.\n\n**판정**: 궤적은 버즈워드 나열이 아니라 인과가 분명한 서사입니다. 다만 그 인과의 동력이 시장(제품·경쟁)이 아니라 **정치·제도**라는 점이 이 회사의 본질입니다. \"콘텐츠 중심 글로벌 미디어 그룹\"이라는 상업적 비전과 \"공영성\"이라는 정체성이 **한 문장 안에 병존**하는 근본 긴장이 그대로 서사에 박혀 있습니다.\n\n---\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n**검증된 실적**\n- ✅ **《피지컬 100》 넷플릭스 공급** — 공중파를 넘어선 글로벌 흥행 실증. 지상파 콘텐츠가 OTT에서 통한다는 걸 보여준 대표 레퍼런스입니다.\n- ✅ **독립적 지배구조 모델** — YTN 정상화 논의에서 \"가장 완벽하고 독립적인 지배구조는 MBC 모델\"로 외부 인용될 만큼 제도적으로 정착.\n- ⚠️ **글로벌 미디어 그룹 비전** — 칸 투자설명회는 '참가·발표' 단계일 뿐, 실제 회수·수출 규모는 미확인(지향에 머묾).\n- ⚠️ **FAST(광고 기반 무료 실시간 TV) 신사업** — 2026년 방미통위 'K-FAST 생태계' 간담회에 KBS·SBS 등과 함께 9개 방송사 중 하나로 참여했으나, 전용 콘텐츠·수익화는 파일럿 이전 수준입니다.\n\n**재무 상태(방향)**: MBC는 시청료(수신료)를 받지 않고 **전액 광고 수익으로 운영**하는 구조입니다. 이것이 이 회사의 재무를 이해하는 결정적 열쇠입니다 — KBS와 달리 안정적 수신료 방패가 없어, **지상파 광고 시장이 축소되는 국면에서 재무 압박에 직접 노출**됩니다. 구체 매출·손익 수치는 공개 근거로 확인되지 않아 **면접에서 반드시 확인**해야 합니다(적자 여부·구조조정 신호). 다만 방문진 70% 지배의 공적 소유구조 특성상, 완전 도산 리스크보다는 **인건비·비정규 규모 조정 압박**으로 나타날 가능성이 큽니다 — 이 직무가 계약직이라는 점과 직결되는 대목입니다.\n\n**자산 기반 안정성(고용 안정성의 토대)**\n- **부동산·인프라**: 서울 상암동 글로벌미디어센터(본사 사옥), 일산 MBC 드림센터 — 자체 사옥·스튜디오·방송설비라는 두꺼운 유형자산을 보유. 조명 콘솔·스튜디오 설비 자체가 이 직무의 일터입니다.\n- **콘텐츠·IP·판권**: 수십 년 축적된 드라마·예능 라이브러리와 《피지컬 100》 같은 신규 IP. 글로벌 유통으로 현금화 여지가 있는 자산입니다.\n- **라이선스·주파수**: 지상파 방송 면허·주파수라는 **진입장벽 자체가 자산**입니다. 이 인허가는 신규 사업자가 복제할 수 없습니다.\n- **계열 지분**: MBC C&I, MBC아트, MBC플러스, 아이엠비씨, MBC아카데미, MBC플레이비 등 계열사.\n- 해석: 자산은 두껍습니다 → **불황·적자에도 회사가 소멸하지 않고 버티는 체력**은 있습니다. 그러나 그 체력이 **계약직 개인의 재계약·정규직 전환까지 보장하지는 않습니다**. 회사는 살아남되, 조정의 칼날은 비정규·계약 인력에 먼저 닿는 구조라는 점을 분리해서 봐야 합니다.\n\n**실질 보상 · 복리후생**\n- 이번 공고는 **연봉 밴드 비공개 + 희망연봉 자기 기재** 방식입니다. 즉 회사 내부 기준은 있으나 지원자에게 먼저 노출하지 않습니다. **본인 시장가를 조사해 희망 숫자를 방어할 근거(경력·콘솔 기종 경험)를 준비**하는 것이 실전 대응입니다.\n- 정규직 아나운서·직군의 처우는 공개 일화상 대기업 반도체와 비교될 만큼 낮지 않다는 언급이 돌지만(정규직 기준), 이는 **계약직 조명 운용 직무와는 처우 체계가 다른 정규직 이야기**이므로 개인 기대치로 오용하면 안 됩니다.\n- 회사 전반 보상수준·복지(재택·성과급·주거지원 등)의 공개 수치는 신뢰할 근거가 확인되지 않아 **\"확인 필요\"** — 특히 계약직 처우, 숙직 수당·야간 근무 보상 체계는 면접에서 직접 물어야 합니다.\n\n**숨은 리스크**\n- **정치·지배구조 리스크(구조적)**: 사장이 방문진에 의해 선임되는 임명직이라, **정권 교체마다 최고경영진·편성 방향이 흔들립니다**. 실제로 'MBC 블랙리스트 의혹'(최승호 전 사장 항소심 벌금형), 경남MBC PD의 '무섭노' 발언 논란, 언론노조 대 제3노조 갈등 등 정치·노사 관련 소음이 상시 존재합니다. 조명 운용 같은 기술 직무는 편성·보도 정치와 직접 연결되진 않지만, **회사 전체의 예산·인력 정책이 정치 주기에 종속**된다는 점은 계약 연장에 간접 영향을 줍니다.\n- **광고 의존 + OTT 잠식(사업 구조)**: 수신료 없이 광고로만 버는데, 시청·광고 기반이 넷플릭스 등 OTT로 이탈하고 있습니다. 파이가 줄면 비정규 인력이 먼저 압박받습니다.\n- **계약직 특성**: \"1년 + 평가 후 1년 연장\"이 상한선이며 정규직 전환 경로가 공고에 없습니다. 이건 리스크라기보다 **처음부터 명확히 설정해야 할 기대치**입니다.\n\n**사업 구조상 진짜 위험/해자**: MBC의 해자는 **지상파 면허·주파수·자체 스튜디오라는 복제 불가 인프라**입니다(신규 진입 불가). 반면 진짜 위험은 **수익 엔진이 광고 단 하나**라는 점 — 규모가 커진다고 마진이 개선되는 구조가 아니라, 광고 파이 자체가 OTT로 새는 구조입니다. 이 위험이 완화되려면 글로벌 콘텐츠 판매·FAST 수익화가 실제 매출로 잡혀야 하는데, 아직 지향 단계입니다. **면접에서 광고 매출 추세와 신사업 매출 기여를 확인하면 이 판단의 확신도가 올라갑니다.**\n\n---\n\n## 8. 산업·시장·경쟁 지형\n\n**산업 규모·성장성**: MBC가 속한 전통 지상파 방송·광고 시장은 **정체·축소** 국면입니다. 시청·광고가 OTT로 이동하고 있기 때문입니다. 반면 회사가 새로 노리는 **FAST(광고 기반 무료 실시간 TV) 시장은 2025년 18조원 → 2030년 47조원(연평균 20.9%) 성장**이 전망되는 파이입니다. 즉 **본진(지상파 광고)은 줄고, 신전장(FAST·글로벌 콘텐츠)은 커지는** 이중 구조입니다. 지원자에게 이것은 — 회사가 성장 산업에 올라타려 하지만 **아직 본진 축소 속도가 신사업 성장보다 빠른 과도기**라는 뜻이며, 이 과도기에 비용(특히 비정규 인건비)이 압박받기 쉽다는 신호입니다. 다만 FAST의 SAM·SOM(MBC가 실제 가져갈 유효·현실 몫)은 근거로 특정되지 않아 **확인 필요**입니다.\n\n**이 회사의 실질 순위·지위**: 지상파 3사(KBS·MBC·SBS)의 한 축으로, **레거시 방송에서는 확고한 상위 플레이어**입니다. 콘텐츠 경쟁력으로는 《피지컬 100》(넷플릭스), 《유부녀 킬러》(공효진 15년 만의 MBC 복귀 금토드라마), 《킬러들의 쇼핑몰》 특선 편성 등 **드라마·예능 IP 파워는 여전히 살아 있습니다**. 그러나 광고·시청 점유의 절대량 순위는 OTT 포함 시 밀리는 방향입니다.\n\n**주요 경쟁사·경쟁제품과 격차**\n- **직접 경쟁**: KBS·SBS(지상파). KBS는 수신료라는 안정적 방패가 있어 MBC보다 재무 방어력이 구조적으로 강합니다 — MBC의 광고 100% 의존이 상대적 약점입니다.\n- **확장 경쟁**: JTBC 등 종편.\n- **최상위 위협**: **넷플릭스·디즈니+ 등 OTT**. \"공중파를 뛰어넘어 콘텐츠 시장 최상위 포식자\"가 된 OTT에 광고·시청 기반을 잠식당하는 구조이며, 격차는 **좁혀지기보다 벌어지는 방향**입니다. 다만 MBC는 그 OTT에 콘텐츠를 **공급하는 파트너**이기도 해서(피지컬 100 넷플릭스, 킬러들의 쇼핑몰 디즈니+ 확보), 순수 적대 관계라기보다 **적이자 유통 채널**이라는 이중성이 있습니다.\n\n**시장 구조**: 지상파는 소수(3사) 과점 구조입니다. 구직자 양면으로 보면 — 과점이라 **강자에 속하면 브랜드·인프라 안정성**이 있으나, **정체·혁신 둔화**와 정치 종속이라는 그늘이 함께 옵니다.\n\n**정성 판정**: MBC는 **레거시 지상파에서는 이기는 쪽, 미래 콘텐츠 시장에서는 밀리지 않으려 분투하는 쪽**입니다. 해자는 면허·인프라·IP 제작력, 발목은 **광고 단일 수익원 + 정치 종속 + OTT 잠식**입니다. 이 직무(조명 운용)는 방송 제작 인프라의 물리적 토대에 붙는 일이라, 회사가 방송 제작을 지속하는 한 **직무 자체의 수요는 유지**됩니다 — 다만 계약직이라 그 수요가 정규직 자리로 이어지느냐는 별개입니다. **면접에서 \"조명 운용 인력의 정규직 전환 사례·재계약률\"과 \"제작 물량(스튜디오 가동) 추세\"를 물으면** 이 판단의 확신도가 결정적으로 올라갑니다.\n\n---\n\n## 6. 경영진 · 투자자·소유 구조\n\n**대표·경영진**: 사장은 **안형준**으로 파악되나, 사장직 최신 재임 여부는 **면접 전 재확인 필요**합니다(정권 주기에 따라 교체되는 자리라 시점 확인이 중요합니다). 조직은 대표이사 사장 아래 **콘텐츠총괄부사장** 체계입니다.\n\n**소유·지배 구조 — 이 회사의 핵심**: MBC는 벤처 투자를 받은 회사도, 오너가 지배하는 회사도 아닙니다.\n- **방송문화진흥회(방문진) 70% / 재단법인 정수장학회 30%.**\n- 배당·회수를 노리는 벤처·전략적 투자자가 없는 **비영리 공적 재단 소유구조**입니다. 따라서 \"투자자 회수 전략 vs 창업자 비전\"이라는 통상적 스타트업 프레임이 적용되지 않습니다.\n- **사장은 방문진이 선임**합니다. 즉 최고경영진은 창업자·오너가 아니라 **정치 지형에 따라 교체되는 임명직**입니다. 이것이 일반 기업과 결정적으로 다른 지점 — **C레벨 안정성·전략 연속성이 정권 주기에 종속**됩니다.\n- **정수장학회 30% 지분**은 그 자체로 역사적·정치적 뇌관(5·16 헌납 이력)입니다.\n- **노조**: 언론노조 MBC본부(교섭대표노조)가 편성·보도 독립성 이슈에서 강한 발언권을 가지며, 별도로 제3노조가 존재해 노노 갈등이 상시화돼 있습니다.\n\n**규모**: 약 1,496명(2023) 수준.\n\n**정렬 인사이트**: MBC의 실제 긴장 축은 벤처식 \"투자자 vs 창업자\"가 아니라 — **① 공영성(방문진)이라는 정체성 vs ② 광고로 벌어야 하는 상업적 생존, 그리고 ③ 정치 지형 변화에 따른 지배구조 흔들림**의 삼각 긴장입니다. 경영진이 그리는 \"글로벌 미디어 그룹\" 비전과, 소유 구조가 요구하는 \"공적 미션·정치 중립\"이 **한 몸 안에서 계속 당깁니다**. 지원자에게 주는 시그널: 이 회사에서 개인의 안정은 회사의 성장률이 아니라 **회사 재무(광고)와 정치 환경**이라는, 개인이 통제 불가능한 두 변수에 크게 좌우됩니다. 계약직이라면 그 변수의 영향을 정규직보다 더 직접적으로 받습니다 — **재계약 판단이 순수 실력 평가일지, 예산·정책 변수에 얽힐지를 면접에서 짚어보는 것**이 현실적입니다.\n\n---\n\n## 7. 용어 · 개념 풀이\n\n- **조명 콘솔** — 스튜디오 조명 장비 전체를 제어하는 통합 제어반(믹서). 이 직무의 핵심 장비이며, 공고 우대사항의 \"콘솔 운용 유경험\"이 곧 실무 채용 포인트입니다.\n- **숙직 교대 근무** — 야간에 방송국에 상주하며 교대로 근무하는 형태. 뉴스는 새벽·심야 방송이 있어 조명 운용에 야간 상주가 필수입니다.\n- **방송문화진흥회(방문진)** — 방송문화진흥법(1988)에 근거해 MBC 주식 70%를 관리하는 공적 관리기구. 사장 선임 권한을 가져 MBC 지배구조의 정점입니다.\n- **정수장학회** — 옛 5·16장학회. MBC 지분 30%를 보유한 재단으로, 그 자체가 역사적·정치적 논쟁의 대상입니다.\n- **FAST(Free Ad-supported Streaming TV)** — 광고를 보는 대신 무료로 시청하는 실시간 스트리밍 채널. MBC 등 지상파가 광고 의존 탈피와 신규 수익원으로 노리는 성장 시장(2025년 18조 → 2030년 47조원 전망).\n- **OTT(Over-The-Top)** — 인터넷으로 콘텐츠를 제공하는 스트리밍 서비스(넷플릭스·디즈니+ 등). MBC의 최상위 경쟁 위협이자 동시에 콘텐츠 공급 채널.\n- **지상파** — 전파(주파수)를 통해 무료 송출하는 전통 방송(KBS·MBC·SBS). 면허·주파수 자체가 진입장벽이자 자산입니다.\n- **수신료** — 시청자에게 걷는 공영방송 재원(KBS). MBC는 이것이 없어 **광고 100% 의존**이며, 이 차이가 재무 방어력의 구조적 격차를 만듭니다.\n- **TAM/SAM/SOM** — 전체 시장 규모(TAM)·실제로 노리는 유효 시장(SAM)·현실적으로 먹을 수 있는 몫(SOM). FAST 47조원은 TAM 성격이며, MBC의 실제 몫(SAM·SOM)은 별도 확인이 필요합니다.", CO="MBC", POS="조명 운용", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?]|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  var PAL={hook:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],2:['#34d399','#bff3da','rgba(52,211,153,.15)'],3:['#a78bfa','#e0d7ff','rgba(167,139,250,.16)'],4:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],8:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],allmore:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  var TOC={2:"요건",3:"서사",4:"리스크",8:"시장",6:"경영진"};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  var cards=[];
+  var hookLine=null,best=0;[4,2,3,8,6].forEach(function(id){if(!byId[id])return;lines(byId[id].body).forEach(function(l){var c=clean(l);if(c.length<14||c.length>128)return;if(/^\*\*(판정|종합|결론)\*\*/.test(c))return;var v=impact(c);if(v>best){best=v;hookLine=clip(c,1);}});});
+  if(!hookLine&&byId[3]){var c3=lines(byId[3].body).map(clean).filter(function(s){return s.length>10;})[0];if(c3)hookLine=clip(c3,1);}
+  cards.push({kind:"hook",line:hookLine});
+  [2,3,4,8,6].forEach(function(id){var b=byId[id];if(!b)return;var ls=lines(b.body);var hl=headline(ls,id===4);if(!hl)return;cards.push({kind:"core",secId:id,headline:hl,evidence:evidence(ls,hl)});});
+  var gapRe=/(주장\s*vs\s*증명|증명\s*간극|괴리|말뿐|말과\s*행동|선택적\s*(공개|IR)|공언|과장(?:하|한|된|해))/;var gap=null;[4,3].forEach(function(id){if(gap||!byId[id])return;var hit=lines(byId[id].body).filter(function(l){return gapRe.test(clean(l))&&clean(l).length>12;})[0];if(hit)gap=clip(clean(hit),2);});
+  if(gap)cards.push({kind:"gap",line:gap});
+  cards.push({kind:"allmore"});
+  function card(c,i){
+    var p=PAL[c.kind==="core"?c.secId:c.kind]||PAL.allmore,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    var anc=(c.secId?'<button class="story-anchor" data-sec="sec-'+c.secId+'">'+ICs+' 원문 근거 보기</button>':"");
+    // 표지 — 회사명 대형 타이포가 지배, 상단정렬(위 spacer 제거)로 dead band 소멸. /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="hook")return '<div class="story-card hook" style="'+sv+'">'+g+'<div class="story-kicker">'+ICt+' 회사 정찰</div><div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':"")+(c.line?'<div class="story-ev">'+kw(c.line)+'</div>':"")+'<div class="spacer"></div><div class="story-tease">넘겨서 정찰 근거 보기 →</div></div>';
+    if(c.kind==="core")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+esc(TOC[c.secId]||"")+'</div><div class="story-hl">'+kw(c.headline)+'</div>'+(c.evidence?'<div class="story-ev">'+kw(c.evidence)+'</div>':"")+'<div class="spacer"></div>'+anc+'</div>';
+    if(c.kind==="gap")return '<div class="story-card" style="'+sv+'">'+g+'<div class="story-kicker">'+ICw+' 말 vs 행동</div><div class="story-hl" style="font-size:19px">'+kw(c.line)+'</div><div class="spacer"></div></div>';
+    if(c.kind==="allmore")return '<div class="story-card allmore" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">내 이력으론 지원할 가치가 있을까?</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 카드는 회사 정찰 요약입니다. 내 이력 기준 적합도·평결은 앱에서.</div><a class="story-cta" href="'+esc(APP)+'">앱에서 내 적합도 보기 →</a></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  function active(i){dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());}
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
 })();
 </script>
 </body></html>
