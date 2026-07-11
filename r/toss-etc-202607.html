@@ -22,7 +22,12 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
 .brand b{color:#4f8cff}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}

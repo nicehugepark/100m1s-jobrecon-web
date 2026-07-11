@@ -22,7 +22,12 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
 .brand b{color:#4f8cff}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
@@ -47,8 +52,12 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
 .stickyhdr .ad{margin:0}
-/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만. */
-#digBtn{position:absolute;display:none;z-index:60;width:auto;margin:0;padding:10px 16px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 6px 18px -3px rgba(0,0,0,.65);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
 .comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
 .comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
 .comment .cq b{color:#4f8cff;font-weight:700}
@@ -63,6 +72,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
 
 .modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
 .modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
@@ -133,7 +147,11 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
-  <div id="report"><h2>공고 핵심 요건</h2>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
 <ul>
 <li><strong>채용 직무</strong>: AX 데이터 인텔리전스 팀장</li>
 <li><strong>한 줄 정의</strong>: 신설 AX(AI Transformation) 전담 부서 산하 데이터인텔리전스팀을 <strong>0→1로 세우는 팀장</strong>. 전사 데이터 거버넌스·표준·품질 체계 구축과 도메인별 데이터/AI 과제 발굴·실증(PoC)을 총괄.</li>
@@ -143,7 +161,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>전형</strong>: 서류 → 1차 실무(화상/대면) → 2차 임원(대면) → 평판조회 → 처우협의·검진 → 최종. 경력직 3개월 수습(급여 동일). 근무지 서울 중구(명동 삼양라운드스퀘어빌딩), 연봉 협의.</li>
 </ul>
 <p>한마디로 <strong>&quot;코드 짜는 자리가 아니라, 없던 데이터 조직을 정치·조율로 세우는 자리&quot;</strong>다. 15년 선호·팀장 타이틀·거버넌스 강조가 그 성격을 못박는다.</p>
-<h2>회사 서사 · 궤적</h2>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
 <p>삼양식품의 서사는 <strong>두 번의 현장 관찰이 만든 회사</strong>다. 책상 기획이 아니라 오너의 직관이 히트를 만든 DNA가 핵심이다.</p>
 <p><strong>1세대(식량난 해결)</strong>: 창업자 전중윤은 식품 도메인 출신이 아니라 보험사(동방생명) 창립 멤버였다. 그러나 1960년대 식량난에 &quot;미군이 버린 음식을 끓인 꿀꿀이죽으로 끼니를 때우는&quot; 사람들을 보고 라면을 해법으로 떠올렸다. 일본 묘조식품(明星食品)을 직접 찾아가 기술을 무상 원조받고, 라인 발주비 6만 달러는 중앙정보부 인맥(김종필 독대)을 거쳐 미 농림부 차관 자금으로 마련해 <strong>1963년 9월 국내 최초 라면 &#x27;삼양라면&#x27;</strong> 을 생산했다.</p>
 <p><strong>연혁의 뼈대와 전환점</strong>:</p>
@@ -159,7 +177,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </ul>
 <p><strong>미션·비전의 일관성</strong>: 창업정신 <strong>&quot;정직과 신용&quot;</strong>(1961년부터 60여 년 반복), 선대 유지 &quot;식품으로 인간 백세시대를 열겠다&quot;, 현재 슬로건 <strong>&quot;Delicious Together&quot;</strong>·그룹 슬로건 <strong>&quot;Round Square&quot;</strong>. 다만 &quot;정직과 신용&quot;은 1989 우지 파동으로 한 번 정면 훼손된 문구이고, &quot;글로벌 종합식품기업 도약&quot;은 2023년 리브랜딩과 함께 나온 <strong>최신 버전</strong>이지 오래된 뿌리가 아니다.</p>
 <p><strong>판정</strong>: 껍데기 버즈워드가 아니라 <strong>부도 위기(1998)→창업 60년 만에 식품 시총 1위(2025)</strong> 로 이어지는 인과가 뚜렷한 탄탄한 서사다. 단 그 반등이 <strong>불닭 단일 제품에 압도적으로 얹혀</strong> 있다는 점이 다음 블록의 핵심이며, 이번 AX 부서 신설·데이터 거버넌스 0→1 채용은 바로 그 &quot;불닭 이후&quot;를 대비한 체질 전환의 일부로 읽어야 한다.</p>
-<h2>실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
 <p><strong>검증된 실적(재무 체력은 최상위권)</strong>:</p>
 <ul>
 <li>2025년 <strong>매출 2조 3,518억 원, 영업이익 5,242억 원</strong>(DART). 순익 3,886억 규모. 매출 궤적 2022 9,090억→2023 1.19조→2024 1.73조→2025 2.35조로 3년 폭증</li>
@@ -184,7 +202,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </ul>
 <p><strong>주장 vs 증명 간극</strong>: 회사는 해외 성장·불닭 누적판매(100억 개)·수출 실적을 전면에 내세우지만, <strong>불닭 초집중 단일 제품 리스크와 국내 열세는 강조하지 않는다.</strong> &quot;종합식품기업&quot; 서사가 실체인지는 헬스케어 브랜드 &#x27;스핀들&#x27;(2026.5 론칭)·&#x27;탱글&#x27; 프로틴 파스타의 2~3년 매출로 확인해야 한다.</p>
 <p><strong>사업 구조상 진짜 위험/해자와 이 자리의 의미</strong>: 삼양의 해자는 <strong>불닭이라는 글로벌 IP 하나</strong>다. 이 자리(AX 데이터 인텔리전스)의 존재 이유가 바로 여기 있다 — 회사는 &quot;불닭 한 방&quot;의 오너 직관 의존에서 벗어나 <strong>데이터 기반 의사결정으로 다음 히트와 SCM·생산 효율을 만들려는 체질 전환</strong> 중이고, 이 팀은 그 0→1 엔진이다. <strong>기회</strong>: 전사 데이터 표준이 없는 백지 상태 → 성과를 남기면 커리어 임팩트가 크다. <strong>위험</strong>: 오너·현장 직관이 여전히 강한 조직에서 데이터 조직의 정치적 입지가 약할 수 있다 → &quot;경영진이 데이터 기반 의사결정에 실제로 얼마나 권한을 실어주는가&quot;가 이 자리 성패의 갈림길. 무엇이 확인되면 판단이 바뀌나: <strong>AX 부서의 보고라인·예산·경영진 스폰서십</strong>이 강하게 확인되면 매력도 급상승.</p>
-<h2>산업·시장·경쟁 지형</h2>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <p><strong>산업 규모·성장성</strong>: K라면 수출은 커지는 파이다. 2026 상반기 수출 9.35억 달러(+28%, 반기 최대), 연 10억 달러를 눈앞에 뒀다. <strong>글로벌 성장 산업의 순풍을 받는 위치 → 고용·성장 전망에 긍정.</strong> 단 국내 라면 시장 자체는 정체 구조(짜파게티 42년 1위 등 고착).</p>
 <p><strong>이 회사의 실질 순위·지위 — 이중적</strong>:</p>
 <ul>
@@ -195,7 +213,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <p><strong>주요 경쟁사·격차</strong>: 국내 3사 구도(농심·오뚜기·삼양). 삼양은 <strong>성장·수익성에서 앞서고 국내 점유·제품 다양성에서 뒤진다.</strong> 글로벌에선 일본 도요수산·닛신·농심과 미주에서 경쟁 — 2분기 삼양 미주 매출 +35.2%인 반면 도요수산·닛신·농심은 하락. <strong>격차 방향은 삼양에 유리하게 벌어지는 중.</strong> 국내에선 오뚜기와 &#x27;프리미엄 짜장·틈새&#x27;에서 2위 격전.</p>
 <p><strong>시장 구조</strong>: 국내는 3사 과점(짜파게티 42년 1위 등 강자 고착). 🔴 구직자 양면 — <strong>과점은 강자에 속하면 든든하나 삼양은 국내에선 3위 팔로워</strong>라 이 안정성의 수혜를 국내에선 덜 받는다. 대신 <strong>글로벌에선 역동적 성장 국면</strong>의 승자 쪽에 서 있다. (특정 담합 등 확정 규제 사실 근거 없음 — 언급 안 함.)</p>
 <p><strong>정성 판정</strong>: 삼양은 <strong>&quot;국내 3위·글로벌 신흥 승자&quot;</strong> 라는 비대칭 포지션이다. 해자는 <strong>불닭이라는 대체 불가 글로벌 매운맛 IP + 21%대 초격차 수익성</strong>, 발목은 <strong>국내 열세와 불닭 단일 의존</strong>. 지원자에겐: 배가 순풍(글로벌 수출·중국 신공장)을 받고 재무 체력이 최상위권이라 <strong>고용 안정·회사 성장 기대는 강한 편</strong>이다. 다만 성장의 열매가 직원 보상으로 잘 안 내려오는 점(블록4)이 병존한다. 무엇이 확인되면 판단이 바뀌나: <strong>불닭 외 신제품(우지 프리미엄·스핀들 헬스케어)이 매출로 검증되면</strong> 구조적 취약성이 완화되고 이 데이터 조직의 전략적 무게도 커진다 — 면접에서 &quot;탈불닭 포트폴리오의 실제 성과와 조직 투자 강도&quot;를 물어라.</p>
-<h2>경영진 · 투자자·소유 구조</h2>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
 <p><strong>대표·경영진</strong>:</p>
 <ul>
 <li><strong>김정수 (대표이사 회장)</strong> — 창업주 전중윤의 며느리, 전인장 부인. 1994년 결혼, 1998년 외환위기·우지파동 위기 때 시아버지 권유로 입사. 전업주부 출신이나 영업본부장·부사장을 거치며 <strong>입사 초기 전국 영업소를 직접 돌고 소비자 경험을 무기로</strong> 불닭볶음면 개발을 주도. 2021년 부회장, <strong>2026년 5월 회장 승진</strong>. WSJ가 &quot;500억 달러 인스턴트 라면 산업을 뒤흔드는 여성&quot;으로 조명. 2024년 연봉 32.2억. 최근 한경협 &#x27;갓생한끼&#x27; 등 청년 멘토로도 활동</li>
@@ -211,7 +229,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>리스크: <strong>내부거래 47.7%(식품사 2위), 중복상장 디스카운트</strong> — 코리아 디스카운트 요인. 소액주주 이익과 오너 승계 재원이 충돌할 수 있는 긴장(&quot;고점 승계 베팅&quot;)</li>
 </ul>
 <p><strong>정렬 인사이트</strong>: 경영진 비전(&quot;글로벌 종합식품기업&quot;·헬스케어·데이터 기반 지능화)과 소유 구조(안정적 오너·지주 지배 + 국민연금)는 <strong>큰 틀에선 정렬</strong> — 급격한 M&amp;A 회수보다 안정적 장기 지배·승계가 무게중심이다. 지원자 관점: <strong>의사결정이 오너로 집중</strong>돼 있어 이 AX 데이터 조직이 힘을 받으려면 <strong>오너·3세(전병우가 이끄는 헬스케어·데이터 신사업)의 스폰서십</strong>이 관건이다. 안정성은 높으나(재무·지분 모두), <strong>성과 보상은 오너에 후하고 직원에 박한 패턴</strong>이 확인되니 처우는 협의 단계에서 냉정하게 따져라. 이 자리는 신설 조직 팀장이므로 <strong>보고라인이 CEO/COO 어디로 붙는지</strong>가 곧 조직의 정치적 무게이자 당신의 실행력이다 — 반드시 물어라.</p>
-<h2>용어 · 개념 풀이</h2>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
 <ul>
 <li><strong>AX (AI Transformation)</strong> — AI를 전사 업무·프로세스에 이식해 체질을 바꾸는 전환. 삼양이 신설한 전담 부서명이며, 이 팀은 그 산하 데이터 축.</li>
 <li><strong>데이터 거버넌스</strong> — 데이터의 표준·품질·소유·접근을 규정하고 관리하는 전사 체계. 이 자리의 핵심 미션(0→1 구축).</li>
@@ -261,11 +279,18 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var JR_COMPANY="삼양식품",JR_APP="https://jobrecon.100m1s.com";
   var report=document.getElementById("report");
   if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
   var digBtn=document.createElement("button");
   digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
   document.body.appendChild(digBtn);
   var _digSel=null;
-  function clearDig(){digBtn.style.display="none";}
+  function clearDig(){digBtn.classList.remove("on");}
   function topBlock(node){
     var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
     while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
@@ -279,13 +304,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     var blockEl=topBlock(range.commonAncestorContainer);
     if(!blockEl){clearDig();return;}
     _digSel={text:text.slice(0,600),blockEl:blockEl};
-    var rects=range.getClientRects();
-    var r=rects.length?rects[rects.length-1]:range.getBoundingClientRect();
-    digBtn.style.display="block";
-    var w=digBtn.offsetWidth||132,vw=document.documentElement.clientWidth;
-    var left=window.scrollX+r.left+r.width/2-w/2;
-    left=Math.max(8,Math.min(left,window.scrollX+vw-w-8));
-    digBtn.style.left=left+"px";digBtn.style.top=(window.scrollY+r.bottom+10)+"px";
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
   }
   var _selDebounce=null;
   function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
@@ -397,7 +416,20 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
   function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
-  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
   var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
   if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
   if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});

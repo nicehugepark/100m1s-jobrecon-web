@@ -22,7 +22,12 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
 .brand b{color:#4f8cff}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
@@ -47,8 +52,12 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
 .stickyhdr .ad{margin:0}
-/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만. */
-#digBtn{position:absolute;display:none;z-index:60;width:auto;margin:0;padding:10px 16px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 6px 18px -3px rgba(0,0,0,.65);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
 .comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
 .comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
 .comment .cq b{color:#4f8cff;font-weight:700}
@@ -63,6 +72,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
 
 .modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
 .modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
@@ -133,7 +147,11 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
-  <div id="report"><h2>공고 핵심 요건</h2>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
 <p><strong>채용 직무</strong>: LLM 엔지니어</p>
 <ul>
 <li><strong>경력</strong>: 5년 이상, 학력무관. AI/ML 실무 경험자 대상 — 신입·주니어는 접점 없음.</li>
@@ -142,7 +160,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>우대(=실전 서빙 인력을 원한다는 신호)</strong>: Alignment Tuning, <strong>vLLM·sglang·TRT-LLM·Triton</strong> 서빙, <strong>prefix-aware routing·KV cache 최적화·GPU/노드 자원 효율 개선</strong>, 대규모 트래픽 대응. → 연구만이 아니라 <strong>프로덕션 서빙·인프라 최적화까지 아는 사람</strong>을 찾는다. 순수 리서처보다 &quot;학습+서빙+응용&quot; 삼각형을 갖춘 엔지니어가 유리.</li>
 <li><strong>전형</strong>: 서류 → 직무역량테스트(코딩)+인성검사 → 1차 → 2차 → 처우협의·검진. 코딩테스트가 명시돼 있으니 알고리즘·ML 구현 준비 필수.</li>
 </ul>
-<h2>회사 서사 · 궤적</h2>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
 <p>이 회사의 출발은 페인포인트를 푸는 벤처가 아니라 <strong>현대자동차그룹이 2000년 4월 세운 자회사</strong>다. 흥미롭게도 첫 이름은 &#x27;오토에버닷컴&#x27; — <strong>중고자동차 전자상거래 벤처</strong>였다. 그러나 그룹 분리 과정에서 현대정보기술의 자동차그룹 IT 부문이 오토에버시스템즈로 넘어오고, 중고차 사업은 현대글로비스로 매각되면서 <strong>SI(시스템 통합) 전문업체로 정체성이 재편</strong>됐다. 즉 존재 이유는 &quot;시장 불편 해결&quot;이 아니라 <strong>&quot;그룹의 IT를 내부에서 책임진다&quot;는 캡티브(전속) 논리</strong>다. 이건 지원자에게 고용 안정의 원천이자 동시에 사업 자율성의 한계선이다.</p>
 <p><strong>연혁의 뼈대와 전환점:</strong></p>
 <ul>
@@ -159,7 +177,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </ul>
 <p><strong>미션·비전의 일관성</strong>: 슬로건 &quot;디지털 신기술로 더 나은 세상을 구현 / Make a Better Future&quot;. 자기규정은 <strong>&#x27;모빌리티 소프트웨어 프로바이더(Mobility Software Provider)&#x27;</strong> — 2021년 합병 이후 &quot;SI 하청업체가 아니라 SW 프로바이더&quot;로 자기를 규정하려는 의지가 일관되게 관통한다. 인재가치는 Innovation·Professionalism·Customer Orientation, 그중 &quot;SW Professional로의 여정&quot;을 반복 강조.</p>
 <p><strong>판정</strong>: 버즈워드 나열이 아니라 <strong>전환점이 인과로 연결된 탄탄한 서사</strong>다. 다만 그 성장은 대부분 <strong>그룹 투자 사이클에 올라탄 파생 성장</strong>(SDV·로봇·정밀지도)이지 독자 시장 개척은 아니다. 이 LLM 엔지니어 채용은 2026 조직개편의 &#x27;AI 경쟁력 강화&#x27; 축과 정확히 맞물린 자리로 읽힌다.</p>
-<h2>실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
 <p><strong>검증된 실적 — 매우 견고:</strong></p>
 <ul>
 <li>매출 성장은 실적으로 증명. 2019년 1조5,718억 → <strong>2025년 4조2,521억(DART, 영업이익 2,553억)</strong>. 세 부문 모두 성장(SI 1조6,572억 / ITO 1조7,672억 / 차량SW 8,277억).</li>
@@ -183,7 +201,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>신임 대표 취임 직후 노조 결성 → 일부 언론은 &quot;리더십 실패 논란&quot;으로 규정. 조직문화 전환기의 마찰이 실재.</li>
 </ul>
 <p><strong>사업 구조상 해자/위험</strong>: 해자는 명확히 <strong>그룹 IT 물량(캡티브)</strong> — 현대차그룹의 SDV·로봇·AI 42조 투자가 곧 이 회사의 파이프라인이다. 위험도 같은 곳에서 온다 — <strong>그룹 의존은 안정이자 천장</strong>. 그룹 전략(예: 포티투닷 송창현 사장 사임 후 SDV 축을 오토에버로 재배열)에 따라 내 부서의 명운이 바뀐다.</p>
-<h2>산업·시장·경쟁 지형</h2>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <ul>
 <li><strong>산업 규모·성장성</strong>: 국내 대기업 IT서비스(SI/ITO)는 그룹 물량 기반으로 <strong>2025~2026 실적 고성장</strong> 국면. 특히 SDV·AI·로보틱스·스마트팩토리로 파이가 확장 중 — 순풍을 받는 배다. 다만 이 회사의 성장은 시장 개척이 아니라 <strong>그룹 CAPEX(신공장·SDV 전환·로봇 투자)에 연동</strong>되므로, 성장의 지속성은 현대차그룹의 투자 지속성에 달렸다.</li>
 <li><strong>실질 순위·지위</strong>: IT서비스 <strong>&#x27;빅3&#x27;</strong> — 삼성SDS, LG CNS, 현대오토에버. 매출 4.25조로 확실한 상위권. 다만 <strong>차량SW라는 고유 무기</strong>를 가진 유일한 플레이어라는 점이 차별화 포인트(경쟁사엔 없는 라인).</li>
@@ -191,7 +209,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>시장 구조</strong>: 대기업 그룹별 캡티브 SI가 각자 물량을 나눠 갖는 <strong>과점적·분할 구조</strong>. 🔴 구직자 양면 해석 — <strong>강자(그룹 SI)에 속하면 든든하고 물량이 마르지 않으나</strong>, 같은 이유로 <strong>혁신 압력이 약하고 대외 시장 근육이 안 자란다</strong>. 최근 삼성SDS·현대오토에버·신세계I&amp;C 연쇄 노조 결성은, 이 안정적 과점 구조가 <strong>&quot;실적 대비 보상이 안 따라온다&quot;는 내부 불만</strong>으로 흔들리는 국면임을 보여준다.</li>
 </ul>
 <p><strong>정성 판정</strong>: 산업 안에서 <strong>이기는 쪽</strong>이다 — 해자는 마르지 않는 그룹 물량과 유일한 차량SW 라인. 그러나 발목은 <strong>94.6% 내부거래 의존과 흔들리는 수익성</strong>. LLM 엔지니어 관점에선, 자원(GPU·데이터·투자)은 풍부한 대기업 환경에서 도메인 특화 AI를 다룰 기회이되, <strong>일이 그룹 내부 과제 중심이라 시장에서 검증받는 프로덕트 경험은 제한적</strong>일 수 있다. → 면접에서 &quot;이 LLM/Agent가 대외 상용화를 노리는가, 그룹 내부 효율화용인가&quot;를 물어 커리어 방향을 가늠하라. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 대외 AI 수주·상용 서비스 실적이 나오면 자생력 평가가 크게 오른다.</p>
-<h2>경영진 · 투자자·소유 구조</h2>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
 <p><strong>대표이사 류석문(11대, 2025.12~)</strong>: <strong>포스코DX 기술연구소장 출신의 개발자 출신 CEO</strong>. 2024년 합류해 SW플랫폼사업부를 이끌다 대표로 내정. 취임 후 <strong>SDV·보안·AI 중심 대규모 조직개편</strong>을 단행하고 재무·영업 수장을 이사회에 전면 배치. → 개발자를 CEO로 앉힌 것은 <strong>&quot;SW 회사로 진짜 바꾸겠다&quot;는 강한 신호</strong>이자, 이번 LLM 엔지니어 채용의 배경. 다만 그 과정에서 복지 축소·노조 결성 마찰이 동반돼, 일부 언론은 &quot;정의선 회장이 데려온 실패한 영입 되나&quot;라는 프레임을 씌우는 중 — <strong>리더십이 시험대 위</strong>라는 점을 인지하고, 면접에선 개발자 출신 CEO 체제의 기술 우선 문화를 어필 포인트로 쓸 수 있다.</p>
 <p><strong>전임 이력(맥락)</strong>: 김윤구(10대, 2024.01~2025.12) — 퇴임 후 보수 35.89억 과다 논란. 서정식(9대, 2021.04~2023.11) — 합병 시기 대표, 퇴임 후 청탁 혐의 기소됐으나 1·2심 무죄.</p>
 <p><strong>실무 채용 조직</strong>: <strong>류창한 TA팀장</strong> — 핵심 인재 직접 영입을 미션으로, 개발자 출신 TA가 주1회 사업부에 상주. 경력 채용이 TA 주도로 적극적으로 돌아간다는 뜻.</p>
@@ -201,7 +219,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>🔑 <strong>정의선 회장 개인 지분 7.33%가 핵심 층위</strong>. 정 회장 지분율이 높은 현대글로비스·보스턴다이나믹스와 함께 <strong>그룹 승계 플랜의 키(key)</strong>로 지목된다. 상장 당시 정 회장은 구주매출로 약 965억원을 확보한 바 있음.</li>
 </ul>
 <p><strong>정렬 인사이트</strong>: 이 회사의 자본 논리는 &#x27;순수 사업 성장&#x27;을 넘어 <strong>오너 승계 재원·지배구조 지렛대</strong>라는 정치적 층위를 갖는다. 성장 스토리(SW 전환)와 승계 논리(주가·지분가치)가 겹치는 한 <strong>그룹의 전폭 지원이 계속된다</strong> — 이건 고용·투자 안정에 강한 긍정 신호. 반대로, 회수 전략이 &#x27;엑싯&#x27;이 아니라 &#x27;지분가치 유지·승계 활용&#x27;이라 <strong>스톡옵션 대박형 회사는 아니다</strong>. 또 국민연금(8.22%)이 임원 보수에 제동을 걸어 <strong>보수위원회를 신설</strong>하게 만든 사례처럼 소수주주·연기금의 견제도 실재한다. → 지원자는 <strong>안정성·그룹 지원은 크게 신뢰하되, 처우는 대박이 아니라 대기업 상한선 안에서 기대</strong>하고, 성과급·평가 투명성(노조 핵심 이슈)을 면접·처우협의에서 검증하라.</p>
-<h2>용어 · 개념 풀이</h2>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
 <ul>
 <li><strong>SDV (Software Defined Vehicle)</strong> — 소프트웨어가 차량 기능·경험을 정의하는 &#x27;소프트웨어 중심 차량&#x27;. 이 회사가 그룹의 SDV 전환에서 <strong>차량SW·정밀지도·보안</strong>을 맡는 중추.</li>
 <li><strong>mobilgene</strong> — 이 회사의 <strong>차량용 임베디드 SW 플랫폼</strong> 브랜드(Classic/Adaptive). AUTOSAR 기반 차량 제어 SW로 2016 그랜저부터 양산 적용.</li>
@@ -251,11 +269,18 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var JR_COMPANY="현대오토에버",JR_APP="https://jobrecon.100m1s.com";
   var report=document.getElementById("report");
   if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
   var digBtn=document.createElement("button");
   digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
   document.body.appendChild(digBtn);
   var _digSel=null;
-  function clearDig(){digBtn.style.display="none";}
+  function clearDig(){digBtn.classList.remove("on");}
   function topBlock(node){
     var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
     while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
@@ -269,13 +294,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     var blockEl=topBlock(range.commonAncestorContainer);
     if(!blockEl){clearDig();return;}
     _digSel={text:text.slice(0,600),blockEl:blockEl};
-    var rects=range.getClientRects();
-    var r=rects.length?rects[rects.length-1]:range.getBoundingClientRect();
-    digBtn.style.display="block";
-    var w=digBtn.offsetWidth||132,vw=document.documentElement.clientWidth;
-    var left=window.scrollX+r.left+r.width/2-w/2;
-    left=Math.max(8,Math.min(left,window.scrollX+vw-w-8));
-    digBtn.style.left=left+"px";digBtn.style.top=(window.scrollY+r.bottom+10)+"px";
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
   }
   var _selDebounce=null;
   function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
@@ -387,7 +406,20 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
   function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
-  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
   var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
   if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
   if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});

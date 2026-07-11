@@ -22,7 +22,12 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
 .brand b{color:#4f8cff}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
@@ -47,8 +52,12 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
 .stickyhdr .ad{margin:0}
-/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만. */
-#digBtn{position:absolute;display:none;z-index:60;width:auto;margin:0;padding:10px 16px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 6px 18px -3px rgba(0,0,0,.65);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
 .comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
 .comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
 .comment .cq b{color:#4f8cff;font-weight:700}
@@ -63,6 +72,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
 
 .modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
 .modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
@@ -133,7 +147,11 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
-  <div id="report"><h2>공고 핵심 요건</h2>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
 <p><strong>채용 직무</strong>: 인프라TA · CE · BD · Pre-Sales</p>
 <ul>
 <li>ITCEN CLOIT의 <strong>Business Strategy / Cloud</strong> 부문 경력직(정규직) 통합 채용이며, 지원 직무는 <strong>CE(Cloud Engineer)</strong> — 클라우드 인프라 설계·구축·운영을 담당하는 엔지니어 트랙이다.</li>
@@ -141,7 +159,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>공고 마감 <strong>2026-08-31</strong>으로 상시성에 가까운 롱런 채용 — 인력을 계속 흡수 중이라는 신호(성장 국면 또는 이직률 높은 SI/MSP 특성 둘 다 가능, 면접에서 결원 충원인지 증원인지 확인 권장).</li>
 <li>세부 자격요건·연차·기술스택(AWS/GCP/Azure 자격증, IaC·Kubernetes·MSP 운영 경험 등)은 공고 본문에 노출되지 않음 — <strong>확인 필요</strong>. 다만 회사가 GCP Premier·네이버·AWS MSP 물량을 굴리는 구조라 <strong>멀티클라우드 실무·자격증 보유가 사실상 CE의 핵심 무기</strong>가 될 가능성이 높다.</li>
 </ul>
-<h2>회사 서사 · 궤적</h2>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
 <p><strong>이 회사는 순수 스타트업이 아니라 그룹 재편의 산물이다.</strong> 창업자가 현장 페인포인트를 파다 세운 벤처가 아니라, 아이티센그룹이 흩어진 클라우드·인프라 역량을 한 법인으로 묶어 만든 <strong>전략 자회사</strong>다. 이 전제를 놓치면 회사를 오독한다.</p>
 <p><strong>설립·재편(2023)</strong> — 쌍용정보통신에서 클라우드 전문업체 &#x27;클로잇&#x27;을 물적분할해 신규법인화했고, 같은 해 LG히다찌를 그룹에 편입해 &#x27;클로센&#x27;으로 개명한 뒤 <strong>클로잇 + 클로센을 합병</strong>, 디지포머싸스랩까지 흡수합병해 지금의 ITCEN CLOIT이 만들어졌다. CEO 김우성은 인사말에서 &quot;그룹 핵심 계열사인 아이티센엔텍의 클라우드 전문성과 스토리지 장비·SI/Infra 경험을 집약&quot;한다고 밝혀, 이 회사가 <strong>그룹 자산의 통합체</strong>임을 스스로 인정한다. 즉 태생이 &quot;아이티센엔텍의 스토리지/SI 유산 + LG히다찌(히타치)의 인프라 혈통&quot;이다.</p>
 <p><strong>미션·비전</strong> — <strong>&quot;No.1 Cloud Native Company&quot;</strong>, &quot;주주·고객·직원을 위한 품질 Driven First Mover&quot;를 내걸고, 반복되는 핵심 문구가 <strong>&quot;DX를 넘어 AX(AI Transformation)를 완성&quot;</strong>, &quot;새로운 패러다임의 Cloud MSP&quot;다. 설립이 2023년으로 짧아 &quot;수년 관통&quot;을 논할 이력 자체가 적지만, <strong>DX→AX</strong> 서사가 홈페이지·CEO 메시지·2025~2026 보도까지 일관되게 반복돼 최소한 메시지 정렬은 되어 있다.</p>
@@ -154,7 +172,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </ul>
 <p>핵심 전환점은 <strong>2026년 1월의 &quot;AI 에이전트 기업으로의 전환&quot; 선언</strong>이다. 블로터(2026.01.28) 보도에서 김우성 대표는 그랜드인터컨티넨탈 파르나스 기자간담회에서 &quot;클라우드 사업을 앞으로 어떻게&quot; 끌고 갈지를 놓고, 회사가 <strong>기업 AI 도입의 투자 지점과 ROI 문제를 플랫폼 차원에서 풀겠다</strong>며 AgentGo를 전면에 세웠다. 즉 <strong>클라우드 MSP(구축·운영 대행)라는 저마진 수탁 사업만으로는 성장 한계가 있다고 보고, AI 에이전트 플랫폼으로 부가가치를 끌어올리려는 전략적 피벗</strong>이다.</p>
 <p><strong>서사 판정</strong>: 버즈워드 나열이 아니라 <strong>전환점이 인과로 연결되는 탄탄한 서사</strong>다 — 그룹 자산 통합(2023) → GCP Premier로 기술 등급 확보(2024) → 스포츠 IT 레퍼런스 반복 수주(2023~2025) → AI 에이전트 피벗(2026). 다만 <strong>AX·AgentGo는 아직 출시·제휴 초기 단계</strong>로, 서사의 최신 장(章)은 &quot;증명&quot;이 아니라 &quot;지향&quot;에 걸려 있다.</p>
-<h2>실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
 <p><strong>검증된 실적(✅):</strong></p>
 <ul>
 <li>공공·교육 클라우드, 국제 스포츠 대회 IT(<strong>항저우 아시안게임 GMS</strong>, <strong>2027 충청 유니버시아드 수주</strong>) — 국제 대회 IT 레퍼런스가 아시안게임→유니버시아드로 <strong>반복 수주</strong>되는 건 이 회사의 실질 해자다. 진입장벽이 높고 대체가 어려운 영역.</li>
@@ -170,13 +188,13 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <p>3. <strong>합병 후 통합 안정성</strong> — 클로잇+클로센(LG히다찌 혈통)+디지포머싸스랩을 3년 안에 묶었다. <strong>이질적 조직·인사 체계의 통합 피로</strong>가 남아 있을 수 있다(면접 확인).</p>
 <p>4. <strong>그룹 리스크의 간접 노출</strong> — 그룹 계열 쌍용정보통신의 <strong>4세대 나이스(NEIS) 오류 및 &#x27;입찰계약 비리&#x27; 논란</strong>(2022, 1,274억 규모 한국교육학술정보원 사업)이 있었다. ITCEN CLOIT 직접 건은 아니나, 공공 SI 수주 의존 그룹의 구조적 리스크(공공사업 논란·감사)를 방증한다.</p>
 <p><strong>사업 구조상 진짜 위험/해자</strong>: MSP 대행은 본질적으로 <strong>인력 투입형 저마진 수탁 사업</strong> — 규모가 커져도 사람을 더 갈아넣어야 해서 유지비가 매출을 쫓는다. AgentGo 같은 <strong>플랫폼(반복 매출·록인)으로 마진 구조를 바꾸려는 시도</strong>가 이 위험의 정답인데, 아직 매출 기여가 입증 안 됐다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: AgentGo의 실제 유료 고객 수·반복매출 비중, 그리고 매출 중 <strong>그룹 내부 물량 vs 외부 신규 비중</strong>(캡티브 의존도). 이 두 숫자가 면접에서 나오면 회사 체질을 정확히 읽을 수 있다.</p>
-<h2>산업·시장·경쟁 지형</h2>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <p><strong>산업 규모·성장성</strong>: 클라우드 MSP는 <strong>커지는 파이</strong>다 — 국내 기업의 클라우드 전환이 공공(디지털 정부)·금융까지 확산 중이고, 그 위에 <strong>AI 도입(AX)이라는 2차 성장축</strong>이 얹히고 있다. 배가 순풍을 받는 산업이라, 고용·수요 측면에선 지원자에게 우호적이다. 단 순풍이 곧 <strong>경쟁 심화</strong>를 뜻하기도 한다.</p>
 <p><strong>이 회사의 실질 순위·지위</strong>: ITCEN CLOIT은 <strong>리더가 아니라 상위권 팔로워/특화 플레이어</strong>다. 국내 MSP 시장의 명확한 상위는 <strong>메가존클라우드·베스핀글로벌</strong>이고, 대기업 계열 <strong>삼성SDS·SK(주요 클라우드 사업부)</strong>가 뒤를 받친다. ITCEN CLOIT의 차별점은 규모가 아니라 <strong>① 국제 스포츠 대회 IT(항저우 아시안게임 GMS·2027 충청 유니버시아드)라는 니치 레퍼런스와 ② 국내 최대 GCP Billing·GCP Premier라는 구글 클라우드 편중 강점</strong>이다. &quot;공공클라우드 전환 수주율 71.4%·No.1&quot;은 자사 주장이므로, <strong>정확한 시장 점유 순위는 확인 필요</strong>.</p>
 <p><strong>경쟁사·격차</strong>: 메가존·베스핀과 정면 비교하면 <strong>전체 규모·멀티클라우드 폭에서는 뒤지지만</strong>, 스포츠 이벤트 IT와 GCP 특화에서는 <strong>좁고 깊은 우위</strong>를 판다. AWS·Azure·Snowflake·Hitachi Vantara 파트너십도 갖췄다. 문제는 AI 에이전트 영역 — AgentGo가 겨냥하는 &quot;기업 AI 거버넌스·보안 장벽&quot; 시장은 이미 국내외 대형 벤더가 뛰어드는 레드오션 초입이라, <strong>자체 모델 없는 통합 사업자의 차별화가 얼마나 지속되는지</strong>가 관건이다.</p>
 <p><strong>시장 구조</strong>: MSP 시장은 <strong>소수 상위(메가존·베스핀) + 대기업 계열 + 다수 중견</strong>이 겨루는 <strong>부분 과점 + 경쟁 구조</strong>다. 지원자 양면 해석 — ITCEN CLOIT은 상위 과점권이 아니므로 &quot;강자에 속하는 안정감&quot;은 약하지만, <strong>그룹 캡티브 물량과 니치 레퍼런스로 방어선</strong>을 갖춰 순수 중소 MSP보다는 든든하다. 동시에 파이 뺏기 경쟁의 한복판이라 <strong>처우·투입 강도 압박</strong>은 상존한다.</p>
 <p><strong>정성 판정</strong>: 이 회사는 <strong>&quot;이기고 있다/지고 있다&quot;의 이분법보다, 큰 판에서 밀리지 않으려 니치와 그룹 우산으로 버티며 AI로 판을 바꾸려는 중위 도전자&quot;</strong>다. 해자는 <strong>국제 스포츠 IT 레퍼런스 + GCP 편중 강점 + 그룹 물량</strong>, 발목은 <strong>규모 열위 + 자체 AI 부재 + 저마진 수탁 체질</strong>. → 지원자에겐 &quot;성장 산업 안의 견실한 중위권, 폭발적 성장보다 안정적 확장&quot;으로 기대치를 잡는 게 정확하다. <strong>면접 질문</strong>: &quot;메가존·베스핀 대비 CLOIT의 CE로서 밟게 될 프로젝트가 어느 클라우드·어느 산업에 집중되나, AgentGo 관련 엔지니어링 수요는 실제로 있나.&quot;</p>
-<h2>경영진 · 투자자·소유 구조</h2>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
 <p><strong>지원 회사의 대표 — 김우성(대표집행임원, CEO).</strong> 2026년 1월 기자간담회에서 <strong>클라우드 MSP → AI 에이전트 기업으로의 전환</strong>을 직접 선언한 인물로, 회사의 최근 방향을 상징한다. &quot;DX를 넘어 AX를 완성&quot;, &quot;데이터 주권과 전사 거버넌스를 갖춘 중앙 집중형 관리(AgentGo)&quot;가 그의 반복 메시지다. &#x27;대표집행임원&#x27;이라는 직함은 <strong>이사회 중심 지배구조</strong>를 시사하나, 세부 이력(전 직장·학력·엑싯)은 공개 정보 미확인 → 면접 확인 권장. 그 외 <strong>이규진 본부장</strong>이 2026년 언론 인터뷰에 노출됐으나 세부 역할 확인 필요. <strong>CTO·CFO 등 C레벨 명단은 공개 정보 미확인</strong> — 조직의 기술 의사결정 구조를 면접에서 반드시 확인하라(누가 AI/클라우드 기술 방향을 잡는가).</p>
 <p><strong>그룹 정점 — 강진모 아이티센그룹 회장.</strong> 1968년 경북 상주 출생, 아주대 물리학과 → 연세대 대학원. <strong>공격적 M&amp;A로 몸집을 키운 오너</strong>로, 2017년 회장 취임하며 대표이사에서 물러났다가 <strong>2024년 3월 경영 일선 복귀</strong>, 복귀 1년 만에 아이티센글로벌의 역대급 성장을 이끌었다(비즈니스포스트). 아이티센/아이티센글로벌 <strong>최대주주</strong>(한 시점 아이티센 12.34%, 특수관계인 포함 약 25%대). 강 회장의 방향타는 <strong>① &#x27;원 아이티센(ONE ITCEN)&#x27; 운영 강화 ② 고부가가치 포트폴리오 전환 가속 ③ AI</strong>(지디넷, 2025.01) — CLOIT의 AX 피벗은 그룹 회장의 큰 그림 안에 있다. 흥미로운 건 그가 M&amp;A 자체보다 <strong>&quot;고급 기술 보유 경력 개발자 여러 명 채용&quot;을 회사 인수보다 낫다고 본</strong> 인재관을 밝힌 점(포브스코리아, 2022) — CLOIT의 상시 경력 채용 기조와 맞닿는다.</p>
 <p><strong>소유·자본 구조 — 벤처가 아니라 오너 그룹 캡티브형.</strong> ITCEN CLOIT 자체의 외부 VC 투자·라운드는 없다. <strong>비상장 그룹 자회사</strong>로, 자본 성격은 IPO 회수 압력형이 아니라 <strong>모그룹 사업 포트폴리오형</strong>이다. 그룹 계열: ITCEN GLOBAL·CTS·ENTEC·PNS·CLOIT·CORE·WITHCEN, ITCEN Japan, 피엠엑스, 그리고 비IT의 <strong>한국금거래소</strong>(현금원). 상장사는 아이티센글로벌(옛 아이티센)이며, 2025.06.30 기준 그룹은 <strong>39개 계열사</strong> 규모.</p>
@@ -185,7 +203,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>지적된 거버넌스 과제</strong>(보도): &quot;창업주 중심 구조 → 이사회 중심 투명 경영 체계 구축&quot;, &quot;승계·거버넌스 체계화&quot;. 오너 지배력이 강한 만큼 <strong>소액주주·직원 인센티브보다 오너 전략이 우선</strong>될 수 있는 구조.</li>
 </ul>
 <p><strong>정렬 인사이트</strong>: 경영진 비전(AX·AI 에이전트 선도)과 소유 구조(오너 그룹 캡티브)는 <strong>어긋나지 않고 정렬</strong>돼 있다 — 회장의 &#x27;ONE ITCEN·AI·고부가가치 전환&#x27;과 CEO의 &#x27;DX→AX&#x27; 피벗이 같은 방향이다. 다만 진짜 긴장은 <strong>&quot;그룹 내부 물량 의존 vs 외부 시장 자립&quot;</strong>에 있다. 지원자는 면접에서 <strong>매출의 캡티브 의존도</strong>를 파악하면, 이 회사가 &quot;그룹 하청 안정형&quot;인지 &quot;외부 시장에서 독립적으로 크는 성장형&quot;인지를 가를 수 있다 — 커리어 성장 폭이 여기서 갈린다.</p>
-<h2>용어 · 개념 풀이</h2>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
 <ul>
 <li><strong>CE(Cloud Engineer)</strong> — 클라우드 인프라를 설계·구축·마이그레이션·운영하는 엔지니어. 이 회사에선 GCP·AWS·Azure 등 멀티클라우드 실무가 핵심.</li>
 <li><strong>MSP(Managed Service Provider)</strong> — 고객사 대신 클라우드를 관리·운영해주는 대행 사업자. 인력 투입형 수탁 구조라 저마진이 특징.</li>
@@ -235,11 +253,18 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var JR_COMPANY="ITCEN CLOIT",JR_APP="https://jobrecon.100m1s.com";
   var report=document.getElementById("report");
   if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
   var digBtn=document.createElement("button");
   digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
   document.body.appendChild(digBtn);
   var _digSel=null;
-  function clearDig(){digBtn.style.display="none";}
+  function clearDig(){digBtn.classList.remove("on");}
   function topBlock(node){
     var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
     while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
@@ -253,13 +278,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     var blockEl=topBlock(range.commonAncestorContainer);
     if(!blockEl){clearDig();return;}
     _digSel={text:text.slice(0,600),blockEl:blockEl};
-    var rects=range.getClientRects();
-    var r=rects.length?rects[rects.length-1]:range.getBoundingClientRect();
-    digBtn.style.display="block";
-    var w=digBtn.offsetWidth||132,vw=document.documentElement.clientWidth;
-    var left=window.scrollX+r.left+r.width/2-w/2;
-    left=Math.max(8,Math.min(left,window.scrollX+vw-w-8));
-    digBtn.style.left=left+"px";digBtn.style.top=(window.scrollY+r.bottom+10)+"px";
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
   }
   var _selDebounce=null;
   function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
@@ -371,7 +390,20 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
   function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
-  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
   var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
   if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
   if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});

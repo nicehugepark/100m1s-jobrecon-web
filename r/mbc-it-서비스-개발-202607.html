@@ -22,7 +22,12 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
 .brand b{color:#4f8cff}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
@@ -47,8 +52,12 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
 .stickyhdr .ad{margin:0}
-/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만. */
-#digBtn{position:absolute;display:none;z-index:60;width:auto;margin:0;padding:10px 16px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 6px 18px -3px rgba(0,0,0,.65);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
 .comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
 .comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
 .comment .cq b{color:#4f8cff;font-weight:700}
@@ -63,6 +72,11 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
 
 .modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
 .modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
@@ -133,7 +147,11 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
-  <div id="report"><h2>공고 핵심 요건</h2>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
 <p><strong>채용 직무</strong>: 사내 IT 서비스 개발·운영</p>
 <ul>
 <li><strong>고용 형태</strong>: 계약직 1년(평가 후 1년 연장 가능) — 정규직 공채가 아니라 <strong>기간제 계약직</strong>이라는 점이 이 공고의 성격을 규정한다.</li>
@@ -143,7 +161,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>연봉</strong>: 사내 기준·경력 기준 책정, 지원서에 희망연봉 기재 → 밴드 비공개. 입사예정일 7월 13일로 <strong>빠른 충원</strong> 성격.</li>
 </ul>
 <p>한 줄 요약: 방송 콘텐츠 조직이 아니라 <strong>사내 IT(정보시스템) 운영조직의 SM/개발 인력</strong>을 계약직으로 뽑는 자리다. &quot;MBC 입사&quot;의 이미지(기자·PD·아나운서)와는 결이 완전히 다르다는 걸 먼저 분리해서 봐야 한다.</p>
-<h2>회사 서사 · 궤적</h2>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
 <p>MBC는 스타트업이 아니라 <strong>1961년 라디오로 출발해 정치 격변에 휩쓸려온 주식회사형 공영방송사</strong>다. &quot;창업자의 페인포인트&quot;라는 틀 자체가 성립하지 않는다.</p>
 <p><strong>설립·태생의 뒤틀림</strong>:</p>
 <ul>
@@ -171,7 +189,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>최근 드라마 라인업: 공효진이 15년 만에 복귀한 금토드라마 <strong>《유부녀 킬러》</strong>(2026.7.10 편성), 디즈니+ 오리지널 <strong>《킬러들의 쇼핑몰》</strong>을 MBC 특선으로 편성 — OTT와 지상파의 콘텐츠 유통을 오가는 최근 행보.</li>
 </ul>
 <p><strong>판정</strong>: 전환점이 인과로 이어지는 <strong>탄탄한 60년 서사</strong>지만, 그 인과의 축이 &quot;비전&quot;이 아니라 <strong>정치권력·제도 변경</strong>이라는 게 특징이다. 방향(광고 쇠퇴 → 글로벌 콘텐츠·FAST 전환)은 명확하나, 자기비판 그대로 <strong>실행은 초기 단계</strong>다. 다만 이 채용은 그 방송 서사와 별개로 <strong>사내 정보시스템 조직</strong>의 자리라는 점을 기억하라.</p>
-<h2>실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
 <p><strong>검증된 실적·자산 기반(고용 안정성의 토대)</strong>:</p>
 <ul>
 <li><strong>지상파 지위·주파수</strong>: 전국 네트워크(대구·전주 등 6대 도시 계열)와 방송 주파수·인허가 — 이건 신규 진입이 불가능한 <strong>규제 해자</strong>다.</li>
@@ -201,7 +219,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>해자 = 규제(주파수·지상파 면허) + IP 라이브러리 + 부동산. 약점 = 광고라는 <strong>구조적으로 축소되는 수익원</strong> 한 다리에 얹힌 P&amp;L. 규모가 커진다고 광고가 늘지 않는다 → 마진 방향이 하향 압력.</li>
 <li><strong>이 채용의 맥락에서의 의미</strong>: &quot;사내 데이터 + AI 연동 서비스&quot;는 방송사가 <strong>제작·운영 비용 효율화</strong>로 광고 쇠퇴를 방어하려는 흐름과 맞닿아 있다. 즉 이 자리는 회사의 <strong>비용 구조 개선/디지털 전환</strong>의 실무 말단이다 — 회사가 이 방향에 실제 예산·인력을 붙이면 자리가 커지고, 정책 구호에 그치면 계약 1년으로 끝날 수 있다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 면접에서 &quot;AI/사내시스템 팀의 인원 규모·연간 예산·2~3년 로드맵&quot;을 물어 실행 의지를 검증하라.</li>
 </ul>
-<h2>산업·시장·경쟁 지형</h2>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <p><strong>산업 규모·성장성 — 두 개의 상반된 파이</strong>:</p>
 <ul>
 <li><strong>지상파 방송 광고 = 정체·축소 파이</strong>. OTT가 콘텐츠 최상위 포식자가 되며 지상파는 제작·공급자로 밀리는 중. 이쪽에 회사 P&amp;L이 얹혀 있어 구조적 압박이 상시.</li>
@@ -222,7 +240,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li>지상파는 소수 지배 <strong>과점</strong>. 양면 해석 — 강자(지상파 면허) 자체는 신규 진입 불가라 <strong>안정적</strong>이지만, 광고 쇠퇴로 <strong>파이 자체가 줄어 혁신·투자 여력이 둔화</strong>된다. 안정성과 정체가 동시에 있는 구조.</li>
 </ul>
 <p><strong>정성 판정</strong>: MBC는 <strong>&quot;규제 해자로 무너지진 않지만, 성장 산업에서는 밀리는 쪽&quot;</strong>이다. 발목은 광고 단일 수익원과 정권 리스크, 해자는 면허·IP·부동산. 지원자 관점에선 → <strong>회사 존속 안정성은 높으나, 폭발적 성장·처우 상승 기대는 낮게</strong> 잡아야 한다. 면접에선 &quot;사내 IT/AI 조직이 이 전환기에 비용센터인지 전략투자 대상인지&quot;를 물어 이 자리의 미래를 검증하라. <strong>무엇이 확인되면 판단이 바뀌나</strong>: FAST·글로벌 콘텐츠 매출이 실제 예산·인력으로 이어지고, AI 사내 프로젝트가 로드맵을 갖췄다면 이 직무의 성장성은 상향된다.</p>
-<h2>경영진 · 투자자·소유 구조</h2>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
 <p><strong>대표·경영진</strong>:</p>
 <ul>
 <li>사장 <strong>안형준</strong>. 그 외 콘텐츠총괄부사장 등 C레벨 임원의 개인 이름·배경은 <strong>공개 정보 미확인(면접 확인)</strong>.</li>
@@ -241,7 +259,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>의사결정 속도</strong>: 재단 감독 + 강한 노조 + 정치적 감시라는 3중 구조 → 신기술(AI) 도입 같은 프로젝트가 <strong>위에서 빠르게 밀어붙이기 어렵다</strong>. 사내 IT/AI 개발자로서 &quot;혁신 속도&quot;를 기대한다면 현실적 기대치를 낮춰야 한다.</li>
 </ul>
 <p><strong>정렬 인사이트</strong>: 경영진이 그리는 미래(&quot;콘텐츠 중심 글로벌 미디어 그룹&quot;, AI·FAST 전환)와 소유 구조가 시사하는 방향(재단·공영의 안정·공적 미션 우선, 정권 리스크)이 <strong>부분적으로 어긋난다</strong> — 전환은 속도를 요구하는데 지배구조는 속도를 억제한다. 이 긴장이 사내 AI·시스템 프로젝트에도 그대로 투영될 수 있다. 지원자는 면접에서 <strong>&quot;AI/디지털 전환에 대한 현 경영진의 실제 투자 의지와 임기 안정성&quot;</strong>을 확인해, 이 자리가 안정적 유지보수직인지 전략 프로젝트인지 가려내라.</p>
-<h2>용어 · 개념 풀이</h2>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
 <ul>
 <li><strong>Spring / Spring Boot</strong> — Java 기반 엔터프라이즈 웹 애플리케이션 프레임워크. 국내 대기업·공공 사내 시스템 백엔드의 사실상 표준. 이 자리의 필수 스택.</li>
 <li><strong>Oracle PL/SQL</strong> — 오라클 데이터베이스의 절차형 SQL 언어. 복잡한 비즈니스 로직을 DB 안에서 처리하는 레거시 방식으로, 경영정보·그룹웨어 같은 기간계 사내 시스템에 흔히 쓰인다.</li>
@@ -288,11 +306,18 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var JR_COMPANY="MBC",JR_APP="https://jobrecon.100m1s.com";
   var report=document.getElementById("report");
   if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
   var digBtn=document.createElement("button");
   digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
   document.body.appendChild(digBtn);
   var _digSel=null;
-  function clearDig(){digBtn.style.display="none";}
+  function clearDig(){digBtn.classList.remove("on");}
   function topBlock(node){
     var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
     while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
@@ -306,13 +331,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
     var blockEl=topBlock(range.commonAncestorContainer);
     if(!blockEl){clearDig();return;}
     _digSel={text:text.slice(0,600),blockEl:blockEl};
-    var rects=range.getClientRects();
-    var r=rects.length?rects[rects.length-1]:range.getBoundingClientRect();
-    digBtn.style.display="block";
-    var w=digBtn.offsetWidth||132,vw=document.documentElement.clientWidth;
-    var left=window.scrollX+r.left+r.width/2-w/2;
-    left=Math.max(8,Math.min(left,window.scrollX+vw-w-8));
-    digBtn.style.left=left+"px";digBtn.style.top=(window.scrollY+r.bottom+10)+"px";
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
   }
   var _selDebounce=null;
   function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
@@ -424,7 +443,20 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
   function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
-  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0,behavior:"smooth"});});});
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
   var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
   if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
   if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
