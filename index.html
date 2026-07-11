@@ -319,7 +319,66 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   details.blk > .body { padding:0 16px 14px; }
 
   /* 완료 착지·목차 이동 시 sticky 헤더에 안 가리도록(JS 스크롤과 이중 안전) */
-  .dbanner, .verdict, details.blk { scroll-margin-top:150px; }
+  .dbanner, .verdict, details.blk, .modeseg { scroll-margin-top:150px; }
+
+  /* === 스와이프 스토리 (2뷰 토글 · EXTRACTIVE 카드 덱) — 다크·390px·창작 0 === */
+  /* 세그먼트 토글 [스토리 | 리포트] — 리포트 완료(has-story) 시에만 노출 */
+  .modeseg { display:none; gap:4px; margin:12px 0 4px; padding:4px;
+    background:var(--card2); border:1px solid var(--line); border-radius:999px; width:fit-content; }
+  body.has-story .modeseg { display:inline-flex; }
+  .modeseg button { width:auto; margin:0; padding:0 20px; min-height:38px; font-size:13.5px; font-weight:700;
+    border-radius:999px; background:transparent; color:var(--dim); border:0; cursor:pointer;
+    -webkit-tap-highlight-color:transparent; transition:background .15s,color .15s; }
+  .modeseg button.on { background:var(--accent); color:#fff; }
+
+  /* 스토리 뷰: 스토리 모드에서만 노출 + 리포트 요소는 스토리 모드에서 숨김 */
+  .storyview { display:none; }
+  body.mode-story .storyview { display:block; }
+  body.mode-story #dbanner, body.mode-story #verdict, body.mode-story #vwhy,
+  body.mode-story #toc, body.mode-story #pcard, body.mode-story #myInfo,
+  body.mode-story #digHint, body.mode-story #blocks, body.mode-story #shareBtn,
+  body.mode-story #compareWrap { display:none !important; }
+
+  /* 카드 덱 — 가로 스냅 스와이프 */
+  .story-deck { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 0; margin:2px 0; }
+  .story-deck::-webkit-scrollbar { display:none; }
+  .story-card { flex:0 0 100%; scroll-snap-align:center; box-sizing:border-box;
+    min-height:58vh; display:flex; flex-direction:column;
+    background:linear-gradient(180deg,var(--card),#12161d);
+    border:1px solid var(--line); border-radius:18px; padding:22px 20px; }
+  .story-card.hook { background:linear-gradient(155deg,#1a2740,#141b26); border-color:#33507d; }
+  .story-card .spacer { flex:1 1 auto; min-height:14px; }
+  .story-kicker { font-size:11.5px; font-weight:800; letter-spacing:.06em;
+    color:var(--accent); margin-bottom:14px; display:flex; align-items:center; gap:6px; text-transform:uppercase; }
+  .story-kicker svg { width:1.15em; height:1.15em; }
+  .story-hl { font-size:21px; font-weight:800; line-height:1.42; color:#f0f4f8; letter-spacing:-.2px; }
+  .story-hl strong { color:#fff; }
+  .story-ev { margin-top:16px; font-size:15px; line-height:1.62; color:#c7d0da;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .story-ev strong { color:#e8ecf1; font-weight:700; }
+  .story-hl mark.kw, .story-ev mark.kw, .story-angle mark.kw, .story-verdict-why mark.kw {
+    background:rgba(79,140,255,.20); color:#cfe0ff; border-radius:4px; padding:0 3px; font-weight:800; }
+  .story-badge { display:inline-block; font-weight:800; font-size:13px; padding:5px 12px;
+    border-radius:999px; color:#08110c; }
+  .story-badge.YES{background:var(--yes)} .story-badge.조건부{background:var(--cond)}
+  .story-badge.NO{background:var(--no);color:#fff} .story-badge.판단보류{background:var(--hold);color:#fff}
+  .story-verdict-why { margin-top:14px; font-size:15px; line-height:1.62; color:#dbe2ea; }
+  .story-verdict-why strong { color:#f0f4f8; font-weight:700; }
+  .story-angle { margin:14px 0 0; padding-left:18px; }
+  .story-angle li { margin:7px 0; font-size:14.5px; line-height:1.55; color:#cdd6e2; }
+  .story-anchor { width:auto; margin:18px 0 0; padding:8px 0; text-align:left; font-size:13px; font-weight:700;
+    color:var(--accent); background:transparent; border:0; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px; -webkit-tap-highlight-color:transparent; }
+  .story-anchor svg { width:1.1em; height:1.1em; }
+  .story-card.allmore { align-items:center; justify-content:center; text-align:center; }
+  .story-card.allmore .story-hl { text-align:center; }
+  .story-cta { width:auto; margin:22px 0 0; padding:12px 22px; font-size:15px; font-weight:700;
+    background:var(--accent); color:#fff; border:0; border-radius:12px; cursor:pointer; }
+  /* 진행 도트 */
+  .story-dots { display:flex; justify-content:center; gap:7px; margin:14px 0 2px; }
+  .story-dots .dot { width:7px; height:7px; border-radius:999px; background:var(--line); transition:width .2s,background .2s; }
+  .story-dots .dot.on { background:var(--accent); width:20px; }
 
   /* 🔴 P1-6 모바일(390px 우선·대표 주 사용자) — 본문 하한 15px·메타 하한 12px + iOS 자동줌 방지(input≥16px) */
   @media (max-width: 480px) {
@@ -428,6 +487,17 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
 
   <!-- 마감 배너(BE posting_status 필드 기반) — 결과 최상단. 필드 없으면 미노출(graceful) -->
   <div class="dbanner" id="dbanner"></div>
+
+  <!-- 2뷰 토글 [스토리 | 리포트] — 정찰 완료 시 노출. 완료 착지 = 스토리 모드(기본) -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 뷰 — 🔴 EXTRACTIVE: 원문 리포트 문장·숫자만 추출(창작 0). 카드 못 담는 뉘앙스는 리포트 모드에 -->
+  <div class="storyview" id="storyView">
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
+  </div>
 
   <div class="verdict" id="verdict">
     <span class="badge" id="badge"></span>
@@ -635,6 +705,162 @@ function scrollToEl(t, openDetails) {
 function landOnVerdict() {
   scrollToEl(dbannerEl.classList.contains("on") ? dbannerEl : verdictEl, false);
 }
+
+/* === 스와이프 스토리 (2뷰) — 🔴 EXTRACTIVE: 원문 리포트에 실존하는 문장·숫자만 추출(slice), 서사 창작 0 (교리 D7 정확 우선·FLR-AGT-002). 프론트 파싱만, 신규 LLM 파이프라인 없음 === */
+let _lastMeta = null, _hasStory = false;
+// 원문 라인 단위(불릿·서브헤더·문단) — 각 요소는 리포트 원문에 실존하는 substring
+function _storyLines(body){ return (body||"").split("\n").map(s=>s.replace(/\s+$/,"").trim()).filter(Boolean); }
+function _storyClean(ln){ return ln.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim(); }  // 마커 prefix만 제거(내용 불변)
+function _storyHasNum(s){ return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s) || /\b\d{4}\b/.test(s); }
+// 앞 n문장만 — 문장 경계로 자르므로 남는 텍스트는 원문 prefix라 여전히 verbatim(창작 아님)
+function _clipSent(s, n){
+  s = String(s).trim();
+  const re = /[다요음죠][.!?]|[.!?](?=\s)|[.!?]$/g; let m, count = 0, idx = 0;
+  while ((m = re.exec(s)) !== null){ count++; idx = m.index + m[0].length; if (count >= n) break; }
+  if (!(count >= n && idx > 0 && idx < s.length)) return s;
+  const c = s.slice(0, idx).trim();
+  // 마크다운 정합: **·` 가 홀수로 잘리면(영문 약어 B. 등 오절단 포함) 절단 취소 → 원문 라인 전체 유지(verbatim·마크다운 안 깨짐)
+  if (((c.match(/\*\*/g) || []).length % 2) || ((c.match(/`/g) || []).length % 2)) return s;
+  return c;
+}
+// 원문 → esc → 숫자(키워드) 하이라이트 → 굵게/코드. 텍스트는 불변, mark/strong span만 덧씌움
+function _storyMdKw(raw){
+  let h = esc(String(raw));
+  h = h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g, mt => '<mark class="kw">' + mt + '</mark>');
+  return h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+// 헤드라인 = 마무리 판정/종합 라인 우선 → 강조 문장 → 첫 유의미 문장 (전부 원문에서 선택)
+function _pickHeadline(lines){
+  const clean = lines.map(_storyClean);
+  let i = clean.findIndex(c => /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c));
+  if (i < 0) i = clean.findIndex(c => /\*\*[^*]+\*\*/.test(c) && c.length > 12);
+  if (i < 0) i = clean.findIndex(c => c.length > 12);
+  return i >= 0 ? _clipSent(clean[i], 1) : null;
+}
+// 근거 = 숫자/사실 포함 라인(헤드라인과 다른 것). 불릿 우선
+function _pickEvidence(lines, headline){
+  const cand = lines.filter(l => { const c = _storyClean(l); return _storyHasNum(c) && c.length > 8 && _clipSent(c,1) !== headline; });
+  const pick = cand.find(l => /^[-•*]/.test(l)) || cand[0];
+  return pick ? _clipSent(_storyClean(pick), 2) : null;
+}
+function _badgeText(l){ return l==="YES"?"지원 추천":l==="조건부"?"조건부":l==="NO"?"지원 비추천":"판단보류"; }
+// 블록1 상위 3줄(배지 태그·별표 잔재 제거) — 스토리 판정 카드용 클린 추출(vwhy와 동일 취지, 스토리 전용)
+function _storyVerdictWhy(b1body){
+  const body = (b1body || "").replace(/\*{0,2}\[(YES|조건부|NO)\]\*{0,2}/g, "").trim();
+  return body.split("\n").map(s => s.replace(/^\s*[-•*]\s*/,"").replace(/^\s*\d+\.\s*/,"").trim()).filter(Boolean).slice(0, 3);
+}
+
+// 카드 덱 빌드 — renderBlocks와 동일 분리(## 1.~## 8.) 후 블록별 추출
+function buildStory(text, meta, level){
+  const deck = $("storyDeck"), dots = $("storyDots");
+  const re = /^##\s*(\d)\.\s*(.*)$/gm; let m, marks = [];
+  while ((m = re.exec(text)) !== null) marks.push({ id:+m[1], end:re.lastIndex, idx:m.index });
+  if (marks.length === 0){ resetStory(); return false; }
+  const byId = {};
+  marks.forEach((mk, i) => { byId[mk.id] = { id:mk.id, body:text.slice(mk.end, i+1 < marks.length ? marks[i+1].idx : text.length).trim() }; });
+  const cards = [];
+  const company = (meta && meta.company) || "", position = (meta && meta.position) || "";
+  // 훅 — 회사 정체(블록3 첫 문장 우선, 없으면 블록1 첫 실질 문장) + 판정 배지 티저
+  let hookLine = null;
+  if (byId[3]){ const c = _storyLines(byId[3].body).map(_storyClean).find(s => s.length > 10); if (c) hookLine = _clipSent(c, 1); }
+  if (!hookLine && byId[1]){ const c = _storyLines(byId[1].body).map(_storyClean).find(s => s.length > 6 && !/^\[?(YES|조건부|NO)\]?$/.test(s.replace(/\*/g,""))); if (c) hookLine = _clipSent(c, 1); }
+  cards.push({ kind:"hook", company, position, badge:level, line:hookLine });
+  // 핵심 딥다이브 — 표시순(요건2·서사3·리스크4·시장8·경영진6), 존재하는 블록만
+  [2,3,4,8,6].forEach(id => {
+    const b = byId[id]; if (!b) return;
+    const lines = _storyLines(b.body);
+    const hl = _pickHeadline(lines); if (!hl) return;
+    cards.push({ kind:"core", secId:id, title:TITLES[id]||"", headline:hl, evidence:_pickEvidence(lines, hl), sec:"sec-"+id });
+  });
+  // 간극(말 vs 행동) — 블록4/3에 주장vs증명·괴리·말뿐이 실존할 때만(없으면 생략·강제 삽입 금지)
+  const gapRe = /(주장\s*vs\s*증명|증명\s*간극|괴리|말뿐|말과\s*행동|선택적\s*(공개|IR)|공언|과장(?:하|한|된|해))/;
+  let gap = null;
+  [4,3].forEach(id => { if (gap || !byId[id]) return;
+    const hit = _storyLines(byId[id].body).find(l => gapRe.test(_storyClean(l)) && _storyClean(l).length > 12);
+    if (hit) gap = { line:_clipSent(_storyClean(hit), 2), sec:"sec-"+id };
+  });
+  if (gap) cards.push({ kind:"gap", line:gap.line, sec:gap.sec });
+  // 판정 — 배지 + vwhy(블록1 상위 3줄, 재사용) + 지원각(블록1 축 문장·블록5 종합, 실존만)
+  const angle = [];
+  if (byId[1]){ const ax = _storyLines(byId[1].body).map(_storyClean).find(l => /(다만|핵심은|기준이면|로는\s*(YES|NO|조건부)|축은|반면)/.test(l) && l.length > 14); if (ax) angle.push(_clipSent(ax, 1)); }
+  if (byId[5]){ const sy = _storyLines(byId[5].body).map(_storyClean).find(l => /^\*\*(종합|트레이드오프|결론)\*\*/.test(l)); if (sy) angle.push(_clipSent(sy, 1)); }
+  cards.push({ kind:"verdict", badge:level, why: byId[1] ? _storyVerdictWhy(byId[1].body) : [], angle, sec: byId[1] ? "sec-1" : (byId[5] ? "sec-5" : null) });
+  // 전체보기 — 리포트 모드 CTA
+  cards.push({ kind:"allmore" });
+
+  deck.innerHTML = cards.map(_renderStoryCard).join("");
+  dots.innerHTML = cards.map((_, i) => `<span class="dot${i===0?' on':''}"></span>`).join("");
+  deck.scrollLeft = 0;
+  _hasStory = true; document.body.classList.add("has-story");
+  _wireStory();
+  return true;
+}
+function _renderStoryCard(c){
+  const anchor = c.sec ? `<button class="story-anchor" data-sec="${c.sec}">${IC.search} 원문 근거 보기</button>` : "";
+  if (c.kind === "hook"){
+    return `<div class="story-card hook">
+      <div class="story-kicker">${IC.target} 정찰 완료</div>
+      <div class="story-hl">${esc(c.company||"이 회사")}${c.position?` <span style="color:var(--dim);font-weight:700">· ${esc(c.position)}</span>`:""}</div>
+      ${c.line?`<div class="story-ev">${_storyMdKw(c.line)}</div>`:""}
+      <div class="spacer"></div>
+      ${c.badge?`<div><span class="story-badge ${c.badge}">${esc(_badgeText(c.badge))}</span><span style="color:var(--dim);font-size:12.5px;margin-left:8px">넘겨서 근거 보기 →</span></div>`:""}
+    </div>`;
+  }
+  if (c.kind === "core"){
+    return `<div class="story-card">
+      <div class="story-kicker">${esc(TOC_LABEL[c.secId]||c.title)}</div>
+      <div class="story-hl">${_storyMdKw(c.headline)}</div>
+      ${c.evidence?`<div class="story-ev">${_storyMdKw(c.evidence)}</div>`:""}
+      <div class="spacer"></div>${anchor}
+    </div>`;
+  }
+  if (c.kind === "gap"){
+    return `<div class="story-card">
+      <div class="story-kicker">${IC.warn} 말 vs 행동</div>
+      <div class="story-hl" style="font-size:18px">${_storyMdKw(c.line)}</div>
+      <div class="spacer"></div>${anchor}
+    </div>`;
+  }
+  if (c.kind === "verdict"){
+    return `<div class="story-card">
+      <div class="story-kicker">${IC.scale} 지원가치 평결</div>
+      <div><span class="story-badge ${c.badge||'판단보류'}">${esc(_badgeText(c.badge))}</span></div>
+      ${c.why&&c.why.length?`<div class="story-verdict-why">${c.why.map(w=>_storyMdKw(w)).join('<br>')}</div>`:""}
+      ${c.angle&&c.angle.length?`<ul class="story-angle">${c.angle.map(a=>`<li>${_storyMdKw(a)}</li>`).join("")}</ul>`:""}
+      <div class="spacer"></div>
+      ${c.sec?`<button class="story-anchor" data-sec="${c.sec}">${IC.search} 판단 근거 원문</button>`:""}
+    </div>`;
+  }
+  if (c.kind === "allmore"){
+    return `<div class="story-card allmore">
+      <div class="story-kicker">${IC.search} 더 깊이</div>
+      <div class="story-hl">근거를 전부 확인하세요</div>
+      <div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 핵심만 추린 요약입니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div>
+      <button class="story-cta" id="storyToReport">근거 전부 보기 →</button>
+    </div>`;
+  }
+  return "";
+}
+function _wireStory(){
+  const deck = $("storyDeck"), dots = $("storyDots");
+  deck.querySelectorAll(".story-anchor").forEach(btn => {
+    btn.addEventListener("click", () => { setStoryMode("report"); const t = $(btn.dataset.sec); if (t){ if (t.tagName === "DETAILS") t.open = true; scrollToEl(t, true); } else landOnVerdict(); });
+  });
+  const cta = $("storyToReport"); if (cta) cta.addEventListener("click", () => { setStoryMode("report"); landOnVerdict(); });
+  deck.onscroll = () => { const i = Math.round(deck.scrollLeft / Math.max(1, deck.clientWidth)); dots.querySelectorAll(".dot").forEach((d, j) => d.classList.toggle("on", j === i)); };
+}
+function setStoryMode(mode){
+  const story = mode === "story";
+  document.body.classList.toggle("mode-story", story);
+  document.body.classList.toggle("mode-report", !story);
+  $("segStory").classList.toggle("on", story);
+  $("segReport").classList.toggle("on", !story);
+}
+function landOnStory(){ scrollToEl($("modeSeg"), false); }
+function resetStory(){ _hasStory = false; document.body.classList.remove("has-story","mode-story","mode-report"); const d = $("storyDeck"); if (d) d.innerHTML = ""; const dd = $("storyDots"); if (dd) dd.innerHTML = ""; }
+$("segStory").addEventListener("click", () => { setStoryMode("story"); landOnStory(); });
+$("segReport").addEventListener("click", () => { setStoryMode("report"); landOnVerdict(); });
+
 // 목차 칩 클릭 → 해당 섹션 열고 이동(이벤트 위임)
 tocEl.addEventListener("click", (e) => {
   const chip = e.target.closest(".tocchip"); if (!chip) return;
@@ -941,6 +1167,7 @@ async function analyze() {
   $("pcard").style.display = "none"; $("pcard").innerHTML = ""; $("shareBtn").style.display = "none"; _pageUrl = null;
   dbannerEl.className = "dbanner"; dbannerEl.innerHTML = "";           // 마감배너 리셋
   vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; tocEl.className = "toc"; tocEl.innerHTML = "";
+  resetStory();                                                       // 스토리 덱 리셋(새 정찰)
   enterResultMode();                                                  // P0-b: 입력폼 접기(결과 상단 승격)
   lastJob = job_url; lastProfile = profile;
   _leftDuringJob = false; _adsFinalized = false; hideDoneGate();
@@ -1000,6 +1227,7 @@ async function cancelRecon() {
   $("digHint").style.display = "none"; $("myInfo").style.display = "none";
   dbannerEl.className = "dbanner"; dbannerEl.innerHTML = "";
   vwhyEl.className = "vwhy"; vwhyEl.innerHTML = ""; tocEl.className = "toc"; tocEl.innerHTML = "";
+  resetStory();       // 스토리 덱 리셋(취소)
   exitResultMode();   // 취소 = 입력폼 복귀
   statusEl.textContent = "정찰을 취소했습니다.";
   if (jid) { try { await ensureAPI(); await fetch(API + "/analyze/cancel/" + jid, { method: "POST", headers: tokenHeaders() }); } catch (e) {} }
@@ -1036,7 +1264,7 @@ function pollJob(job_id) {
       endPoll(); return;
     }
     if (ev.cancelled) { exitResultMode(); statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
-    if (ev.meta) { renderMeta(ev.meta); renderDeadlineBanner(ev); }   // 마감배너(필드 있으면·graceful)
+    if (ev.meta) { _lastMeta = ev.meta; renderMeta(ev.meta); renderDeadlineBanner(ev); }   // 마감배너(필드 있으면·graceful)
     if (ev.page && ev.page.url) _pageUrl = ev.page.url;  // Phase 2: 고정 URL 정찰 페이지(공유용, FR-056)
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
@@ -1055,7 +1283,14 @@ function pollJob(job_id) {
       if (_pollFull && _leftDuringJob) showDoneGate();   // 트랙 B-2: 이탈 후 복귀 → 완료 게이트(게이트 버튼이 착지 담당)
       loadCompare(curScoutLabel());                      // 비교 리스트 갱신(방금 공고 강조만·자동 스크롤 X)
       endPoll();
-      if (_pollFull && !_leftDuringJob) landOnVerdict(); // 🔴 P0-b: 완료 착지 = 결과 최상단(평결/마감배너)
+      if (_pollFull) {
+        const _lvl = (_pollFull.match(/\[(YES|조건부|NO)\]/) || [])[1] || null;
+        const _built = buildStory(_pollFull, ev.meta || _lastMeta, _lvl);  // EXTRACTIVE 카드 덱(원문 추출·창작 0)
+        if (!_leftDuringJob) {                            // 🔴 완료 착지 = 스토리 모드(landOnVerdict 로직 유지·뷰만 스토리로)
+          if (_built) { setStoryMode("story"); landOnStory(); }
+          else landOnVerdict();
+        }
+      }
       return;
     }
     _pollTimer = setTimeout(tick, 2000);
@@ -1086,7 +1321,7 @@ document.addEventListener("visibilitychange", () => {
 // 트랙 B-2: 완료 게이트(이탈 후 복귀 사용자에게 광고 1회 후 리포트)
 function showDoneGate() { const g = $("doneGate"); if (g) { activateAd("gateAd"); g.classList.add("on"); } }
 function hideDoneGate() { const g = $("doneGate"); if (g) g.classList.remove("on"); const ga=$("gateAd"); if (ga) delete ga.dataset.done; }
-$("gateBtn").addEventListener("click", () => { hideDoneGate(); landOnVerdict(); });   // P0-b: 게이트 닫으면 평결로 착지
+$("gateBtn").addEventListener("click", () => { hideDoneGate(); if (_hasStory) { setStoryMode("story"); landOnStory(); } else landOnVerdict(); });   // P0-b: 게이트 닫으면 스토리(없으면 평결)로 착지
 
 // 트랙 B-1/B-2: AdSense 슬롯 활성화 — window.JOBRECON_ADSENSE_CLIENT 설정 시 placeholder→실제 광고. 미설정 시 placeholder 유지.
 let _adsFinalized = false;
