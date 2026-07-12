@@ -295,6 +295,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .dbanner.on { display:flex; }
   .dbanner.closed { border-color:#7a3f3f; background:#241416; color:#f1cccc; }
   .dbanner.soon { border-color:#7a6a2f; background:#241f12; color:#ece0b4; }
+  .dbanner.unk { border-color:#3a4250; background:#161b23; color:#aab6c4; }  /* R3-016 미확인 = 중립 회색(경고·안심 어느 쪽도 단정 안 함) */
   .dbanner .di { flex:0 0 auto; margin-top:1px; }
   .dbanner b { font-weight:800; }
   .dbanner .dd { font-weight:800; }
@@ -348,12 +349,14 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body.mode-story #compareWrap { display:none !important; }
 
   /* 카드 덱 — 가로 스냅 스와이프 (릴스 감성·카드별 시맨틱 컬러 변주 · 창작0 무관 순수 비주얼) */
-  .story-deck { display:flex; align-items:flex-start; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
+  /* R3-014 콘텐츠 적응 높이 — 덱 높이=콘텐츠 최장 카드(stretch·전 카드 균질), 54vh 고정 폐기(짧은 카드 하단 55~60% 텅 제거).
+     min-height 34vh = 터치·존재감 안전 하한만. 짧은 카드의 잔여 여백은 .spacer(flex)가 흡수해 anchor가 하단 정렬. */
+  .story-deck { display:flex; align-items:stretch; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:4px 2px 2px; margin:2px -2px; }
   .story-deck::-webkit-scrollbar { display:none; }
   /* 색은 JS가 카드별 --sc(악센트)·--sc2(밝은 변주·텍스트 대비용)·--scg(글로우 rgba) 주입. 본문은 밝은 회색 고정(WCAG AA). */
   .story-card { position:relative; flex:0 0 100%; scroll-snap-align:center; box-sizing:border-box;
-    min-height:54vh; display:flex; flex-direction:column; overflow:hidden;
+    min-height:34vh; display:flex; flex-direction:column; overflow:hidden;
     --sc:#4f8cff; --sc2:#bcd4ff; --scg:rgba(79,140,255,.16);
     background:
       radial-gradient(130% 88% at 86% 2%, var(--scg), transparent 56%),
@@ -430,7 +433,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   @keyframes storyRise { to { opacity:1; transform:none; } }
   /* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격·해소=평결. 높이는 통일(가로 스냅), 밀도는 폰트·여백으로. === */
   .story-card.role-setup .story-hl, .story-card.role-context .story-hl { font-size:20px; font-weight:700; line-height:1.56; color:#dde5ef; }
-  .story-card.role-setup .spacer { min-height:20vh; }                 /* 설정 뒤 큰 여백 = 전복을 기다리는 호흡 */
+  /* (R3-014) role-setup .spacer 20vh 룰 제거 — 현행 렌더는 role-axis/resolve/cta만 생성(죽은 룰)·여백 과다 유발원 */
   /* 리스트-리스크 설정 카드의 '세 가지' 이름표 — 각 항목 원문 볼드 리드 나열(창작0). 예고 1줄뿐이던 빈 카드를 채워 타 설정 카드와 밀도 정합 */
   .story-names { align-self:stretch; margin-top:20px; display:flex; flex-direction:column; gap:11px; }
   .story-name { position:relative; padding-left:18px; font-size:15.5px; font-weight:700; line-height:1.45; color:#d3dbe6; letter-spacing:-.2px; word-break:keep-all; }
@@ -913,9 +916,19 @@ function _axClean(s){ s=String(s).trim(); s=s.replace(/^\s*[→•]\s*/,""); s=s
 function _clipWall(s){ if(_axNlen(s)<=90)return s; const cut=s.search(/[,，]\s/); if(cut>0 && _axNlen(s.slice(0,cut))>=12) return _axBal(s.slice(0,cut).trim()); return s; }   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
 function _axLastClause(t){ const re=/[.!?]\s+/g; let m, last=-1; while((m=re.exec(t))!==null) last=m.index+m[0].length; if(last>0){ const tail=t.slice(last).trim(); if(_axNlen(tail)>=3) return tail; } return String(t).trim(); }   // setup의 대비 직전 완결 절
 // ③ 문장 단위 대비 — 어미('…지만 B') 또는 리드접속사(문장 시작/중간). subvert=완결 문장(종결어미 보장·잘림0). setup은 접속사 앞(대비 보존). 전부 원문 substring(창작0).
-function _sentContrast(para){ const ss=_storySents(para); for(let i=0;i<ss.length;i++){ const s=ss[i]; const m=s.match(/[가-힣]지만(?=[\s,])/); if(m){ const idx=s.indexOf(m[0]), cut=idx+m[0].length; const sub=s.slice(cut).replace(/^[\s,、]+/,"").trim(); if(_axNlen(s.slice(0,idx))>=5 && _axNlen(sub)>=8) return { setup:_axBal(s.slice(0,cut).trim()), subvert:_axBal(_clipSent(sub,1)) }; } const m2=s.match(_AXCONJ); if(m2){ const pos=s.indexOf(m2[1],m2.index); const setup=s.slice(0,pos).trim(), sub=s.slice(pos).trim(); if(_axNlen(setup)>=4 && _axNlen(sub)>=8) return { setup:_axBal(_axLastClause(setup)), subvert:_axBal(_clipSent(sub,1)) }; } } return null; }
-// 문단 리스트에서 첫 유효 대비(used=문단 중복 방지, 한 §에서 2축 뽑을 때). ①볼드리드 → ③문장대비. 없으면 null(축 skip).
-function _extractContrast(pls, used){ for(let i=0;i<pls.length;i++){ if(used[i])continue; const r=_leadContrast(pls[i]) || _sentContrast(pls[i]); if(!r)continue; used[i]=true; return r; } return null; }
+//    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 '급여 26.4% 증가. 그러나 증가율 최저' 보상반전 추출).
+function _sentContrast(para){ const ss=_storySents(para); for(let i=0;i<ss.length;i++){ const s=ss[i]; const m=s.match(/[가-힣]지만(?=[\s,])/); if(m){ const idx=s.indexOf(m[0]), cut=idx+m[0].length; const sub=s.slice(cut).replace(/^[\s,、]+/,"").trim(); if(_axNlen(s.slice(0,idx))>=5 && _axNlen(sub)>=8) return { setup:_axBal(s.slice(0,cut).trim()), subvert:_axBal(_clipSent(sub,1)) }; } const m2=s.match(_AXCONJ); if(m2){ const pos=s.indexOf(m2[1],m2.index); let setup=s.slice(0,pos).trim(); const sub=s.slice(pos).trim(); if(_axNlen(setup)<4 && i>0) setup=ss[i-1].trim(); if(_axNlen(setup)>=4 && _axNlen(sub)>=8) return { setup:_axBal(_axLastClause(setup)), subvert:_axBal(_clipSent(sub,1)) }; } } return null; }
+// R3-015 비문(잘림) 게이트 — 말미가 수사 관형('+35.2%인')·관형형·비대비 연결어미·구두점이면 미완결(삼양 card3 비문 차단).
+//    '…지만'은 대비 구조 설계 산출이라 완결 취급. 명사 종결(레이블형)은 완결. iOS 안전(lookbehind 0).
+const _AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
+function _axWhole(s){ return !_AXCUT.test(String(s).trim().replace(/[*`]+$/,"").trim()); }
+//    선두 볼드 콜론 라벨('**한 문장 판정**:')은 자르기 전에 제거 — ': ' 경계 절단이 메타 라벨만 남기는 역전 방지. 말미 구두점은 strip으로 우선 해소.
+function _axTrim(s){ s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,""); s=_axBal(s.replace(/[\s,·—:：]+$/,"")); for(let k=0;k<3 && s && !_axWhole(s);k++){ const cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", ")); s=cut>4?_axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):""; } return _axWhole(s)?s:""; }
+// R3-013 최강 반전 우선 승격 — '첫 유효 대비'가 아니라 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드)를 선택.
+//    리포트 자기 마커('여기가 반전') 문단 최우선(+10) — 리포트-카드 격차(삼양 보상반전 증발) 구조 봉쇄. 비문 후보는 자격 박탈. used=문단 중복 방지.
+const _AXMARK=/여기가 반전/;
+function _axCandScore(r, para){ let v=_storyImpact(r.setup+" "+r.subvert); if(_AXNEG.test(r.subvert))v+=2; if(_AXMARK.test(para))v+=10; return v; }
+function _extractContrast(pls, used){ let best=null, bi=-1, bs=-1; for(let i=0;i<pls.length;i++){ if(used[i])continue; const r=_leadContrast(pls[i]) || _sentContrast(pls[i]); if(!r)continue; r.setup=_axTrim(r.setup); r.subvert=_axTrim(r.subvert); if(!r.setup||!r.subvert)continue; const v=_axCandScore(r,pls[i]); if(v>bs){ best=r; bi=i; bs=v; } } if(best){ used[bi]=true; best.score=bs; } return best; }
 // 6축 = §위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속·memory story_narrative_beat). 라벨=섹션 파생, key=색상. 3장 미만 → 스토리 숨김(buildStory).
 const _AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
 // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
@@ -923,7 +936,13 @@ const _MEANRE=/(?:지원자에게 주는 시그널|지원자 관점에서|무엇
 function _extractMean(body,mused){ const ss=_storySents(body); for(let i=0;i<ss.length;i++){ if(mused[i])continue; const s=ss[i], m=s.match(_MEANRE); if(!m)continue; let t=s.slice(m.index+m[0].length).replace(/^[（(]\s*/,"").replace(/\s*[）)]\s*$/,"").trim(); t=_axBal(_clipSent(t,1)); if(_axNlen(t)>=8){ mused[i]=true; return t; } } return null; }
 // P1-3 comp 축 라벨 내용 파생 — 보상 키워드 매칭 시만 "실체·보상", 아니면 중립 "회사 주장 vs 실제"(§4 첫 채굴이 보상 무관 4/5 mismatch 해소: 당근=적자·페이타랩=트래픽·MBC=미디어표방·삼양=주장vs증명).
 const _COMP=/(연봉|급여|보상|스톡옵션|스톡|RSU|처우|복지|성과급|인센티브|월급|초봉|페이밴드|사이닝)/;
-function _collectAxes(byId){ const out=[], used={}, mused={}; for(let i=0;i<_AXIS_SEC.length;i++){ const sec=_AXIS_SEC[i][0], label=_AXIS_SEC[i][1], key=_AXIS_SEC[i][2]; const b=byId[sec]; if(!b)continue; const c=_extractContrast(_storyParas(b.body), used[sec]||(used[sec]={})); if(!c)continue; const setup=_clipWall(_clipSent(_axClean(c.setup),2)), subvert=_axClean(String(c.subvert).replace(_LEADCONJ,"")); const mean=_extractMean(b.body, mused[sec]||(mused[sec]={})); if(_axNlen(setup)+_axNlen(subvert)<14 && !mean) continue; const _label = key==="comp" ? (_COMP.test(setup+" "+subvert)?"실체·보상":"회사 주장 vs 실제") : label; out.push({ key, label:_label, setup, subvert, mean, sec:"sec-"+sec }); } return out; }
+// R3-012 얇은 축 배제 — 카드 수를 축 프레임(6)이 아니라 콘텐츠 밀도로 결정. 밀도 = 후보 임팩트(숫자·반전어·마커)+뜻줄(+2) >= 3.
+//    미달 축(토스 '커지는 파이/경쟁 심화 파이' 동어반복류)은 카드화 배제 — 리포트에만 남긴다(얇은 축은 카드가 아니라 리포트다).
+function _collectAxes(byId){ const out=[], used={}, mused={}; for(let i=0;i<_AXIS_SEC.length;i++){ const sec=_AXIS_SEC[i][0], label=_AXIS_SEC[i][1], key=_AXIS_SEC[i][2]; const b=byId[sec]; if(!b)continue; const c=_extractContrast(_storyParas(b.body), used[sec]||(used[sec]={})); if(!c)continue; const setup=_clipWall(_clipSent(_axClean(c.setup),2)), subvert=_axClean(String(c.subvert).replace(_LEADCONJ,"")); const mean=_extractMean(b.body, mused[sec]||(mused[sec]={})); if(_axNlen(setup)+_axNlen(subvert)<14 && !mean) continue; if((c.score||0)+(mean?2:0)<3) continue; const _label = key==="comp" ? (_COMP.test(setup+" "+subvert)?"실체·보상":"회사 주장 vs 실제") : label; out.push({ key, label:_label, setup, subvert, mean, sec:"sec-"+sec }); } return out; }
+// R3-015 용어 gloss — 카드 노출 텍스트의 약어 첫 등장에 인라인 괄호 풀이(덱 단위 1회). 원문에 이미 괄호 풀이가 붙어 있으면 skip.
+//    표준 정의만(용어 풀이=사실 정보·창작0 위배 아님). 맨끝 사전 금지 → 등장 지점 인라인. iOS 안전(lookahead만·lookbehind 0).
+const _GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+function _axGloss(t, st){ let s=String(t==null?"":t); for(let i=0;i<_GLOSS.length;i++){ const k=_GLOSS[i][0], d=_GLOSS[i][1]; if(st[k])continue; const m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])")); if(!m)continue; st[k]=1; const e=m.index+k.length; s=s.slice(0,e)+"("+d+")"+s.slice(e); } return s; }
 
 // 카드별 시맨틱 악센트 — [sc(악센트), sc2(밝은 변주·텍스트 대비), scg(글로우 rgba)] · 순수 비주얼(창작0 무관)
 const _STORY_PAL = {
@@ -967,16 +986,20 @@ function buildStory(text, meta, level){
   const byId = {};
   marks.forEach((mk, i) => { byId[mk.id] = { id:mk.id, body:text.slice(mk.end, i+1 < marks.length ? marks[i+1].idx : text.length).trim() }; });
   const company = (meta && meta.company) || "", position = (meta && meta.position) || "";
-  // 6축 균형 발췌(존재하는 축만). 최소 3장 하한 — 미만이면 스토리 숨김(반쪽 덱 노출 금지, 리포트 body만 노출).
+  // 6축 후보 중 밀도 통과 축만 발췌(R3-012). 최소 3장 하한 — 미만이면 스토리 숨김(반쪽 덱 노출 금지, 리포트 body만 노출).
   const axes = _collectAxes(byId);
   if (axes.length < 3){ resetStory(); return false; }
+  // R3-015 용어 gloss — 덱 노출 텍스트(setup/subvert/mean) 첫 등장 약어에 인라인 풀이(덱 단위 상태 공유).
+  const _gst = {};
+  axes.forEach(a => { a.setup=_axGloss(a.setup,_gst); a.subvert=_axGloss(a.subvert,_gst); if(a.mean)a.mean=_axGloss(a.mean,_gst); });
   // C1(첫 축)에 회사명 표지를 얹어 훅으로. 나머지 축은 일반 카드. 순서=피벗→핏→문화→보상→재무→리스크(긴장 상승·순서 종속).
   const cards = axes.map((a, i) => Object.assign({ kind:"axis", first:(i===0), company, position }, a));
   // 개인 종합 판정 1장(맨 뒤, CTA 앞) — 🔴 §1(개인 지원판단)이 있을 때만(개인 분석 완료 케이스). tier1 회사 정찰(§1 부재)엔
-  //    verdict 생략 → 6축+CTA(7장). §8/§4 폴백 제거 — 시장(§8) 통짜 문단이 verdict why로 덤프되던 것 차단(design R2 P1-1).
-  if (byId[1]) cards.push({ kind:"verdict", role:"resolve", badge:level, why:_storyVerdictWhy(byId[1].body), sec:"sec-1" });
+  //    verdict 생략 → 축+CTA. §8/§4 폴백 제거 — 시장(§8) 통짜 문단이 verdict why로 덤프되던 것 차단(design R2 P1-1).
+  if (byId[1]) cards.push({ kind:"verdict", role:"resolve", badge:level, why:_storyVerdictWhy(byId[1].body).map(w=>_axGloss(w,_gst)), sec:"sec-1" });
   // CTA 독립 슬롯(항상 마지막·1개) — 리포트 근거 유도(로그인 유도 전). 어느 축이 빠져도 CTA는 보존(리스크 카드 종속 금지).
-  cards.push({ kind:"allmore", role:"cta" });
+  //    n=실제 축 수 — CTA 라벨이 실측 카드 수를 말하게(R3-012 '6축 핵심만' 거짓 라벨 제거).
+  cards.push({ kind:"allmore", role:"cta", n:axes.length });
 
   deck.innerHTML = cards.map((c, i) => _renderStoryCard(c, i)).join("");
   dots.innerHTML = cards.map((_, i) => `<span class="dot${i===0?' on':''}"></span>`).join("");
@@ -1026,7 +1049,7 @@ function _renderStoryCard(c, i){
     return `<div class="story-card allmore role-cta" style="${sv}">${ghost}
       <div class="story-kicker">${IC.search} 더 깊이</div>
       <div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div>
-      <div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 6축 핵심만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div>
+      <div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 반전이 강한 ${c.n||"몇"}개 축만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div>
       <button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button>
     </div>`;
   }
@@ -1108,6 +1131,9 @@ function renderDeadlineBanner(ev) {
       : dday === 0 ? ' · <span class="dd">오늘 마감</span>'
       : ' · <span class="dd">마감 D-' + dday + '</span>';
     html = '<span class="di">' + IC.check + '</span><div><b>모집 중</b> — ' + esc(dl) + ' 마감' + ddText + '</div>';
+  } else if (p.status === "unknown") {   // R3-016 5사 정합 — 미확인도 명시(무표기=모집중 오인 방지). '상시' 단정 금지(사실만)
+    cls += " unk";
+    html = '<span class="di">' + IC.warn + '</span><div><b>마감 정보 미확인</b> — 지원 전 공고 원문에서 마감 여부를 확인하세요.</div>';
   } else { dbannerEl.className = "dbanner"; return; }  // status만 있고 정보 부족 → 미노출
   dbannerEl.className = cls;
   dbannerEl.innerHTML = html;
