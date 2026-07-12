@@ -84,9 +84,9 @@ body.mode-story .dighint{display:none}
 .storyview{display:none}
 body.mode-story .storyview{display:block}
 body.mode-story #report,body.mode-story .repextra{display:none!important}
-.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck{display:flex;align-items:stretch;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
 .story-deck::-webkit-scrollbar{display:none}
-.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:54vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 .story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
 .story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
 .story-card>*:not(.ghost){position:relative;z-index:1}
@@ -125,7 +125,6 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 @keyframes storyRise{to{opacity:1;transform:none}}
 /* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격. 높이 통일(가로 스냅), 밀도는 폰트·여백으로. === */
 .story-card.role-setup .story-hl,.story-card.role-context .story-hl{font-size:20px;font-weight:700;line-height:1.56;color:#dde5ef}
-.story-card.role-setup .spacer{min-height:20vh}
 .story-names{align-self:stretch;margin-top:20px;display:flex;flex-direction:column;gap:11px}
 .story-name{position:relative;padding-left:18px;font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
 .story-name::before{content:"";position:absolute;left:1px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sc);transform:translateY(-50%) rotate(45deg)}
@@ -411,8 +410,17 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   function clipWall(s){if(axNlen(s)<=90)return s;var cut=s.search(/[,，]\s/);if(cut>0&&axNlen(s.slice(0,cut))>=12)return axBal(s.slice(0,cut).trim());return s;}   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
   function axLastClause(t){var re=/[.!?]\s+/g,m,last=-1;while((m=re.exec(t))!==null)last=m.index+m[0].length;if(last>0){var tail=t.slice(last).trim();if(axNlen(tail)>=3)return tail;}return String(t).trim();}   // setup 대비 직전 완결 절
   // ③ 문장 단위 대비 — 어미('…지만 B')/리드접속사(문장 시작·중간). subvert=완결 문장(종결어미 보장·잘림0). 원문 substring(창작0).
-  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
-  function extractContrast(pls,used){for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;used[i]=true;return r;}return null;}
+  //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 보상반전 추출). 앱 index.html _sentContrast mirror.
+  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
+  // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
+  var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
+  function axWhole(s){return !AXCUT.test(String(s).trim().replace(/[*`]+$/,"").trim());}
+  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
+  function axTrim(s){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s)?s:"";}
+  // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
+  var AXMARK=/여기가 반전/;
+  function axCandScore(r,para){var v=impact(r.setup+" "+r.subvert);if(AXNEG.test(r.subvert))v+=2;if(AXMARK.test(para))v+=10;return v;}
+  function extractContrast(pls,used){var best=null,bi=-1,bs=-1;for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;r.setup=axTrim(r.setup);r.subvert=axTrim(r.subvert);if(!r.setup||!r.subvert)continue;var v=axCandScore(r,pls[i]);if(v>bs){best=r;bi=i;bs=v;}}if(best){used[bi]=true;best.score=bs;}return best;}
   // 6축=§위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속). 라벨=섹션 파생, key=색상.
   var AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
   // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
@@ -429,10 +437,15 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
   if(!marks.length)return;
   var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
-  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
+  // R3-012 얇은 축 배제 — 카드 수 = 축 프레임(6)이 아니라 콘텐츠 밀도(임팩트+뜻줄 스코어>=3). 미달 축은 카드화 배제(리포트에만). 앱 mirror.
+  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
   if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
+  // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
+  var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+  function axGloss(t,st){var s=String(t==null?"":t);for(var gi=0;gi<GLOSS.length;gi++){var k=GLOSS[gi][0],d=GLOSS[gi][1];if(st[k])continue;var m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])"));if(!m)continue;st[k]=1;var e=m.index+k.length;s=s.slice(0,e)+"("+d+")"+s.slice(e);}return s;}
+  var _gst={};axes.forEach(function(a){a.setup=axGloss(a.setup,_gst);a.subvert=axGloss(a.subvert,_gst);if(a.mean)a.mean=axGloss(a.mean,_gst);});
   var cards=axes.map(function(a,i){a.kind="axis";a.first=(i===0);return a;});
-  cards.push({kind:"cta"});   // CTA 독립 슬롯(항상 마지막·1개). /r/는 개인 verdict 구조적 제외(로그인 벽) → CTA가 리포트 근거로 유도.
+  cards.push({kind:"cta",n:axes.length});   // CTA 독립 슬롯(항상 마지막·1개)·n=실제 축 수(R3-012 거짓 라벨 제거). /r/는 개인 verdict 구조적 제외(로그인 벽) → CTA가 리포트 근거로 유도.
   function card(c,i){
     var p=PAL[c.kind==="cta"?"cta":c.key]||PAL.cta,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
     // 축 카드 = [축 라벨] + [설정↔전복 발췌(좌보더 인용서식)] + [보조 발췌] + [원문 조언=뜻줄]. 첫 축엔 회사명 표지. 전부 원문 substring(창작0). /r/는 개인판정(배지·평결) 구조적 제외.
@@ -444,7 +457,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
       return '<div class="story-card role-axis'+(c.first?" first":"")+'" style="'+sv+'">'+g+co+'<div class="story-kicker soft">'+esc(c.label||"")+'</div><div class="story-beat"><div class="hb-line hb-setup">'+kw(c.setup)+'</div><div class="hb-turn">'+ICw+'</div><div class="hb-line hb-subvert">'+kw(c.subvert)+'</div></div>'+bd+mn+'<div class="spacer"></div>'+an+'</div>';
     }
     // CTA 독립 슬롯 — 리포트 근거 유도(로그인 유도 전). /r/은 리포트 body가 같은 페이지 → segReport 모드 전환.
-    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 6축 핵심만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
+    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 반전이 강한 '+(c.n||"몇")+'개 축만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
     return "";
   }
   deck.innerHTML=cards.map(card).join("");
