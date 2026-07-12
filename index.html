@@ -562,7 +562,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
       <div class="radar"></div>
       <div>
         <div class="scan-stage" id="scanStage">회사를 정찰하는 중</div>
-        <div class="scan-sub"><b id="scanSec">0</b>초 경과 · 심층 분석 중</div>
+        <div class="scan-sub"><b id="scanSec">0</b>초 경과 · <span id="scanNote">심층 분석 중</span></div>
       </div>
     </div>
     <div class="scan-bar"><span></span></div>
@@ -1206,10 +1206,13 @@ function scanStart() {
   _scanT0 = Date.now(); _scanVerdict = false; _scanIdx = -1; renderScan(0);
   if (_scanTimer) clearInterval(_scanTimer);
   _scanTimer = setInterval(() => {
-    $("scanSec").textContent = Math.floor((Date.now() - _scanT0) / 1000);  // 1초 틱(항상 움직임)
+    const _sec = Math.floor((Date.now() - _scanT0) / 1000);
+    $("scanSec").textContent = _sec;  // 1초 틱(항상 움직임)
     if (!_scanVerdict) {
-      const i = Math.min(SCAN_CARD_CAP, Math.floor((Date.now() - _scanT0) / 1000 / SCAN_STEP_SECS));
+      const i = Math.min(SCAN_CARD_CAP, Math.floor(_sec / SCAN_STEP_SECS));
       if (i > _scanIdx) renderScan(i);
+      // 딥 리서치는 수 분 정상 소요 — 오래 걸려도 '멈춘 게 아니라 깊이 보는 중'임을 담백하게 안내(정직).
+      if (_sec >= 75) { const _n = $("scanNote"); if (_n && _n.textContent !== "심층 정찰 중 · 수 분 걸릴 수 있어요") _n.textContent = "심층 정찰 중 · 수 분 걸릴 수 있어요"; }
     }
   }, 1000);
 }
@@ -1484,25 +1487,39 @@ $("cancelBtn").addEventListener("click", cancelRecon);
 // 서버 job 상태를 2초마다 조회 — 연결이 아니라 상태를 폴링하므로 모바일 백그라운드를 견딘다
 function pollJob(job_id) {
   stopPoll(); _pollFull = "";
-  const _pollT0 = Date.now();                 // P1-10: 이 폴링 세션 시작(무한 로딩 차단)
-  const POLL_TIMEOUT_MS = 90000;              // 90초 초과 → 지연 안내 + 재시도
+  // 🔴 P1-10 재설계: '총 경과 시간'이 아니라 '진행 정체(stall)'로 판정한다.
+  //   백엔드 status(스테이지 문구 + 경과초·7초 하트비트)와 리포트 스트리밍(text)이 살아있음 신호 —
+  //   딥 리서치·개인 평결은 수 분 정상 소요이므로, 진행 중이면 재시도 안내를 띄우지 않는다.
+  const STALL_MS = 90000;               // status·text가 이 시간 무변화면 진짜 정체(백엔드 hang)
+  const FAIL_STALL = 24;                // poll HTTP 연속 실패 24회(≈60초) → 정체로 간주
+  let _lastProgressT = Date.now();      // 마지막으로 백엔드가 '진행'한 시각(무한 로딩 차단 기준)
+  let _lastStatus = "";                 // 직전 백엔드 스테이지 문구(값이 바뀌면 = 살아있음)
+  let _pollFails = 0;                   // poll HTTP 연속 실패 카운터(응답 성공 시 리셋)
   function endPoll() { stopPoll(); scanStop(); showCancel(false); localStorage.removeItem(JOB_KEY); go.disabled = false; }
-  function pollTimedOut() {                    // P1-10: 무한 회전 금지. job_id·JOB_KEY는 유지 → 재시도로 폴링 재개.
+  function pollStalled() {               // 진짜 정체만 도달. job_id·JOB_KEY는 유지 → 재시도로 폴링 재개(P1-10 보존).
     stopPoll(); scanStop(); showCancel(false); go.disabled = false;
-    statusEl.innerHTML = '<span class="err">정찰이 예상보다 지연됩니다.</span> '
-      + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
+    if (_pollFull) {
+      // 리포트가 이미 부분 렌더 중 → 상단 빨강 에러 금지(내용 뜨는데 '지연'은 모순). 담백한 이어받기 안내만.
+      statusEl.innerHTML = '리포트를 이어받는 중… 오래 걸리면 '
+        + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
+    } else {
+      statusEl.innerHTML = '<span class="err">정찰이 예상보다 오래 걸립니다.</span> '
+        + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
+    }
     const rp = $("retryPoll");
     if (rp) rp.addEventListener("click", (e) => {
       e.preventDefault(); statusEl.textContent = ""; scanStart(); showCancel(true); go.disabled = true; pollJob(job_id);
     });
   }
   const tick = async () => {
-    if (Date.now() - _pollT0 > POLL_TIMEOUT_MS) { pollTimedOut(); return; }
+    if (Date.now() - _lastProgressT > STALL_MS) { pollStalled(); return; }  // 총경과 아님 — 진행 정체로 판정
     let ev;
     try {
       const r = await fetch(API + "/analyze/poll/" + job_id, { cache:"no-store" });
       ev = await r.json();
+      _pollFails = 0;                    // 응답 도착 → 연속 실패 리셋
     } catch (e) {
+      if (++_pollFails >= FAIL_STALL) { pollStalled(); return; }  // 연결 실패가 지속되면 정체로 간주
       _pollTimer = setTimeout(tick, 2500); return;  // 일시 실패(백그라운드 등) → 중단 말고 재시도
     }
     if (ev.error === "unknown_job") {
@@ -1511,11 +1528,15 @@ function pollJob(job_id) {
       endPoll(); return;
     }
     if (ev.cancelled) { exitResultMode(); statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
+    if (typeof ev.status === "string" && ev.status !== _lastStatus) {  // 백엔드 스테이지 변화 = 진행(살아있음)
+      _lastStatus = ev.status; _lastProgressT = Date.now();
+    }
     if (ev.meta) { _lastMeta = ev.meta; renderMeta(ev.meta); renderDeadlineBanner(ev); }   // 마감배너(필드 있으면·graceful)
     if (ev.page && ev.page.url) _pageUrl = ev.page.url;  // Phase 2: 고정 URL 정찰 페이지(공유용, FR-056)
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
       _pollFull = ev.text; renderBlocks(_pollFull);
+      _lastProgressT = Date.now();       // 리포트 스트리밍 진행 = 살아있음
       if (_pollFull) { $("scanner").classList.add("has-content"); if (wasEmpty) scanVerdict(); }  // 카드 도착 → 평결 단계
     }
     if (ev.error) { exitResultMode(); statusEl.innerHTML = `<span class="err">${esc(ev.error)}</span>`; endPoll(); return; }
