@@ -179,16 +179,19 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .pbox.drag { border-color:var(--accent); background:rgba(79,140,255,.1); }
   .pbox textarea#profile, .pbox #url { border:0; background:transparent; border-radius:0; margin:0; width:100%; }
   .pbox textarea#profile { min-height:90px; }
-  .pbox #url { padding:12px 13px; font-size:15px; }
+  /* 🔴 R5-028 P0: rect 42→44 — elementFromPoint 1px 그리드(자기+자손) 실효 44 확보 */
+  .pbox #url { padding:12px 13px; font-size:15px; min-height:44px; }
   .pbox textarea#profile:focus, .pbox #url:focus { outline:none; box-shadow:none; }
   .pbox-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     padding:7px 9px; border-top:1px solid var(--line); background:var(--bg); }
-  .attach { position:relative; display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
+  .attach { position:relative; z-index:1; display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
     margin:0; padding:0 13px; font-size:13px; font-weight:600; color:#cdd6e2;
     background:var(--card2); border:1px solid var(--line); border-radius:9px; cursor:pointer;
     -webkit-tap-highlight-color:transparent; }
-  /* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px — fold 높이 악화 없이 44 충족 (R3 ⑨ P0-2, PM320 R49 ::after 전례) */
-  .attach::after { content:""; position:absolute; left:0; right:0; top:-3px; bottom:-3px; }
+  /* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px+ (R3 ⑨ P0-2, PM320 R49 ::after 전례)
+     R5-028 P0: z-index:1(인접 pbox-bar stacking 차단 해소) + -4px 확장 — ::after 44 정확 선언은
+     서브픽셀 경계에서 실효 43(R4 조니 프로브 재현). 46 선언으로 경계 1~2px 손실에도 44+ 보장. */
+  .attach::after { content:""; position:absolute; left:0; right:0; top:-4px; bottom:-4px; }
   .attach:hover { border-color:var(--accent); color:var(--fg); }
   .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
   /* 공고 파일 업로드(FR-051) */
@@ -361,8 +364,13 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* R4-021① 콘텐츠 적응 높이 완결 — R3-014(54vh 고정 폐기) 후에도 stretch가 '최장 카드 높이'를 전 카드에 강제해
      짧은 카드 중앙 spacer 공동 30%+(toss #2 실측 44.7%) 잔존 → flex-start로 카드 개별 높이(=자기 콘텐츠).
      min-height 34vh = 터치·존재감 안전 하한만. spacer는 하한 카드에서만 잔여 흡수(중앙 spacer 비율 <30% 게이트). */
-  .story-deck { display:flex; align-items:flex-start; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:4px 2px 2px; margin:2px -2px; }
+  /* R5-029 스냅 상태 뷰포트 공백 해소 — flex-start(R4-021①)로 카드는 개별 높이가 됐지만 트랙h는
+     최장 카드 고정 → 짧은 카드 스냅 시 카드 하단~dots 공백 26~51%(R4 ⑨·조니 트랙 레벨 실측).
+     JS(_syncH)가 트랙h를 현재 스냅 카드 높이로 동기(transition) → dots가 카드 바로 아래로 따라옴.
+     overflow-y:hidden = height 지정 시 인접 긴 카드의 세로 스크롤바 생성 차단. /r/ page.py _STORY_CSS 미러(G6). */
+  .story-deck { display:flex; align-items:flex-start; gap:14px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:4px 2px 2px; margin:2px -2px;
+    transition:height .3s cubic-bezier(.2,.7,.2,1); }
   .story-deck::-webkit-scrollbar { display:none; }
   /* 색은 JS가 카드별 --sc(악센트)·--sc2(밝은 변주·텍스트 대비용)·--scg(글로우 rgba) 주입. 본문은 밝은 회색 고정(WCAG AA). */
   .story-card { position:relative; flex:0 0 100%; scroll-snap-align:center; box-sizing:border-box;
@@ -509,7 +517,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     .story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .bwrap,
     .story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,
     .story-card .story-verdict-why,.story-card .story-angle,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{
-      opacity:1!important;transform:none!important;animation:none!important; } }
+      opacity:1!important;transform:none!important;animation:none!important; }
+    .story-deck{ transition:none; } }
 
   /* 🔴 P1-6 모바일(390px 우선·대표 주 사용자) — 본문 하한 15px·메타 하한 12px + iOS 자동줌 방지(input≥16px) */
   @media (max-width: 480px) {
@@ -561,7 +570,6 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
       <div id="meta"></div>
     </div>
   </header>
-  <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
 
   <div class="card">
     <label for="url">채용공고 URL</label>
@@ -597,6 +605,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
 
     <button id="go">정찰 시작</button>
   </div>
+  <!-- R5-031: AD는 폼 아래(첫인상 첫 블록 = 광고 해소·R4 조니 2심) · 대기 상태 설명 문구 제거(입력 전 화면 문맥 불일치) -->
+  <div class="ad" id="ad"><b>AD</b> · 광고</div>
 
   <!-- 결과 모드 복귀(입력폼 접힘 시): 다른 공고 정찰 재진입 -->
   <button class="reopen" id="reopenBar" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><circle cx="12" cy="12" r="8.8" fill="url(#jrico)" opacity=".15"/><circle cx="12" cy="12" r="8.8" stroke="url(#jrico)" stroke-width="1.5"/><path d="M12 7.8v8.4M7.8 12h8.4" stroke="url(#jrico)" stroke-width="1.7" stroke-linecap="round"/></svg> 다른 공고 정찰</button>
@@ -992,7 +1002,7 @@ const _GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장
 function _axGloss(t, st){ let s=String(t==null?"":t); for(let i=0;i<_GLOSS.length;i++){ const k=_GLOSS[i][0], d=_GLOSS[i][1]; if(st[k])continue; const m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])")); if(!m)continue; st[k]=1; const e=m.index+k.length; s=s.slice(0,e)+"("+d+")"+s.slice(e); } return s; }
 // R4-019b② 메타 발화 차단 — LLM 자기서술 괄호 문장("(공고에는 …를 언급하지 않습니다)" 류)의 스토리·리포트 노출 금지.
 //    괄호째 제거(잔여 문장의 사실 정보는 보존·창작0). FLR-20260712-AGT-001(반환각 자기지시 노출) 계열. /r/ page.py 미러(G6).
-const _METAPAREN=/[(（][^()（）]{0,80}(?:언급(?:하지|되지|이|은|도)?\s*않|명시(?:하지|되지)\s*않|공개(?:하지|되지)\s*않|밝히지\s*않|드러나지\s*않|나와\s*있지\s*않|포함되(?:어|지)\s*않|(?:지어내|추측하)지\s*않)[^()（）]{0,40}[)）]\s*/g;
+const _METAPAREN=/[(（][^()（）]{0,80}(?:언급(?:하지|되지|이|은|도)?\s*않|명시(?:하지|되지)\s*않|공개(?:하지|되지)\s*않|밝히지\s*않|드러나지\s*않|나와\s*있지\s*않|포함되(?:어|지)\s*않|(?:지어내|추측하)지\s*않)[^()（）]{0,40}[)）]\s*|[(（]\s*블록\s*\d+[^()（）]{0,30}[)）]\s*/g;
 function _stripMetaTalk(t){ return String(t==null?"":t).replace(_METAPAREN,""); }
 
 // 카드별 시맨틱 악센트 — [sc(악센트), sc2(밝은 변주·텍스트 대비), scg(글로우 rgba)] · 순수 비주얼(창작0 무관)
@@ -1102,7 +1112,7 @@ function _renderStoryCard(c, i){
     return `<div class="story-card allmore role-cta" style="${sv}">${ghost}
       <div class="story-kicker">${IC.search} 더 깊이</div>
       <div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div>
-      <div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 반전이 강한 ${c.n||"몇"}개 축만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div>
+      <div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div>
       <button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button>
     </div>`;
   }
@@ -1123,8 +1133,14 @@ function _wireStory(){
   if (cards[0]) cards[0].classList.add("inview");
   // 활성 도트 + 도트색 = 현재 카드 악센트(스와이프 따라 색 흐름)
   let _cur = 0;
+  // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩 4+2) — 짧은 카드 스냅 시 하단 공백 해소.
+  // display:none(리포트 모드) 중엔 offsetHeight 0 → skip, setStoryMode(story)가 재동기. /r/ page.py 미러(G6).
+  const syncH = () => { const c = cards[_cur]; if (c && c.offsetHeight) deck.style.height = (c.offsetHeight + 6) + "px"; };
+  deck._syncH = syncH;
+  if (!window._deckHSync){ window._deckHSync = 1; window.addEventListener("resize", () => { const d = $("storyDeck"); if (d && d._syncH) d._syncH(); }); }
   const setActive = i => {
     _cur = i;
+    syncH();
     dots.querySelectorAll(".dot").forEach((d, j) => d.classList.toggle("on", j === i));
     if (cards[i]) dots.style.setProperty("--dot-on", getComputedStyle(cards[i]).getPropertyValue("--sc").trim());
     const pv = $("storyPrev"), nx = $("storyNext");   // R4-021② 끝단 비활성
@@ -1146,9 +1162,11 @@ function setStoryMode(mode){
   document.body.classList.toggle("mode-report", !story);
   $("segStory").classList.toggle("on", story);
   $("segReport").classList.toggle("on", !story);
+  // R5-029: 리포트 모드(display:none) 동안 offsetHeight 0으로 skip된 트랙h를 스토리 복귀 시 재동기
+  if (story){ const d = $("storyDeck"); if (d && d._syncH) requestAnimationFrame(() => d._syncH()); }
 }
 function landOnStory(){ scrollToEl($("modeSeg"), false); }
-function resetStory(){ _hasStory = false; document.body.classList.remove("has-story","mode-story","mode-report"); const d = $("storyDeck"); if (d) d.innerHTML = ""; const dd = $("storyDots"); if (dd) dd.innerHTML = ""; }
+function resetStory(){ _hasStory = false; document.body.classList.remove("has-story","mode-story","mode-report"); const d = $("storyDeck"); if (d){ d.innerHTML = ""; d.style.height = ""; } const dd = $("storyDots"); if (dd) dd.innerHTML = ""; }
 $("segStory").addEventListener("click", () => { setStoryMode("story"); landOnStory(); });
 $("segReport").addEventListener("click", () => { setStoryMode("report"); landOnVerdict(); });
 
