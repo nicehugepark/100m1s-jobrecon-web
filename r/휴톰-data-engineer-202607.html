@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ko"><head>
+<!-- Google tag (gtag.js) — GA4 G-NLKWNGHTJM + Consent Mode v2 (region-default·GDPR) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','region':['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_personalization':'granted','analytics_storage':'granted'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLKWNGHTJM"></script>
+<script>gtag('js',new Date());gtag('config','G-NLKWNGHTJM');</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>휴톰 · 데이터 엔지니어 취업 정찰 — JobRecon</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://jobrecon.100m1s.com/r/휴톰-data-engineer-202607.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="휴톰 · 데이터 엔지니어 취업 정찰 — JobRecon">
+<meta property="og:description" content="휴톰 데이터 엔지니어 채용 — 구직자 편 회사 정찰(재무·리스크·서사).">
+<meta property="og:url" content="https://jobrecon.100m1s.com/r/휴톰-data-engineer-202607.html">
+<meta property="og:image" content="https://jobrecon.100m1s.com/r/휴톰-data-engineer-202607.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
+/* 🔴 form 요소는 font-family 비상속(UA 기본 Arial/monospace) — 본문 타이포 강제 상속 (R3 ⑨ P0-1 계열·앱 index.html 동기) */
+button,input,textarea,select{font-family:inherit}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
+.brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.brand b{color:#4f8cff}
+.tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;border:1px solid #222a35;background:#12161d;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.meta .co{font-size:18px;font-weight:800}
+.meta .fd{font-size:14px;color:#c3ccd6}
+.meta .ym{font-size:12px;color:#8b97a6;margin-left:auto}
+.blk{border:1px solid #222a35;background:#12161d;border-radius:12px;padding:14px 16px;margin:12px 0}
+.blk h2{font-size:16px;margin:0 0 8px;color:#f0f4f8}
+.blk h3{font-size:14px;margin:12px 0 6px;color:#dbe2ea}
+.blk p{margin:6px 0;font-size:15px;color:#dbe2ea}
+.blk ul{margin:6px 0;padding-left:18px}
+.blk li{margin:4px 0;font-size:14.5px;color:#dbe2ea}
+.blk strong{color:#f0f4f8;font-weight:700}
+.blk code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
+.cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:12px;background:#4f8cff;color:#fff;font-weight:700;text-decoration:none;font-size:16px}
+.cta-sub{text-align:center;color:#8b97a6;font-size:12.5px;margin-bottom:4px}
+.foot{color:#6b7684;font-size:12px;text-align:center;margin-top:26px;line-height:1.6}
+.foot a{color:#8b97a6}
+.ad{margin:14px 0;border:1px dashed #222a35;background:#0e131a;color:#6b7684;text-align:center;padding:14px;border-radius:12px;font-size:12px;letter-spacing:.4px}
+.stickyhdr{position:sticky;top:0;z-index:50;background:#0b0e13;margin:-20px -18px 6px;padding:16px 18px 8px}
+.stickyhdr .tag{margin:2px 0 8px}
+.stickyhdr .meta{margin-bottom:8px}
+/* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
+.comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
+.comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
+.comment .cq b{color:#4f8cff;font-weight:700}
+.comment .cx{float:right;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1;margin-left:8px}
+.comment .cbody{font-size:14px;color:#dbe2ea;line-height:1.6}
+.comment .cbody .ln{margin:4px 0}
+.comment .cbody ul,.comment .cbody ol{margin:6px 0;padding-left:18px}
+.comment .cbody strong{color:#f0f4f8}
+.comment .cbody code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+.comment .err{color:#ff6b6b}
+.comment .cta-app{display:inline-block;margin-top:8px;color:#4f8cff;font-weight:700;text-decoration:none}
+/* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
+.deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
+.ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+.ddaybn.unk{border-color:#3a4250;color:#aab6c4}  /* R3-016 미확인 = 중립 회색(경고·안심 어느 쪽도 단정 안 함) */
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{position:relative;width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+/* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — sticky 헤더 비대 회피 위해 ::after 확장, PM320 R49 전례) */
+.modeseg button::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+/* R5-029 스냅 상태 뷰포트 공백 해소 — JS(syncH)가 트랙h를 현재 스냅 카드 높이로 동기. 앱 index.html 미러(G6) */
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+/* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, ::after 확장) */
+.story-anchor::after{content:"";position:absolute;left:0;right:0;top:-5px;bottom:-5px}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-names{animation:storyRise .55s .2s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+/* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격. 높이 통일(가로 스냅), 밀도는 폰트·여백으로. === */
+.story-card.role-setup .story-hl,.story-card.role-context .story-hl{font-size:20px;font-weight:700;line-height:1.56;color:#dde5ef}
+.story-names{align-self:stretch;margin-top:20px;display:flex;flex-direction:column;gap:11px}
+.story-name{position:relative;padding-left:18px;font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
+.story-name::before{content:"";position:absolute;left:1px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sc);transform:translateY(-50%) rotate(45deg)}
+.story-name strong{color:#eef3f8;font-weight:800}
+.story-name mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-card.role-subvert{background:radial-gradient(122% 84% at 84% 0%,var(--scg),transparent 50%),linear-gradient(168deg,#1b191d,#0f0d11 74%)}
+.story-card.role-subvert::before{height:4px;opacity:1}
+.story-card .story-hl.big{font-size:25.5px;font-weight:900;line-height:1.38;color:#fff;letter-spacing:-.4px}
+.story-kicker.warn{color:#fcd34d;background:rgba(251,191,36,.15)}
+.story-kicker.soft{color:var(--sc2);opacity:.92;background:transparent;padding-left:2px;text-transform:none;letter-spacing:0;font-size:12.5px}
+.story-card.role-hook .hookbeat{margin-top:22px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(12px)}
+.story-card.role-hook.inview .hookbeat{animation:storyRise .6s .16s cubic-bezier(.2,.7,.2,1) forwards}
+.hb-line{font-size:16px;line-height:1.58;padding-left:13px;border-left:3px solid}
+.hb-setup{color:#cfe0ff;border-color:#5b9bff}
+.hb-setup strong{color:#eaf1ff}
+.hb-subvert{color:#fde3ad;border-color:#fbbf24;font-weight:600}
+.hb-subvert strong{color:#fff2cf}
+.story-card.role-axis.first{justify-content:flex-start}
+.story-card.role-axis.first .story-co-lg{margin:6px 0 4px;font-weight:900;line-height:1.05;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.role-axis.first .story-pos{margin-bottom:8px;font-size:15px;font-weight:700;color:#8792a0;letter-spacing:-.2px}
+.story-card.role-axis .story-beat{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.story-card.role-axis.first .story-beat{margin-top:18px}
+.story-card.role-axis .story-quote{margin-top:15px;font-size:14.5px;line-height:1.62;color:#c3ccd7;padding-left:13px;border-left:3px solid var(--sc);opacity:.96}
+.story-card.role-axis .story-quote strong{color:#e8eef4}
+.story-card.role-axis .story-quote mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-mean{margin-top:16px;display:flex;gap:8px;align-items:flex-start;font-size:14.5px;line-height:1.56;font-weight:700;color:var(--sc2)}
+.story-mean svg{flex:0 0 auto;width:1.15em;height:1.15em;margin-top:2px;opacity:.9}
+.story-mean>span{flex:1 1 auto}
+.story-mean strong{color:#fff}
+.story-mean mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.hb-turn{color:#fbbf24;height:17px;margin-left:1px}
+.hb-turn svg{width:17px;height:17px}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.story-dots .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:-10px;bottom:-10px}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+.storyview{position:relative}
+.story-nav{display:none}
+@media (hover:hover) and (pointer:fine){
+.story-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:44%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
+.story-nav:hover{background:rgba(23,28,38,.95)}
+.story-nav.prev{left:-6px}.story-nav.next{right:-6px}
+.story-nav[disabled]{opacity:.22;cursor:default}
+.story-nav svg{width:20px;height:20px}
+}
+.sharebar{display:flex;justify-content:center;margin:14px 0 2px}
+.sharebar button{display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button svg{width:1.15em;height:1.15em}
+.sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
+.sharetoast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
+</style>
+
+</head><body>
+<div class="wrap">
+  <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
+  <div class="stickyhdr">
+    <div class="brand">Job<b>Recon</b></div>
+    <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
+    <div class="meta"><span class="co">휴톰</span><span class="fd">데이터 엔지니어</span><span class="ym">2026년 07월 정찰</span></div>
+  </div>
+  <div class="ad">AD · 광고</div>
+  <div class="ddaybn">D-18</div>
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <!-- R4-021② 데스크탑 화살표(hover 포인터 전용 CSS 노출) — 마우스-only 카드 2~5 도달 -->
+    <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+    <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
+  </div>
+  <!-- R4-023① 공유 수단 — 모드 무관 상시(개인 평결 미포함 페이지·회사 정찰만이라 공유 안전) -->
+  <div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2>휴톰 — 데이터 엔지니어 정찰 리포트</h2>
+<h2 id="sec-2">공고 핵심 요건</h2>
+<p><strong>채용 직무</strong>: 데이터 엔지니어</p>
+<ul>
+<li><strong>경력·직무</strong>: 경력 5년 이상, 의료데이터(EMR·LAB 등) 정제·표준화·구조화 및 DB 설계·구축·관리가 핵심 업무 (공고 명시)</li>
+<li><strong>필수 스택</strong>: SQL, Python 또는 R 활용 데이터 처리 경험, 기본 통계분석으로 데이터 특성·품질 이슈 파악, DB·데이터 관리 기본 이해, 정제 기준·처리 과정 문서화 (공고 명시)</li>
+<li><strong>우대</strong>: 병원·임상연구 데이터 경험, EMR·LAB·처방·진단·검사 데이터 이해, ETL/데이터 파이프라인 구축, 의료 코드 체계(예: KCD·SNOMED 등)·의료 용어 이해, 대시보드 구축 (공고 명시)</li>
+<li><strong>협업 성격</strong>: 의료진·연구자·개발자와 함께 데이터 활용 목적·기준을 정리하는 <strong>가교형 엔지니어</strong>를 원함 (공고 명시)</li>
+</ul>
+<p>한 줄 정리: 이 자리는 파이프라인을 화려하게 짜는 빅데이터형이 아니라, <strong>지저분한 병원 원천 데이터(EMR·LAB)를 사람이 신뢰할 수 있는 형태로 정제·문서화하는 실무형</strong>입니다. Kafka·Spark·클라우드 같은 대규모 스트리밍 스택이 요건에 없다는 점이 이를 뒷받침합니다 (정찰 보강).</p>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
+<p><strong>창업 동기 — 수술방에서 나온 진짜 페인포인트.</strong> 창업자 <strong>형우진</strong>은 연세암병원 위암센터장이자 세브란스병원 위장관외과 교수로, 1992년부터 30년 넘게 의사로 활동하며 <strong>전 세계에서 위암 로봇 수술을 가장 많이 집도한 기록</strong>(누적 수술 약 7,000건, 위암 로봇수술 2,000건 이상)을 가진 외과의입니다(이데일리 2025.12, 뉴스1 2026.03). 존슨앤드존슨(J&amp;J)에서 감사 이메일을 받은 이듬해, &quot;자신이 수술할 때 꼭 있었으면 좋겠다 싶은 수술 보조 플랫폼&quot;을 만들겠다며 휴톰을 세웠습니다(이코노미조선 2023.06). 책상물림이 아니라 <strong>직접 칼을 잡던 집도의가 자기 임상 통증을 제품화한</strong> 전형적 도메인 창업입니다.</p>
+<p><strong>미션의 일관성.</strong> 사명 <strong>Hutom = Human Touch in Medicine</strong>이 곧 미션입니다. &quot;Reshaping Surgery Through Digital Innovation&quot;, &quot;기술과 인간 중심 가치의 결합&quot; 같은 톤이 창업 초부터 지금까지 관통하며, 대표 제품 RUS도 일관되게 &quot;정밀·안전(precision and safety)&quot;을 반복합니다. 슬로건이 그때그때 바뀌지 않는다는 점은 신뢰 신호입니다.</p>
+<p><strong>연혁·전환점.</strong></p>
+<ul>
+<li><strong>2016~2017년</strong> — 형우진 설립(자료마다 설립연도가 2016년/2017년으로 갈립니다 — 면접에서 확인).</li>
+<li><strong>2018년</strong> — 시리즈A 성사.</li>
+<li><strong>2020.12</strong> — 시리즈A 프라임 50억원(KB인베스트먼트·IMM인베스트먼트). 누적 92억원.</li>
+<li><strong>2022.01</strong> — 시리즈B 170억원. 기존 IMM·퀀텀벤처스코리아·KB·삼성벤처투자 후속, 나우IB캐피탈·한국투자파트너스 등 합류. 용도로 &quot;플랫폼·알고리즘 고도화&quot; 명시. 직후 &quot;업계 최고 수준 연봉&quot; 내건 전사 대규모 채용을 진행(뉴스1·메디칼타임즈 2022.02) — <strong>170억 실탄으로 조직을 급팽창시킨 전환점</strong>입니다.</li>
+<li><strong>2023.04</strong> — 가상현실 수술 기술 특허 등록.</li>
+<li><strong>2023.12</strong> — 유진투자증권을 주관사로 기술특례 코스닥 상장 추진 보도. &quot;내년부터 본격 사업화&quot; 선언(조선비즈).</li>
+<li><strong>2024.03</strong> — 시리즈C 총 205억원 클로징(2회 분할 납입), 기업가치 약 1,300억원. 같은 달 <strong>일본 대형 유통사 아다치와 RUS 공급계약</strong> 체결하며 해외 채널 확보.</li>
+<li><strong>2025~2026</strong> — MEDICA 2025(독일) 참가, 중기부 <strong>유니콘브릿지</strong> 및 텍사스 C&amp;D 선정(2026년). 형 대표는 &quot;미국·일본·홍콩·말레이시아 등에서 파트너십·임상 레퍼런스를 확보해 글로벌 수술 내비게이션 기업으로 성장&quot; 목표를 공언.</li>
+</ul>
+<p><strong>응축.</strong> 세계 최고 집도의의 임상에서 출발한 서사와 자본 조달은 진짜입니다 — 다만 <strong>2023년에야 &quot;본격 사업화 시작&quot;을 선언했다는 점이 핵심</strong>입니다. 자본·권위의 사다리는 화려하게 올라갔지만, <strong>매출 궤적은 이제 막 출발선</strong>에 서 있는 회사입니다.</p>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<p><strong>검증된 실적 — 임상 권위와 자본은 실체, 매출은 아직 초기.</strong> 특허 56~65건, 시리즈C까지 누적 약 465억원 조달, 일본 아다치 공급계약, 유니콘브릿지 선정 등은 근거로 확인되는 실체입니다. 반면 매출은 공개 자료 기준 <strong>위키 9,264만원 → 포브스 바이오테크50(2024.08) 2억원 → 포브스 AI50(2025.05) 4억원</strong>으로, 방향은 우상향이나 <strong>절대 규모는 여전히 pre-revenue(사실상 매출 발생 이전) 수준</strong>입니다. &quot;국내외 의사들이 이미 제품을 경험&quot;이라는 홍보와 실제 유료 도입 사이 간극이 실재합니다 — 임상 경험과 유료 계약은 다릅니다. 그래서 지원자는 면접에서 <strong>실제 상용 매출·유료 도입 병원 수</strong>를 반드시 물어야 합니다.</p>
+<p><strong>밸류에이션 추세.</strong> 시리즈C 기업가치 약 <strong>1,300억원</strong>, 회사는 IPO 이후 목표를 <strong>4,000억원</strong>으로 제시(더벨 2024.10). 시리즈B(170억)→C(205억)로 몸값이 소폭 상승했고 펀딩 혹한기(2023~2024)에도 밸류를 지켰다는 점은 긍정 신호이나, <strong>매출 4억원대에 기업가치 1,300억원은 실적이 아니라 창업자 권위·특허·플랫폼 서사에 얹힌 밸류</strong>입니다. 상장 후 실적 입증 압박이 클 수밖에 없는 구조입니다.</p>
+<p><strong>자산 기반 안정성.</strong> 자본금은 약 1억원 수준(위키)으로 얇고, 부동산·자체 사옥·판권 같은 두꺼운 축적 자산은 확인되지 않습니다. 회사 체력은 사실상 <strong>누적 465억 투자금의 잔여 런웨이(투자금으로 버티는 기간)와 IPO 성공 여부에 달려 있습니다</strong>. 자산이 얇고 외부 자금 의존형이라는 뜻이며, 이는 곧 <strong>IPO 시나리오가 흔들리면 고용·처우가 흔들릴 수 있다는 신호</strong>입니다 — 잔여 현금과 월 소진율(번레이트)을 면접에서 가늠해 보십시오.</p>
+<p><strong>실질 보상 · 복리후생.</strong> 공고상 복지포인트 연 130만원, 자유로운 휴가(자가결재), 인재추천 포상 100~300만원, 특허출원 보상금, 고성능 노트북·데스크테리어, ML-OPS용 고성능 서버 IDC, 종합건강검진, 도서·외부교육 지원이 명시돼 있습니다. 원티드 태그에 <strong>&quot;연봉상위11~20%&quot;</strong>로 표기돼 있고, 2022년 채용 당시 &quot;업계 최고 수준 연봉 보장&quot;을 반복 강조했습니다(뉴스1·메디칼타임즈 등 다수). 다만 <strong>구체적 연봉 밴드·성과급·스톡옵션 조건은 공개 정보로 확인되지 않습니다</strong> — &quot;상위11~20%&quot;는 원티드의 밴드 추정일 뿐 실수령과 괴리가 있으니, <strong>처우협의 단계에서 기본급·스톡옵션 행사가·베스팅 조건을 직접 협상</strong>하십시오. 비상장사이므로 스톡옵션의 가치는 전적으로 IPO 성공에 종속됩니다.</p>
+<p><strong>숨은 리스크.</strong></p>
+<ul>
+<li><strong>기술특례 상장 제도 자체의 신뢰 이슈</strong>: 2023년 파두, 2024년 이노그리드 등 기술특례 상장사가 잇달아 상장 후 실적 논란을 일으켜 제도에 대한 시장 경계가 커진 상태입니다(조선비즈 2024.07). 매출 4억원대에서 기술특례로 상장을 밀어붙이는 휴톰은 이 회의적 시선을 정면으로 받게 됩니다.</li>
+<li><strong>창업자 겸직 구조</strong>: 형 대표가 연세암병원 위암센터장·연세대 의대 교수를 겸직하는 의사-창업가 구조로, 일상 경영과 제품 개발을 실질적으로 이끄는 실무 리더십(C레벨·CTO)이 누구인지 공개 정보로 확인되지 않습니다.</li>
+<li><strong>IPO 일정 지연 리스크</strong>: 2024년 &quot;연내 상장&quot;, 2026년 상반기 IPO 등 목표 시점이 계속 미뤄져 온 정황이 있어(약업신문 2024.03, 더벨 2024.10), 실제 진행 상황을 확인해야 합니다.</li>
+</ul>
+<p><strong>대기업 → 스타트업 전환 시 체감 변화(휴톰은 51~300명·투자의존 스타트업).</strong></p>
+<ul>
+<li><strong>고용안정</strong>: 대기업의 정년·안정 대신, IPO·후속 투자에 매인 런웨이 의존 구조입니다. 안정성보다 성장 베팅에 가깝습니다.</li>
+<li><strong>업무 범위</strong>: 좁은 R&amp;R 대신 원천 데이터 이해부터 정제 기준 수립·DB 설계·대시보드·문서화까지 <strong>혼자 넓게 오너십을 지는</strong> 자리입니다. 의료진·연구자와 직접 조율하는 몫도 큽니다.</li>
+<li><strong>안전판</strong>: 정비된 데이터 거버넌스·백오피스보다는 <strong>스스로 표준과 프로세스를 세워야 하는</strong> 초기 조직일 가능성이 높습니다(공고가 &quot;정제 기준 수립·문서화&quot;를 강조하는 것이 방증).</li>
+<li><strong>보상 구성</strong>: 안정적 고정급 대신 기본급 + 스톡옵션(IPO 성공 시 변동)입니다 — 대박은 IPO 성사에, 하방은 상장 지연에 걸립니다.</li>
+</ul>
+<p><strong>사업 구조상 해자와 위험.</strong> 진짜 해자는 <strong>형우진이라는 세계 최다 위암 로봇수술 집도의의 임상 권위 + 위암(RUS GA)에 축적된 데이터·알고리즘</strong>입니다. 이건 경쟁사가 쉽게 복제하기 어렵습니다. 반대로 위험은 <strong>위암 외 라인(RUS NE 신장·RUS LUNG 폐)의 실증·인허가·상용화가 아직 로드맵 단계</strong>라는 점, 그리고 수술 내비게이션이 <strong>수술로봇 생태계(인튜이티브서지컬·J&amp;J·메드트로닉)에 종속·연계되어야 확산</strong>된다는 구조적 의존성입니다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 유료 도입 병원 수와 재구매·구독 매출이 실제로 늘고 있다면 해자는 진짜로 굳어지고, 여전히 무상 임상 수준이라면 서사에 머무릅니다.</p>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
+<p><strong>산업 규모·성장성.</strong> 고령화·암 발생 증가·로봇 수술 확산으로 <strong>수술 정밀도·안전성을 높이는 디지털/AI 수술 지원 시장은 커지는 파이</strong>입니다(바이오타임즈 2025.12). 순풍을 받는 산업이라는 점은 지원자에게 성장 기대의 근거가 됩니다. 다만 휴톰이 실제 노리는 유효 시장(수술 내비게이션 세그먼트)의 구체적 SAM(실제 공략 가능 시장)·SOM(단기 확보 가능 시장) 규모는 공개 근거로 확인되지 않습니다 — TAM(수술 로봇·디지털 헬스케어 전체)만 크다는 점과 실제 먹을 몫은 구분해야 합니다(확인 필요).</p>
+<p><strong>이 회사의 지위.</strong> 휴톰은 <strong>&quot;국내 최초 수술 AI 플랫폼&quot;</strong>을 표방하며(데일리메디·글로벌경제), 수술 전 시뮬레이션–수술 중 3D 내비게이션–수술 후 예후 예측을 잇는 파이프라인을 지향합니다. RUS는 2D CT 영상을 AI로 3D 재구성해 장기·혈관·복부 팽창 등 환자 고유 해부구조를 보여줍니다. <strong>위암 내비게이션에서는 창업자 권위에 힘입어 국내 선도 위치</strong>로 볼 수 있으나, 시장 전체를 좌우하는 리더라기보다 <strong>특화 니치에서 앞서가는 플레이어</strong>에 가깝습니다.</p>
+<p><strong>경쟁 지형.</strong> 수술로봇 시장은 미국 <strong>인튜이티브서지컬이 95% 이상 점유</strong>하는 독점 구조입니다(형 대표, 이데일리 2025.12). 휴톰의 내비게이션은 로봇 자체가 아니라 그 위에 얹히는 소프트웨어라, <strong>스트라이커·올림푸스(복강경 제조), 존슨앤드존슨·메드트로닉(수술 로봇/기기)과 경쟁이자 제휴 대상</strong>이라는 양면 관계입니다(머니투데이 2022.06). 형 대표 스스로 &quot;독점체제보다 생태계 다변화가 좋다&quot;며 SI 투자 유치를 존슨앤드존슨에 국한하지 않겠다고 밝힌 것은, <strong>거대 수술로봇 기업의 플랫폼에 올라타되 한 곳에 종속되지 않으려는</strong> 전략입니다. 국내 인접 기업으로 루닛(암 진단 AI)·딥매트릭스 등이 있으나 세그먼트가 달라 직접 경쟁은 제한적입니다.</p>
+<p><strong>시장 구조와 판정.</strong> 수술로봇 하드웨어는 인튜이티브의 압도적 과점이지만, 그 위의 <strong>AI 수술 지원 소프트웨어는 아직 표준 승자가 없는 초기 시장</strong>입니다. 이는 구직자에게 양면입니다 — <strong>선점하면 초기 진입자 이점을 크게 누리지만, 거대 기기 기업이 자체 소프트웨어를 붙이면 순식간에 밀릴 수 있는</strong> 위태로운 자리이기도 합니다. 종합하면 휴톰은 <strong>&quot;커지는 시장에서 임상 권위로 앞서 있으나, 매출·상용화로는 아직 위치를 굳히지 못한&quot;</strong> 상태입니다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 글로벌 기기 기업과의 제휴가 단순 &quot;논의&quot;를 넘어 실제 임베디드 계약으로 전환되는지가 이 회사의 운명을 가릅니다 — 면접에서 J&amp;J·메드트로닉·아다치와의 계약이 어느 단계인지 물어보십시오.</p>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
+<p><strong>대표·경영진.</strong> <strong>형우진</strong> — 대표이사 겸 창업자. 연세암병원 위암센터장, 세브란스병원 위장관외과 교수, 1992년부터 활동한 국내 최초·최다 로봇 수술 집도의(누적 약 7,000건, 위암 로봇수술 2,000건 이상). &quot;외과의사 중 손꼽히는 얼리 어답터&quot;로 소개됩니다(이데일리 2025.12). <strong>기술·임상 권위의 원천이자 사실상 회사의 얼굴이며 영업 채널</strong>입니다(&quot;존슨앤드존슨 회장도 호평&quot;). 인터뷰에서 본인보다 휴톰과 솔루션에 초점을 두는 태도를 보인다는 점은 제품 중심 리더십의 신호이나(이데일리 2022.04), <strong>대학병원 요직을 겸직하는 구조라 일상 경영 전담자가 누구인지가 핵심 물음</strong>입니다.</p>
+<p><strong>C레벨·핵심 인력.</strong> CEO 외 C레벨·CTO·사업개발 책임자의 이름·배경은 <strong>공개 정보로 확인되지 않습니다</strong>. 개발 조직 규모(임직원 78~92명 중 R&amp;D 비중)도 미확인 — 면접에서 반드시 확인하십시오. 데이터 엔지니어로서 직속 상급자와 데이터/개발 조직의 성숙도를 파악하는 것이 특히 중요합니다.</p>
+<p><strong>투자자·소유 구조.</strong> 라운드별로 <strong>시리즈A프라임(2020.12, 50억)</strong> KB인베스트먼트·IMM인베스트먼트, <strong>시리즈B(2022.01, 170억)</strong> IMM·퀀텀벤처스코리아·KB·삼성벤처투자·나우IB캐피탈·한국투자파트너스, <strong>시리즈C(2024, 205억)</strong> 엔베스터·비와이비인베스트먼트·아주IB투자·SK증권 등 기존·신규 참여. 상장 주관사는 유진투자증권(기술특례 코스닥). 지원 대상 법인 휴톰은 <strong>비상장</strong>이며, 뉴스에 보이는 종목코드는 다른 법인의 것이니 혼동하지 마십시오.</p>
+<ul>
+<li><strong>자본 성격</strong>: 라인업이 <strong>금융계열(KB인베스트먼트·삼성벤처투자·한국투자파트너스·나우IB캐피탈·SK증권·아주IB투자) 중심</strong>으로, <strong>IPO 회수를 겨냥하는 안정 지향 색채가 짙습니다</strong>. 휴톰이 IMM인베스트먼트 포트폴리오사로 &#x27;IMM 헬스케어 데이&#x27;(한국판 JP모건 헬스케어)에 소집되는 구조는, 투자자가 포트폴리오를 묶어 엑싯을 조율함을 보여줍니다(같은 자리에 루닛 등 상장 성공 사례 등장).</li>
+<li><strong>체력 신호</strong>: 누적 약 465억원 조달로 초기 스타트업치고는 두툼하나, 매출이 얇아 <strong>잔여 런웨이는 IPO 성공 여부에 크게 걸려 있습니다</strong> — 정확한 현금 잔고는 비공개이니 면접에서 가늠하십시오.</li>
+</ul>
+<p><strong>정렬 인사이트.</strong> 창업자의 비전(&quot;환자 안전을 위한 장기 임상 가치&quot;)과 소유 구조가 시사하는 방향(<strong>금융계 투자자의 기술특례 코스닥 조기 회수</strong>)이 미묘하게 긴장합니다. 매출 4억원대에서 IPO를 미는 것은 실적보다 <strong>권위·특허·플랫폼 서사로 밸류를 설득하는 전략</strong>이며, 상장 후 실적 입증 압박이 RUS NE·LUNG 확장 로드맵과 충돌할 수 있습니다. 지원자에게 이것이 주는 시그널: <strong>스톡옵션 대박은 IPO 성공에 전적으로 걸려 있고, 상장이 지연되면 조직·처우가 흔들릴 수 있으니, 기대치를 &quot;IPO 시나리오&quot;로 잡고 진행 상황을 검증</strong>하십시오.</p>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
+<ul>
+<li><strong>EMR</strong> — 전자의무기록(Electronic Medical Record). 병원이 환자 진료 과정을 전산으로 남긴 원천 데이터로, 형식이 병원마다 제각각이라 정제 난이도가 큽니다. 이 자리의 주 데이터 소스입니다.</li>
+<li><strong>LAB 데이터</strong> — 혈액·소변 등 검사실(laboratory) 검사 결과 데이터. 결측·이상값이 잦아 품질 관리가 핵심입니다.</li>
+<li><strong>ETL</strong> — Extract·Transform·Load. 원천에서 데이터를 뽑아(추출) 정제·변환한 뒤 DB에 적재하는 파이프라인. 우대 요건입니다.</li>
+<li><strong>의료 코드 체계</strong> — 진단·처치·검사를 표준 코드로 정리한 규격(예: KCD 한국표준질병분류, SNOMED CT 등). 병원 간 데이터를 표준화·비교 가능하게 만드는 열쇠라 우대됩니다.</li>
+<li><strong>RUS</strong> — 휴톰의 대표 제품. Reshaping and Unraveling Surgery. 2D CT 영상을 AI로 3D 재구성해 장기·혈관 위치를 보여주는 수술 내비게이션. RUS GA(위암)·RUS NE(신장)·RUS LUNG(폐)로 라인업.</li>
+<li><strong>기술특례 상장</strong> — 매출·이익이 작아도 기술력·성장성 평가로 코스닥 상장을 허용하는 제도. 매출이 얇은 바이오·AI 기업이 주로 이용하나, 상장 후 실적 부진 논란이 반복돼 시장 경계가 큽니다.</li>
+<li><strong>SI(전략적 투자자)</strong> — Strategic Investor. 재무 수익만 노리는 재무적 투자자(FI)와 달리, 사업 시너지를 노리고 들어오는 기업 투자자(예: 존슨앤드존슨 같은 수술기기사).</li>
+<li><strong>런웨이/번레이트</strong> — 런웨이는 보유 현금으로 버틸 수 있는 기간, 번레이트는 매달 소진하는 현금. 매출이 얇은 스타트업의 생존을 좌우하는 핵심 지표입니다.</li>
+<li><strong>베스팅</strong> — 스톡옵션이 일정 재직 기간에 걸쳐 순차적으로 행사 가능해지는 조건. 비상장사 스톡옵션은 IPO 성공 시에만 실질 가치가 생깁니다.</li>
+</ul></div>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com/?co=%ED%9C%B4%ED%86%B0&amp;pos=%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4&amp;from=r">내 이력으로 적합도·평결 받기 →</a>
+  </div>
+  <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
+</div>
+<script>
+(function(){
+  var API=(window.JOBRECON_API||"").replace(/\/+$/,"");
+  function ensureAPI(){
+    if(API)return Promise.resolve(API);
+    return fetch("/api.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():"";})
+      .then(function(t){API=(t||"").trim().replace(/\/+$/,"");return API;}).catch(function(){return API;});
+  }
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function mdInline(s){return s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function renderMd(t){
+    var lines=esc(t).split("\n"),html="",stack=[];
+    function closeTo(d){while(stack.length>d)html+="</"+stack.pop()+">";}
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i].replace(/\s+$/,"");
+      var bm=line.match(/^(\s*)[-•]\s+(.*)$/),nm=line.match(/^(\s*)\d+\.\s+(.*)$/);
+      if(bm||nm){
+        var indent=(bm?bm[1]:nm[1]).replace(/\t/g,"  ").length;
+        var depth=indent>=4?3:(indent>=2?2:1),tag=nm?"ol":"ul";
+        closeTo(depth);
+        if(stack.length<depth){html+="<"+tag+">";stack.push(tag);}
+        html+="<li>"+mdInline(bm?bm[2]:nm[2])+"</li>";
+      }else{closeTo(0);if(line.trim())html+='<div class="ln">'+mdInline(line)+"</div>";}
+    }
+    closeTo(0);return html;
+  }
+  var JR_COMPANY="휴톰",JR_APP="https://jobrecon.100m1s.com";
+  var report=document.getElementById("report");
+  if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
+  var digBtn=document.createElement("button");
+  digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
+  document.body.appendChild(digBtn);
+  var _digSel=null;
+  function clearDig(){digBtn.classList.remove("on");}
+  function topBlock(node){
+    var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
+    while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
+    return (el&&el.parentElement===report)?el:null;
+  }
+  function checkSelection(){
+    var s=window.getSelection();
+    var text=(s&&s.toString?s.toString():"").trim();
+    if(!text||text.length<2||!s.rangeCount){clearDig();return;}
+    var range=s.getRangeAt(0);
+    var blockEl=topBlock(range.commonAncestorContainer);
+    if(!blockEl){clearDig();return;}
+    _digSel={text:text.slice(0,600),blockEl:blockEl};
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
+  }
+  var _selDebounce=null;
+  function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
+  document.addEventListener("selectionchange",function(){scheduleCheck(320);});
+  document.addEventListener("mouseup",function(){scheduleCheck(10);});
+  document.addEventListener("touchend",function(){scheduleCheck(140);});
+  digBtn.addEventListener("mousedown",function(e){e.preventDefault();});
+  var _digLast=0;
+  function runDig(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    if(Date.now()-_digLast<800)return;
+    _digLast=Date.now();
+    if(!_digSel)return;
+    var sel=_digSel,blockEl=sel.blockEl;
+    clearDig();
+    try{window.getSelection().removeAllRanges();}catch(x){}
+    var _dk="jr_dig_r_"+location.pathname; var used=parseInt(localStorage.getItem(_dk)||"0",10);
+    if(used>=3){
+      var note=document.createElement("div");note.className="comment";
+      note.innerHTML='<span class="cx">✕</span><div class="cbody">더 깊은 분석과 내 이력 기준 적합도는 앱에서 이어가세요 →<br><a class="cta-app" href="'+esc(JR_APP)+'">JobRecon 앱에서 계속하기 →</a></div>';
+      blockEl.insertAdjacentElement("afterend",note);
+      note.querySelector(".cx").addEventListener("click",function(){note.remove();});
+      note.scrollIntoView({behavior:"smooth",block:"center"});return;
+    }
+    localStorage.setItem(_dk,String(used+1));
+    var card=document.createElement("div");card.className="comment";
+    card.innerHTML='<span class="cx">✕</span><div class="cq"><b>선택</b> “'+esc(sel.text)+'”</div><div class="cbody">더 깊이 분석 중…</div>';
+    blockEl.insertAdjacentElement("afterend",card);
+    card.querySelector(".cx").addEventListener("click",function(){card.remove();});
+    card.scrollIntoView({behavior:"smooth",block:"center"});
+    var bodyEl=card.querySelector(".cbody");
+    var context=(blockEl.textContent||"").slice(0,2000);
+    ensureAPI().then(function(){
+      return fetch(API+"/expand",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({selected:sel.text,context:context,company:JR_COMPANY})});
+    }).then(function(res){
+      if(!res.ok||!res.body)throw new Error("연결 실패");
+      var reader=res.body.getReader(),dec=new TextDecoder(),buf="",full="";
+      function pump(){
+        return reader.read().then(function(r){
+          if(r.done){if(!full)bodyEl.innerHTML='<span class="err">응답이 지연됩니다 — 다시 시도해 주세요.</span>';return;}
+          buf+=dec.decode(r.value,{stream:true});
+          var sep;
+          while((sep=buf.indexOf("\n\n"))!==-1){
+            var line=buf.slice(0,sep);buf=buf.slice(sep+2);
+            if(line.indexOf("data: ")!==0)continue;
+            var ev;try{ev=JSON.parse(line.slice(6));}catch(x){continue;}
+            if(ev.error){bodyEl.innerHTML='<span class="err">'+esc(ev.error)+'</span>';return;}
+            if(ev.status&&!full)bodyEl.textContent=ev.status;
+            if(ev.t){full+=ev.t;bodyEl.innerHTML=renderMd(full);}
+            if(ev.done)return;
+          }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(){bodyEl.innerHTML='<span class="err">추가 분석 실패 — 다시 시도해 주세요.</span>';});
+  }
+  digBtn.addEventListener("click",runDig);
+  digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="# 휴톰 — 데이터 엔지니어 정찰 리포트\n\n## 2. 공고 핵심 요건\n\n**채용 직무**: 데이터 엔지니어\n\n- **경력·직무**: 경력 5년 이상, 의료데이터(EMR·LAB 등) 정제·표준화·구조화 및 DB 설계·구축·관리가 핵심 업무 (공고 명시)\n- **필수 스택**: SQL, Python 또는 R 활용 데이터 처리 경험, 기본 통계분석으로 데이터 특성·품질 이슈 파악, DB·데이터 관리 기본 이해, 정제 기준·처리 과정 문서화 (공고 명시)\n- **우대**: 병원·임상연구 데이터 경험, EMR·LAB·처방·진단·검사 데이터 이해, ETL/데이터 파이프라인 구축, 의료 코드 체계(예: KCD·SNOMED 등)·의료 용어 이해, 대시보드 구축 (공고 명시)\n- **협업 성격**: 의료진·연구자·개발자와 함께 데이터 활용 목적·기준을 정리하는 **가교형 엔지니어**를 원함 (공고 명시)\n\n한 줄 정리: 이 자리는 파이프라인을 화려하게 짜는 빅데이터형이 아니라, **지저분한 병원 원천 데이터(EMR·LAB)를 사람이 신뢰할 수 있는 형태로 정제·문서화하는 실무형**입니다. Kafka·Spark·클라우드 같은 대규모 스트리밍 스택이 요건에 없다는 점이 이를 뒷받침합니다 (정찰 보강).\n\n## 3. 회사 서사 · 궤적\n\n**창업 동기 — 수술방에서 나온 진짜 페인포인트.** 창업자 **형우진**은 연세암병원 위암센터장이자 세브란스병원 위장관외과 교수로, 1992년부터 30년 넘게 의사로 활동하며 **전 세계에서 위암 로봇 수술을 가장 많이 집도한 기록**(누적 수술 약 7,000건, 위암 로봇수술 2,000건 이상)을 가진 외과의입니다(이데일리 2025.12, 뉴스1 2026.03). 존슨앤드존슨(J&J)에서 감사 이메일을 받은 이듬해, \"자신이 수술할 때 꼭 있었으면 좋겠다 싶은 수술 보조 플랫폼\"을 만들겠다며 휴톰을 세웠습니다(이코노미조선 2023.06). 책상물림이 아니라 **직접 칼을 잡던 집도의가 자기 임상 통증을 제품화한** 전형적 도메인 창업입니다.\n\n**미션의 일관성.** 사명 **Hutom = Human Touch in Medicine**이 곧 미션입니다. \"Reshaping Surgery Through Digital Innovation\", \"기술과 인간 중심 가치의 결합\" 같은 톤이 창업 초부터 지금까지 관통하며, 대표 제품 RUS도 일관되게 \"정밀·안전(precision and safety)\"을 반복합니다. 슬로건이 그때그때 바뀌지 않는다는 점은 신뢰 신호입니다.\n\n**연혁·전환점.**\n- **2016~2017년** — 형우진 설립(자료마다 설립연도가 2016년/2017년으로 갈립니다 — 면접에서 확인).\n- **2018년** — 시리즈A 성사.\n- **2020.12** — 시리즈A 프라임 50억원(KB인베스트먼트·IMM인베스트먼트). 누적 92억원.\n- **2022.01** — 시리즈B 170억원. 기존 IMM·퀀텀벤처스코리아·KB·삼성벤처투자 후속, 나우IB캐피탈·한국투자파트너스 등 합류. 용도로 \"플랫폼·알고리즘 고도화\" 명시. 직후 \"업계 최고 수준 연봉\" 내건 전사 대규모 채용을 진행(뉴스1·메디칼타임즈 2022.02) — **170억 실탄으로 조직을 급팽창시킨 전환점**입니다.\n- **2023.04** — 가상현실 수술 기술 특허 등록.\n- **2023.12** — 유진투자증권을 주관사로 기술특례 코스닥 상장 추진 보도. \"내년부터 본격 사업화\" 선언(조선비즈).\n- **2024.03** — 시리즈C 총 205억원 클로징(2회 분할 납입), 기업가치 약 1,300억원. 같은 달 **일본 대형 유통사 아다치와 RUS 공급계약** 체결하며 해외 채널 확보.\n- **2025~2026** — MEDICA 2025(독일) 참가, 중기부 **유니콘브릿지** 및 텍사스 C&D 선정(2026년). 형 대표는 \"미국·일본·홍콩·말레이시아 등에서 파트너십·임상 레퍼런스를 확보해 글로벌 수술 내비게이션 기업으로 성장\" 목표를 공언.\n\n**응축.** 세계 최고 집도의의 임상에서 출발한 서사와 자본 조달은 진짜입니다 — 다만 **2023년에야 \"본격 사업화 시작\"을 선언했다는 점이 핵심**입니다. 자본·권위의 사다리는 화려하게 올라갔지만, **매출 궤적은 이제 막 출발선**에 서 있는 회사입니다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n**검증된 실적 — 임상 권위와 자본은 실체, 매출은 아직 초기.** 특허 56~65건, 시리즈C까지 누적 약 465억원 조달, 일본 아다치 공급계약, 유니콘브릿지 선정 등은 근거로 확인되는 실체입니다. 반면 매출은 공개 자료 기준 **위키 9,264만원 → 포브스 바이오테크50(2024.08) 2억원 → 포브스 AI50(2025.05) 4억원**으로, 방향은 우상향이나 **절대 규모는 여전히 pre-revenue(사실상 매출 발생 이전) 수준**입니다. \"국내외 의사들이 이미 제품을 경험\"이라는 홍보와 실제 유료 도입 사이 간극이 실재합니다 — 임상 경험과 유료 계약은 다릅니다. 그래서 지원자는 면접에서 **실제 상용 매출·유료 도입 병원 수**를 반드시 물어야 합니다.\n\n**밸류에이션 추세.** 시리즈C 기업가치 약 **1,300억원**, 회사는 IPO 이후 목표를 **4,000억원**으로 제시(더벨 2024.10). 시리즈B(170억)→C(205억)로 몸값이 소폭 상승했고 펀딩 혹한기(2023~2024)에도 밸류를 지켰다는 점은 긍정 신호이나, **매출 4억원대에 기업가치 1,300억원은 실적이 아니라 창업자 권위·특허·플랫폼 서사에 얹힌 밸류**입니다. 상장 후 실적 입증 압박이 클 수밖에 없는 구조입니다.\n\n**자산 기반 안정성.** 자본금은 약 1억원 수준(위키)으로 얇고, 부동산·자체 사옥·판권 같은 두꺼운 축적 자산은 확인되지 않습니다. 회사 체력은 사실상 **누적 465억 투자금의 잔여 런웨이(투자금으로 버티는 기간)와 IPO 성공 여부에 달려 있습니다**. 자산이 얇고 외부 자금 의존형이라는 뜻이며, 이는 곧 **IPO 시나리오가 흔들리면 고용·처우가 흔들릴 수 있다는 신호**입니다 — 잔여 현금과 월 소진율(번레이트)을 면접에서 가늠해 보십시오.\n\n**실질 보상 · 복리후생.** 공고상 복지포인트 연 130만원, 자유로운 휴가(자가결재), 인재추천 포상 100~300만원, 특허출원 보상금, 고성능 노트북·데스크테리어, ML-OPS용 고성능 서버 IDC, 종합건강검진, 도서·외부교육 지원이 명시돼 있습니다. 원티드 태그에 **\"연봉상위11~20%\"**로 표기돼 있고, 2022년 채용 당시 \"업계 최고 수준 연봉 보장\"을 반복 강조했습니다(뉴스1·메디칼타임즈 등 다수). 다만 **구체적 연봉 밴드·성과급·스톡옵션 조건은 공개 정보로 확인되지 않습니다** — \"상위11~20%\"는 원티드의 밴드 추정일 뿐 실수령과 괴리가 있으니, **처우협의 단계에서 기본급·스톡옵션 행사가·베스팅 조건을 직접 협상**하십시오. 비상장사이므로 스톡옵션의 가치는 전적으로 IPO 성공에 종속됩니다.\n\n**숨은 리스크.**\n- **기술특례 상장 제도 자체의 신뢰 이슈**: 2023년 파두, 2024년 이노그리드 등 기술특례 상장사가 잇달아 상장 후 실적 논란을 일으켜 제도에 대한 시장 경계가 커진 상태입니다(조선비즈 2024.07). 매출 4억원대에서 기술특례로 상장을 밀어붙이는 휴톰은 이 회의적 시선을 정면으로 받게 됩니다.\n- **창업자 겸직 구조**: 형 대표가 연세암병원 위암센터장·연세대 의대 교수를 겸직하는 의사-창업가 구조로, 일상 경영과 제품 개발을 실질적으로 이끄는 실무 리더십(C레벨·CTO)이 누구인지 공개 정보로 확인되지 않습니다.\n- **IPO 일정 지연 리스크**: 2024년 \"연내 상장\", 2026년 상반기 IPO 등 목표 시점이 계속 미뤄져 온 정황이 있어(약업신문 2024.03, 더벨 2024.10), 실제 진행 상황을 확인해야 합니다.\n\n**대기업 → 스타트업 전환 시 체감 변화(휴톰은 51~300명·투자의존 스타트업).**\n- **고용안정**: 대기업의 정년·안정 대신, IPO·후속 투자에 매인 런웨이 의존 구조입니다. 안정성보다 성장 베팅에 가깝습니다.\n- **업무 범위**: 좁은 R&R 대신 원천 데이터 이해부터 정제 기준 수립·DB 설계·대시보드·문서화까지 **혼자 넓게 오너십을 지는** 자리입니다. 의료진·연구자와 직접 조율하는 몫도 큽니다.\n- **안전판**: 정비된 데이터 거버넌스·백오피스보다는 **스스로 표준과 프로세스를 세워야 하는** 초기 조직일 가능성이 높습니다(공고가 \"정제 기준 수립·문서화\"를 강조하는 것이 방증).\n- **보상 구성**: 안정적 고정급 대신 기본급 + 스톡옵션(IPO 성공 시 변동)입니다 — 대박은 IPO 성사에, 하방은 상장 지연에 걸립니다.\n\n**사업 구조상 해자와 위험.** 진짜 해자는 **형우진이라는 세계 최다 위암 로봇수술 집도의의 임상 권위 + 위암(RUS GA)에 축적된 데이터·알고리즘**입니다. 이건 경쟁사가 쉽게 복제하기 어렵습니다. 반대로 위험은 **위암 외 라인(RUS NE 신장·RUS LUNG 폐)의 실증·인허가·상용화가 아직 로드맵 단계**라는 점, 그리고 수술 내비게이션이 **수술로봇 생태계(인튜이티브서지컬·J&J·메드트로닉)에 종속·연계되어야 확산**된다는 구조적 의존성입니다. **무엇이 확인되면 판단이 바뀌나**: 유료 도입 병원 수와 재구매·구독 매출이 실제로 늘고 있다면 해자는 진짜로 굳어지고, 여전히 무상 임상 수준이라면 서사에 머무릅니다.\n\n## 8. 산업·시장·경쟁 지형\n\n**산업 규모·성장성.** 고령화·암 발생 증가·로봇 수술 확산으로 **수술 정밀도·안전성을 높이는 디지털/AI 수술 지원 시장은 커지는 파이**입니다(바이오타임즈 2025.12). 순풍을 받는 산업이라는 점은 지원자에게 성장 기대의 근거가 됩니다. 다만 휴톰이 실제 노리는 유효 시장(수술 내비게이션 세그먼트)의 구체적 SAM(실제 공략 가능 시장)·SOM(단기 확보 가능 시장) 규모는 공개 근거로 확인되지 않습니다 — TAM(수술 로봇·디지털 헬스케어 전체)만 크다는 점과 실제 먹을 몫은 구분해야 합니다(확인 필요).\n\n**이 회사의 지위.** 휴톰은 **\"국내 최초 수술 AI 플랫폼\"**을 표방하며(데일리메디·글로벌경제), 수술 전 시뮬레이션–수술 중 3D 내비게이션–수술 후 예후 예측을 잇는 파이프라인을 지향합니다. RUS는 2D CT 영상을 AI로 3D 재구성해 장기·혈관·복부 팽창 등 환자 고유 해부구조를 보여줍니다. **위암 내비게이션에서는 창업자 권위에 힘입어 국내 선도 위치**로 볼 수 있으나, 시장 전체를 좌우하는 리더라기보다 **특화 니치에서 앞서가는 플레이어**에 가깝습니다.\n\n**경쟁 지형.** 수술로봇 시장은 미국 **인튜이티브서지컬이 95% 이상 점유**하는 독점 구조입니다(형 대표, 이데일리 2025.12). 휴톰의 내비게이션은 로봇 자체가 아니라 그 위에 얹히는 소프트웨어라, **스트라이커·올림푸스(복강경 제조), 존슨앤드존슨·메드트로닉(수술 로봇/기기)과 경쟁이자 제휴 대상**이라는 양면 관계입니다(머니투데이 2022.06). 형 대표 스스로 \"독점체제보다 생태계 다변화가 좋다\"며 SI 투자 유치를 존슨앤드존슨에 국한하지 않겠다고 밝힌 것은, **거대 수술로봇 기업의 플랫폼에 올라타되 한 곳에 종속되지 않으려는** 전략입니다. 국내 인접 기업으로 루닛(암 진단 AI)·딥매트릭스 등이 있으나 세그먼트가 달라 직접 경쟁은 제한적입니다.\n\n**시장 구조와 판정.** 수술로봇 하드웨어는 인튜이티브의 압도적 과점이지만, 그 위의 **AI 수술 지원 소프트웨어는 아직 표준 승자가 없는 초기 시장**입니다. 이는 구직자에게 양면입니다 — **선점하면 초기 진입자 이점을 크게 누리지만, 거대 기기 기업이 자체 소프트웨어를 붙이면 순식간에 밀릴 수 있는** 위태로운 자리이기도 합니다. 종합하면 휴톰은 **\"커지는 시장에서 임상 권위로 앞서 있으나, 매출·상용화로는 아직 위치를 굳히지 못한\"** 상태입니다. **무엇이 확인되면 판단이 바뀌나**: 글로벌 기기 기업과의 제휴가 단순 \"논의\"를 넘어 실제 임베디드 계약으로 전환되는지가 이 회사의 운명을 가릅니다 — 면접에서 J&J·메드트로닉·아다치와의 계약이 어느 단계인지 물어보십시오.\n\n## 6. 경영진 · 투자자·소유 구조\n\n**대표·경영진.** **형우진** — 대표이사 겸 창업자. 연세암병원 위암센터장, 세브란스병원 위장관외과 교수, 1992년부터 활동한 국내 최초·최다 로봇 수술 집도의(누적 약 7,000건, 위암 로봇수술 2,000건 이상). \"외과의사 중 손꼽히는 얼리 어답터\"로 소개됩니다(이데일리 2025.12). **기술·임상 권위의 원천이자 사실상 회사의 얼굴이며 영업 채널**입니다(\"존슨앤드존슨 회장도 호평\"). 인터뷰에서 본인보다 휴톰과 솔루션에 초점을 두는 태도를 보인다는 점은 제품 중심 리더십의 신호이나(이데일리 2022.04), **대학병원 요직을 겸직하는 구조라 일상 경영 전담자가 누구인지가 핵심 물음**입니다.\n\n**C레벨·핵심 인력.** CEO 외 C레벨·CTO·사업개발 책임자의 이름·배경은 **공개 정보로 확인되지 않습니다**. 개발 조직 규모(임직원 78~92명 중 R&D 비중)도 미확인 — 면접에서 반드시 확인하십시오. 데이터 엔지니어로서 직속 상급자와 데이터/개발 조직의 성숙도를 파악하는 것이 특히 중요합니다.\n\n**투자자·소유 구조.** 라운드별로 **시리즈A프라임(2020.12, 50억)** KB인베스트먼트·IMM인베스트먼트, **시리즈B(2022.01, 170억)** IMM·퀀텀벤처스코리아·KB·삼성벤처투자·나우IB캐피탈·한국투자파트너스, **시리즈C(2024, 205억)** 엔베스터·비와이비인베스트먼트·아주IB투자·SK증권 등 기존·신규 참여. 상장 주관사는 유진투자증권(기술특례 코스닥). 지원 대상 법인 휴톰은 **비상장**이며, 뉴스에 보이는 종목코드는 다른 법인의 것이니 혼동하지 마십시오.\n\n- **자본 성격**: 라인업이 **금융계열(KB인베스트먼트·삼성벤처투자·한국투자파트너스·나우IB캐피탈·SK증권·아주IB투자) 중심**으로, **IPO 회수를 겨냥하는 안정 지향 색채가 짙습니다**. 휴톰이 IMM인베스트먼트 포트폴리오사로 'IMM 헬스케어 데이'(한국판 JP모건 헬스케어)에 소집되는 구조는, 투자자가 포트폴리오를 묶어 엑싯을 조율함을 보여줍니다(같은 자리에 루닛 등 상장 성공 사례 등장).\n- **체력 신호**: 누적 약 465억원 조달로 초기 스타트업치고는 두툼하나, 매출이 얇아 **잔여 런웨이는 IPO 성공 여부에 크게 걸려 있습니다** — 정확한 현금 잔고는 비공개이니 면접에서 가늠하십시오.\n\n**정렬 인사이트.** 창업자의 비전(\"환자 안전을 위한 장기 임상 가치\")과 소유 구조가 시사하는 방향(**금융계 투자자의 기술특례 코스닥 조기 회수**)이 미묘하게 긴장합니다. 매출 4억원대에서 IPO를 미는 것은 실적보다 **권위·특허·플랫폼 서사로 밸류를 설득하는 전략**이며, 상장 후 실적 입증 압박이 RUS NE·LUNG 확장 로드맵과 충돌할 수 있습니다. 지원자에게 이것이 주는 시그널: **스톡옵션 대박은 IPO 성공에 전적으로 걸려 있고, 상장이 지연되면 조직·처우가 흔들릴 수 있으니, 기대치를 \"IPO 시나리오\"로 잡고 진행 상황을 검증**하십시오.\n\n## 7. 용어 · 개념 풀이\n\n- **EMR** — 전자의무기록(Electronic Medical Record). 병원이 환자 진료 과정을 전산으로 남긴 원천 데이터로, 형식이 병원마다 제각각이라 정제 난이도가 큽니다. 이 자리의 주 데이터 소스입니다.\n- **LAB 데이터** — 혈액·소변 등 검사실(laboratory) 검사 결과 데이터. 결측·이상값이 잦아 품질 관리가 핵심입니다.\n- **ETL** — Extract·Transform·Load. 원천에서 데이터를 뽑아(추출) 정제·변환한 뒤 DB에 적재하는 파이프라인. 우대 요건입니다.\n- **의료 코드 체계** — 진단·처치·검사를 표준 코드로 정리한 규격(예: KCD 한국표준질병분류, SNOMED CT 등). 병원 간 데이터를 표준화·비교 가능하게 만드는 열쇠라 우대됩니다.\n- **RUS** — 휴톰의 대표 제품. Reshaping and Unraveling Surgery. 2D CT 영상을 AI로 3D 재구성해 장기·혈관 위치를 보여주는 수술 내비게이션. RUS GA(위암)·RUS NE(신장)·RUS LUNG(폐)로 라인업.\n- **기술특례 상장** — 매출·이익이 작아도 기술력·성장성 평가로 코스닥 상장을 허용하는 제도. 매출이 얇은 바이오·AI 기업이 주로 이용하나, 상장 후 실적 부진 논란이 반복돼 시장 경계가 큽니다.\n- **SI(전략적 투자자)** — Strategic Investor. 재무 수익만 노리는 재무적 투자자(FI)와 달리, 사업 시너지를 노리고 들어오는 기업 투자자(예: 존슨앤드존슨 같은 수술기기사).\n- **런웨이/번레이트** — 런웨이는 보유 현금으로 버틸 수 있는 기간, 번레이트는 매달 소진하는 현금. 매출이 얇은 스타트업의 생존을 좌우하는 핵심 지표입니다.\n- **베스팅** — 스톡옵션이 일정 재직 기간에 걸쳐 순차적으로 행사 가능해지는 조건. 비상장사 스톡옵션은 IPO 성공 시에만 실질 가치가 생깁니다.", CO="휴톰", POS="데이터 엔지니어", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?](?:\*\*)?(?=\s|$)|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  // === 6축 큐레이터 — 앱 buildStory와 동일 규칙(창작0·iOS 안전). 리포트 6축(재무·성장·리스크·문화·핏·보상)의 균형 발췌. ===
+  function paras(b){return (b||"").split(/\n\s*\n/).map(function(p){return p.trim();}).filter(Boolean);}
+  // 문장 분리 — 줄(불릿) 개별 + 종결어미/구두점(볼드 흡수) 또는 ')." 경계. 원문 substring. iOS 안전(exec-index).
+  function sentsOf(body){var out=[];String(body||"").split(/\n/).forEach(function(ln){ln=ln.replace(/^\s*[-•*]\s+/,"").replace(/^#{1,4}\s+/,"").trim();if(!ln)return;var re=/(?:[다요죠음까함됨봄임][.!?]|\)\.)(\*\*)?(?=\s|$)/g,last=0,m;while((m=re.exec(ln))!==null){var end=m.index+m[0].length;out.push(ln.slice(last,end).trim());last=end;}var t=ln.slice(last).trim();if(t)out.push(t);});return out.filter(Boolean);}
+  // 리드 라벨(콜론 붙은 볼드)만 제거 — 콜론 없는 볼드강조(**다만 위험은 명확합니다**)는 보존
+  function stripLabel(s){return String(s).replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"").replace(/^(?:지원자에게 주는 시그널|지원자 관점에서|또 하나|무엇이 확인되면 판단이 바뀌나)\s*[:：]\s*/,"").trim();}
+  // 나열≠대조 — comma 분기가 "A, B" 나열(대조·반전 신호 0)을 가짜 대비로 뽑는 것 방지(페이타랩 "개발자 출신, 시장검증형"). setup/subvert 둘 다 짧고 반전어 없으면 무효 → sentContrast 폴백.
+  var AXNEG=/(베일|물음표|없|아니|않|못|미확인|불투명|비공개|의문|불확실|모호|우려|그림자|리스크|위험|약하|낮|숨|가림|이면|글쎄|반면|의존|취약|공백|결여|한계|정체|둔화)/;
+  // em대시 리드 대비 "**주제 — A, B**"(comma·대조성 검사)/"**주제 — A지만 B**"(conj) → {setup,subvert}. iOS 안전(split·lookbehind 0).
+  function leadContrast(p){var m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/);if(!m)return null;var f=m[1].trim().split(/\s[—-]\s/);if(f.length<2)return null;var rest=f.slice(1).join(" — ");var cm=rest.split(/\s*,\s*/);if(cm.length>=2){var _lsu=cm[0].trim(),_lsv=cm.slice(1).join(", ").trim().replace(/\.$/,"");if(!(axNlen(_lsu)<=6&&axNlen(_lsv)<=6&&!AXNEG.test(_lsv)&&!AXNEG.test(_lsu)))return {setup:_lsu,subvert:_lsv,lead:true};}var mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/);if(mm&&mm.index>=3){var cut=mm[1]?mm.index+mm[1].length:mm.index;var sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim();if(sub.replace(/\s/g,"").length>=6)return {setup:rest.slice(0,cut).trim(),subvert:sub,lead:true};}return null;}
+  // ── 범용 대비 추출기(§위치 기반·특정 회사 문구 0) — 페이타랩 하드코딩 제거(FLR-20260712-AGT-003: 페이타랩 외 소멸 근본 fix). 앱 index.html buildStory와 동일 규칙. ──
+  var AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간)
+  var LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip(앱 index.html _LEADCONJ mirror) — 카드 ⚠️+금색볼드+병치 3중 전환신호라 선두 접속사 잉여. 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
+  function axNlen(s){return String(s).replace(/\s/g,"").length;}
+  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){s=/\*\*$/.test(s)?s.slice(0,-2):(/\*$/.test(s)?s.slice(0,-1):s+"**");}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존
+  function axClean(s){s=String(s).trim();s=s.replace(/^\s*[→•]\s*/,"");s=s.replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=s.replace(/\s*[,，—:：]\s*(\*\*|`)?\s*$/,"$1");return axBal(s.trim());}   // P1-2 누출 정화: 선두 →•·콜론붙은 볼드라벨 + 말미 ,—: 트림(볼드/백틱 닫기 안쪽 콤마도 = 축,** → 축**)
+  function clipWall(s){if(axNlen(s)<=90)return s;var cut=s.search(/[,，]\s/);if(cut>0&&axNlen(s.slice(0,cut))>=12)return axBal(s.slice(0,cut).trim());return s;}   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
+  function axLastClause(t){var re=/[.!?]\s+/g,m,last=-1;while((m=re.exec(t))!==null)last=m.index+m[0].length;if(last>0){var tail=t.slice(last).trim();if(axNlen(tail)>=3)return tail;}return String(t).trim();}   // setup 대비 직전 완결 절
+  // ③ 문장 단위 대비 — 어미('…지만 B')/리드접속사(문장 시작·중간). subvert=완결 문장(종결어미 보장·잘림0). 원문 substring(창작0).
+  //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 보상반전 추출). 앱 index.html _sentContrast mirror.
+  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
+  // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
+  var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
+  // R4-019b 종결어미 화이트리스트 — 블랙리스트가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린') 구조 차단. lead(볼드 리드 명사구)는 블랙리스트만. 앱 _AXFIN mirror(G6).
+  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
+  function axWhole(s,lead){var t=String(s).trim().replace(/[*`]+$/,"").trim();if(!t)return false;if(AXCUT.test(t))return false;return lead?true:AXFIN.test(t);}
+  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
+  function axTrim(s,lead){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
+  // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
+  var AXMARK=/여기가 반전/;
+  // R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지(리포트 실존 후보만 승격·창작0). 앱 _FITKW mirror(G6).
+  var FITKW=/(개발|엔지니어|기술\s*스택|테크|아키텍처|인프라|코드|데이터|플랫폼|백엔드|프론트엔드|모바일|서버|AI|머신러닝|알고리즘|직무|요건|경력|연차|온보딩|커리어|성장\s*기회)/;
+  var FITRE=(function(pos){var toks=String(pos||"").split(/[\s·,/()+&]+/).filter(function(w){return w.replace(/\s/g,"").length>=2;}).map(function(w){return w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");});return toks.length?new RegExp("(?:"+toks.join("|")+")"):null;})(POS);
+  function axCandScore(r,para){var v=impact(r.setup+" "+r.subvert);if(AXNEG.test(r.subvert))v+=2;if(AXMARK.test(para))v+=10;var b=r.setup+" "+r.subvert;if(FITKW.test(b)||(FITRE&&FITRE.test(b)))v+=2;return v;}
+  function extractContrast(pls,used){var best=null,bi=-1,bs=-1;for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;r.setup=axTrim(r.setup,r.lead);r.subvert=axTrim(r.subvert,r.lead);if(!r.setup||!r.subvert)continue;var v=axCandScore(r,pls[i]);if(v>bs){best=r;bi=i;bs=v;}}if(best){used[bi]=true;best.score=bs;}return best;}
+  // 6축=§위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속). 라벨=섹션 파생, key=색상.
+  var AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
+  // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
+  var MEANRE=/(?:지원자에게 주는 시그널|지원자 관점에서|무엇이 확인되면 판단이 바뀌나)\s*(?:\*\*)?\s*[:：—-]\s*/;
+  function extractMean(body,mused){var ss=sentsOf(body);for(var i=0;i<ss.length;i++){if(mused[i])continue;var s=ss[i],m=s.match(MEANRE);if(!m)continue;var t=s.slice(m.index+m[0].length).replace(/^[（(]\s*/,"").replace(/\s*[）)]\s*$/,"").trim();t=axBal(clip(t,1));if(axNlen(t)>=8){mused[i]=true;return t;}}return null;}
+  // P1-3 comp 축 라벨 내용 파생 — 보상 키워드 매칭 시만 "실체·보상", 아니면 중립 "회사 주장 vs 실제"(§4 첫 채굴이 보상 무관 4/5 mismatch 해소: 당근=적자·페이타랩=트래픽·MBC=미디어표방·삼양=주장vs증명).
+  var COMP=/(연봉|급여|보상|스톡옵션|스톡|RSU|처우|복지|성과급|인센티브|월급|초봉|페이밴드|사이닝)/;
+  var PAL={pivot:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],fit:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],culture:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],comp:['#34d399','#bff3da','rgba(52,211,153,.15)'],runway:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],risk:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],cta:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  // R3-012 얇은 축 배제 — 카드 수 = 축 프레임(6)이 아니라 콘텐츠 밀도(임팩트+뜻줄 스코어>=3). 미달 축은 카드화 배제(리포트에만). 앱 mirror.
+  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
+  if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
+  // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
+  var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+  function axGloss(t,st){var s=String(t==null?"":t);for(var gi=0;gi<GLOSS.length;gi++){var k=GLOSS[gi][0],d=GLOSS[gi][1];if(st[k])continue;var m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])"));if(!m)continue;st[k]=1;var e=m.index+k.length;s=s.slice(0,e)+"("+d+")"+s.slice(e);}return s;}
+  var _gst={};axes.forEach(function(a){a.setup=axGloss(a.setup,_gst);a.subvert=axGloss(a.subvert,_gst);if(a.mean)a.mean=axGloss(a.mean,_gst);});
+  var cards=axes.map(function(a,i){a.kind="axis";a.first=(i===0);return a;});
+  cards.push({kind:"cta",n:axes.length});   // CTA 독립 슬롯(항상 마지막·1개)·n=실제 축 수(R3-012 거짓 라벨 제거). /r/는 개인 verdict 구조적 제외(로그인 벽) → CTA가 리포트 근거로 유도.
+  function card(c,i){
+    var p=PAL[c.kind==="cta"?"cta":c.key]||PAL.cta,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    // 축 카드 = [축 라벨] + [설정↔전복 발췌(좌보더 인용서식)] + [보조 발췌] + [원문 조언=뜻줄]. 첫 축엔 회사명 표지. 전부 원문 substring(창작0). /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="axis"){
+      var co=c.first?'<div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':""):"";
+      var bd=c.body?'<div class="story-quote">'+kw(c.body)+'</div>':"";
+      var mn=c.mean?'<div class="story-mean">'+ICt+'<span>'+kw(c.mean)+'</span></div>':"";
+      var an=c.sec?'<button class="story-anchor" data-sec="'+c.sec+'">'+ICs+' 근거 원문</button>':"";
+      return '<div class="story-card role-axis'+(c.first?" first":"")+'" style="'+sv+'">'+g+co+'<div class="story-kicker soft">'+esc(c.label||"")+'</div><div class="story-beat"><div class="hb-line hb-setup">'+kw(c.setup)+'</div><div class="hb-turn">'+ICw+'</div><div class="hb-line hb-subvert">'+kw(c.subvert)+'</div></div>'+bd+mn+'<div class="spacer"></div>'+an+'</div>';
+    }
+    // CTA 독립 슬롯 — 리포트 근거 유도(로그인 유도 전). /r/은 리포트 body가 같은 페이지 → segReport 모드 전환.
+    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);if(story)requestAnimationFrame(function(){syncH();});}
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
+  var _toRep=document.getElementById("storyToReport");if(_toRep)_toRep.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  var _cur=0,_pv=document.getElementById("storyPrev"),_nx=document.getElementById("storyNext");
+  // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
+  function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
+  window.addEventListener("resize",syncH);
+  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
+  function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
+  dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
+  if(_pv)_pv.onclick=function(){goTo(_cur-1);};
+  if(_nx)_nx.onclick=function(){goTo(_cur+1);};
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
+  // R4-023① /r/ 공유 수단 — navigator.share(모바일) → clipboard(폴백) → 구형 execCommand. 개인 평결 미포함 페이지라 공유 안전.
+  var shareBtn=document.getElementById("shareLink");
+  function _toast(msg){var t=document.getElementById("shareToast");if(!t){t=document.createElement("div");t.id="shareToast";t.className="sharetoast";document.body.appendChild(t);}t.textContent=msg;t.classList.add("on");clearTimeout(_toast._t);_toast._t=setTimeout(function(){t.classList.remove("on");},2200);}
+  function _copyFallback(u){var ta=document.createElement("textarea");ta.value=u;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(ta);_toast(ok?"링크가 복사됐어요":"복사 실패 — 주소창에서 복사해 주세요");}
+  if(shareBtn)shareBtn.addEventListener("click",function(){
+    var lk=document.querySelector('link[rel="canonical"]');var url=(lk&&lk.href)||location.href;
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){_toast("링크가 복사됐어요");},function(){_copyFallback(url);});return;}
+    _copyFallback(url);
+  });
+})();
+</script>
+</body></html>
