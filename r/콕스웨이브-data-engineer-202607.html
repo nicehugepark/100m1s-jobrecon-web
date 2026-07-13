@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ko"><head>
+<!-- Google tag (gtag.js) — GA4 G-NLKWNGHTJM + Consent Mode v2 (region-default·GDPR) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','region':['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_personalization':'granted','analytics_storage':'granted'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLKWNGHTJM"></script>
+<script>gtag('js',new Date());gtag('config','G-NLKWNGHTJM');</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>콕스웨이브 · [AX AgentX] 데이터 엔지니어(RAG/LLM Pipeline) 취업 정찰 — JobRecon</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://jobrecon.100m1s.com/r/콕스웨이브-data-engineer-202607.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="콕스웨이브 · [AX AgentX] 데이터 엔지니어(RAG/LLM Pipeline) 취업 정찰 — JobRecon">
+<meta property="og:description" content="콕스웨이브 [AX AgentX] 데이터 엔지니어(RAG/LLM Pipeline) 채용 — 구직자 편 회사 정찰(재무·리스크·서사).">
+<meta property="og:url" content="https://jobrecon.100m1s.com/r/콕스웨이브-data-engineer-202607.html">
+<meta property="og:image" content="https://jobrecon.100m1s.com/r/콕스웨이브-data-engineer-202607.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
+/* 🔴 form 요소는 font-family 비상속(UA 기본 Arial/monospace) — 본문 타이포 강제 상속 (R3 ⑨ P0-1 계열·앱 index.html 동기) */
+button,input,textarea,select{font-family:inherit}
+/* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
+   줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
+   토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
+   🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
+   깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
+.brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.brand b{color:#4f8cff}
+.tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;border:1px solid #222a35;background:#12161d;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.meta .co{font-size:18px;font-weight:800}
+.meta .fd{font-size:14px;color:#c3ccd6}
+.meta .ym{font-size:12px;color:#8b97a6;margin-left:auto}
+.blk{border:1px solid #222a35;background:#12161d;border-radius:12px;padding:14px 16px;margin:12px 0}
+.blk h2{font-size:16px;margin:0 0 8px;color:#f0f4f8}
+.blk h3{font-size:14px;margin:12px 0 6px;color:#dbe2ea}
+.blk p{margin:6px 0;font-size:15px;color:#dbe2ea}
+.blk ul{margin:6px 0;padding-left:18px}
+.blk li{margin:4px 0;font-size:14.5px;color:#dbe2ea}
+.blk strong{color:#f0f4f8;font-weight:700}
+.blk code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
+.cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:12px;background:#4f8cff;color:#fff;font-weight:700;text-decoration:none;font-size:16px}
+.cta-sub{text-align:center;color:#8b97a6;font-size:12.5px;margin-bottom:4px}
+.foot{color:#6b7684;font-size:12px;text-align:center;margin-top:26px;line-height:1.6}
+.foot a{color:#8b97a6}
+.ad{margin:14px 0;border:1px dashed #222a35;background:#0e131a;color:#6b7684;text-align:center;padding:14px;border-radius:12px;font-size:12px;letter-spacing:.4px}
+.stickyhdr{position:sticky;top:0;z-index:50;background:#0b0e13;margin:-20px -18px 6px;padding:16px 18px 8px}
+.stickyhdr .tag{margin:2px 0 8px}
+.stickyhdr .meta{margin-bottom:8px}
+/* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
+/* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
+   🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
+#digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
+@keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
+.comment{margin:10px 0 14px;border-left:3px solid #4f8cff;background:#141a24;border-radius:0 10px 10px 0;padding:10px 12px}
+.comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #222a35}
+.comment .cq b{color:#4f8cff;font-weight:700}
+.comment .cx{float:right;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1;margin-left:8px}
+.comment .cbody{font-size:14px;color:#dbe2ea;line-height:1.6}
+.comment .cbody .ln{margin:4px 0}
+.comment .cbody ul,.comment .cbody ol{margin:6px 0;padding-left:18px}
+.comment .cbody strong{color:#f0f4f8}
+.comment .cbody code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+.comment .err{color:#ff6b6b}
+.comment .cta-app{display:inline-block;margin-top:8px;color:#4f8cff;font-weight:700;text-decoration:none}
+/* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
+.deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
+.ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+.ddaybn.unk{border-color:#3a4250;color:#aab6c4}  /* R3-016 미확인 = 중립 회색(경고·안심 어느 쪽도 단정 안 함) */
+/* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
+.dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
+.dighint b{color:#4f8cff;font-weight:700}
+.dighint .dx{position:absolute;top:8px;right:10px;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1}
+body.mode-story .dighint{display:none}
+
+.modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
+.modeseg button{position:relative;width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+/* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — sticky 헤더 비대 회피 위해 ::after 확장, PM320 R49 전례) */
+.modeseg button::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
+.modeseg button.on{background:#4f8cff;color:#fff}
+.storyview{display:none}
+body.mode-story .storyview{display:block}
+body.mode-story #report,body.mode-story .repextra{display:none!important}
+/* R5-029 스냅 상태 뷰포트 공백 해소 — JS(syncH)가 트랙h를 현재 스냅 카드 높이로 동기. 앱 index.html 미러(G6) */
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
+.story-deck::-webkit-scrollbar{display:none}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
+.story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
+.story-card>*:not(.ghost){position:relative;z-index:1}
+.story-card .spacer{flex:1 1 auto;min-height:12px}
+.story-kicker{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sc);margin-bottom:17px;display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:999px;background:var(--scg)}
+.story-kicker svg{width:1.2em;height:1.2em}
+.story-hl{font-size:22.5px;font-weight:800;line-height:1.4;color:#f4f7fa;letter-spacing:-.3px}
+.story-hl strong{color:#fff}
+/* 표지(hook) — 회사명 대형 타이포 지배, 상단정렬. 크기는 JS coFont가 글자수 기반 주입 */
+.story-card.hook{justify-content:flex-start}
+.story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
+.story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
+.story-ev strong{color:#eef2f6;font-weight:700}
+.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.bwrap .tease{color:#8b97a6;font-size:12.5px}
+.story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+/* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, ::after 확장) */
+.story-anchor::after{content:"";position:absolute;left:0;right:0;top:-5px;bottom:-5px}
+.story-anchor svg{width:1.1em;height:1.1em}
+.story-card.allmore{align-items:center;justify-content:center;text-align:center}
+.story-card.allmore .story-hl{text-align:center}
+.story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+.story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-tease{animation:storyRise .5s .32s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-hl{animation:storyRise .55s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-ev{animation:storyRise .55s .19s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-names{animation:storyRise .55s .2s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes storyRise{to{opacity:1;transform:none}}
+/* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격. 높이 통일(가로 스냅), 밀도는 폰트·여백으로. === */
+.story-card.role-setup .story-hl,.story-card.role-context .story-hl{font-size:20px;font-weight:700;line-height:1.56;color:#dde5ef}
+.story-names{align-self:stretch;margin-top:20px;display:flex;flex-direction:column;gap:11px}
+.story-name{position:relative;padding-left:18px;font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
+.story-name::before{content:"";position:absolute;left:1px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sc);transform:translateY(-50%) rotate(45deg)}
+.story-name strong{color:#eef3f8;font-weight:800}
+.story-name mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-card.role-subvert{background:radial-gradient(122% 84% at 84% 0%,var(--scg),transparent 50%),linear-gradient(168deg,#1b191d,#0f0d11 74%)}
+.story-card.role-subvert::before{height:4px;opacity:1}
+.story-card .story-hl.big{font-size:25.5px;font-weight:900;line-height:1.38;color:#fff;letter-spacing:-.4px}
+.story-kicker.warn{color:#fcd34d;background:rgba(251,191,36,.15)}
+.story-kicker.soft{color:var(--sc2);opacity:.92;background:transparent;padding-left:2px;text-transform:none;letter-spacing:0;font-size:12.5px}
+.story-card.role-hook .hookbeat{margin-top:22px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(12px)}
+.story-card.role-hook.inview .hookbeat{animation:storyRise .6s .16s cubic-bezier(.2,.7,.2,1) forwards}
+.hb-line{font-size:16px;line-height:1.58;padding-left:13px;border-left:3px solid}
+.hb-setup{color:#cfe0ff;border-color:#5b9bff}
+.hb-setup strong{color:#eaf1ff}
+.hb-subvert{color:#fde3ad;border-color:#fbbf24;font-weight:600}
+.hb-subvert strong{color:#fff2cf}
+.story-card.role-axis.first{justify-content:flex-start}
+.story-card.role-axis.first .story-co-lg{margin:6px 0 4px;font-weight:900;line-height:1.05;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
+.story-card.role-axis.first .story-pos{margin-bottom:8px;font-size:15px;font-weight:700;color:#8792a0;letter-spacing:-.2px}
+.story-card.role-axis .story-beat{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.story-card.role-axis.first .story-beat{margin-top:18px}
+.story-card.role-axis .story-quote{margin-top:15px;font-size:14.5px;line-height:1.62;color:#c3ccd7;padding-left:13px;border-left:3px solid var(--sc);opacity:.96}
+.story-card.role-axis .story-quote strong{color:#e8eef4}
+.story-card.role-axis .story-quote mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-mean{margin-top:16px;display:flex;gap:8px;align-items:flex-start;font-size:14.5px;line-height:1.56;font-weight:700;color:var(--sc2)}
+.story-mean svg{flex:0 0 auto;width:1.15em;height:1.15em;margin-top:2px;opacity:.9}
+.story-mean>span{flex:1 1 auto}
+.story-mean strong{color:#fff}
+.story-mean mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.hb-turn{color:#fbbf24;height:17px;margin-left:1px}
+.hb-turn svg{width:17px;height:17px}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+.story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.story-dots .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:-10px;bottom:-10px}
+.story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+.storyview{position:relative}
+.story-nav{display:none}
+@media (hover:hover) and (pointer:fine){
+.story-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:44%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
+.story-nav:hover{background:rgba(23,28,38,.95)}
+.story-nav.prev{left:-6px}.story-nav.next{right:-6px}
+.story-nav[disabled]{opacity:.22;cursor:default}
+.story-nav svg{width:20px;height:20px}
+}
+.sharebar{display:flex;justify-content:center;margin:14px 0 2px}
+.sharebar button{display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button svg{width:1.15em;height:1.15em}
+.sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
+.sharetoast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
+</style>
+
+</head><body>
+<div class="wrap">
+  <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
+  <div class="stickyhdr">
+    <div class="brand">Job<b>Recon</b></div>
+    <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
+    <div class="meta"><span class="co">콕스웨이브</span><span class="fd">[AX AgentX] 데이터 엔지니어(RAG/LLM Pipeline)</span><span class="ym">2026년 07월 정찰</span></div>
+  </div>
+  <div class="ad">AD · 광고</div>
+  <div class="ddaybn">상시</div>
+  <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
+  <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
+    <button id="segStory" type="button" role="tab" class="on">스토리</button>
+    <button id="segReport" type="button" role="tab">리포트</button>
+  </div>
+  <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
+  <div class="storyview" id="storyView">
+    <!-- R4-021② 데스크탑 화살표(hover 포인터 전용 CSS 노출) — 마우스-only 카드 2~5 도달 -->
+    <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+    <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
+    <div class="story-deck" id="storyDeck"></div>
+    <div class="story-dots" id="storyDots"></div>
+  </div>
+  <!-- R4-023① 공유 수단 — 모드 무관 상시(개인 평결 미포함 페이지·회사 정찰만이라 공유 안전) -->
+  <div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
+  <div class="dighint" id="digHintR">
+    <span class="dx" id="digHintRX" title="닫기">✕</span>
+    🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
+  </div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
+<ul>
+<li><strong>채용 직무</strong>: 데이터 엔지니어(RAG/LLM Pipeline)</li>
+<li><strong>경력·언어</strong>: 경력 3~7년, Python·Java·Scala 중 하나 이상 기반 데이터 파이프라인 개발 경험 (공고 명시)</li>
+<li><strong>필수 스택</strong>: 워크플로우 오케스트레이션(Dagster·Airflow·Prefect — 여러 파이프라인 작업을 순서·의존관계에 맞춰 자동 실행/스케줄링하는 도구), SQL 및 NoSQL(MongoDB·DocumentDB), Docker 컨테이너 배포·운영 (공고 명시)</li>
+<li><strong>우대</strong>: RAG(문서를 검색해 그 근거로 LLM이 답하게 하는 구조) 프로덕션 배포 경험, 벡터DB(Pinecone·Milvus·Qdrant — 텍스트를 숫자벡터로 바꿔 의미 유사도로 검색하는 DB) 인덱싱·검색 최적화, 멀티모달(음성·문서이미지) 전처리, LLM 응답 품질 평가체계 설계 (공고 명시)</li>
+<li><strong>직무 실체</strong>: 표면은 &quot;데이터 엔지니어&quot;지만, 실제 업무는 ETL(데이터 추출·변환·적재) + 벡터DB 인덱싱 + LLMOps(LLM 서비스의 평가자동화·트레이싱·배포 운영) — <strong>RAG 파이프라인을 프로덕션까지 책임지는 LLM 인프라 엔지니어</strong>에 가깝습니다 (정찰 보강). AgentX 팀 = 교육 B2B 제품 &#x27;에듀탭&#x27; 담당이므로, 이 자리는 에듀탭의 검색·응답 품질을 떠받치는 데이터 백본입니다 (정찰 보강).</li>
+</ul>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
+<p><strong>창업 동기 — 현장에서 나온 진짜 페인포인트.</strong> 김주원 대표는 UNIST 컴퓨터공학과를 졸업하고 2017년부터 약 3년간 크래프트테크놀로지스(AI 기반 자산운용 스타트업)에서 근무한 뒤 서울대 석사(데이터마이닝 연구실)에 있었습니다. 2021년 연구실이 코로나로 폐쇄되자 동료들과 해커톤·AI 경연에 참가하며 &quot;반복적 데이터 분석·모델 학습의 비효율&quot;을 체감했고, 이를 자동화하려는 문제의식에서 콕스웨이브를 창업했습니다(2021년 5월). 여기서 중요한 건 <strong>창업 후 실제 B2C 제품을 굴리면서 겪은 두 번째 페인포인트</strong>입니다 — &quot;AI 이용자의 행동·피드백을 충분히 분석하는 서비스가 없다&quot;는 것을 직접 겪고, 자기가 쓰려고 만든 분석 도구를 솔루션화한 게 지금의 주력 제품 &#x27;얼라인(Align)&#x27;입니다. 남의 문제를 상상한 게 아니라 <strong>자기가 겪고 자기가 쓰던 도구</strong>라는 점은 강한 신호입니다.</p>
+<p><strong>연도별 궤적 — 전환점 중심.</strong></p>
+<ul>
+<li><strong>2021년(5월)</strong>: 서울대 데이터마이닝 연구실 동료들과 창업. 초기 B2B를 노렸으나 &quot;대학원생 신분이라 쉽지 않아&quot; B2C로 방향을 틀었습니다.</li>
+<li><strong>2022년</strong>: AI 이미지 지우개 &#x27;하마(Hama)&#x27;, 이미지 검색엔진 &#x27;엔터픽스(Enterpix)&#x27; 출시 → 8개월 만에 130만 이용자 확보.</li>
+<li><strong>2023년</strong>: 하마·엔터픽스를 폰트 기업 산돌의 자회사 산돌메타랩에 매각. 회사가 반복해 강조하는 <strong>&quot;국내 1호 생성형 AI M&amp;A&quot;</strong> — 즉 Exit 경험이 정체성의 핵심 자산입니다.</li>
+<li><strong>2024년 1월</strong>: 생성형 AI 분석 플랫폼 &#x27;얼라인(Align)&#x27; 정식 론칭. 같은 달 45억 규모 시드 투자(KB인베스트먼트 등).</li>
+<li><strong>2024년 7월~2025년 4월</strong>: 인도 AI 기업 펀다멘토·레난(Renan)과 파트너십·MOU — 인도 시장 진출 시도.</li>
+<li><strong>2025년 9월</strong>: B2B 에듀 솔루션 &#x27;에듀탭(Edutap)&#x27; 출시(패스트캠퍼스·해커스 등).</li>
+<li><strong>2025년 11월</strong>: 중기부 스케일업 팁스 R&amp;D 글로벌형 선정(3년 15억 R&amp;D 자금).</li>
+<li><strong>2025년 12월</strong>: 컴업 2025서 엔비디아 협업 발표, OpenAI와 멀티에이전트 해커톤, SKT·앤트로픽과 SK AI 서밋 해커톤 공동 주최.</li>
+<li><strong>2026년 1월</strong>: 70억 프리시리즈A 유치(누적 125억). 신년사에서 &quot;AI 에이전트 동작 모니터링 안전시스템 구축&quot; 제시.</li>
+</ul>
+<p><strong>미션·비전의 일관성.</strong> 관통하는 문구는 <strong>&quot;AI 기반 솔루션과 전략으로 파트너 기업이 각자의 업계에서 최고가 되도록 돕는다&quot;</strong>(영문 &quot;Making Our Partners Best in Their Vertical&quot;)로, 홈페이지·채용·인터뷰(2026.02)에 반복 등장합니다. 여기 핵심 전략적 선택이 하나 명시돼 있습니다 — <strong>&quot;직접 AI 제품을 운영하는 대신, 세상의 기업들을 돕는 방식을 택했다.&quot;</strong> 자사 B2C 제품(하마·엔터픽스)을 만들어 성공·매각한 팀이, 의도적으로 &quot;조력자(Enabler)&quot; 포지션으로 전환한 것이며, 이는 매각 경험에서 도출된 선택입니다. 사명 자체가 비전 — 조타수 &#x27;콕스(Cox)&#x27; + 파도 &#x27;웨이브(Wave)&#x27;.</p>
+<p><strong>한 문장 응축.</strong> 현장에서 겪은 진짜 페인포인트에서 출발해 제품 매각 Exit까지 실제로 해낸 서사는 단단하지만, 지금 공고가 속한 채용 브랜딩(AX(AI 전환)·AgentX·가드레일·거버넌스)은 <strong>아직 구축 중인 방향을 회사 스스로 &quot;강화할 계획&quot;으로 표현</strong>하는 대목이 많아, 화려한 글로벌 협업 서사와 5.6억 매출(2024) 사이의 규모 격차는 지원자가 눈을 크게 뜨고 봐야 합니다.</p>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<p><strong>검증된 실적.</strong> 실제로 발생한 것들: ① 하마·엔터픽스 130만 이용자 후 매각 M&amp;A, ② 얼라인 론칭 후 &quot;300~400개 기업&quot; 고객(회사 진술), ③ 구체 성과 — 패스트캠퍼스 AI 튜터 &#x27;케미&#x27; 이용자 불만족도 30%↓·대화 지속시간 2배↑, 클레온 챗봇 &#x27;알미고&#x27; 이탈률 15%↓·파워이용자 24%↑, ④ 70억 프리A(누적 125억) + 팁스 R&amp;D 선정. 면접에서 인용할 최근 이벤트로는 <strong>2026년 4월 인튜브와 에듀테크 MOU, 2026년 2월 크레온에듀와 에듀탭 도입계약(공교육 시장 진출), OpenAI·SKT·앤트로픽 공동 해커톤</strong>이 유효합니다.</p>
+<p><strong>주장 vs 증명의 간극(실재하는 대비).</strong> 회사가 크게 노출하는 것은 Anthropic·OpenAI·NVIDIA·PwC·Meta·MS 파트너 명단입니다. 그런데 확인해 보면 이들이 <strong>유료 고객인지·마케팅 협업인지·협업 규모가 얼마인지는 모호하게</strong> 둡니다 — 홈페이지의 Anthropic CPO Mike Krieger, PwC Puneet Singh 인용문은 게재된 추천사일 뿐 매출관계를 뜻하지 않습니다. 통신·금융 고객은 &quot;도입 논의 중&quot;(계약 아님), 인도(레난·펀다멘토)는 MOU/파트너십 단계로 매출 기여 미확인, &#x27;가드레일/거버넌스&#x27; 실시간 오작동 탐지는 &quot;강화할 계획&quot;으로 표현되는 로드맵입니다. 반대로 재무는 조용합니다 — <strong>공개 재무(2024.12 기준 매출 5억 6,185만원, 자본금 1억 666만원)</strong>는 글로벌 협업 서사와 규모 격차가 큽니다. 매출 대비 누적투자 125억이라는 구조는 <strong>아직 매출보다 기대·투자로 굴러가는 초기 단계</strong>임을 드러냅니다. 파트너 명단은 크게, 재무는 작게 — 이 선택적 공개 패턴 자체를 지원자는 인지하고 면접에서 &quot;얼라인/AX/에듀탭 각각의 매출 비중과 얼라인 300~400 고객의 유료 전환·리텐션·객단가&quot;를 직접 물어야 합니다.</p>
+<p><strong>자산 기반 안정성.</strong> 초기 스타트업답게 두꺼운 자산(부동산·IP·유보금)은 확인되지 않습니다. 실질 체력은 <strong>2026년 1월 70억 프리A + 팁스 R&amp;D 3년 15억</strong>에서 나옵니다. 매출이 아직 얇으므로 고용 안정성의 토대는 <strong>투자 런웨이(현금 소진 속도 대비 남은 자금)</strong>이며, 이는 매출 성장 궤적과 다음 라운드 타이밍에 달려 있습니다 — 즉 지원자 관점에서 &quot;몇 년 버티나&quot;는 공개 재무만으로 확정 불가, 면접에서 <strong>번레이트·런웨이·다음 라운드 계획</strong>을 확인해야 합니다.</p>
+<p><strong>실질 보상 · 복리후생.</strong> 합격 시 지원자·추천인 각 현금 50만원(원티드 보상금). 연봉 단서(추정치): 오픈샐러리 평균 추정 약 6,748만원, 직행 5,561만원(업계 평균 5,082만원 대비 +9.4%) — 다만 <strong>전 직급·연차를 뭉뚱그린 회사 전반 보상수준 참고치</strong>로, 경력 3~7년 개인 실수령과는 괴리가 있으니 처우협의 단계 실제 오퍼로 확인해야 합니다. 복지: 자율출근(오전 8~11시)·주1회 재택·자유휴가, 최신 맥북/4K 모니터, AI 툴(ChatGPT·Claude·Cursor) 지원, 점심·저녁 식대(야근 시), 월간 팀 회식비, 네스프레소, 도서·컨퍼런스 지원. 스톡옵션 언급은 공고에 없어 <strong>확인 필요 — 초기 스타트업 특성상 협의 여지가 있으니 면접에서 질문</strong>하세요.</p>
+<p><strong>평판.</strong> 블라인드 약 3.2점(커리어 3.0/워라밸 3.6/급여 3.0), 잡플래닛 2.8점(워라밸 3.0/복지·급여 2.4/사내문화·승진 2.6). 표본은 매우 적습니다(초기 스타트업). 워라밸은 나쁘지 않게 보고되나 <strong>급여·승진 만족도가 상대적 약점 신호</strong>입니다. 문화는 &quot;직군 경계 없이 치열하게 토론&quot;, &quot;0에서 100까지 성장&quot;, &quot;실험에 열린 문화&quot; — 전형적 초기 팀 강도 높은 몰입형입니다.</p>
+<p><strong>숨은 리스크.</strong> ① 재무 초기(매출 5.6억, 자본금 1억) → 투자 의존 구조, ② 미국 산호세·인도 뉴델리 오피스 표기는 있으나 <strong>해외 법인 실체·인력·매출 미확인</strong>, ③ 규모 약 25명(국민연금 2026.3 기준) — 백오피스·체계는 아직 얇을 가능성. 규제·소송·경영진 논란 등 공개 리스크 신호는 미확인.</p>
+<p><strong>대기업 → 스타트업 전환 시 체감 변화.</strong> 이 회사는 명백한 초기 스타트업(약 25명)이므로 대기업 배경 지원자는 다음 트레이드오프를 각오해야 합니다 — ① <strong>고용안정</strong>: 대기업 정년·안정 대신 투자 런웨이에 묶인 성격(회수·성장 시나리오에 따라 변동), ② <strong>의사결정·범위</strong>: 느린 결재·좁은 R&amp;R 대신 빠른 실행·넓은 오너십(&quot;직급·연차 무관 논리적 제안이 중심&quot;을 공고가 명시), ③ <strong>안전판</strong>: 체계·백오피스·교육이 갖춰진 환경 대신 스스로 세팅, ④ <strong>보상</strong>: 안정적 고정급 대신 기본급 + (협의 시) 스톡옵션 변동. 좋다/나쁘다가 아니라 성향의 문제입니다.</p>
+<p><strong>사업 구조상 진짜 위험/해자.</strong> 해자 후보는 <strong>&quot;AI 제품 분석에서 축적한 데이터&quot;</strong> — 얼라인이 300~400 고객의 AI 사용 데이터를 쌓아, 이를 에이전트 검증·평가로 확장하는 구조입니다. 이게 진짜 해자가 되려면 데이터가 <strong>누적될수록 검증 품질이 좋아지고 고객이 갈아타기 어려워지는 록인</strong>이 작동해야 합니다. 위험은 두 축 — (1) LLM 관측성·평가(observability) 시장은 글로벌 플레이어가 빠르게 진입 중이라 국내 데이터 축적만으로 방어가 되는지 미검증, (2) AX 컨설팅은 사람이 붙는 프로젝트성 매출이라 규모가 커져도 마진이 자동으로 좋아지지 않는(인력에 비례하는) 구조일 수 있습니다. <strong>무엇이 확인되면 판단이 바뀌나</strong>: 얼라인 SaaS 매출 비중과 순수 리텐션이 높게 확인되면 &quot;데이터 해자&quot;는 실재, 컨설팅 비중이 크면 &quot;몸값 파는&quot; 구조에 가깝습니다 — 면접에서 매출 구성을 반드시 확인하세요.</p>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
+<p><strong>산업 규모·성장성.</strong> 이 회사가 선 자리는 두 층입니다 — (1) <strong>LLM 관측성·평가/LLMOps 시장</strong>(AI 서비스의 응답 품질·오작동을 추적·평가하는 도구), (2) <strong>AX(AI 전환) 컨설팅 + AI 에이전트 검증</strong> 시장. 둘 다 생성형 AI 확산과 함께 <strong>커지는 파이</strong>입니다. 특히 회사가 새로 진입한다고 밝힌 &quot;AI 에이전트 검증&quot; 시장은 에이전트가 실제 업무를 수행하기 시작하면서 신뢰성·안전성 수요가 폭증하는 초기 국면이라, 배는 순풍 방향입니다. 다만 구체적 시장 규모(TAM(전체 시장 규모))와 이 회사가 실제 노릴 유효시장(SAM(실제 공략 가능 시장))·현실 몫(SOM(단기 확보 가능 시장))의 수치는 근거에 없어 <strong>확인 필요</strong> — TAM만 크게 부풀리는 서사에 휘둘리지 마세요.</p>
+<p><strong>이 회사의 실질 순위·지위.</strong> 국내 생성형 AI 안전·분석 영역에서 <strong>이름이 자주 거론되는 니치 플레이어</strong>입니다. 근거: 앤트로픽이 한국 사례로 &quot;타인AI·콕스웨이브&quot;를 언급(조선일보 2026.01), SKT·OpenAI·앤트로픽과 반복 공동 해커톤 — 즉 <strong>글로벌 빅테크가 국내 협업 파트너로 호출하는 위치</strong>는 검증됩니다. 하지만 매출·점유율로 보면 리더가 아니라 초기 팔로워이며, 정확한 순위는 확인 필요입니다. 이 &quot;빅테크가 부르는 스타트업&quot;이라는 브랜드가 실제 매출로 얼마나 전환됐는지가 관건입니다.</p>
+<p><strong>주요 경쟁사·격차.</strong> 실질 경쟁 축은 (1) LLM 관측성·평가 툴(글로벌 LLMOps·AI 평가 플레이어), (2) AX 컨설팅 시장으로 나뉩니다. 비교군에 비블·팀러너스·자라소프트·위블·일릭서·일루넥스가 열거되나 직접 경쟁으로 확증되지 않고, 글로벌 경쟁 구도도 공개 자료로 특정되지 않습니다 — <strong>경쟁 포지셔닝은 면접에서 직접 확인 요망</strong>. 콕스웨이브가 내세우는 차별점은 &quot;차단이 아닌 정렬(alignment) 기반 AI 안전&quot;, &quot;사용자 데이터 기반 제품 성능 개선&quot;(얼라인)입니다.</p>
+<p><strong>시장 구조.</strong> 아직 절대강자가 굳지 않은 <strong>초기·역동적 시장</strong>입니다. 구직자 양면으로 — 정체된 과점이 아니라 다수가 겨루는 판이라 성장 기회는 크지만, 그만큼 생존·펀딩 경쟁 압박도 큽니다. 글로벌 플레이어가 국내로 밀고 들어오면 판이 빠르게 재편될 수 있습니다.</p>
+<p><strong>정성 판정.</strong> 시장은 커지는 순풍이고, 콕스웨이브는 그 안에서 <strong>&quot;빅테크가 협업 파트너로 부를 만큼 존재감은 있으나 매출·규모로는 아직 초기 팔로워&quot;</strong>입니다. 해자 후보(얼라인 데이터 축적)는 실재하나 방어력은 미검증이고, 발목은 얇은 매출·미검증 로드맵·글로벌 경쟁 진입입니다. 지원자 관점에서 <strong>고용 안정은 &quot;성장 순풍에 올라탄 초기 스타트업 = 잠재력은 높되 변동성도 높음&quot;</strong>으로 잡고, 면접에서 &quot;얼라인 SaaS vs 컨설팅 매출 비중, AI 에이전트 검증 제품의 출시 시점·유료 고객&quot;을 물어 성장 실체를 검증하세요 — 이 답이 확인되면 판단이 크게 바뀝니다.</p>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
+<p><strong>대표·경영진.</strong> <strong>김주원</strong> — 국내 대표 겸 공동창업자. UNIST 컴퓨터공학 → 크래프트테크놀로지스(약 3년) → 서울대 석사(데이터마이닝) → 2021 창업. 도메인 실무 + 연구 배경을 겸비한 현장형입니다. 주목할 대목: <strong>2024년 10월 김주원 CSO(최고보안책임자)를 공동대표로 임명해 김기정 대표와 2인 공동대표 체제로 전환</strong>했고, 이는 인도 시장 진출을 본격화하며 해외·국내 담당을 나눈 결정입니다(전자신문 2024.10). 즉 &quot;국내 대표&quot;라는 표현은 <strong>공동대표 체제</strong>를 뜻하며, 김주원은 국내를, 김기정은 별도 축을 맡는 구조로 읽힙니다. 창업 시점 표기 기준 공동창업자로 <strong>정주영</strong>도 확인됩니다(뉴스핌 2024.01, &quot;김주원 공동창업자·김기정 대표·정주영 공동창업자&quot;).</p>
+<p>김 대표의 최근 목소리는 일관됩니다 — <strong>&quot;AI 도입 시 &#x27;가드레일&#x27;도 함께 적용해야&quot;</strong>(전자신문 2026.03), &quot;국내 기업들은 AI 채택 후 내부 사고를 겪고 나서야 안전장치를 찾는다&quot;는 문제의식, &quot;얼라인은 차단이 아니라 정렬(alignment)&quot;이라는 프레임. 면접에서 &quot;귀사의 배포 후(post-deployment) 모니터링과 가드레일 방향성&quot;을 언급하면 회사의 자기 서사와 정확히 맞물립니다.</p>
+<p><strong>팀 리드(이 공고와 직결).</strong> AgentX 팀 관련 인물 — <strong>Sungwook Ku(AgentX Lead</strong>, 검증된 Agent 정의·완성), <strong>Dongeon Kim(Align Engineering Lead</strong>, 에이전틱 태스크 위협 탐지·분석 — SKT·앤트로픽 해커톤에 콕스웨이브 대표 엔지니어로 참석), <strong>Esther Kim(AX Consulting Lead)</strong>, 대외 발언이 잦은 <strong>이엽 이사</strong>(앤트로픽 CPO와 대담·인터뷰 담당). 이 자리(AX AgentX 데이터 엔지니어)는 <strong>Sungwook Ku 라인</strong> 아래 에듀탭 데이터 백본을 맡을 가능성이 높습니다(정찰 보강 — 면접에서 리포팅 라인 확인).</p>
+<p><strong>C레벨.</strong> CTO/CFO 등 실명·지분은 공개 정보로 확인되지 않습니다 — <strong>면접 확인 필요</strong>.</p>
+<p><strong>투자자·소유 구조 — 해석.</strong> 2026년 1월 프리시리즈A 70억(누적 125억): <strong>리드 L&amp;S벤처캐피탈</strong>, 신규 <strong>현대기술투자·현대자동차 제로원벤처스·산은캐피탈</strong>, 기존 <strong>KB인베스트먼트</strong> 후속. 여기에 공적 트랙 — 팁스 R&amp;D 글로벌형(3년 15억), 경북대 창업지원단·SKT 창업도약패키지. 또 2024년 2월엔 상장사 다날의 전략적 투자도 있었습니다.</p>
+<ul>
+<li><strong>자본 성격</strong>: 은행·증권계(KB인베스트먼트·산은캐피탈 = 안정 지향·검증 선호)와 대기업 CVC(현대기술투자·현대차 제로원 = 전략적, 모빌리티 AI 접점)가 섞였습니다. 순수 공격형 해외 VC 리드가 아니라 <strong>국내 기관·대기업 중심</strong>입니다.</li>
+<li><strong>의미</strong>: 이 구성은 회수 전략이 초대형 글로벌 스케일업보다 <strong>국내 성장 + 전략적 인수(M&amp;A) 회수</strong>에 무게가 실릴 수 있음을 시사합니다. 지원자에게는 &quot;스톡옵션 초대박(글로벌 IPO)&quot;보다 <strong>전략적 M&amp;A 시나리오로 기대치를 잡는 게 현실적</strong>이라는 뜻이며, 성장 속도 기대는 면접에서 검증할 지점입니다.</li>
+</ul>
+<p><strong>정렬 인사이트.</strong> 창업자는 &quot;국내 1호 Exit&quot; 경험을 정체성으로 삼는 팀 — M&amp;A 회수에 친숙합니다. 투자자 구성(대기업 CVC + 은행계)도 전략적 인수 시나리오와 정렬됩니다. 반면 &quot;100개 기업 임팩트 확장&quot;·미국·인도 글로벌 비전은 장기 독립 성장 서사입니다. 여기서 <strong>빠른 전략적 Exit vs 독립 스케일업</strong> 사이 방향은 아직 한쪽으로 굳지 않았습니다. 이는 지원자에게 <strong>잔류·성장 경로의 불확실성</strong>으로 작용하니, 대표 인터뷰(3차 전형)에서 &quot;회수 전략에 대한 경영진 입장&quot;을 직접 물을 값어치가 있습니다.</p>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
+<ul>
+<li><strong>RAG (Retrieval-Augmented Generation)</strong> — 문서를 먼저 검색해 그 근거로 LLM이 답을 생성하는 구조. 이 공고 직무의 핵심 — 에듀탭 튜터가 교재를 근거로 정확히 답하게 하는 백본.</li>
+<li><strong>LLMOps</strong> — LLM 서비스의 운영(평가 자동화·트레이싱·배포·모니터링). 이 자리가 구축·고도화할 대상.</li>
+<li><strong>벡터 데이터베이스(Pinecone·Milvus·Qdrant)</strong> — 텍스트를 숫자 벡터로 바꿔 &quot;의미가 비슷한 것&quot;을 빠르게 찾는 DB. RAG 검색 품질을 좌우하는 인프라.</li>
+<li><strong>ETL</strong> — 데이터 추출(Extract)·변환(Transform)·적재(Load). 비정형 데이터를 AI가 쓸 형태로 가공하는 파이프라인.</li>
+<li><strong>워크플로우 오케스트레이션(Dagster·Airflow·Prefect)</strong> — 여러 데이터 작업을 순서·의존관계에 맞춰 자동 실행/스케줄링하는 도구.</li>
+<li><strong>에이전틱(Agentic) 워크플로우</strong> — LLM이 스스로 단계를 계획하고 도구를 호출해 작업을 수행하는 방식. AgentX 팀의 핵심 주제.</li>
+<li><strong>멀티모달</strong> — 텍스트뿐 아니라 음성·이미지 등 여러 형태 데이터를 함께 다루는 것.</li>
+<li><strong>AX (AI Transformation)</strong> — 기업 업무를 AI로 전환하는 것. 콕스웨이브가 사업부·브랜드로 쓰는 자체 용어.</li>
+<li><strong>AI 가드레일·거버넌스</strong> — AI가 위험·부적절하게 작동하지 못하게 막는 안전장치와 관리 체계. 콕스웨이브가 강화하겠다는 방향성 담론어.</li>
+<li><strong>관측성(Observability)</strong> — 서비스가 내부에서 어떻게 동작하는지 추적·관찰하는 것. 얼라인의 정체성(AI 제품 분석).</li>
+<li><strong>프리시리즈A</strong> — 시드와 정식 시리즈A 사이의 초기 라운드. 제품·초기 매출은 나왔으나 본격 확장 전 단계.</li>
+<li><strong>CVC (Corporate Venture Capital)</strong> — 대기업이 전략적 목적으로 스타트업에 투자하는 벤처캐피탈(현대기술투자·제로원벤처스 등).</li>
+<li><strong>PoC (Proof of Concept)</strong> — 기술이 실제 작동하는지 검증하는 시제품 단계. 공고가 &quot;PoC를 넘어 운영 수준까지&quot;를 요구.</li>
+</ul></div>
+  <div class="repextra">
+    <div class="ad">AD · 광고</div>
+    <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
+    <a class="cta" href="https://jobrecon.100m1s.com/?co=%EC%BD%95%EC%8A%A4%EC%9B%A8%EC%9D%B4%EB%B8%8C&amp;pos=%5BAX%20AgentX%5D%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%28RAG/LLM%20Pipeline%29&amp;from=r">내 이력으로 적합도·평결 받기 →</a>
+  </div>
+  <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
+</div>
+<script>
+(function(){
+  var API=(window.JOBRECON_API||"").replace(/\/+$/,"");
+  function ensureAPI(){
+    if(API)return Promise.resolve(API);
+    return fetch("/api.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():"";})
+      .then(function(t){API=(t||"").trim().replace(/\/+$/,"");return API;}).catch(function(){return API;});
+  }
+  function esc(s){return (s||"").replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function mdInline(s){return s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function renderMd(t){
+    var lines=esc(t).split("\n"),html="",stack=[];
+    function closeTo(d){while(stack.length>d)html+="</"+stack.pop()+">";}
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i].replace(/\s+$/,"");
+      var bm=line.match(/^(\s*)[-•]\s+(.*)$/),nm=line.match(/^(\s*)\d+\.\s+(.*)$/);
+      if(bm||nm){
+        var indent=(bm?bm[1]:nm[1]).replace(/\t/g,"  ").length;
+        var depth=indent>=4?3:(indent>=2?2:1),tag=nm?"ol":"ul";
+        closeTo(depth);
+        if(stack.length<depth){html+="<"+tag+">";stack.push(tag);}
+        html+="<li>"+mdInline(bm?bm[2]:nm[2])+"</li>";
+      }else{closeTo(0);if(line.trim())html+='<div class="ln">'+mdInline(line)+"</div>";}
+    }
+    closeTo(0);return html;
+  }
+  var JR_COMPANY="콕스웨이브",JR_APP="https://jobrecon.100m1s.com";
+  var report=document.getElementById("report");
+  if(!report)return;
+  // 더파고들기 가이드(#4) — dismissible·재방문 숨김. CSS가 리포트 모드에서만 노출(스토리 모드 숨김).
+  var _hint=document.getElementById("digHintR");
+  if(_hint){
+    if(localStorage.getItem("jr_dighint_r"))_hint.style.display="none";
+    var _hx=document.getElementById("digHintRX");
+    if(_hx)_hx.addEventListener("click",function(){_hint.style.display="none";localStorage.setItem("jr_dighint_r","1");});
+  }
+  var digBtn=document.createElement("button");
+  digBtn.id="digBtn";digBtn.textContent="🔎 더 파고들기";
+  document.body.appendChild(digBtn);
+  var _digSel=null;
+  function clearDig(){digBtn.classList.remove("on");}
+  function topBlock(node){
+    var el=node&&node.nodeType===1?node:(node?node.parentElement:null);
+    while(el&&el.parentElement&&el.parentElement!==report)el=el.parentElement;
+    return (el&&el.parentElement===report)?el:null;
+  }
+  function checkSelection(){
+    var s=window.getSelection();
+    var text=(s&&s.toString?s.toString():"").trim();
+    if(!text||text.length<2||!s.rangeCount){clearDig();return;}
+    var range=s.getRangeAt(0);
+    var blockEl=topBlock(range.commonAncestorContainer);
+    if(!blockEl){clearDig();return;}
+    _digSel={text:text.slice(0,600),blockEl:blockEl};
+    digBtn.classList.add("on");  // 🔴 하단 중앙 고정(CSS) — 선택지점 좌표계산 제거(네이티브·sticky 비겹침)
+  }
+  var _selDebounce=null;
+  function scheduleCheck(delay){clearTimeout(_selDebounce);_selDebounce=setTimeout(checkSelection,delay);}
+  document.addEventListener("selectionchange",function(){scheduleCheck(320);});
+  document.addEventListener("mouseup",function(){scheduleCheck(10);});
+  document.addEventListener("touchend",function(){scheduleCheck(140);});
+  digBtn.addEventListener("mousedown",function(e){e.preventDefault();});
+  var _digLast=0;
+  function runDig(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    if(Date.now()-_digLast<800)return;
+    _digLast=Date.now();
+    if(!_digSel)return;
+    var sel=_digSel,blockEl=sel.blockEl;
+    clearDig();
+    try{window.getSelection().removeAllRanges();}catch(x){}
+    var _dk="jr_dig_r_"+location.pathname; var used=parseInt(localStorage.getItem(_dk)||"0",10);
+    if(used>=3){
+      var note=document.createElement("div");note.className="comment";
+      note.innerHTML='<span class="cx">✕</span><div class="cbody">더 깊은 분석과 내 이력 기준 적합도는 앱에서 이어가세요 →<br><a class="cta-app" href="'+esc(JR_APP)+'">JobRecon 앱에서 계속하기 →</a></div>';
+      blockEl.insertAdjacentElement("afterend",note);
+      note.querySelector(".cx").addEventListener("click",function(){note.remove();});
+      note.scrollIntoView({behavior:"smooth",block:"center"});return;
+    }
+    localStorage.setItem(_dk,String(used+1));
+    var card=document.createElement("div");card.className="comment";
+    card.innerHTML='<span class="cx">✕</span><div class="cq"><b>선택</b> “'+esc(sel.text)+'”</div><div class="cbody">더 깊이 분석 중…</div>';
+    blockEl.insertAdjacentElement("afterend",card);
+    card.querySelector(".cx").addEventListener("click",function(){card.remove();});
+    card.scrollIntoView({behavior:"smooth",block:"center"});
+    var bodyEl=card.querySelector(".cbody");
+    var context=(blockEl.textContent||"").slice(0,2000);
+    ensureAPI().then(function(){
+      return fetch(API+"/expand",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({selected:sel.text,context:context,company:JR_COMPANY})});
+    }).then(function(res){
+      if(!res.ok||!res.body)throw new Error("연결 실패");
+      var reader=res.body.getReader(),dec=new TextDecoder(),buf="",full="";
+      function pump(){
+        return reader.read().then(function(r){
+          if(r.done){if(!full)bodyEl.innerHTML='<span class="err">응답이 지연됩니다 — 다시 시도해 주세요.</span>';return;}
+          buf+=dec.decode(r.value,{stream:true});
+          var sep;
+          while((sep=buf.indexOf("\n\n"))!==-1){
+            var line=buf.slice(0,sep);buf=buf.slice(sep+2);
+            if(line.indexOf("data: ")!==0)continue;
+            var ev;try{ev=JSON.parse(line.slice(6));}catch(x){continue;}
+            if(ev.error){bodyEl.innerHTML='<span class="err">'+esc(ev.error)+'</span>';return;}
+            if(ev.status&&!full)bodyEl.textContent=ev.status;
+            if(ev.t){full+=ev.t;bodyEl.innerHTML=renderMd(full);}
+            if(ev.done)return;
+          }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(){bodyEl.innerHTML='<span class="err">추가 분석 실패 — 다시 시도해 주세요.</span>';});
+  }
+  digBtn.addEventListener("click",runDig);
+  digBtn.addEventListener("touchend",runDig);
+})();
+</script>
+<script>
+(function(){
+  var CARD="## 2. 공고 핵심 요건\n\n- **채용 직무**: 데이터 엔지니어(RAG/LLM Pipeline)\n- **경력·언어**: 경력 3~7년, Python·Java·Scala 중 하나 이상 기반 데이터 파이프라인 개발 경험 (공고 명시)\n- **필수 스택**: 워크플로우 오케스트레이션(Dagster·Airflow·Prefect — 여러 파이프라인 작업을 순서·의존관계에 맞춰 자동 실행/스케줄링하는 도구), SQL 및 NoSQL(MongoDB·DocumentDB), Docker 컨테이너 배포·운영 (공고 명시)\n- **우대**: RAG(문서를 검색해 그 근거로 LLM이 답하게 하는 구조) 프로덕션 배포 경험, 벡터DB(Pinecone·Milvus·Qdrant — 텍스트를 숫자벡터로 바꿔 의미 유사도로 검색하는 DB) 인덱싱·검색 최적화, 멀티모달(음성·문서이미지) 전처리, LLM 응답 품질 평가체계 설계 (공고 명시)\n- **직무 실체**: 표면은 \"데이터 엔지니어\"지만, 실제 업무는 ETL(데이터 추출·변환·적재) + 벡터DB 인덱싱 + LLMOps(LLM 서비스의 평가자동화·트레이싱·배포 운영) — **RAG 파이프라인을 프로덕션까지 책임지는 LLM 인프라 엔지니어**에 가깝습니다 (정찰 보강). AgentX 팀 = 교육 B2B 제품 '에듀탭' 담당이므로, 이 자리는 에듀탭의 검색·응답 품질을 떠받치는 데이터 백본입니다 (정찰 보강).\n\n## 3. 회사 서사 · 궤적\n\n**창업 동기 — 현장에서 나온 진짜 페인포인트.** 김주원 대표는 UNIST 컴퓨터공학과를 졸업하고 2017년부터 약 3년간 크래프트테크놀로지스(AI 기반 자산운용 스타트업)에서 근무한 뒤 서울대 석사(데이터마이닝 연구실)에 있었습니다. 2021년 연구실이 코로나로 폐쇄되자 동료들과 해커톤·AI 경연에 참가하며 \"반복적 데이터 분석·모델 학습의 비효율\"을 체감했고, 이를 자동화하려는 문제의식에서 콕스웨이브를 창업했습니다(2021년 5월). 여기서 중요한 건 **창업 후 실제 B2C 제품을 굴리면서 겪은 두 번째 페인포인트**입니다 — \"AI 이용자의 행동·피드백을 충분히 분석하는 서비스가 없다\"는 것을 직접 겪고, 자기가 쓰려고 만든 분석 도구를 솔루션화한 게 지금의 주력 제품 '얼라인(Align)'입니다. 남의 문제를 상상한 게 아니라 **자기가 겪고 자기가 쓰던 도구**라는 점은 강한 신호입니다.\n\n**연도별 궤적 — 전환점 중심.**\n- **2021년(5월)**: 서울대 데이터마이닝 연구실 동료들과 창업. 초기 B2B를 노렸으나 \"대학원생 신분이라 쉽지 않아\" B2C로 방향을 틀었습니다.\n- **2022년**: AI 이미지 지우개 '하마(Hama)', 이미지 검색엔진 '엔터픽스(Enterpix)' 출시 → 8개월 만에 130만 이용자 확보.\n- **2023년**: 하마·엔터픽스를 폰트 기업 산돌의 자회사 산돌메타랩에 매각. 회사가 반복해 강조하는 **\"국내 1호 생성형 AI M&A\"** — 즉 Exit 경험이 정체성의 핵심 자산입니다.\n- **2024년 1월**: 생성형 AI 분석 플랫폼 '얼라인(Align)' 정식 론칭. 같은 달 45억 규모 시드 투자(KB인베스트먼트 등).\n- **2024년 7월~2025년 4월**: 인도 AI 기업 펀다멘토·레난(Renan)과 파트너십·MOU — 인도 시장 진출 시도.\n- **2025년 9월**: B2B 에듀 솔루션 '에듀탭(Edutap)' 출시(패스트캠퍼스·해커스 등).\n- **2025년 11월**: 중기부 스케일업 팁스 R&D 글로벌형 선정(3년 15억 R&D 자금).\n- **2025년 12월**: 컴업 2025서 엔비디아 협업 발표, OpenAI와 멀티에이전트 해커톤, SKT·앤트로픽과 SK AI 서밋 해커톤 공동 주최.\n- **2026년 1월**: 70억 프리시리즈A 유치(누적 125억). 신년사에서 \"AI 에이전트 동작 모니터링 안전시스템 구축\" 제시.\n\n**미션·비전의 일관성.** 관통하는 문구는 **\"AI 기반 솔루션과 전략으로 파트너 기업이 각자의 업계에서 최고가 되도록 돕는다\"**(영문 \"Making Our Partners Best in Their Vertical\")로, 홈페이지·채용·인터뷰(2026.02)에 반복 등장합니다. 여기 핵심 전략적 선택이 하나 명시돼 있습니다 — **\"직접 AI 제품을 운영하는 대신, 세상의 기업들을 돕는 방식을 택했다.\"** 자사 B2C 제품(하마·엔터픽스)을 만들어 성공·매각한 팀이, 의도적으로 \"조력자(Enabler)\" 포지션으로 전환한 것이며, 이는 매각 경험에서 도출된 선택입니다. 사명 자체가 비전 — 조타수 '콕스(Cox)' + 파도 '웨이브(Wave)'.\n\n**한 문장 응축.** 현장에서 겪은 진짜 페인포인트에서 출발해 제품 매각 Exit까지 실제로 해낸 서사는 단단하지만, 지금 공고가 속한 채용 브랜딩(AX(AI 전환)·AgentX·가드레일·거버넌스)은 **아직 구축 중인 방향을 회사 스스로 \"강화할 계획\"으로 표현**하는 대목이 많아, 화려한 글로벌 협업 서사와 5.6억 매출(2024) 사이의 규모 격차는 지원자가 눈을 크게 뜨고 봐야 합니다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n**검증된 실적.** 실제로 발생한 것들: ① 하마·엔터픽스 130만 이용자 후 매각 M&A, ② 얼라인 론칭 후 \"300~400개 기업\" 고객(회사 진술), ③ 구체 성과 — 패스트캠퍼스 AI 튜터 '케미' 이용자 불만족도 30%↓·대화 지속시간 2배↑, 클레온 챗봇 '알미고' 이탈률 15%↓·파워이용자 24%↑, ④ 70억 프리A(누적 125억) + 팁스 R&D 선정. 면접에서 인용할 최근 이벤트로는 **2026년 4월 인튜브와 에듀테크 MOU, 2026년 2월 크레온에듀와 에듀탭 도입계약(공교육 시장 진출), OpenAI·SKT·앤트로픽 공동 해커톤**이 유효합니다.\n\n**주장 vs 증명의 간극(실재하는 대비).** 회사가 크게 노출하는 것은 Anthropic·OpenAI·NVIDIA·PwC·Meta·MS 파트너 명단입니다. 그런데 확인해 보면 이들이 **유료 고객인지·마케팅 협업인지·협업 규모가 얼마인지는 모호하게** 둡니다 — 홈페이지의 Anthropic CPO Mike Krieger, PwC Puneet Singh 인용문은 게재된 추천사일 뿐 매출관계를 뜻하지 않습니다. 통신·금융 고객은 \"도입 논의 중\"(계약 아님), 인도(레난·펀다멘토)는 MOU/파트너십 단계로 매출 기여 미확인, '가드레일/거버넌스' 실시간 오작동 탐지는 \"강화할 계획\"으로 표현되는 로드맵입니다. 반대로 재무는 조용합니다 — **공개 재무(2024.12 기준 매출 5억 6,185만원, 자본금 1억 666만원)**는 글로벌 협업 서사와 규모 격차가 큽니다. 매출 대비 누적투자 125억이라는 구조는 **아직 매출보다 기대·투자로 굴러가는 초기 단계**임을 드러냅니다. 파트너 명단은 크게, 재무는 작게 — 이 선택적 공개 패턴 자체를 지원자는 인지하고 면접에서 \"얼라인/AX/에듀탭 각각의 매출 비중과 얼라인 300~400 고객의 유료 전환·리텐션·객단가\"를 직접 물어야 합니다.\n\n**자산 기반 안정성.** 초기 스타트업답게 두꺼운 자산(부동산·IP·유보금)은 확인되지 않습니다. 실질 체력은 **2026년 1월 70억 프리A + 팁스 R&D 3년 15억**에서 나옵니다. 매출이 아직 얇으므로 고용 안정성의 토대는 **투자 런웨이(현금 소진 속도 대비 남은 자금)**이며, 이는 매출 성장 궤적과 다음 라운드 타이밍에 달려 있습니다 — 즉 지원자 관점에서 \"몇 년 버티나\"는 공개 재무만으로 확정 불가, 면접에서 **번레이트·런웨이·다음 라운드 계획**을 확인해야 합니다.\n\n**실질 보상 · 복리후생.** 합격 시 지원자·추천인 각 현금 50만원(원티드 보상금). 연봉 단서(추정치): 오픈샐러리 평균 추정 약 6,748만원, 직행 5,561만원(업계 평균 5,082만원 대비 +9.4%) — 다만 **전 직급·연차를 뭉뚱그린 회사 전반 보상수준 참고치**로, 경력 3~7년 개인 실수령과는 괴리가 있으니 처우협의 단계 실제 오퍼로 확인해야 합니다. 복지: 자율출근(오전 8~11시)·주1회 재택·자유휴가, 최신 맥북/4K 모니터, AI 툴(ChatGPT·Claude·Cursor) 지원, 점심·저녁 식대(야근 시), 월간 팀 회식비, 네스프레소, 도서·컨퍼런스 지원. 스톡옵션 언급은 공고에 없어 **확인 필요 — 초기 스타트업 특성상 협의 여지가 있으니 면접에서 질문**하세요.\n\n**평판.** 블라인드 약 3.2점(커리어 3.0/워라밸 3.6/급여 3.0), 잡플래닛 2.8점(워라밸 3.0/복지·급여 2.4/사내문화·승진 2.6). 표본은 매우 적습니다(초기 스타트업). 워라밸은 나쁘지 않게 보고되나 **급여·승진 만족도가 상대적 약점 신호**입니다. 문화는 \"직군 경계 없이 치열하게 토론\", \"0에서 100까지 성장\", \"실험에 열린 문화\" — 전형적 초기 팀 강도 높은 몰입형입니다.\n\n**숨은 리스크.** ① 재무 초기(매출 5.6억, 자본금 1억) → 투자 의존 구조, ② 미국 산호세·인도 뉴델리 오피스 표기는 있으나 **해외 법인 실체·인력·매출 미확인**, ③ 규모 약 25명(국민연금 2026.3 기준) — 백오피스·체계는 아직 얇을 가능성. 규제·소송·경영진 논란 등 공개 리스크 신호는 미확인.\n\n**대기업 → 스타트업 전환 시 체감 변화.** 이 회사는 명백한 초기 스타트업(약 25명)이므로 대기업 배경 지원자는 다음 트레이드오프를 각오해야 합니다 — ① **고용안정**: 대기업 정년·안정 대신 투자 런웨이에 묶인 성격(회수·성장 시나리오에 따라 변동), ② **의사결정·범위**: 느린 결재·좁은 R&R 대신 빠른 실행·넓은 오너십(\"직급·연차 무관 논리적 제안이 중심\"을 공고가 명시), ③ **안전판**: 체계·백오피스·교육이 갖춰진 환경 대신 스스로 세팅, ④ **보상**: 안정적 고정급 대신 기본급 + (협의 시) 스톡옵션 변동. 좋다/나쁘다가 아니라 성향의 문제입니다.\n\n**사업 구조상 진짜 위험/해자.** 해자 후보는 **\"AI 제품 분석에서 축적한 데이터\"** — 얼라인이 300~400 고객의 AI 사용 데이터를 쌓아, 이를 에이전트 검증·평가로 확장하는 구조입니다. 이게 진짜 해자가 되려면 데이터가 **누적될수록 검증 품질이 좋아지고 고객이 갈아타기 어려워지는 록인**이 작동해야 합니다. 위험은 두 축 — (1) LLM 관측성·평가(observability) 시장은 글로벌 플레이어가 빠르게 진입 중이라 국내 데이터 축적만으로 방어가 되는지 미검증, (2) AX 컨설팅은 사람이 붙는 프로젝트성 매출이라 규모가 커져도 마진이 자동으로 좋아지지 않는(인력에 비례하는) 구조일 수 있습니다. **무엇이 확인되면 판단이 바뀌나**: 얼라인 SaaS 매출 비중과 순수 리텐션이 높게 확인되면 \"데이터 해자\"는 실재, 컨설팅 비중이 크면 \"몸값 파는\" 구조에 가깝습니다 — 면접에서 매출 구성을 반드시 확인하세요.\n\n## 8. 산업·시장·경쟁 지형\n\n**산업 규모·성장성.** 이 회사가 선 자리는 두 층입니다 — (1) **LLM 관측성·평가/LLMOps 시장**(AI 서비스의 응답 품질·오작동을 추적·평가하는 도구), (2) **AX(AI 전환) 컨설팅 + AI 에이전트 검증** 시장. 둘 다 생성형 AI 확산과 함께 **커지는 파이**입니다. 특히 회사가 새로 진입한다고 밝힌 \"AI 에이전트 검증\" 시장은 에이전트가 실제 업무를 수행하기 시작하면서 신뢰성·안전성 수요가 폭증하는 초기 국면이라, 배는 순풍 방향입니다. 다만 구체적 시장 규모(TAM(전체 시장 규모))와 이 회사가 실제 노릴 유효시장(SAM(실제 공략 가능 시장))·현실 몫(SOM(단기 확보 가능 시장))의 수치는 근거에 없어 **확인 필요** — TAM만 크게 부풀리는 서사에 휘둘리지 마세요.\n\n**이 회사의 실질 순위·지위.** 국내 생성형 AI 안전·분석 영역에서 **이름이 자주 거론되는 니치 플레이어**입니다. 근거: 앤트로픽이 한국 사례로 \"타인AI·콕스웨이브\"를 언급(조선일보 2026.01), SKT·OpenAI·앤트로픽과 반복 공동 해커톤 — 즉 **글로벌 빅테크가 국내 협업 파트너로 호출하는 위치**는 검증됩니다. 하지만 매출·점유율로 보면 리더가 아니라 초기 팔로워이며, 정확한 순위는 확인 필요입니다. 이 \"빅테크가 부르는 스타트업\"이라는 브랜드가 실제 매출로 얼마나 전환됐는지가 관건입니다.\n\n**주요 경쟁사·격차.** 실질 경쟁 축은 (1) LLM 관측성·평가 툴(글로벌 LLMOps·AI 평가 플레이어), (2) AX 컨설팅 시장으로 나뉩니다. 비교군에 비블·팀러너스·자라소프트·위블·일릭서·일루넥스가 열거되나 직접 경쟁으로 확증되지 않고, 글로벌 경쟁 구도도 공개 자료로 특정되지 않습니다 — **경쟁 포지셔닝은 면접에서 직접 확인 요망**. 콕스웨이브가 내세우는 차별점은 \"차단이 아닌 정렬(alignment) 기반 AI 안전\", \"사용자 데이터 기반 제품 성능 개선\"(얼라인)입니다.\n\n**시장 구조.** 아직 절대강자가 굳지 않은 **초기·역동적 시장**입니다. 구직자 양면으로 — 정체된 과점이 아니라 다수가 겨루는 판이라 성장 기회는 크지만, 그만큼 생존·펀딩 경쟁 압박도 큽니다. 글로벌 플레이어가 국내로 밀고 들어오면 판이 빠르게 재편될 수 있습니다.\n\n**정성 판정.** 시장은 커지는 순풍이고, 콕스웨이브는 그 안에서 **\"빅테크가 협업 파트너로 부를 만큼 존재감은 있으나 매출·규모로는 아직 초기 팔로워\"**입니다. 해자 후보(얼라인 데이터 축적)는 실재하나 방어력은 미검증이고, 발목은 얇은 매출·미검증 로드맵·글로벌 경쟁 진입입니다. 지원자 관점에서 **고용 안정은 \"성장 순풍에 올라탄 초기 스타트업 = 잠재력은 높되 변동성도 높음\"**으로 잡고, 면접에서 \"얼라인 SaaS vs 컨설팅 매출 비중, AI 에이전트 검증 제품의 출시 시점·유료 고객\"을 물어 성장 실체를 검증하세요 — 이 답이 확인되면 판단이 크게 바뀝니다.\n\n## 6. 경영진 · 투자자·소유 구조\n\n**대표·경영진.** **김주원** — 국내 대표 겸 공동창업자. UNIST 컴퓨터공학 → 크래프트테크놀로지스(약 3년) → 서울대 석사(데이터마이닝) → 2021 창업. 도메인 실무 + 연구 배경을 겸비한 현장형입니다. 주목할 대목: **2024년 10월 김주원 CSO(최고보안책임자)를 공동대표로 임명해 김기정 대표와 2인 공동대표 체제로 전환**했고, 이는 인도 시장 진출을 본격화하며 해외·국내 담당을 나눈 결정입니다(전자신문 2024.10). 즉 \"국내 대표\"라는 표현은 **공동대표 체제**를 뜻하며, 김주원은 국내를, 김기정은 별도 축을 맡는 구조로 읽힙니다. 창업 시점 표기 기준 공동창업자로 **정주영**도 확인됩니다(뉴스핌 2024.01, \"김주원 공동창업자·김기정 대표·정주영 공동창업자\").\n\n김 대표의 최근 목소리는 일관됩니다 — **\"AI 도입 시 '가드레일'도 함께 적용해야\"**(전자신문 2026.03), \"국내 기업들은 AI 채택 후 내부 사고를 겪고 나서야 안전장치를 찾는다\"는 문제의식, \"얼라인은 차단이 아니라 정렬(alignment)\"이라는 프레임. 면접에서 \"귀사의 배포 후(post-deployment) 모니터링과 가드레일 방향성\"을 언급하면 회사의 자기 서사와 정확히 맞물립니다.\n\n**팀 리드(이 공고와 직결).** AgentX 팀 관련 인물 — **Sungwook Ku(AgentX Lead**, 검증된 Agent 정의·완성), **Dongeon Kim(Align Engineering Lead**, 에이전틱 태스크 위협 탐지·분석 — SKT·앤트로픽 해커톤에 콕스웨이브 대표 엔지니어로 참석), **Esther Kim(AX Consulting Lead)**, 대외 발언이 잦은 **이엽 이사**(앤트로픽 CPO와 대담·인터뷰 담당). 이 자리(AX AgentX 데이터 엔지니어)는 **Sungwook Ku 라인** 아래 에듀탭 데이터 백본을 맡을 가능성이 높습니다(정찰 보강 — 면접에서 리포팅 라인 확인).\n\n**C레벨.** CTO/CFO 등 실명·지분은 공개 정보로 확인되지 않습니다 — **면접 확인 필요**.\n\n**투자자·소유 구조 — 해석.** 2026년 1월 프리시리즈A 70억(누적 125억): **리드 L&S벤처캐피탈**, 신규 **현대기술투자·현대자동차 제로원벤처스·산은캐피탈**, 기존 **KB인베스트먼트** 후속. 여기에 공적 트랙 — 팁스 R&D 글로벌형(3년 15억), 경북대 창업지원단·SKT 창업도약패키지. 또 2024년 2월엔 상장사 다날의 전략적 투자도 있었습니다.\n- **자본 성격**: 은행·증권계(KB인베스트먼트·산은캐피탈 = 안정 지향·검증 선호)와 대기업 CVC(현대기술투자·현대차 제로원 = 전략적, 모빌리티 AI 접점)가 섞였습니다. 순수 공격형 해외 VC 리드가 아니라 **국내 기관·대기업 중심**입니다.\n- **의미**: 이 구성은 회수 전략이 초대형 글로벌 스케일업보다 **국내 성장 + 전략적 인수(M&A) 회수**에 무게가 실릴 수 있음을 시사합니다. 지원자에게는 \"스톡옵션 초대박(글로벌 IPO)\"보다 **전략적 M&A 시나리오로 기대치를 잡는 게 현실적**이라는 뜻이며, 성장 속도 기대는 면접에서 검증할 지점입니다.\n\n**정렬 인사이트.** 창업자는 \"국내 1호 Exit\" 경험을 정체성으로 삼는 팀 — M&A 회수에 친숙합니다. 투자자 구성(대기업 CVC + 은행계)도 전략적 인수 시나리오와 정렬됩니다. 반면 \"100개 기업 임팩트 확장\"·미국·인도 글로벌 비전은 장기 독립 성장 서사입니다. 여기서 **빠른 전략적 Exit vs 독립 스케일업** 사이 방향은 아직 한쪽으로 굳지 않았습니다. 이는 지원자에게 **잔류·성장 경로의 불확실성**으로 작용하니, 대표 인터뷰(3차 전형)에서 \"회수 전략에 대한 경영진 입장\"을 직접 물을 값어치가 있습니다.\n\n## 7. 용어 · 개념 풀이\n\n- **RAG (Retrieval-Augmented Generation)** — 문서를 먼저 검색해 그 근거로 LLM이 답을 생성하는 구조. 이 공고 직무의 핵심 — 에듀탭 튜터가 교재를 근거로 정확히 답하게 하는 백본.\n- **LLMOps** — LLM 서비스의 운영(평가 자동화·트레이싱·배포·모니터링). 이 자리가 구축·고도화할 대상.\n- **벡터 데이터베이스(Pinecone·Milvus·Qdrant)** — 텍스트를 숫자 벡터로 바꿔 \"의미가 비슷한 것\"을 빠르게 찾는 DB. RAG 검색 품질을 좌우하는 인프라.\n- **ETL** — 데이터 추출(Extract)·변환(Transform)·적재(Load). 비정형 데이터를 AI가 쓸 형태로 가공하는 파이프라인.\n- **워크플로우 오케스트레이션(Dagster·Airflow·Prefect)** — 여러 데이터 작업을 순서·의존관계에 맞춰 자동 실행/스케줄링하는 도구.\n- **에이전틱(Agentic) 워크플로우** — LLM이 스스로 단계를 계획하고 도구를 호출해 작업을 수행하는 방식. AgentX 팀의 핵심 주제.\n- **멀티모달** — 텍스트뿐 아니라 음성·이미지 등 여러 형태 데이터를 함께 다루는 것.\n- **AX (AI Transformation)** — 기업 업무를 AI로 전환하는 것. 콕스웨이브가 사업부·브랜드로 쓰는 자체 용어.\n- **AI 가드레일·거버넌스** — AI가 위험·부적절하게 작동하지 못하게 막는 안전장치와 관리 체계. 콕스웨이브가 강화하겠다는 방향성 담론어.\n- **관측성(Observability)** — 서비스가 내부에서 어떻게 동작하는지 추적·관찰하는 것. 얼라인의 정체성(AI 제품 분석).\n- **프리시리즈A** — 시드와 정식 시리즈A 사이의 초기 라운드. 제품·초기 매출은 나왔으나 본격 확장 전 단계.\n- **CVC (Corporate Venture Capital)** — 대기업이 전략적 목적으로 스타트업에 투자하는 벤처캐피탈(현대기술투자·제로원벤처스 등).\n- **PoC (Proof of Concept)** — 기술이 실제 작동하는지 검증하는 시제품 단계. 공고가 \"PoC를 넘어 운영 수준까지\"를 요구.", CO="콕스웨이브", POS="[AX AgentX] 데이터 엔지니어(RAG/LLM Pipeline)", APP="https://jobrecon.100m1s.com";
+  var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
+  if(!deck||!CARD) return;
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function lines(b){return (b||"").split("\n").map(function(s){return s.replace(/\s+$/,"").trim();}).filter(Boolean);}
+  function clean(l){return l.replace(/^#{1,4}\s+/,"").replace(/^[-•*]\s+/,"").trim();}
+  function hasNum(s){return /\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)/.test(s)||/\b\d{4}\b/.test(s);}
+  function clip(s,n){s=String(s).trim();var re=/[다요음죠][.!?](?:\*\*)?(?=\s|$)|[.!?](?=\s)|[.!?]$/g,m,cnt=0,idx=0;while((m=re.exec(s))!==null){cnt++;idx=m.index+m[0].length;if(cnt>=n)break;}if(!(cnt>=n&&idx>0&&idx<s.length))return s;var end=idx;if(((s.slice(0,end).match(/\*\*/g)||[]).length%2)&&s.slice(end,end+2)==="**")end+=2;else if(((s.slice(0,end).match(/`/g)||[]).length%2)&&s.slice(end,end+1)==="`")end+=1;var c=s.slice(0,end).trim();if((c.match(/\*\*/g)||[]).length%2)c+="**";if((c.match(/`/g)||[]).length%2)c+="`";return c;}
+  function kw(raw){var h=esc(String(raw));h=h.replace(/(\d[\d,.]*\s*(?:억|조|만|천|%|년|월|일|원|명|위|배|개|달러|PB|TB|GB|분기|대|개월|건|주)|\b\d{4}\b)/g,function(mt){return '<mark class="kw">'+mt+'</mark>';});return h.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,"<code>$1</code>");}
+  function impact(s){var v=0;if(hasNum(s))v+=3;if(/\*\*/.test(s))v+=1;if(/(리스크|위험|적자|손실|소송|하락|급감|급증|의존|취약|마감|경고|논란|불투명|규제|감소|축소|과장|괴리|부채|미상|확인 필요|독점|1위|최대|최초|최고|유일|급성장|흑자전환|구조조정|정체|둔화)/.test(s))v+=2;var L=s.length;if(L>=16&&L<=108)v+=1;if(L>140)v-=2;return v;}
+  var RISK=/(리스크|위험|의존|취약|압박|종속|잠식|축소|정체|둔화|흔들|이탈|불투명|미확인|단일|단 하나|없습니다|못하|어렵|적자|손실|규제|논란|경고)/;
+  function headline(ls,riskFirst){var cl=ls.map(clean);if(riskFirst){for(var j=0;j<cl.length;j++){var cc=cl[j];if(cc.length<14||/^✅/.test(cc))continue;var ss=clip(cc,1);if(ss.length>14&&RISK.test(ss))return ss;}}var i=cl.findIndex(function(c){return /^\*\*(판정|종합|핵심|결론|마무리)\*\*/.test(c);});if(i<0)i=cl.findIndex(function(c){return /\*\*[^*]+\*\*/.test(c)&&c.length>12;});if(i<0)i=cl.findIndex(function(c){return c.length>12;});return i>=0?clip(cl[i],1):null;}
+  function evidence(ls,hl){var cand=ls.filter(function(l){var c=clean(l);return hasNum(c)&&c.length>8&&clip(c,1)!==hl;});var pick=cand.filter(function(l){return /^[-•*]/.test(l);})[0]||cand[0];return pick?clip(clean(pick),2):null;}
+  // === 6축 큐레이터 — 앱 buildStory와 동일 규칙(창작0·iOS 안전). 리포트 6축(재무·성장·리스크·문화·핏·보상)의 균형 발췌. ===
+  function paras(b){return (b||"").split(/\n\s*\n/).map(function(p){return p.trim();}).filter(Boolean);}
+  // 문장 분리 — 줄(불릿) 개별 + 종결어미/구두점(볼드 흡수) 또는 ')." 경계. 원문 substring. iOS 안전(exec-index).
+  function sentsOf(body){var out=[];String(body||"").split(/\n/).forEach(function(ln){ln=ln.replace(/^\s*[-•*]\s+/,"").replace(/^#{1,4}\s+/,"").trim();if(!ln)return;var re=/(?:[다요죠음까함됨봄임][.!?]|\)\.)(\*\*)?(?=\s|$)/g,last=0,m;while((m=re.exec(ln))!==null){var end=m.index+m[0].length;out.push(ln.slice(last,end).trim());last=end;}var t=ln.slice(last).trim();if(t)out.push(t);});return out.filter(Boolean);}
+  // 리드 라벨(콜론 붙은 볼드)만 제거 — 콜론 없는 볼드강조(**다만 위험은 명확합니다**)는 보존
+  function stripLabel(s){return String(s).replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"").replace(/^(?:지원자에게 주는 시그널|지원자 관점에서|또 하나|무엇이 확인되면 판단이 바뀌나)\s*[:：]\s*/,"").trim();}
+  // 나열≠대조 — comma 분기가 "A, B" 나열(대조·반전 신호 0)을 가짜 대비로 뽑는 것 방지(페이타랩 "개발자 출신, 시장검증형"). setup/subvert 둘 다 짧고 반전어 없으면 무효 → sentContrast 폴백.
+  var AXNEG=/(베일|물음표|없|아니|않|못|미확인|불투명|비공개|의문|불확실|모호|우려|그림자|리스크|위험|약하|낮|숨|가림|이면|글쎄|반면|의존|취약|공백|결여|한계|정체|둔화)/;
+  // em대시 리드 대비 "**주제 — A, B**"(comma·대조성 검사)/"**주제 — A지만 B**"(conj) → {setup,subvert}. iOS 안전(split·lookbehind 0).
+  function leadContrast(p){var m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/);if(!m)return null;var f=m[1].trim().split(/\s[—-]\s/);if(f.length<2)return null;var rest=f.slice(1).join(" — ");var cm=rest.split(/\s*,\s*/);if(cm.length>=2){var _lsu=cm[0].trim(),_lsv=cm.slice(1).join(", ").trim().replace(/\.$/,"");if(!(axNlen(_lsu)<=6&&axNlen(_lsv)<=6&&!AXNEG.test(_lsv)&&!AXNEG.test(_lsu)))return {setup:_lsu,subvert:_lsv,lead:true};}var mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/);if(mm&&mm.index>=3){var cut=mm[1]?mm.index+mm[1].length:mm.index;var sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim();if(sub.replace(/\s/g,"").length>=6)return {setup:rest.slice(0,cut).trim(),subvert:sub,lead:true};}return null;}
+  // ── 범용 대비 추출기(§위치 기반·특정 회사 문구 0) — 페이타랩 하드코딩 제거(FLR-20260712-AGT-003: 페이타랩 외 소멸 근본 fix). 앱 index.html buildStory와 동일 규칙. ──
+  var AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간)
+  var LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip(앱 index.html _LEADCONJ mirror) — 카드 ⚠️+금색볼드+병치 3중 전환신호라 선두 접속사 잉여. 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
+  function axNlen(s){return String(s).replace(/\s/g,"").length;}
+  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){s=/\*\*$/.test(s)?s.slice(0,-2):(/\*$/.test(s)?s.slice(0,-1):s+"**");}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존
+  function axClean(s){s=String(s).trim();s=s.replace(/^\s*[→•]\s*/,"");s=s.replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=s.replace(/\s*[,，—:：]\s*(\*\*|`)?\s*$/,"$1");return axBal(s.trim());}   // P1-2 누출 정화: 선두 →•·콜론붙은 볼드라벨 + 말미 ,—: 트림(볼드/백틱 닫기 안쪽 콤마도 = 축,** → 축**)
+  function clipWall(s){if(axNlen(s)<=90)return s;var cut=s.search(/[,，]\s/);if(cut>0&&axNlen(s.slice(0,cut))>=12)return axBal(s.slice(0,cut).trim());return s;}   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
+  function axLastClause(t){var re=/[.!?]\s+/g,m,last=-1;while((m=re.exec(t))!==null)last=m.index+m[0].length;if(last>0){var tail=t.slice(last).trim();if(axNlen(tail)>=3)return tail;}return String(t).trim();}   // setup 대비 직전 완결 절
+  // ③ 문장 단위 대비 — 어미('…지만 B')/리드접속사(문장 시작·중간). subvert=완결 문장(종결어미 보장·잘림0). 원문 substring(창작0).
+  //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 보상반전 추출). 앱 index.html _sentContrast mirror.
+  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
+  // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
+  var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
+  // R4-019b 종결어미 화이트리스트 — 블랙리스트가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린') 구조 차단. lead(볼드 리드 명사구)는 블랙리스트만. 앱 _AXFIN mirror(G6).
+  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
+  function axWhole(s,lead){var t=String(s).trim().replace(/[*`]+$/,"").trim();if(!t)return false;if(AXCUT.test(t))return false;return lead?true:AXFIN.test(t);}
+  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
+  function axTrim(s,lead){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
+  // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
+  var AXMARK=/여기가 반전/;
+  // R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지(리포트 실존 후보만 승격·창작0). 앱 _FITKW mirror(G6).
+  var FITKW=/(개발|엔지니어|기술\s*스택|테크|아키텍처|인프라|코드|데이터|플랫폼|백엔드|프론트엔드|모바일|서버|AI|머신러닝|알고리즘|직무|요건|경력|연차|온보딩|커리어|성장\s*기회)/;
+  var FITRE=(function(pos){var toks=String(pos||"").split(/[\s·,/()+&]+/).filter(function(w){return w.replace(/\s/g,"").length>=2;}).map(function(w){return w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");});return toks.length?new RegExp("(?:"+toks.join("|")+")"):null;})(POS);
+  function axCandScore(r,para){var v=impact(r.setup+" "+r.subvert);if(AXNEG.test(r.subvert))v+=2;if(AXMARK.test(para))v+=10;var b=r.setup+" "+r.subvert;if(FITKW.test(b)||(FITRE&&FITRE.test(b)))v+=2;return v;}
+  function extractContrast(pls,used){var best=null,bi=-1,bs=-1;for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;r.setup=axTrim(r.setup,r.lead);r.subvert=axTrim(r.subvert,r.lead);if(!r.setup||!r.subvert)continue;var v=axCandScore(r,pls[i]);if(v>bs){best=r;bi=i;bs=v;}}if(best){used[bi]=true;best.score=bs;}return best;}
+  // 6축=§위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속). 라벨=섹션 파생, key=색상.
+  var AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
+  // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
+  var MEANRE=/(?:지원자에게 주는 시그널|지원자 관점에서|무엇이 확인되면 판단이 바뀌나)\s*(?:\*\*)?\s*[:：—-]\s*/;
+  function extractMean(body,mused){var ss=sentsOf(body);for(var i=0;i<ss.length;i++){if(mused[i])continue;var s=ss[i],m=s.match(MEANRE);if(!m)continue;var t=s.slice(m.index+m[0].length).replace(/^[（(]\s*/,"").replace(/\s*[）)]\s*$/,"").trim();t=axBal(clip(t,1));if(axNlen(t)>=8){mused[i]=true;return t;}}return null;}
+  // P1-3 comp 축 라벨 내용 파생 — 보상 키워드 매칭 시만 "실체·보상", 아니면 중립 "회사 주장 vs 실제"(§4 첫 채굴이 보상 무관 4/5 mismatch 해소: 당근=적자·페이타랩=트래픽·MBC=미디어표방·삼양=주장vs증명).
+  var COMP=/(연봉|급여|보상|스톡옵션|스톡|RSU|처우|복지|성과급|인센티브|월급|초봉|페이밴드|사이닝)/;
+  var PAL={pivot:['#5b9bff','#cfe0ff','rgba(79,140,255,.20)'],fit:['#22d3ee','#b6f2fb','rgba(34,211,238,.14)'],culture:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],comp:['#34d399','#bff3da','rgba(52,211,153,.15)'],runway:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'],risk:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],cta:['#4f8cff','#cfe0ff','rgba(79,140,255,.18)']};
+  function pv(p){return "--sc:"+p[0]+";--sc2:"+p[1]+";--scg:"+p[2];}
+  function coFont(co){var n=(co||"").replace(/\s/g,"").length;return n<=3?48:n<=4?42:n<=6?34:n<=8?27:22;}
+  var ICt='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></svg>';
+  var ICw='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 4l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 16.4h.01"/></svg>';
+  var ICs='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>';
+  var re=/^##\s*(\d)\.\s*(.*)$/gm,m,marks=[];while((m=re.exec(CARD))!==null)marks.push({id:+m[1],end:re.lastIndex,idx:m.index});
+  if(!marks.length)return;
+  var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
+  // R3-012 얇은 축 배제 — 카드 수 = 축 프레임(6)이 아니라 콘텐츠 밀도(임팩트+뜻줄 스코어>=3). 미달 축은 카드화 배제(리포트에만). 앱 mirror.
+  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
+  if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
+  // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
+  var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+  function axGloss(t,st){var s=String(t==null?"":t);for(var gi=0;gi<GLOSS.length;gi++){var k=GLOSS[gi][0],d=GLOSS[gi][1];if(st[k])continue;var m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])"));if(!m)continue;st[k]=1;var e=m.index+k.length;s=s.slice(0,e)+"("+d+")"+s.slice(e);}return s;}
+  var _gst={};axes.forEach(function(a){a.setup=axGloss(a.setup,_gst);a.subvert=axGloss(a.subvert,_gst);if(a.mean)a.mean=axGloss(a.mean,_gst);});
+  var cards=axes.map(function(a,i){a.kind="axis";a.first=(i===0);return a;});
+  cards.push({kind:"cta",n:axes.length});   // CTA 독립 슬롯(항상 마지막·1개)·n=실제 축 수(R3-012 거짓 라벨 제거). /r/는 개인 verdict 구조적 제외(로그인 벽) → CTA가 리포트 근거로 유도.
+  function card(c,i){
+    var p=PAL[c.kind==="cta"?"cta":c.key]||PAL.cta,sv=pv(p),g='<div class="ghost">'+("0"+(i+1)).slice(-2)+'</div>';
+    // 축 카드 = [축 라벨] + [설정↔전복 발췌(좌보더 인용서식)] + [보조 발췌] + [원문 조언=뜻줄]. 첫 축엔 회사명 표지. 전부 원문 substring(창작0). /r/는 개인판정(배지·평결) 구조적 제외.
+    if(c.kind==="axis"){
+      var co=c.first?'<div class="story-co-lg" style="font-size:'+coFont(CO)+'px">'+esc(CO||"이 회사")+'</div>'+(POS?'<div class="story-pos">· '+esc(POS)+'</div>':""):"";
+      var bd=c.body?'<div class="story-quote">'+kw(c.body)+'</div>':"";
+      var mn=c.mean?'<div class="story-mean">'+ICt+'<span>'+kw(c.mean)+'</span></div>':"";
+      var an=c.sec?'<button class="story-anchor" data-sec="'+c.sec+'">'+ICs+' 근거 원문</button>':"";
+      return '<div class="story-card role-axis'+(c.first?" first":"")+'" style="'+sv+'">'+g+co+'<div class="story-kicker soft">'+esc(c.label||"")+'</div><div class="story-beat"><div class="hb-line hb-setup">'+kw(c.setup)+'</div><div class="hb-turn">'+ICw+'</div><div class="hb-line hb-subvert">'+kw(c.subvert)+'</div></div>'+bd+mn+'<div class="spacer"></div>'+an+'</div>';
+    }
+    // CTA 독립 슬롯 — 리포트 근거 유도(로그인 유도 전). /r/은 리포트 body가 같은 페이지 → segReport 모드 전환.
+    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
+    return "";
+  }
+  deck.innerHTML=cards.map(card).join("");
+  dots.innerHTML=cards.map(function(_,i){return '<span class="dot'+(i===0?" on":"")+'"></span>';}).join("");
+  document.body.classList.add("mode-story");
+  if(seg)seg.style.display="inline-flex";
+  var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);if(story)requestAnimationFrame(function(){syncH();});}
+  // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
+  var _hdr=document.querySelector(".stickyhdr");
+  var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
+  function _stickyH(){return _hdr?_hdr.getBoundingClientRect().height:0;}          // 매 스크롤 실측(하드코딩·캐시 금지)
+  function _alignUnderSticky(t){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){            // 모드전환(#report display 복원) 리플로우 정착 후 측정
+      var y=t.getBoundingClientRect().top+window.scrollY-_stickyH()-10;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+      _reTarget=t;_reUntil=Date.now()+1500;                                       // 착지 후 AD async 로드/리사이즈 보정 window
+    });});
+  }
+  // AD 슬롯 높이 변화 시(밀림 또는 브라우저 scroll-anchoring 상쇄) ResizeObserver로 감지 → window 내에서 타겟을 스티키 바로 아래로 절대 재정렬(dh 방향 가정 없이 실측 위치 기준)
+  if(window.ResizeObserver&&_hdr){new ResizeObserver(function(){var h=_stickyH(),dh=h-_lastH;_lastH=h;if(_reTarget&&Date.now()<_reUntil&&Math.abs(dh)>0.5){var diff=_reTarget.getBoundingClientRect().top-(h+10);if(Math.abs(diff)>1)window.scrollBy({top:diff,behavior:"auto"});}}).observe(_hdr);}
+  deck.querySelectorAll(".story-anchor").forEach(function(btn){btn.addEventListener("click",function(){setMode(false);var t=document.getElementById(btn.dataset.sec);if(t)_alignUnderSticky(t);else window.scrollTo({top:0,behavior:"smooth"});});});
+  var _toRep=document.getElementById("storyToReport");if(_toRep)_toRep.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  var sa=document.getElementById("segStory"),sb=document.getElementById("segReport");
+  if(sa)sa.addEventListener("click",function(){setMode(true);window.scrollTo({top:0,behavior:"smooth"});});
+  if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
+  if(cardsEl[0])cardsEl[0].classList.add("inview");
+  var _cur=0,_pv=document.getElementById("storyPrev"),_nx=document.getElementById("storyNext");
+  // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
+  function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
+  window.addEventListener("resize",syncH);
+  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
+  function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
+  dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
+  if(_pv)_pv.onclick=function(){goTo(_cur-1);};
+  if(_nx)_nx.onclick=function(){goTo(_cur+1);};
+  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  active(0);
+  // R4-023① /r/ 공유 수단 — navigator.share(모바일) → clipboard(폴백) → 구형 execCommand. 개인 평결 미포함 페이지라 공유 안전.
+  var shareBtn=document.getElementById("shareLink");
+  function _toast(msg){var t=document.getElementById("shareToast");if(!t){t=document.createElement("div");t.id="shareToast";t.className="sharetoast";document.body.appendChild(t);}t.textContent=msg;t.classList.add("on");clearTimeout(_toast._t);_toast._t=setTimeout(function(){t.classList.remove("on");},2200);}
+  function _copyFallback(u){var ta=document.createElement("textarea");ta.value=u;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(ta);_toast(ok?"링크가 복사됐어요":"복사 실패 — 주소창에서 복사해 주세요");}
+  if(shareBtn)shareBtn.addEventListener("click",function(){
+    var lk=document.querySelector('link[rel="canonical"]');var url=(lk&&lk.href)||location.href;
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){_toast("링크가 복사됐어요");},function(){_copyFallback(url);});return;}
+    _copyFallback(url);
+  });
+})();
+</script>
+</body></html>
