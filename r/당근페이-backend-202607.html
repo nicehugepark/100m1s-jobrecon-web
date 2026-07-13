@@ -79,12 +79,14 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 body.mode-story .dighint{display:none}
 
 .modeseg{display:none;gap:4px;margin:0 0 14px;padding:4px;background:#12161d;border:1px solid #222a35;border-radius:999px;width:fit-content}
-.modeseg button{width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+.modeseg button{position:relative;width:auto;margin:0;padding:0 20px;min-height:38px;font-size:13.5px;font-weight:700;border-radius:999px;background:transparent;color:#8b97a6;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s}
+/* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — sticky 헤더 비대 회피 위해 ::after 확장, PM320 R49 전례) */
+.modeseg button::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px}
 .modeseg button.on{background:#4f8cff;color:#fff}
 .storyview{display:none}
 body.mode-story .storyview{display:block}
 body.mode-story #report,body.mode-story .repextra{display:none!important}
-.story-deck{display:flex;align-items:stretch;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
 .story-deck::-webkit-scrollbar{display:none}
 .story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 .story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
@@ -106,7 +108,9 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
 .bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
 .bwrap .tease{color:#8b97a6;font-size:12.5px}
-.story-anchor{align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+.story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
+/* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, ::after 확장) */
+.story-anchor::after{content:"";position:absolute;left:0;right:0;top:-5px;bottom:-5px}
 .story-anchor svg{width:1.1em;height:1.1em}
 .story-card.allmore{align-items:center;justify-content:center;text-align:center}
 .story-card.allmore .story-hl{text-align:center}
@@ -158,8 +162,23 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .hb-turn{color:#fbbf24;height:17px;margin-left:1px}
 .hb-turn svg{width:17px;height:17px}
 .story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
-.story-dots .dot{width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s}
+.story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.story-dots .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:-10px;bottom:-10px}
 .story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
+.storyview{position:relative}
+.story-nav{display:none}
+@media (hover:hover) and (pointer:fine){
+.story-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:44%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
+.story-nav:hover{background:rgba(23,28,38,.95)}
+.story-nav.prev{left:-6px}.story-nav.next{right:-6px}
+.story-nav[disabled]{opacity:.22;cursor:default}
+.story-nav svg{width:20px;height:20px}
+}
+.sharebar{display:flex;justify-content:center;margin:14px 0 2px}
+.sharebar button{display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button svg{width:1.15em;height:1.15em}
+.sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
+.sharetoast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}}
 </style>
 
@@ -403,7 +422,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   // 나열≠대조 — comma 분기가 "A, B" 나열(대조·반전 신호 0)을 가짜 대비로 뽑는 것 방지(페이타랩 "개발자 출신, 시장검증형"). setup/subvert 둘 다 짧고 반전어 없으면 무효 → sentContrast 폴백.
   var AXNEG=/(베일|물음표|없|아니|않|못|미확인|불투명|비공개|의문|불확실|모호|우려|그림자|리스크|위험|약하|낮|숨|가림|이면|글쎄|반면|의존|취약|공백|결여|한계|정체|둔화)/;
   // em대시 리드 대비 "**주제 — A, B**"(comma·대조성 검사)/"**주제 — A지만 B**"(conj) → {setup,subvert}. iOS 안전(split·lookbehind 0).
-  function leadContrast(p){var m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/);if(!m)return null;var f=m[1].trim().split(/\s[—-]\s/);if(f.length<2)return null;var rest=f.slice(1).join(" — ");var cm=rest.split(/\s*,\s*/);if(cm.length>=2){var _lsu=cm[0].trim(),_lsv=cm.slice(1).join(", ").trim().replace(/\.$/,"");if(!(axNlen(_lsu)<=6&&axNlen(_lsv)<=6&&!AXNEG.test(_lsv)&&!AXNEG.test(_lsu)))return {setup:_lsu,subvert:_lsv};}var mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/);if(mm&&mm.index>=3){var cut=mm[1]?mm.index+mm[1].length:mm.index;var sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim();if(sub.replace(/\s/g,"").length>=6)return {setup:rest.slice(0,cut).trim(),subvert:sub};}return null;}
+  function leadContrast(p){var m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/);if(!m)return null;var f=m[1].trim().split(/\s[—-]\s/);if(f.length<2)return null;var rest=f.slice(1).join(" — ");var cm=rest.split(/\s*,\s*/);if(cm.length>=2){var _lsu=cm[0].trim(),_lsv=cm.slice(1).join(", ").trim().replace(/\.$/,"");if(!(axNlen(_lsu)<=6&&axNlen(_lsv)<=6&&!AXNEG.test(_lsv)&&!AXNEG.test(_lsu)))return {setup:_lsu,subvert:_lsv,lead:true};}var mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/);if(mm&&mm.index>=3){var cut=mm[1]?mm.index+mm[1].length:mm.index;var sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim();if(sub.replace(/\s/g,"").length>=6)return {setup:rest.slice(0,cut).trim(),subvert:sub,lead:true};}return null;}
   // ── 범용 대비 추출기(§위치 기반·특정 회사 문구 0) — 페이타랩 하드코딩 제거(FLR-20260712-AGT-003: 페이타랩 외 소멸 근본 fix). 앱 index.html buildStory와 동일 규칙. ──
   var AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간)
   var LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip(앱 index.html _LEADCONJ mirror) — 카드 ⚠️+금색볼드+병치 3중 전환신호라 선두 접속사 잉여. 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
@@ -417,13 +436,18 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
   // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
   var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
-  function axWhole(s){return !AXCUT.test(String(s).trim().replace(/[*`]+$/,"").trim());}
+  // R4-019b 종결어미 화이트리스트 — 블랙리스트가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린') 구조 차단. lead(볼드 리드 명사구)는 블랙리스트만. 앱 _AXFIN mirror(G6).
+  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
+  function axWhole(s,lead){var t=String(s).trim().replace(/[*`]+$/,"").trim();if(!t)return false;if(AXCUT.test(t))return false;return lead?true:AXFIN.test(t);}
   // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
-  function axTrim(s){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s)?s:"";}
+  function axTrim(s,lead){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
   // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
   var AXMARK=/여기가 반전/;
-  function axCandScore(r,para){var v=impact(r.setup+" "+r.subvert);if(AXNEG.test(r.subvert))v+=2;if(AXMARK.test(para))v+=10;return v;}
-  function extractContrast(pls,used){var best=null,bi=-1,bs=-1;for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;r.setup=axTrim(r.setup);r.subvert=axTrim(r.subvert);if(!r.setup||!r.subvert)continue;var v=axCandScore(r,pls[i]);if(v>bs){best=r;bi=i;bs=v;}}if(best){used[bi]=true;best.score=bs;}return best;}
+  // R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지(리포트 실존 후보만 승격·창작0). 앱 _FITKW mirror(G6).
+  var FITKW=/(개발|엔지니어|기술\s*스택|테크|아키텍처|인프라|코드|데이터|플랫폼|백엔드|프론트엔드|모바일|서버|AI|머신러닝|알고리즘|직무|요건|경력|연차|온보딩|커리어|성장\s*기회)/;
+  var FITRE=(function(pos){var toks=String(pos||"").split(/[\s·,/()+&]+/).filter(function(w){return w.replace(/\s/g,"").length>=2;}).map(function(w){return w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");});return toks.length?new RegExp("(?:"+toks.join("|")+")"):null;})(POS);
+  function axCandScore(r,para){var v=impact(r.setup+" "+r.subvert);if(AXNEG.test(r.subvert))v+=2;if(AXMARK.test(para))v+=10;var b=r.setup+" "+r.subvert;if(FITKW.test(b)||(FITRE&&FITRE.test(b)))v+=2;return v;}
+  function extractContrast(pls,used){var best=null,bi=-1,bs=-1;for(var i=0;i<pls.length;i++){if(used[i])continue;var r=leadContrast(pls[i])||sentContrast(pls[i]);if(!r)continue;r.setup=axTrim(r.setup,r.lead);r.subvert=axTrim(r.subvert,r.lead);if(!r.setup||!r.subvert)continue;var v=axCandScore(r,pls[i]);if(v>bs){best=r;bi=i;bs=v;}}if(best){used[bi]=true;best.score=bs;}return best;}
   // 6축=§위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속). 라벨=섹션 파생, key=색상.
   var AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
   // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
@@ -444,7 +468,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
   if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
   // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
-  var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+  var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
   function axGloss(t,st){var s=String(t==null?"":t);for(var gi=0;gi<GLOSS.length;gi++){var k=GLOSS[gi][0],d=GLOSS[gi][1];if(st[k])continue;var m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])"));if(!m)continue;st[k]=1;var e=m.index+k.length;s=s.slice(0,e)+"("+d+")"+s.slice(e);}return s;}
   var _gst={};axes.forEach(function(a){a.setup=axGloss(a.setup,_gst);a.subvert=axGloss(a.subvert,_gst);if(a.mean)a.mean=axGloss(a.mean,_gst);});
   var cards=axes.map(function(a,i){a.kind="axis";a.first=(i===0);return a;});
@@ -489,9 +513,25 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(sb)sb.addEventListener("click",function(){setMode(false);window.scrollTo({top:0,behavior:"smooth"});});
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
   if(cardsEl[0])cardsEl[0].classList.add("inview");
-  function active(i){dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());}
+  var _cur=0,_pv=document.getElementById("storyPrev"),_nx=document.getElementById("storyNext");
+  function active(i){_cur=i;dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
+  function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
+  dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
+  if(_pv)_pv.onclick=function(){goTo(_cur-1);};
+  if(_nx)_nx.onclick=function(){goTo(_cur+1);};
   deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
   active(0);
+  // R4-023① /r/ 공유 수단 — navigator.share(모바일) → clipboard(폴백) → 구형 execCommand. 개인 평결 미포함 페이지라 공유 안전.
+  var shareBtn=document.getElementById("shareLink");
+  function _toast(msg){var t=document.getElementById("shareToast");if(!t){t=document.createElement("div");t.id="shareToast";t.className="sharetoast";document.body.appendChild(t);}t.textContent=msg;t.classList.add("on");clearTimeout(_toast._t);_toast._t=setTimeout(function(){t.classList.remove("on");},2200);}
+  function _copyFallback(u){var ta=document.createElement("textarea");ta.value=u;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(ta);_toast(ok?"링크가 복사됐어요":"복사 실패 — 주소창에서 복사해 주세요");}
+  if(shareBtn)shareBtn.addEventListener("click",function(){
+    var lk=document.querySelector('link[rel="canonical"]');var url=(lk&&lk.href)||location.href;
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){_toast("링크가 복사됐어요");},function(){_copyFallback(url);});return;}
+    _copyFallback(url);
+  });
 })();
 </script>
 </body></html>
