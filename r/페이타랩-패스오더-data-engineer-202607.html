@@ -180,6 +180,9 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
 .sharetoast.on{opacity:1}
 @media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}}
+
+button,input,textarea,select{font-family:inherit}
+#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
 </style>
 
 </head><body>
@@ -214,7 +217,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>우대</strong>: Snowflake 비용 최적화·권한설정 운영, dbt(SQL 기반 데이터 변환·품질관리 도구), AI/ML 파이프라인, Text-to-SQL(자연어를 SQL로 바꾸는 환경) 구축, O2O·모바일 앱·식음료 도메인 경험 (공고 명시).</li>
 <li><strong>전형</strong>: 서류 → 사전 테스트(SQL/코딩/과제/커피챗) → 1차 직무 → <strong>2차 CEO 인터뷰</strong> → 레퍼런스 체크 → 최종 (공고 명시). 대표가 직접 면접에 들어오는 구조라 회사 비전·문화 적합성 비중이 큽니다.</li>
 </ul>
-<p>---</p>
+<hr>
 <h2 id="sec-3">회사 서사 · 궤적</h2>
 <p><strong>창업 동기 — 현장 인터뷰에서 출발한 문제 정의.</strong> 곽수용 대표는 부경대 컴퓨터공학과 10학번으로, 같은 과 동기 3명과 2016년 페이타랩을 창업한 개발자 출신입니다. 주목할 점은 이 창업이 책상물림이 아니라는 근거가 남아 있다는 것 — 2019년 부산일보 인터뷰에서 곽 대표는 &quot;70곳 남짓한 카페 업주들과 이야기를 나눈 결과 인건비와 홍보비가 원인이라는 걸 깨달았다&quot;고 말합니다. 창업자 본인이 카페 운영자였던 건 아니지만, <strong>점주 70명을 직접 인터뷰해 페인을 좁힌</strong> 흔적이 있습니다. 곽 대표는 대학 시절 창업으로 &quot;논문 대회 등재 후보가 될 성과를 냈지만 시장성이 없으면 성공할 수 없다는 현실에 부딪혔다&quot;고 회고하는데 — 즉 <strong>기술 실패를 겪고 나서 문제 정의를 다시 잡은</strong> 궤적이며, 이 시장검증 의식이 지금의 그로스해킹·데이터 조직 DNA로 이어졌을 가능성이 있습니다.</p>
 <p><strong>미션의 일관성 — 축은 유지, 자기규정은 이동.</strong> 2018년 패스오더 출시 이래 &quot;대형 프랜차이즈 전유물이던 스마트오더를 중소형·개인 카페까지 내린다&quot;는 하방 민주화 앵글은 관통합니다. 다만 자기규정은 이동 중입니다. 시리즈B 시점 곽 대표는 &quot;비효율적 주문 시스템을 디지털로 혁신하고 자영업자들이 고객과 <strong>데이터로 연결되는 생태계</strong>를 구축하는 것이 목표&quot;라고 했고, 최근 홍보에서는 단순 주문 도구를 넘어 &quot;900만 잠재고객에게 매장을 홍보하는 <strong>마케팅·CRM 채널</strong>&quot;로 자기를 재규정합니다. 이번 그로스 데이터 엔지니어 채용이 바로 이 이동의 실행 인력입니다.</p>
@@ -232,7 +235,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>2025년</strong>: 이용자 <strong>800만 명</strong>, 누적 판매잔수 <strong>1억 잔</strong> 돌파.</li>
 </ul>
 <p><strong>한 문장 응축</strong>: 점주 70명 인터뷰에서 시작한 창업 서사는 진짜이고 가맹점·거래액 지표도 실제로 쌓였지만, 회사의 무게중심이 &#x27;주문 자동화 도구&#x27;에서 &#x27;데이터·광고 CRM 플랫폼&#x27;으로 옮겨가는 전환기이며, <strong>그 이동이 매출로 증명됐는지는 아직 확인이 필요한 단계</strong>입니다.</p>
-<p>---</p>
+<hr>
 <h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
 <p><strong>검증된 실적 — 트래픽은 진짜, 수익은 베일.</strong> 확인되는 건 규모 지표입니다: 가맹점 2만 3천여 개, 누적 거래액(GMV) 1,000억 원(2024), 누적 1억 잔(2025), 이용자 800만, 시리즈B 121억·누적 200억 실제 유치, 부산 서비스 강소기업 선정, SPC·중기부 제휴. 여기까진 외부 발표로 뒷받침됩니다. 그런데 공고가 내세우는 &quot;매출액 1800% 성장&quot;, &quot;1초에 599잔&quot;, &quot;재주문율 80%↑&quot;는 모두 <strong>성장률·트래픽 지표</strong>일 뿐, <strong>절대 매출액·영업이익·수익성은 어디에도 공개되지 않습니다.</strong> GMV 1,000억은 크게 알리지만 이 중 회사가 취하는 수수료율·실매출은 드러나지 않습니다. 비상장이라 DART 공시도 없습니다. &quot;1800% 성장&quot;이라는 자극적 수치도 <strong>작은 기저에서 출발한 배수</strong>일 수 있어 절대 규모를 봐야 합니다 — 면접에서 실매출·수수료 구조·손익분기 시점을 반드시 물어야 합니다.</p>
 <p><strong>주장 vs 증명 간극 — 선택적 공개.</strong> 재주문율·판매잔수 같은 트래픽은 적극 강조하나 수익성 지표는 일관되게 비공개하는 <strong>선택적 IR 패턴</strong>이 보입니다. &quot;대한민국 No.1&quot;, &quot;업계 1위&quot; 표현도 점유율·경쟁사 대비 순위의 정량 근거는 공개 정보로 확인되지 않습니다. &quot;초개인화 맞춤형 광고&quot;의 매출 기여도 역시 계획 단계로만 언급될 뿐 성과 수치가 없습니다. 즉 <strong>성장 서사와 실제 수익구조 사이 간극이 미확인 상태</strong>입니다.</p>
@@ -248,14 +251,14 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 <li><strong>문화 강도</strong>: 공고가 &quot;일과 성장에 미쳐있는 사람들&quot;, &quot;빠르게 성장&quot; 등 <strong>하드워킹을 전면에</strong> 내세웁니다. &quot;저녁 회식 없음&quot;은 강점이나, &quot;사람 때문에 힘든 일 없도록&quot;이라는 문화 약속의 실제 이행과 야근 상시화 여부는 면접·레퍼런스로 검증하세요.</li>
 </ul>
 <p><strong>사업 구조상 해자와 위험.</strong> 진짜 해자 후보는 <strong>300개+ 브랜드·2만 3천 가맹점 네트워크 + 커피 거래 빅데이터</strong>입니다. 한국성장금융이 투자 근거로 &quot;커피전문점에서 확보되는 거래 빅데이터의 가치&quot;를 명시했을 만큼, 데이터 자산화가 성공하면 광고·CRM으로 마진이 개선되는 구조가 될 수 있습니다. <strong>다만 위험은 명확합니다</strong> — 스마트오더는 전환비용이 낮고, 네이버·카카오 같은 대형 플랫폼이 언제든 같은 기능을 무료로 얹을 수 있습니다. 무엇이 확인되면 판단이 바뀌나: ① 광고·데이터 매출이 실제로 발생하는지, ② 대형 프랜차이즈(SPC 등) 제휴가 락인으로 굳는지 — 이 둘이 확인되면 해자는 진짜가 되고, 안 되면 &#x27;얇은 도구&#x27;에 머뭅니다.</p>
-<p>---</p>
+<hr>
 <h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <p><strong>산업 규모·성장성 — 커지는 파이 위 니치.</strong> 스마트오더/O2O 카페 주문 시장은 코로나 비대면 수요로 성장한 영역이고, 커피·식음료 소비 자체가 견고한 시장입니다(구체 시장 규모·성장률 수치는 공개 근거 미확인 — 확인 필요). TAM은 국내 커피·프랜차이즈 주문 전체지만, 이 회사의 <strong>SAM은 대형 프랜차이즈 자체 앱(스타벅스 사이렌오더 등)을 뺀 중소형·개인 카페 주문</strong>이고, <strong>SOM은 실제 확보한 2만 3천 가맹점·800만 이용자 규모</strong>입니다. 즉 대형 체인이 자체 앱으로 이미 가져간 파이는 이 회사 몫이 아니며, 남은 <strong>중소형 카페 롱테일</strong>이 핵심 전장입니다.</p>
 <p><strong>실질 지위 — 니치 리더, 그러나 상대 좌표 미검증.</strong> 회사는 &quot;대한민국 No.1 커피 주문 플랫폼&quot;을 내세우나, 점유율·경쟁사 대비 순위의 정량 근거는 공개 정보로 확인되지 않습니다. 확인되는 건 &quot;포브스 선정 식음료 앱 5위&quot;, &quot;2024 앱스토어 식음료 부문 1위(회사 주장)&quot; 정도입니다. <strong>중소형 카페 스마트오더라는 좁은 니치에선 앞선 플레이어</strong>로 보이나, 정확한 순위는 확인이 필요합니다.</p>
 <p><strong>경쟁 구도 — 위아래로 낀 샌드위치.</strong> 직접 경쟁사의 정량 비교는 근거상 없으나, 구조적으로 이 회사는 두 방향에서 압박받습니다. 위로는 <strong>네이버 주문·카카오·스타벅스 사이렌오더 등 대형 플랫폼/자체 앱</strong> — 자본·트래픽·개발력이 압도적이라 언제든 중소 카페 주문을 흡수할 수 있습니다. 옆·아래로는 테이블오더·기타 스마트오더 스타트업. 패스오더의 방어선은 <strong>개인 카페까지 파고든 영업 밀도와 SPC 등 프랜차이즈 제휴</strong>이고, 이 격차가 벌어지는지 좁혀지는지는 데이터·광고 수익화 성공 여부에 달렸습니다.</p>
 <p><strong>시장 구조 — 파편화된 롱테일 vs 지배적 대형.</strong> 대형 프랜차이즈 주문은 각 브랜드 자체 앱이 과점하고, 중소형 카페는 다수가 겨루는 파편화 시장입니다. 구직자 관점 양면: 파편화 시장의 통합자가 되면 큰 기회지만, <strong>대형 플랫폼이 진입하면 순식간에 밀릴 수 있는 역동적·불안정 구조</strong>입니다.</p>
 <p><strong>정성 판정.</strong> 이 회사는 <strong>커지는 시장의 좁은 니치에서 앞서가는 중이나, 해자가 아직 구조적으로 굳지 않은 위치</strong>입니다. 강점은 중소 카페 영업 밀도·거래 데이터, 발목은 낮은 전환비용과 대형 플랫폼의 잠재 위협. <strong>무엇이 확인되면 판단이 바뀌나</strong> — 데이터·광고 매출이 실제로 나오고 대형 프랜차이즈 제휴가 락인으로 굳으면 &#x27;이기는 쪽&#x27;으로 옮겨가고, 그렇지 못하면 대형 플랫폼에 잠식될 리스크가 큽니다. 면접에서 &quot;네이버·카카오 대비 방어 해자가 무엇인가&quot;를 직접 물어 회사의 자기 인식을 확인하세요.</p>
-<p>---</p>
+<hr>
 <h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
 <p><strong>대표 — 개발자 출신, 시장검증형.</strong> 곽수용 대표는 부경대 컴퓨터공학과 10학번, 동기 3명과 2016년 창업한 <strong>개발자 출신 창업자</strong>입니다. 앞서 본 대로 점주 70명 인터뷰로 문제를 좁혔고, &quot;어중간하게 성공해서 안주하지 않겠다&quot;는 경영 철학을 공고에 내세웁니다. 비전형이면서도 초기에 기술 실패를 겪고 시장성으로 방향을 잡은 이력이라, <strong>제품·데이터 실무를 이해하는 리더</strong>로 보입니다. 2차 면접에 대표가 직접 들어오므로, 그의 데이터·CRM 전환 비전에 지원자가 어떻게 기여할지를 면접 언어로 준비하는 게 유리합니다.</p>
 <p><strong>공동창업자·C레벨 — 미확인.</strong> 2016년 함께 창업한 부경대 동기 3인의 개별 신원·현 역할, CTO 등 주요 임원 명단은 공개 정보로 확인되지 않습니다. 공동창업자 4인의 잔류 현황, 개발/사업 리더십 분담은 면접에서 확인하세요. 조직은 그로스해킹팀(CRM/데이터)·프로덕트팀·영업·마케팅·iOS/Windows 개발로 구성되며, 산업기능요원(병역특례)을 개발·데이터 직군에 적극 채용합니다 — 개발 인력을 병역 특례로 확보하는 구조입니다.</p>
@@ -267,7 +270,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </ul>
 <p><strong>자본 성격 해석.</strong> KB인베스트먼트·한국성장금융(정책·핀테크 펀드)·KT인베스트먼트·롯데벤처스(대기업 CVC) 등 <strong>금융·전략적 투자자 비중이 높습니다.</strong> 한국성장금융은 &quot;거래 빅데이터·금융기관 협업&quot;을, 에이벤처스는 &quot;포트폴리오사와의 협업&quot;을 성장 논리로 명시했습니다. 이는 순수 고속성장 베팅이라기보다 <strong>데이터 자산화·전략적 시너지·안정적 스케일업</strong>을 노리는 색채입니다. 지원자 관점에서: 대기업/금융 CVC가 다수인 구조는 스톡옵션 &#x27;대박&#x27;보다 <strong>결제·데이터 사업의 전략적 인수(M&amp;A) 시나리오</strong>를 시사합니다 — 회수 경로가 IPO형 독립성장보다 <strong>파트너 종속적</strong>일 수 있고, 그렇다면 스톡옵션 기대치는 보수적으로, 회사 방향은 롯데·KT·KB 등 파트너와의 시너지 관점에서 읽는 게 현실적입니다.</p>
 <p><strong>정렬 인사이트.</strong> 창업자 비전(&quot;데이터로 연결되는 생태계&quot;)과 투자자 회수 전략(&quot;빅데이터·금융 협업&quot;)은 <strong>표면적으로 잘 정렬</strong>됩니다 — 바로 이번 그로스 데이터 엔지니어 채용이 그 정렬의 실행 지점입니다. 다만 대기업/금융 CVC 다수 구조는 독립 IPO보다 <strong>전략적 M&amp;A 쪽으로 무게가 실릴 여지</strong>를 남깁니다. 지원자에게 주는 시그널: 이 회사에서 데이터 조직은 &#x27;있으면 좋은 팀&#x27;이 아니라 <strong>투자자가 돈을 낸 이유이자 다음 성장·회수 논리의 핵심</strong>이라는 것 — 데이터 엔지니어 역할의 전략적 무게가 크다는 뜻이면서, 동시에 그 성과 압박도 크다는 뜻입니다.</p>
-<p>---</p>
+<hr>
 <h2 id="sec-7">용어 · 개념 풀이</h2>
 <ul>
 <li><strong>스마트오더 / O2O</strong> — 매장에 가기 전 앱으로 미리 주문·결제하는 방식(스마트오더). O2O는 Online-to-Offline, 온라인으로 오프라인 매장 거래를 연결하는 사업.</li>
