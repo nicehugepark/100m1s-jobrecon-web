@@ -166,21 +166,25 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-mean mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
 .hb-turn{color:#fbbf24;height:17px;margin-left:1px}
 .hb-turn svg{width:17px;height:17px}
-.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
+/* R6-038 nav+dots 한 행 — 화살표를 카드 좌우 오버레이(top:44%·카드 높이 종속 = R5 ⑨ 교차 81% 구조 원인)에서 덱 아래 dots 행으로: 콘텐츠 safe-area 물리 분리(교차 0 구조 보장). 앱 index.html 미러(G6) */
+.story-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0 2px}
+.story-dots{display:flex;justify-content:center;gap:7px}
 .story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .story-dots .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:-10px;bottom:-10px}
 .story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
 .storyview{position:relative}
 .story-nav{display:none}
 @media (hover:hover) and (pointer:fine){
-.story-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:44%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
+.story-nav{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
 .story-nav:hover{background:rgba(23,28,38,.95)}
-.story-nav.prev{left:-6px}.story-nav.next{right:-6px}
 .story-nav[disabled]{opacity:.22;cursor:default}
 .story-nav svg{width:20px;height:20px}
 }
 .sharebar{display:flex;justify-content:center;margin:14px 0 2px}
-.sharebar button{display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* R6-039(REQ-JOBRECON-20260713-039) 터치 히트 확장 — 시각 39.6px 유지 + ::after로 실효 44px+ (R5 조니 이진탐색 39.64~39.78 실측·R3 ⑨ P0-2 modeseg 전례).
+   -4px 사유: border 1px가 ::after containing block(padding box)을 안쪽으로 만들어 -3이 실질 -2로 동작(G9 43.98 실측) — border 감안 -4 = 실질 -3/방향 → 45.7px */
+.sharebar button{position:relative;display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px}
 .sharebar button svg{width:1.15em;height:1.15em}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
 .sharetoast.on{opacity:1}
@@ -204,11 +208,13 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   </div>
   <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
   <div class="storyview" id="storyView">
-    <!-- R4-021② 데스크탑 화살표(hover 포인터 전용 CSS 노출) — 마우스-only 카드 2~5 도달 -->
-    <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
-    <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
     <div class="story-deck" id="storyDeck"></div>
-    <div class="story-dots" id="storyDots"></div>
+    <!-- R6-038 데스크탑 화살표(hover 포인터 전용 CSS 노출)를 dots 행으로 — 카드 콘텐츠 safe-area 물리 분리(교차 0) -->
+    <div class="story-nav-row">
+      <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+      <div class="story-dots" id="storyDots"></div>
+      <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
+    </div>
   </div>
   <!-- R4-023① 공유 수단 — 모드 무관 상시(개인 평결 미포함 페이지·회사 정찰만이라 공유 안전) -->
   <div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
@@ -440,20 +446,30 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간)
   var LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip(앱 index.html _LEADCONJ mirror) — 카드 ⚠️+금색볼드+병치 3중 전환신호라 선두 접속사 잉여. 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
   function axNlen(s){return String(s).replace(/\s/g,"").length;}
-  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){s=/\*\*$/.test(s)?s.slice(0,-2):(/\*$/.test(s)?s.slice(0,-1):s+"**");}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존
+  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){if(/\*\*$/.test(s))s=s.slice(0,-2);else if(/\*$/.test(s))s=s.slice(0,-1);else{var bi=s.indexOf("**");s=(bi>0&&/\S/.test(s.charAt(bi-1)))?"**"+s:s+"**";}}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존 — R6-034(d) 닫힘 볼드 시작 발췌 선두 보강(강조 역전 방지·앱 mirror)
+  // R6-034(a) 문두 편집 라벨 전 변형 스트립 — 구조 판정(짧은 조각≤16자+무숫자+비종결=라벨)·사실성 라벨(추정 등) 보존. 앱 index.html _axLabelStrip mirror(G6).
+  var AXLBLKEEP=/추정|잠정|명시|확인/;
+  function axIsLabel(t){t=String(t).replace(/[.。:：]\s*$/,"").trim();if(!t||t.length>16)return false;if(/\d/.test(t))return false;if(AXLBLKEEP.test(t))return false;return !/[다요죠까]$/.test(t);}
+  function axLabelStrip(s){s=String(s).trim();for(var k=0;k<2;k++){var m=s.match(/^\*\*([^*]{1,18})\*\*\s*[:：]\s*/)||s.match(/^\*\*([^*]{0,17}[.。])\*\*\s*/);if(m&&axIsLabel(m[1])){s=s.slice(m[0].length).trim();continue;}var m2=s.match(/^([^\s*][^:：.!?*]{0,15})[:：]\s+/);if(m2&&axIsLabel(m2[1])){s=s.slice(m2[0].length).trim();continue;}break;}return s;}   // 볼드 라벨 = 뒤 콜론/내부 마침표 종결만(**데이터팀**이라는 = 강조라 보존)
+  // R6-034(b) setup 문두 자립성 — 지시어·고아 보조사 문두 박탈(subvert는 setup 병치로 완화). 앱 _axHeadFree mirror(G6).
+  function axHeadFree(s){var t=String(s).trim().replace(/^[*`"“'『「\s]+/,"");if(/^(?:이건|그건|저건|이는|그는|이것|그것|이걸|그걸|이를|그를|이에|이처럼|그처럼|그래서|그러니까|그렇기에|그런데도|여기서|여기에|여기까진|여기까지는)(?=[\s은는이가을를도,]|$)/.test(t))return false;var m=t.match(/^([가-힣]{1,7}도)(?=\s)/);if(m&&!/^(?:아무도|누구도|하나도|조금도)/.test(m[1]))return false;return true;}
+  // R6-034(c) 인용부 폐합 — 미폐합 여는 부호에서 앞/뒤 중 알맹이 굵은 쪽 채택(반토막 인용 금지·인용 내부 대비 보존) → 잔여는 axWhole 재검. 앱 _axQuoteClose mirror(G6).
+  function axQuoteCut(s,at){var bf=s.slice(0,at),af=s.slice(at+1);var bn=axNlen(bf.replace(/[*`]/g,"")),an=axNlen(af.replace(/[*`]/g,""));return (an>=6&&an>bn)?af:bf;}
+  function axQuoteClose(s){s=String(s);var prs=[["“","”"],["『","』"],["「","」"],["‘","’"]];for(var i=0;i<prs.length;i++){var o=prs[i][0],c=prs[i][1];while((s.split(o).length-1)>(s.split(c).length-1)){s=axQuoteCut(s,s.lastIndexOf(o));}}if(((s.match(/"/g)||[]).length)%2){s=axQuoteCut(s,s.lastIndexOf('"'));}return axBal(s.replace(/[\s,·—:：]+$/,"").trim());}
   function axClean(s){s=String(s).trim();s=s.replace(/^\s*[→•]\s*/,"");s=s.replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=s.replace(/\s*[,，—:：]\s*(\*\*|`)?\s*$/,"$1");return axBal(s.trim());}   // P1-2 누출 정화: 선두 →•·콜론붙은 볼드라벨 + 말미 ,—: 트림(볼드/백틱 닫기 안쪽 콤마도 = 축,** → 축**)
   function clipWall(s){if(axNlen(s)<=90)return s;var cut=s.search(/[,，]\s/);if(cut>0&&axNlen(s.slice(0,cut))>=12)return axBal(s.slice(0,cut).trim());return s;}   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
   function axLastClause(t){var re=/[.!?]\s+/g,m,last=-1;while((m=re.exec(t))!==null)last=m.index+m[0].length;if(last>0){var tail=t.slice(last).trim();if(axNlen(tail)>=3)return tail;}return String(t).trim();}   // setup 대비 직전 완결 절
   // ③ 문장 단위 대비 — 어미('…지만 B')/리드접속사(문장 시작·중간). subvert=완결 문장(종결어미 보장·잘림0). 원문 substring(창작0).
   //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 보상반전 추출). 앱 index.html _sentContrast mirror.
-  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
+  // R6-033 문형 확장 — ①인용부·괄호 닫힘 뒤 '지만'(콕스웨이브 '"데이터 엔지니어"지만') ②'A(이/가/은/는) 아니라/아니고 B'(휴톰·페이타랩·당근 §2 직무 실체 최빈 대비형·setup=명사구 lead:true). 앱 index.html _sentContrast mirror(G6).
+  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣"”'』」)\]]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var mn=s.match(/(?:[이가은는]\s*)?아니(?:라|고)[,，]?(?=\s)/);if(mn&&mn.index>=4){var st2=s.slice(0,mn.index).trim();var sub2=s.slice(mn.index+mn[0].length).replace(/^[\s,、]+/,"").trim();if(axNlen(st2)>=6&&axNlen(sub2)>=8)return {setup:axBal(st2),subvert:axBal(clip(sub2,1)),lead:true};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
   // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
   var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
   // R4-019b 종결어미 화이트리스트 — 블랙리스트가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린') 구조 차단. lead(볼드 리드 명사구)는 블랙리스트만. 앱 _AXFIN mirror(G6).
-  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
+  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐|국면)[*`"”')\]]*\s*$/;   // R6-034 '국면' 보강(완결 명사문·앱 mirror)
   function axWhole(s,lead){var t=String(s).trim().replace(/[*`]+$/,"").trim();if(!t)return false;if(AXCUT.test(t))return false;return lead?true:AXFIN.test(t);}
-  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
-  function axTrim(s,lead){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
+  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. R6-034(a) axLabelStrip 최전단 통합. 앱 _axTrim mirror.
+  function axTrim(s,lead){s=axLabelStrip(String(s).trim()).replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
   // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
   var AXMARK=/여기가 반전/;
   // R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지(리포트 실존 후보만 승격·창작0). 앱 _FITKW mirror(G6).
@@ -478,7 +494,8 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(!marks.length)return;
   var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
   // R3-012 얇은 축 배제 — 카드 수 = 축 프레임(6)이 아니라 콘텐츠 밀도(임팩트+뜻줄 스코어>=3). 미달 축은 카드화 배제(리포트에만). 앱 mirror.
-  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
+  // R6-033/034: 후보 폐기 시 같은 § 차순위 재시도(3회) + 최종 산출 출력 규격 게이트(라벨0·자립·폐합·완결) + fit 한정 밀도 완화 (_mn?2:0)<(fit?1:3). 앱 _collectAxes mirror(G6).
+  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _u=axUsed[_sec]||(axUsed[_sec]={});var _got=null;for(var _t=0;_t<3&&!_got;_t++){var _c0=extractContrast(paras(_b.body),_u);if(!_c0)break;var _su0=clipWall(clip(axClean(axLabelStrip(_c0.setup)),2)),_sv0=axClean(axLabelStrip(String(_c0.subvert).replace(LEADCONJ,"")));_su0=axQuoteClose(_su0);_sv0=axQuoteClose(_sv0);if(!_su0||!_sv0)continue;if(!axHeadFree(_su0))continue;if(!axWhole(_su0,true)||!axWhole(_sv0,!!_c0.lead))continue;_got={c:_c0,su:_su0,sv:_sv0};}if(!_got)continue;var _c=_got.c,_su=_got.su,_sv=_got.sv;var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<(_ky==="fit"?1:3))continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
   if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
   // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
   var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
