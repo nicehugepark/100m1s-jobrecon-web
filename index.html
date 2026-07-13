@@ -33,6 +33,9 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body { margin:0; background:var(--bg); color:var(--fg);
     font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",Segoe UI,Roboto,sans-serif;
     line-height:1.6; }
+  /* 🔴 form 요소는 font-family 비상속(UA 기본: textarea=monospace·input=Arial) — 본문 타이포 강제 상속.
+     placeholder 전각식 공백·괄호 리듬 붕괴 해소 (R3 ⑨ P0-1). /r/ page.py CSS와 동기. */
+  button, input, textarea, select { font-family:inherit; }
   /* 🔴 /r/ page.py와 동기: 긴 '·' 연결 목록(CJK를 iOS Safari가 non-breaking 처리하는 케이스)·줄바꿈 불가
      긴 라틴/URL 토큰이 뷰포트를 넘겨 가로 스크롤을 만드는 것 차단. 두 속성 다 상속되어 .card/.blk 본문·story 커버.
      overflow-x:hidden 금지(sticky .anchor.pinned 파괴). */
@@ -50,7 +53,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .anchor { background:var(--bg); }
   .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -4px; padding:6px 4px 4px;
     border-bottom:1px solid var(--line); box-shadow:0 6px 14px -8px rgba(0,0,0,.6); }
-  .anchor.pinned .ad { margin:8px 0 4px; padding:9px; }   /* 고정 시 광고 슬림 */
+  /* (R4-023③) .anchor.pinned .ad 슬림 룰 제거 — AD는 sticky 밖(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
   .ad-infeed { margin:12px 0; }                            /* 리포트 인피드 광고(트랙 B-1) */
   /* 복귀 완료 게이트(트랙 B-2) — 이탈 후 돌아온 사용자에게 광고 1회 후 리포트 공개 */
   .gate { position:fixed; inset:0; z-index:100; background:rgba(6,9,13,.93);
@@ -95,7 +98,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .crow { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:8px; }
   .ck { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--fg); margin:0; cursor:pointer; }
   .ck input { width:16px; height:16px; accent-color:var(--accent); }
-  .constraints input[type=number] { width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:9px 10px; font-size:14px; }
+  /* 🔴 padding 13px = 터치 타깃 h44 (R3 ⑨ P0-2 — input은 ::after 미지원, 실 상향. 조건 칩 h44와 정합) */
+  .constraints input[type=number] { width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:13px 10px; font-size:14px; }
   .clabel { font-size:12px; color:var(--dim); margin:2px 0 4px; }
 
   .verdict { display:none; align-items:center; gap:10px; margin:12px 0; }
@@ -179,10 +183,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .pbox textarea#profile:focus, .pbox #url:focus { outline:none; box-shadow:none; }
   .pbox-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap;
     padding:7px 9px; border-top:1px solid var(--line); background:var(--bg); }
-  .attach { display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
+  .attach { position:relative; display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
     margin:0; padding:0 13px; font-size:13px; font-weight:600; color:#cdd6e2;
     background:var(--card2); border:1px solid var(--line); border-radius:9px; cursor:pointer;
     -webkit-tap-highlight-color:transparent; }
+  /* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px — fold 높이 악화 없이 44 충족 (R3 ⑨ P0-2, PM320 R49 ::after 전례) */
+  .attach::after { content:""; position:absolute; left:0; right:0; top:-3px; bottom:-3px; }
   .attach:hover { border-color:var(--accent); color:var(--fg); }
   .pbox-hint { font-size:11.5px; color:var(--dim); line-height:1.4; }
   /* 공고 파일 업로드(FR-051) */
@@ -217,6 +223,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     .radar::before,.scan-bar span,.scan-steps .st.active,.scan-skel .sk,#digBtn.on { animation:none; }
   }
   .blk .body .ln { margin:5px 0; }
+  .blk .body hr { border:0; border-top:1px solid var(--line); margin:12px 0; }
   .blk .body strong { color:#f0f4f8; font-weight:700; }
 
   /* 인라인 SVG 아이콘(이모지 대체) — currentColor·14px 기준. 냉정/날카로움 */
@@ -335,9 +342,11 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .modeseg { display:none; gap:4px; margin:12px 0 4px; padding:4px;
     background:var(--card2); border:1px solid var(--line); border-radius:999px; width:fit-content; }
   body.has-story .modeseg { display:inline-flex; }
-  .modeseg button { width:auto; margin:0; padding:0 20px; min-height:38px; font-size:13.5px; font-weight:700;
+  .modeseg button { position:relative; width:auto; margin:0; padding:0 20px; min-height:38px; font-size:13.5px; font-weight:700;
     border-radius:999px; background:transparent; color:var(--dim); border:0; cursor:pointer;
     -webkit-tap-highlight-color:transparent; transition:background .15s,color .15s; }
+  /* 🔴 터치 히트 확장: 시각 38px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — /r/ page.py와 동기) */
+  .modeseg button::after { content:""; position:absolute; left:0; right:0; top:-3px; bottom:-3px; }
   .modeseg button.on { background:var(--accent); color:#fff; }
 
   /* 스토리 뷰: 스토리 모드에서만 노출 + 리포트 요소는 스토리 모드에서 숨김 */
@@ -349,9 +358,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body.mode-story #compareWrap { display:none !important; }
 
   /* 카드 덱 — 가로 스냅 스와이프 (릴스 감성·카드별 시맨틱 컬러 변주 · 창작0 무관 순수 비주얼) */
-  /* R3-014 콘텐츠 적응 높이 — 덱 높이=콘텐츠 최장 카드(stretch·전 카드 균질), 54vh 고정 폐기(짧은 카드 하단 55~60% 텅 제거).
-     min-height 34vh = 터치·존재감 안전 하한만. 짧은 카드의 잔여 여백은 .spacer(flex)가 흡수해 anchor가 하단 정렬. */
-  .story-deck { display:flex; align-items:stretch; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
+  /* R4-021① 콘텐츠 적응 높이 완결 — R3-014(54vh 고정 폐기) 후에도 stretch가 '최장 카드 높이'를 전 카드에 강제해
+     짧은 카드 중앙 spacer 공동 30%+(toss #2 실측 44.7%) 잔존 → flex-start로 카드 개별 높이(=자기 콘텐츠).
+     min-height 34vh = 터치·존재감 안전 하한만. spacer는 하한 카드에서만 잔여 흡수(중앙 spacer 비율 <30% 게이트). */
+  .story-deck { display:flex; align-items:flex-start; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:4px 2px 2px; margin:2px -2px; }
   .story-deck::-webkit-scrollbar { display:none; }
   /* 색은 JS가 카드별 --sc(악센트)·--sc2(밝은 변주·텍스트 대비용)·--scg(글로우 rgba) 주입. 본문은 밝은 회색 고정(WCAG AA). */
@@ -404,9 +414,11 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .story-angle li { position:relative; margin:10px 0; padding-left:18px; font-size:14.5px; line-height:1.55; color:#cdd6e2; }
   .story-angle li::before { content:""; position:absolute; left:0; top:.5em; width:7px; height:7px;
     border-radius:2px; background:var(--sc); transform:rotate(45deg); }
-  .story-anchor { align-self:flex-start; width:auto; margin:18px 0 0; padding:9px 15px; font-size:13px; font-weight:700;
+  .story-anchor { position:relative; align-self:flex-start; width:auto; margin:18px 0 0; padding:9px 15px; font-size:13px; font-weight:700;
     color:var(--sc2); background:var(--scg); border:0; border-radius:999px; cursor:pointer;
     display:inline-flex; align-items:center; gap:6px; -webkit-tap-highlight-color:transparent; }
+  /* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, /r/ page.py와 동기) */
+  .story-anchor::after { content:""; position:absolute; left:0; right:0; top:-5px; bottom:-5px; }
   .story-anchor svg { width:1.1em; height:1.1em; }
   .story-card.allmore { align-items:center; justify-content:center; text-align:center; }
   .story-card.allmore .story-hl { text-align:center; }
@@ -475,8 +487,24 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .story-mean mark.kw { background:var(--scg); color:var(--sc2); border-radius:5px; padding:0 3px; font-weight:800; box-shadow:inset 0 -2px 0 var(--sc); }
   /* 진행 도트 — 활성 도트는 현재 카드색(JS 주입) */
   .story-dots { display:flex; justify-content:center; gap:7px; margin:16px 0 2px; }
-  .story-dots .dot { width:7px; height:7px; border-radius:999px; background:var(--line); transition:width .25s,background .25s; }
+  /* R4-021② dot=클릭 이동 타겟 — 시각 7px 유지 + ::after 히트 확장(터치·마우스 공용, R3 ⑨ P0-2 전례) */
+  .story-dots .dot { position:relative; width:7px; height:7px; border-radius:999px; background:var(--line);
+    transition:width .25s,background .25s; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .story-dots .dot::after { content:""; position:absolute; left:-3px; right:-3px; top:-10px; bottom:-10px; }
   .story-dots .dot.on { width:22px; background:var(--dot-on,var(--accent)); }
+  /* R4-021② 데스크탑 마우스-only 도달성 — hover 포인터 환경에서만 좌우 화살표(카드 2~5 도달 불가 해소). 터치는 스와이프 유지. */
+  .storyview { position:relative; }
+  .story-nav { display:none; }
+  @media (hover:hover) and (pointer:fine) {
+    .story-nav { display:flex; align-items:center; justify-content:center; position:absolute; top:44%;
+      transform:translateY(-50%); z-index:5; width:44px; height:44px; border-radius:999px;
+      border:1px solid var(--line); background:rgba(11,14,19,.82); color:#dbe4ee; cursor:pointer;
+      transition:opacity .2s, background .15s; }
+    .story-nav:hover { background:rgba(23,28,38,.95); }
+    .story-nav.prev { left:-6px; } .story-nav.next { right:-6px; }
+    .story-nav[disabled] { opacity:.22; cursor:default; }
+    .story-nav svg { width:20px; height:20px; }
+  }
   @media (prefers-reduced-motion:reduce){
     .story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .bwrap,
     .story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,
@@ -524,21 +552,23 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   <!-- 알림 배너 슬롯: 평소 숨김, 실 운영 알림 시에만 노출. 개발용 문구는 라이브에 싣지 않음 -->
   <div id="notice" style="display:none; margin:12px 0; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card2); color:var(--dim); font-size:13px; line-height:1.5"></div>
 
-  <!-- 앵커(FR-009·FR-029): 서비스명(JobRecon)+정찰대상(회사·직군)+광고를 하나의 sticky 단위로 스크롤 중 상단 상시 고정(대표 요구 2026-07-10). 태그라인은 브랜드 바로 밑에 함께 고정. -->
+  <!-- 앵커(FR-009·FR-029): 서비스명(JobRecon)+정찰대상(회사·직군)을 sticky 단위로 상단 상시 고정. 태그라인은 브랜드 바로 밑에 함께 고정.
+       R4-023③: AD 슬롯은 sticky 밖으로 이동(모바일 뷰포트 24% 상시 점유 해소 — R3 조니 2심 채택. 광고 존치는 유지·위치만, FR-009 원안과 충돌 사항은 대표 결정 대기). -->
   <header class="anchor pinned" id="anchor">
     <div class="brand">Job<span>Recon</span></div>
     <div class="tag">구직자 편 취업 정찰 · 공고 URL 하나로 "지원할 가치가 있나"를 답합니다</div>
     <div class="anchor-row">
       <div id="meta"></div>
     </div>
-    <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
   </header>
+  <div class="ad" id="ad"><b>AD</b> · 광고 지면 (정찰 리포트를 기다리는 동안 노출됩니다)</div>
 
   <div class="card">
     <label for="url">채용공고 URL</label>
     <!-- 통합 박스(내 정보와 동일 포맷): URL 입력 + 공고 파일 업로드(FR-051) -->
     <div class="pbox">
-      <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·링크드인·사람인·잡코리아·회사 채용페이지 등 어디든" />
+      <!-- 🔴 placeholder 390px 완결 의무 (R3 ⑨ P1-2): 실측 가용 306px, 현 문구 264.7px. 43자 원문은 489.8px로 '잡코리아' 중간 절단 -->
+      <input id="url" type="url" placeholder="채용 공고 링크 — 원티드·사람인 등 어디든" />
       <div class="pbox-bar">
         <button id="jdBtn" type="button" class="attach"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" fill="url(#jrico)" opacity=".17"/><path d="M6 3h8l4 4v14H6z" fill="none" stroke="url(#jrico)" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v4h4" fill="none" stroke="url(#jrico)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17.5v-6M9.4 13.6l2.6-2.6 2.6 2.6" fill="none" stroke="url(#jrico)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> 공고 파일 업로드</button>
         <span class="pbox-hint">URL 없이 PDF·PPT·Word·HWP·txt 파일로도 정찰</span>
@@ -561,7 +591,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     <div class="constraints">
       <div class="clabel">내 조건 (평결에 반영·저장됩니다 — 눌러서 선택)</div>
       <div class="condchips" id="condChips"></div>
-      <input id="c_tc" type="number" inputmode="numeric" placeholder="목표 연봉 TC (세전·만원, 선택) — 예) 8000" />
+      <!-- R4-022b② TC gloss — 약어 첫 노출에 뜻 병기(placeholder 390px 완결 제약 내) -->
+      <input id="c_tc" type="number" inputmode="numeric" placeholder="목표 연봉 TC(총 보상) — 세전·만원, 예) 8000" />
     </div>
 
     <button id="go">정찰 시작</button>
@@ -598,6 +629,9 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   </div>
   <!-- 스와이프 스토리 뷰 — 🔴 EXTRACTIVE: 원문 리포트 문장·숫자만 추출(창작 0). 카드 못 담는 뉘앙스는 리포트 모드에 -->
   <div class="storyview" id="storyView">
+    <!-- R4-021② 데스크탑 화살표(hover 포인터 전용 CSS 노출) — 마우스-only 환경 카드 2~5 도달 -->
+    <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+    <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
@@ -716,6 +750,8 @@ function renderMd(t) {
   const closeTo = (d) => { while (stack.length > d) html += "</" + stack.pop().tag + ">"; };
   for (const raw of lines) {
     const line = raw.replace(/\s+$/, "");
+    // 🔴 hr(---/***/___) → <hr> — 미처리 시 "---" 리터럴 노출 (R3 ⑧① P0). /r/ page.py md_to_html과 동기 (FLR-20260428-TEC-001).
+    if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { closeTo(0); html += "<hr>"; continue; }
     const bm = line.match(/^(\s*)[-•]\s+(.*)$/);       // 불릿
     const nm = line.match(/^(\s*)\d+\.\s+(.*)$/);       // 번호
     if (bm || nm) {
@@ -741,6 +777,9 @@ function renderMeta(m) {
 }
 
 function renderBlocks(text) {
+  // R4-019b② 메타 발화(괄호 자기서술) 리포트 노출 차단 + R4-022b② 리포트 gloss — 카드(R3-015)와 동일 사전을
+  // 본문에도 문서 단위 첫 등장 1회 적용(페이타랩 TAM/SAM/SOM 잔존 구멍 해소). 전체 텍스트 기준 재계산이라 스트리밍 중에도 멱등.
+  text = _axGloss(_stripMetaTalk(text), {});
   // "## 1." ~ "## 8." 헤더로 분리(텍스트 순서로 슬라이스)
   const re = /^##\s*(\d)\.\s*(.*)$/gm;
   let m, marks = [];
@@ -906,7 +945,7 @@ function _stripStoryLabel(s){ return String(s).replace(/^\*\*[^*]+\*\*\s*[:：]\
 // em대시 리드 대비 "**주제 — A, B**"(comma) 또는 "**주제 — A지만/그러나 B**"(conj) → {setup, subvert}. §4 보상/실적 볼드리드용. iOS 안전(split·lookbehind 0).
 // 나열≠대조 — comma 분기가 "A, B" 나열(대조·반전 신호 0)을 가짜 대비로 뽑는 것 방지(페이타랩 "개발자 출신, 시장검증형"). 둘 다 짧고 반전어 없으면 무효 → _sentContrast 폴백.
 const _AXNEG=/(베일|물음표|없|아니|않|못|미확인|불투명|비공개|의문|불확실|모호|우려|그림자|리스크|위험|약하|낮|숨|가림|이면|글쎄|반면|의존|취약|공백|결여|한계|정체|둔화)/;
-function _leadContrast(p){ const m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/); if(!m)return null; const f=m[1].trim().split(/\s[—-]\s/); if(f.length<2)return null; const rest=f.slice(1).join(" — "); const cm=rest.split(/\s*,\s*/); if(cm.length>=2){ const _lsu=cm[0].trim(), _lsv=cm.slice(1).join(", ").trim().replace(/\.$/,""); if(!(_axNlen(_lsu)<=6 && _axNlen(_lsv)<=6 && !_AXNEG.test(_lsv) && !_AXNEG.test(_lsu))) return { setup:_lsu, subvert:_lsv }; } const mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/); if(mm && mm.index>=3){ const cut=mm[1]?mm.index+mm[1].length:mm.index; const sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim(); if(sub.replace(/\s/g,"").length>=6) return { setup:rest.slice(0,cut).trim(), subvert:sub }; } return null; }
+function _leadContrast(p){ const m=String(p).match(/^\*\*\s*([^*]+?)\s*\*\*/); if(!m)return null; const f=m[1].trim().split(/\s[—-]\s/); if(f.length<2)return null; const rest=f.slice(1).join(" — "); const cm=rest.split(/\s*,\s*/); if(cm.length>=2){ const _lsu=cm[0].trim(), _lsv=cm.slice(1).join(", ").trim().replace(/\.$/,""); if(!(_axNlen(_lsu)<=6 && _axNlen(_lsv)<=6 && !_AXNEG.test(_lsv) && !_AXNEG.test(_lsu))) return { setup:_lsu, subvert:_lsv, lead:true }; } const mm=rest.match(/([가-힣]지만)(?=[\s,])|(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/); if(mm && mm.index>=3){ const cut=mm[1]?mm.index+mm[1].length:mm.index; const sub=rest.slice(cut).replace(/^[\s,、]+/,"").trim(); if(sub.replace(/\s/g,"").length>=6) return { setup:rest.slice(0,cut).trim(), subvert:sub, lead:true }; } return null; }
 // ── 범용 대비 추출기(§위치 기반·특정 회사 문구 0) — 페이타랩 하드코딩 정규식 제거(FLR-20260712-AGT-003: 페이타랩 외 17개 스토리 소멸 근본 fix) ──
 const _AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간). iOS 안전(lookbehind 0)
 const _LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip — 카드가 이미 ⚠️+금색볼드+병치로 3중 전환신호라 선두 접속사는 잉여·반복(대표 "다만 다만 다만"). 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
@@ -919,16 +958,24 @@ function _axLastClause(t){ const re=/[.!?]\s+/g; let m, last=-1; while((m=re.exe
 //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 '급여 26.4% 증가. 그러나 증가율 최저' 보상반전 추출).
 function _sentContrast(para){ const ss=_storySents(para); for(let i=0;i<ss.length;i++){ const s=ss[i]; const m=s.match(/[가-힣]지만(?=[\s,])/); if(m){ const idx=s.indexOf(m[0]), cut=idx+m[0].length; const sub=s.slice(cut).replace(/^[\s,、]+/,"").trim(); if(_axNlen(s.slice(0,idx))>=5 && _axNlen(sub)>=8) return { setup:_axBal(s.slice(0,cut).trim()), subvert:_axBal(_clipSent(sub,1)) }; } const m2=s.match(_AXCONJ); if(m2){ const pos=s.indexOf(m2[1],m2.index); let setup=s.slice(0,pos).trim(); const sub=s.slice(pos).trim(); if(_axNlen(setup)<4 && i>0) setup=ss[i-1].trim(); if(_axNlen(setup)>=4 && _axNlen(sub)>=8) return { setup:_axBal(_axLastClause(setup)), subvert:_axBal(_clipSent(sub,1)) }; } } return null; }
 // R3-015 비문(잘림) 게이트 — 말미가 수사 관형('+35.2%인')·관형형·비대비 연결어미·구두점이면 미완결(삼양 card3 비문 차단).
-//    '…지만'은 대비 구조 설계 산출이라 완결 취급. 명사 종결(레이블형)은 완결. iOS 안전(lookbehind 0).
+//    '…지만'은 대비 구조 설계 산출이라 완결 취급. iOS 안전(lookbehind 0).
 const _AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
-function _axWhole(s){ return !_AXCUT.test(String(s).trim().replace(/[*`]+$/,"").trim()); }
+// R4-019b 종결어미 화이트리스트 — 블랙리스트(_AXCUT)가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린' = "A한 반면 B" 앞 관형절)을 구조 차단.
+//    허용: ①종결어미(다/요/죠/까/음/함/됨/임/봄/셈)+말미부호opt ②구두점·닫는괄호·인용부호 ③숫자·수치단위(발췌 수치) ④'…지만'(대비 설계 산출)
+//    ⑤명사문 서술어로 흔한 종결 명사(미지수/관건/전망 등 — 데이터 실측 보강). 문장 절단 위험 경로(_sentContrast)에만 엄격 적용,
+//    볼드 리드 명사구 발췌(_leadContrast '개발자 출신')는 lead 플래그로 관형·연결어미 블랙리스트만 검사. /r/ page.py 미러(G6).
+const _AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
+function _axWhole(s, lead){ const t=String(s).trim().replace(/[*`]+$/,"").trim(); if(!t)return false; if(_AXCUT.test(t))return false; return lead?true:_AXFIN.test(t); }
 //    선두 볼드 콜론 라벨('**한 문장 판정**:')은 자르기 전에 제거 — ': ' 경계 절단이 메타 라벨만 남기는 역전 방지. 말미 구두점은 strip으로 우선 해소.
-function _axTrim(s){ s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,""); s=_axBal(s.replace(/[\s,·—:：]+$/,"")); for(let k=0;k<3 && s && !_axWhole(s);k++){ const cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", ")); s=cut>4?_axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):""; } return _axWhole(s)?s:""; }
+function _axTrim(s, lead){ s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,""); s=_axBal(s.replace(/[\s,·—:：]+$/,"")); for(let k=0;k<3 && s && !_axWhole(s,lead);k++){ const cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", ")); s=cut>4?_axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):""; } return _axWhole(s,lead)?s:""; }
 // R3-013 최강 반전 우선 승격 — '첫 유효 대비'가 아니라 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드)를 선택.
 //    리포트 자기 마커('여기가 반전') 문단 최우선(+10) — 리포트-카드 격차(삼양 보상반전 증발) 구조 봉쇄. 비문 후보는 자격 박탈. used=문단 중복 방지.
 const _AXMARK=/여기가 반전/;
-function _axCandScore(r, para){ let v=_storyImpact(r.setup+" "+r.subvert); if(_AXNEG.test(r.subvert))v+=2; if(_AXMARK.test(para))v+=10; return v; }
-function _extractContrast(pls, used){ let best=null, bi=-1, bs=-1; for(let i=0;i<pls.length;i++){ if(used[i])continue; const r=_leadContrast(pls[i]) || _sentContrast(pls[i]); if(!r)continue; r.setup=_axTrim(r.setup); r.subvert=_axTrim(r.subvert); if(!r.setup||!r.subvert)continue; const v=_axCandScore(r,pls[i]); if(v>bs){ best=r; bi=i; bs=v; } } if(best){ used[bi]=true; best.score=bs; } return best; }
+// R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지: 리포트 실존 후보 중 직무·기술 신호(+정찰 직군 토큰) +2(승격만·창작0). /r/ page.py 미러(FITKW).
+const _FITKW=/(개발|엔지니어|기술\s*스택|테크|아키텍처|인프라|코드|데이터|플랫폼|백엔드|프론트엔드|모바일|서버|AI|머신러닝|알고리즘|직무|요건|경력|연차|온보딩|커리어|성장\s*기회)/;
+function _mkFitRe(pos){ const toks=String(pos||"").split(/[\s·,/()+&]+/).filter(w=>w.replace(/\s/g,"").length>=2).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")); return toks.length?new RegExp("(?:"+toks.join("|")+")"):null; }
+function _axCandScore(r, para, fitRe){ let v=_storyImpact(r.setup+" "+r.subvert); if(_AXNEG.test(r.subvert))v+=2; if(_AXMARK.test(para))v+=10; const b=r.setup+" "+r.subvert; if(_FITKW.test(b)||(fitRe&&fitRe.test(b)))v+=2; return v; }
+function _extractContrast(pls, used, fitRe){ let best=null, bi=-1, bs=-1; for(let i=0;i<pls.length;i++){ if(used[i])continue; const r=_leadContrast(pls[i]) || _sentContrast(pls[i]); if(!r)continue; r.setup=_axTrim(r.setup,r.lead); r.subvert=_axTrim(r.subvert,r.lead); if(!r.setup||!r.subvert)continue; const v=_axCandScore(r,pls[i],fitRe); if(v>bs){ best=r; bi=i; bs=v; } } if(best){ used[bi]=true; best.score=bs; } return best; }
 // 6축 = §위치 매핑(회사 100% 공통). 순서=서사곡선(성장→핏→보상→리스크→시장→경영, 순서 종속·memory story_narrative_beat). 라벨=섹션 파생, key=색상. 3장 미만 → 스토리 숨김(buildStory).
 const _AXIS_SEC=[[3,"성장·전환","pivot"],[2,"직무 무게","fit"],[4,"실체·보상","comp"],[4,"숨은 리스크","risk"],[8,"시장·경쟁","runway"],[6,"경영·투자","culture"]];
 // P1-1 뜻줄(mean) — §body 앵커(지원자에게 주는 시그널/관점에서·무엇이 확인되면) 뒤 문장 substring(창작0). 앵커 없으면 mean 없음(optional·render는 c.mean? 이미 지원). 수렴 골격 = setup↔subvert + 나한테 뜻하는 바 1줄.
@@ -938,11 +985,15 @@ function _extractMean(body,mused){ const ss=_storySents(body); for(let i=0;i<ss.
 const _COMP=/(연봉|급여|보상|스톡옵션|스톡|RSU|처우|복지|성과급|인센티브|월급|초봉|페이밴드|사이닝)/;
 // R3-012 얇은 축 배제 — 카드 수를 축 프레임(6)이 아니라 콘텐츠 밀도로 결정. 밀도 = 후보 임팩트(숫자·반전어·마커)+뜻줄(+2) >= 3.
 //    미달 축(토스 '커지는 파이/경쟁 심화 파이' 동어반복류)은 카드화 배제 — 리포트에만 남긴다(얇은 축은 카드가 아니라 리포트다).
-function _collectAxes(byId){ const out=[], used={}, mused={}; for(let i=0;i<_AXIS_SEC.length;i++){ const sec=_AXIS_SEC[i][0], label=_AXIS_SEC[i][1], key=_AXIS_SEC[i][2]; const b=byId[sec]; if(!b)continue; const c=_extractContrast(_storyParas(b.body), used[sec]||(used[sec]={})); if(!c)continue; const setup=_clipWall(_clipSent(_axClean(c.setup),2)), subvert=_axClean(String(c.subvert).replace(_LEADCONJ,"")); const mean=_extractMean(b.body, mused[sec]||(mused[sec]={})); if(_axNlen(setup)+_axNlen(subvert)<14 && !mean) continue; if((c.score||0)+(mean?2:0)<3) continue; const _label = key==="comp" ? (_COMP.test(setup+" "+subvert)?"실체·보상":"회사 주장 vs 실제") : label; out.push({ key, label:_label, setup, subvert, mean, sec:"sec-"+sec }); } return out; }
+function _collectAxes(byId, fitRe){ const out=[], used={}, mused={}; for(let i=0;i<_AXIS_SEC.length;i++){ const sec=_AXIS_SEC[i][0], label=_AXIS_SEC[i][1], key=_AXIS_SEC[i][2]; const b=byId[sec]; if(!b)continue; const c=_extractContrast(_storyParas(b.body), used[sec]||(used[sec]={}), fitRe); if(!c)continue; const setup=_clipWall(_clipSent(_axClean(c.setup),2)), subvert=_axClean(String(c.subvert).replace(_LEADCONJ,"")); const mean=_extractMean(b.body, mused[sec]||(mused[sec]={})); if(_axNlen(setup)+_axNlen(subvert)<14 && !mean) continue; if((c.score||0)+(mean?2:0)<3) continue; const _label = key==="comp" ? (_COMP.test(setup+" "+subvert)?"실체·보상":"회사 주장 vs 실제") : label; out.push({ key, label:_label, setup, subvert, mean, sec:"sec-"+sec }); } return out; }
 // R3-015 용어 gloss — 카드 노출 텍스트의 약어 첫 등장에 인라인 괄호 풀이(덱 단위 1회). 원문에 이미 괄호 풀이가 붙어 있으면 skip.
 //    표준 정의만(용어 풀이=사실 정보·창작0 위배 아님). 맨끝 사전 금지 → 등장 지점 인라인. iOS 안전(lookahead만·lookbehind 0).
-const _GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
+const _GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
 function _axGloss(t, st){ let s=String(t==null?"":t); for(let i=0;i<_GLOSS.length;i++){ const k=_GLOSS[i][0], d=_GLOSS[i][1]; if(st[k])continue; const m=s.match(new RegExp("\\b"+k+"\\b(?!\\s*[(（])")); if(!m)continue; st[k]=1; const e=m.index+k.length; s=s.slice(0,e)+"("+d+")"+s.slice(e); } return s; }
+// R4-019b② 메타 발화 차단 — LLM 자기서술 괄호 문장("(공고에는 …를 언급하지 않습니다)" 류)의 스토리·리포트 노출 금지.
+//    괄호째 제거(잔여 문장의 사실 정보는 보존·창작0). FLR-20260712-AGT-001(반환각 자기지시 노출) 계열. /r/ page.py 미러(G6).
+const _METAPAREN=/[(（][^()（）]{0,80}(?:언급(?:하지|되지|이|은|도)?\s*않|명시(?:하지|되지)\s*않|공개(?:하지|되지)\s*않|밝히지\s*않|드러나지\s*않|나와\s*있지\s*않|포함되(?:어|지)\s*않|(?:지어내|추측하)지\s*않)[^()（）]{0,40}[)）]\s*/g;
+function _stripMetaTalk(t){ return String(t==null?"":t).replace(_METAPAREN,""); }
 
 // 카드별 시맨틱 악센트 — [sc(악센트), sc2(밝은 변주·텍스트 대비), scg(글로우 rgba)] · 순수 비주얼(창작0 무관)
 const _STORY_PAL = {
@@ -980,6 +1031,7 @@ function _isMetaCaveat(s){
 // 🔴 편집 단위 = 리포트 6축(재무·성장·리스크·문화·핏·보상). 각 축=[설정↔전복 발췌 + 원문 조언 뜻줄]. 문장·숫자 전부 원문 substring(창작0).
 function buildStory(text, meta, level){
   const deck = $("storyDeck"), dots = $("storyDots");
+  text = _stripMetaTalk(text);   // R4-019b② 메타 발화(괄호 자기서술) 카드 노출 차단
   const re = /^##\s*(\d)\.\s*(.*)$/gm; let m, marks = [];
   while ((m = re.exec(text)) !== null) marks.push({ id:+m[1], end:re.lastIndex, idx:m.index });
   if (marks.length === 0){ resetStory(); return false; }
@@ -987,7 +1039,8 @@ function buildStory(text, meta, level){
   marks.forEach((mk, i) => { byId[mk.id] = { id:mk.id, body:text.slice(mk.end, i+1 < marks.length ? marks[i+1].idx : text.length).trim() }; });
   const company = (meta && meta.company) || "", position = (meta && meta.position) || "";
   // 6축 후보 중 밀도 통과 축만 발췌(R3-012). 최소 3장 하한 — 미만이면 스토리 숨김(반쪽 덱 노출 금지, 리포트 body만 노출).
-  const axes = _collectAxes(byId);
+  // R4-022b③ 직군 토큰(정찰 대상 position) 가중 — 개발 공고에 직무·기술축 0장 방지.
+  const axes = _collectAxes(byId, _mkFitRe(position));
   if (axes.length < 3){ resetStory(); return false; }
   // R3-015 용어 gloss — 덱 노출 텍스트(setup/subvert/mean) 첫 등장 약어에 인라인 풀이(덱 단위 상태 공유).
   const _gst = {};
@@ -1069,10 +1122,21 @@ function _wireStory(){
   } else cards.forEach(c => c.classList.add("inview"));
   if (cards[0]) cards[0].classList.add("inview");
   // 활성 도트 + 도트색 = 현재 카드 악센트(스와이프 따라 색 흐름)
+  let _cur = 0;
   const setActive = i => {
+    _cur = i;
     dots.querySelectorAll(".dot").forEach((d, j) => d.classList.toggle("on", j === i));
     if (cards[i]) dots.style.setProperty("--dot-on", getComputedStyle(cards[i]).getPropertyValue("--sc").trim());
+    const pv = $("storyPrev"), nx = $("storyNext");   // R4-021② 끝단 비활성
+    if (pv) pv.disabled = (i <= 0);
+    if (nx) nx.disabled = (i >= cards.length - 1);
   };
+  // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동 (scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소)
+  const goTo = i => { i = Math.max(0, Math.min(cards.length - 1, i)); const c = cards[i]; if (c) deck.scrollTo({ left: c.offsetLeft - cards[0].offsetLeft, behavior: "smooth" }); };
+  dots.onclick = e => { const t = e.target.closest(".dot"); if (!t) return; const i = [...dots.querySelectorAll(".dot")].indexOf(t); if (i >= 0) goTo(i); };
+  const pv = $("storyPrev"), nx = $("storyNext");
+  if (pv) pv.onclick = () => goTo(_cur - 1);
+  if (nx) nx.onclick = () => goTo(_cur + 1);
   deck.onscroll = () => setActive(Math.round(deck.scrollLeft / Math.max(1, deck.clientWidth)));
   setActive(0);
 }
@@ -1890,7 +1954,19 @@ function initAds() {
     + (slot ? ' data-ad-slot="' + slot + '"' : "") + ' data-ad-format="auto" data-full-width-responsive="true"></ins>';
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
-window.addEventListener("DOMContentLoaded", async () => { await ensureAPI(); loadProfile(); loadCompare(); initAds(); resumeActiveJob(); });
+// R4-023② /r/ CTA 착지 컨텍스트 — ?co=회사&pos=직군 수신 시 공고 컨텍스트 유지(홈 맨땅 던지기 해소).
+// 회사명·직군만(개인정보 0 — URL 파라미터 규칙 준수). 프리필=placeholder·안내 문구·포커스, 입력값 주입은 없음(사실만).
+function applyRefPrefill() {
+  let q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
+  const co = (q.get("co") || "").trim().slice(0, 40);
+  if (!co) return;
+  const pos = (q.get("pos") || "").trim().slice(0, 40);
+  $("url").placeholder = co + " 공고 URL을 붙여넣으세요 — 내 이력 기준 평결까지";
+  const st = $("status");
+  if (st && !st.textContent.trim()) st.textContent = co + (pos ? " · " + pos : "") + " 정찰에서 이어서 오셨네요 — 공고 URL을 붙여넣으면 내 이력 기준 적합도·평결까지 분석합니다.";
+  try { $("url").focus({ preventScroll: true }); } catch (e) { $("url").focus(); }
+}
+window.addEventListener("DOMContentLoaded", async () => { applyRefPrefill(); await ensureAPI(); loadProfile(); loadCompare(); initAds(); resumeActiveJob(); });
 
 go.addEventListener("click", analyze);
 $("url").addEventListener("keydown", e => { if (e.key === "Enter") analyze(); });
