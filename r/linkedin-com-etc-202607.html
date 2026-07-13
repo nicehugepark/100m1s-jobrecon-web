@@ -10,18 +10,20 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <script>gtag('js',new Date());gtag('config','G-NLKWNGHTJM');</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>linkedin.com · 채용 취업 정찰 — JobRecon</title>
+<title>linkedin.com 취업 정찰 — JobRecon</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://jobrecon.100m1s.com/r/linkedin-com-etc-202607.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linkedin.com · 채용 취업 정찰 — JobRecon">
-<meta property="og:description" content="linkedin.com 채용 채용 — 구직자 편 회사 정찰(재무·리스크·서사).">
+<meta property="og:title" content="linkedin.com 취업 정찰 — JobRecon">
+<meta property="og:description" content="linkedin.com 채용 — 구직자 편 회사 정찰(재무·리스크·서사).">
 <meta property="og:url" content="https://jobrecon.100m1s.com/r/linkedin-com-etc-202607.html">
 <meta property="og:image" content="https://jobrecon.100m1s.com/r/linkedin-com-etc-202607.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
+/* 🔴 form 요소는 font-family 비상속(UA 기본 Arial/monospace) — 본문 타이포 강제 상속 (R3 ⑨ P0-1 계열·앱 index.html 동기) */
+button,input,textarea,select{font-family:inherit}
 /* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
    줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
    토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
@@ -43,6 +45,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .blk li{margin:4px 0;font-size:14.5px;color:#dbe2ea}
 .blk strong{color:#f0f4f8;font-weight:700}
 .blk code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
+#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
 .cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:12px;background:#4f8cff;color:#fff;font-weight:700;text-decoration:none;font-size:16px}
 .cta-sub{text-align:center;color:#8b97a6;font-size:12.5px;margin-bottom:4px}
 .foot{color:#6b7684;font-size:12px;text-align:center;margin-top:26px;line-height:1.6}
@@ -51,7 +54,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 .stickyhdr{position:sticky;top:0;z-index:50;background:#0b0e13;margin:-20px -18px 6px;padding:16px 18px 8px}
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
-.stickyhdr .ad{margin:0}
+/* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
 /* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
    🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
 #digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -72,6 +75,7 @@ body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMa
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
+.ddaybn.unk{border-color:#3a4250;color:#aab6c4}  /* R3-016 미확인 = 중립 회색(경고·안심 어느 쪽도 단정 안 함) */
 /* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
 .dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
 .dighint b{color:#4f8cff;font-weight:700}
@@ -86,7 +90,8 @@ body.mode-story .dighint{display:none}
 .storyview{display:none}
 body.mode-story .storyview{display:block}
 body.mode-story #report,body.mode-story .repextra{display:none!important}
-.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
+/* R5-029 스냅 상태 뷰포트 공백 해소 — JS(syncH)가 트랙h를 현재 스냅 카드 높이로 동기. 앱 index.html 미러(G6) */
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
 .story-deck::-webkit-scrollbar{display:none}
 .story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 .story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
@@ -179,21 +184,19 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .sharebar button svg{width:1.15em;height:1.15em}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
 .sharetoast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}}
-
-button,input,textarea,select{font-family:inherit}
-#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
 </style>
 
 </head><body>
 <div class="wrap">
+  <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
   <div class="stickyhdr">
     <div class="brand">Job<b>Recon</b></div>
     <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
     <div class="meta"><span class="co">linkedin.com</span><span class="ym">2026년 07월 정찰</span></div>
-    <div class="ad">AD · 광고</div>
   </div>
-  
+  <div class="ad">AD · 광고</div>
+  <div class="ddaybn unk">마감 정보 미확인 — 지원 전 공고 원문에서 확인하세요</div>
   <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
   <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
     <button id="segStory" type="button" role="tab" class="on">스토리</button>
@@ -201,9 +204,14 @@ button,input,textarea,select{font-family:inherit}
   </div>
   <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
   <div class="storyview" id="storyView">
+    <!-- R4-021② 데스크탑 화살표(hover 포인터 전용 CSS 노출) — 마우스-only 카드 2~5 도달 -->
+    <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+    <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
     <div class="story-deck" id="storyDeck"></div>
     <div class="story-dots" id="storyDots"></div>
   </div>
+  <!-- R4-023① 공유 수단 — 모드 무관 상시(개인 평결 미포함 페이지·회사 정찰만이라 공유 안전) -->
+  <div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
   <div class="dighint" id="digHintR">
     <span class="dx" id="digHintRX" title="닫기">✕</span>
     🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
@@ -258,7 +266,7 @@ button,input,textarea,select{font-family:inherit}
 <hr>
 <h2 id="sec-8">산업·시장·경쟁 지형</h2>
 <ul>
-<li><strong>산업 규모·성장성</strong>: 이 회사가 속한 시장은 <strong>① 프로페셔널 소셜네트워크, ② 온라인 채용·리크루팅, ③ 온라인 러닝(스킬 교육)</strong> 이 겹치는 영역입니다. 세 영역 모두 디지털 전환·원격근무·평생학습 흐름을 타는 <strong>성장 파이</strong>입니다(정확한 TAM·SAM·SOM 수치는 이 자리 근거로 확인 필요). <strong>지원자에겐</strong>: 정체·축소 산업이 아니라 순풍을 받는 쪽이라 고용·성장 기대의 바탕은 나쁘지 않습니다.</li>
+<li><strong>산업 규모·성장성</strong>: 이 회사가 속한 시장은 <strong>① 프로페셔널 소셜네트워크, ② 온라인 채용·리크루팅, ③ 온라인 러닝(스킬 교육)</strong> 이 겹치는 영역입니다. 세 영역 모두 디지털 전환·원격근무·평생학습 흐름을 타는 <strong>성장 파이</strong>입니다(정확한 TAM(전체 시장 규모)·SAM(실제 공략 가능 시장)·SOM(단기 확보 가능 시장) 수치는 이 자리 근거로 확인 필요). <strong>지원자에겐</strong>: 정체·축소 산업이 아니라 순풍을 받는 쪽이라 고용·성장 기대의 바탕은 나쁘지 않습니다.</li>
 </ul>
 <ul>
 <li><strong>이 회사의 실질 지위</strong>: 글로벌 프로페셔널 네트워크에서 링크드인은 <strong>명백한 리더</strong>입니다 — 10억 회원 규모 자체가 대체 불가한 지위의 증명입니다. 다만 <strong>한국 시장에서는 지위가 다릅니다.</strong> 국내 채용·커리어 영역엔 사람인·잡코리아·원티드·리멤버 같은 로컬 강자가 있어, 한국 한정으로는 <strong>니치~팔로워</strong>에 가까울 수 있습니다(정확한 국내 점유·활성도는 확인 필요). <strong>글로벌 리더 ≠ 한국 리더</strong>라는 이 간극을, 지원 직무가 어느 시장을 겨냥하는지와 함께 반드시 따지세요.</li>
@@ -286,7 +294,7 @@ button,input,textarea,select{font-family:inherit}
 <ul>
 <li><strong>그래서 지원자에게 뭘 의미하나</strong>:</li>
 <li><strong>고용 안정성</strong>: 초기 스타트업의 런웨이·자금난 리스크가 없는, <strong>대기업 자회사의 안정성·프로세스</strong>를 뜻합니다. 반대급부로 <strong>의사결정은 전사(MS) 전략에 종속</strong>되고 속도는 스타트업보다 느릴 수 있습니다.</li>
-<li><strong>보상 성격</strong>: <strong>비상장 지분 대박(IPO 기대)이 아니라, MS 상장주식 연동 RSU 중심의 안정적 보상</strong>으로 기대치를 잡으세요.</li>
+<li><strong>보상 성격</strong>: <strong>비상장 지분 대박(IPO 기대)이 아니라, MS 상장주식 연동 RSU(양도제한 주식) 중심의 안정적 보상</strong>으로 기대치를 잡으세요.</li>
 <li><strong>커리어 변수의 무게중심</strong>: 이 회사의 미래는 <strong>MS 클라우드·생산성(Microsoft 365·Azure·AI) 생태계와의 정렬</strong>에 좌우됩니다. 링크드인 데이터가 MS의 AI·생산성 제품에 어떻게 엮이느냐가 곧 여러분 조직의 위상입니다 — <strong>면접에서 &quot;링크드인과 MS 제품의 통합 로드맵&quot;을 물으면</strong> 조직 조사를 깊이 했다는 신호가 됩니다.</li>
 </ul>
 <ul>
@@ -308,7 +316,7 @@ button,input,textarea,select{font-family:inherit}
   <div class="repextra">
     <div class="ad">AD · 광고</div>
     <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
+    <a class="cta" href="https://jobrecon.100m1s.com/?co=linkedin.com&amp;from=r">내 이력으로 적합도·평결 받기 →</a>
   </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
@@ -431,7 +439,7 @@ button,input,textarea,select{font-family:inherit}
 </script>
 <script>
 (function(){
-  var CARD="## 2. 공고 핵심 요건\n\n이 공고는 링크드인(LinkedIn) 플랫폼의 **로그인 화면**만 노출됩니다 — 직무명·자격요건·연차·기술스택·처우가 전혀 담기지 않아, 이 자리에서 뽑는 세부 직무를 특정할 수 없습니다. 따라서 요건 digest는 작성 불가이며, **아래 리포트는 \"링크드인이라는 회사에 지원한다\"는 전제로 회사 자체를 정찰**한 것입니다.\n\n- 실제 지원 전 **직무 상세(JD)를 반드시 재확보**하세요 — 직무명, 소속 조직(뒤에서 설명할 마이크로소프트 산하 어느 라인인지), 근무지(미국 본사 vs 한국 오피스), 연차·스택이 이 화면엔 없습니다. (공고 미제공)\n- 특히 확인할 것: **고용주체가 링크드인 코리아(한국 법인)인지, 미국 본사 직고용인지, 아니면 마이크로소프트 통합 조직인지** — 처우·비자·소속이 여기서 갈립니다. (정찰 보강)\n\n---\n\n## 3. 회사 서사 · 궤적\n\n**주인공은 \"실리콘밸리 권력이 자본과 네트워크를 재투입해 만든 플랫폼\"입니다.**\n\n- **창업 주체·현장성**: 창업자는 **레이드 호프먼(Reid Hoffman)** 으로, **페이팔 마피아(PayPal Mafia)** — 전자결제 페이팔이 2002년 이베이에 15억 달러에 매각된 뒤 그 자본과 인맥을 들고 나온 창업 집단 — 의 일원입니다. 즉 이 회사는 \"밑바닥 현장에서 페인포인트를 겪은 사람\"이 세운 게 아니라, **이미 대형 엑싯을 경험한 집단이 처음부터 '네트워크 효과'를 무기로 설계한 플랫폼**입니다. 테슬라·유튜브와 나란히 \"페이팔 이후의 새 도전\" 서사에 놓입니다. (창업자의 커리어 도메인 1차 스토리 자체는 확인 필요)\n\n- **미션·비전의 일관성**: 대외 문구는 수년간 두 축을 관통합니다 — ① **비즈니스 인맥(네트워크)**, ② **커리어·기회 연결**. 현재 카피는 **\"1B(10억) 회원이 함께하는 글로벌 비즈니스 세상\"**, **\"비즈니스 인맥을 쌓고 넓히세요. 커리어 계발에 유용한 정보와 기회의 문으로\"** 입니다. 슬로건이 흔들리지 않고 **'규모 그 자체'를 자산으로 내세우는 일관성**은 신뢰 신호입니다.\n\n- **결정적 전환점 — 지배구조 변화**: 이 회사의 서사에서 가장 중요한 사건은 **마이크로소프트(Microsoft)의 인수**입니다. \"인수를 계기로 경영진의 변화를 겪었다\"고 서술됩니다. 즉 **\"창업자 주도 독립기업 → 빅테크(MS) 산하 사업부\"** 로 지배구조가 바뀐 회사입니다. (인수 시점·금액은 이 자리 근거로는 확정 불가 — 면접 전 확인 필요. 일반적으로 알려진 MS의 링크드인 인수 사실 자체는 이 회사 정체성의 핵심)\n\n- **현재 방향**: 회원 **10억 명** 규모를 표방하며, **LinkedIn Learning(스킬·교육 학습 플랫폼)**, 채용공고·인턴십 검색, 연봉 정보, 이용자통계(demographics)·인력시장 보고서(workforce report) 분석으로 기능을 확장 중입니다. AI·에이전트 등 최신 전략 담론에 대한 이 회사 고유의 구체적 로드맵은 이 자리 근거로는 확인되지 않으므로 **면접에서 직접 물어야 할 지점**입니다.\n\n- **궤적 판정**: **버즈워드 나열이 아니라, '네트워크 효과 → 규모 축적 → 빅테크 인수'로 인과가 완결된 탄탄한 서사**입니다. 다만 지원자에겐 이 완결성이 곧 **\"엑싯 사이클이 이미 끝난 회사\"** — 초기 스타트업의 폭발적 지분 업사이드가 아니라, 성숙한 대기업 자회사의 성격 — 임을 뜻합니다.\n\n---\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n- **검증된 실적·체력**: 이 회사는 **마이크로소프트 산하**입니다. 이것이 재무 안정성의 결정적 사실입니다. 매출·수익성의 개별 수치는 이 자리 근거로 확정할 수 없으나(확인 필요), **소속 지붕이 세계 최대 소프트웨어 기업 중 하나**라는 점은 개별 스타트업과 비교 불가한 자금 체력·현금 유보·인프라를 의미합니다. 즉 **\"이 회사가 내년에 런웨이가 마르나\"** 같은 생존 리스크는 사실상 무의미하고, 변수는 **\"모회사 MS의 전사 전략·조직 개편\"** 쪽으로 옮겨갑니다.\n\n- **자산 기반 안정성(고용 안정성의 토대)**: 링크드인의 진짜 자산은 부동산이나 설비가 아니라 **10억 회원의 프로필·커리어·인맥 그래프(데이터)** 입니다. 이건 신규 진입자가 돈으로 살 수 없는 **네트워크 자산이자 해자**입니다. 사람들이 커리어를 옮길 때마다 스스로 갱신해주는 데이터라, 유지비 대비 가치가 축적되는 구조입니다. **자산이 두껍고(데이터·브랜드) + 모회사 자본이 든든** → 불황·적자에도 버티는 체력이 매우 높습니다. **지원자에겐 = 고용 안정성 측면에서 상위권**이라는 신호입니다.\n\n- **실질 보상·복리후생(지원자 즉시 팩터)**: 링크드인/마이크로소프트 계열의 **한국 근무 시 연봉 밴드·성과급·RSU(양도제한조건부주식) 구조는 이 자리 근거로 확인되지 않습니다 — 확인 필요.** 다만 구조적으로 짚을 것은, MS 계열 빅테크의 보상은 통상 **기본급 + 보너스 + RSU(모회사 상장주식)** 형태라, **스톡옵션 대박(비상장 지분)이 아니라 MS 주가에 연동된 안정적 주식 보상**이 핵심입니다. 실제 밴드·베스팅(vesting, 주식 지급 시점 조건) 스케줄·한국 오피스 복지는 **면접·오퍼 단계에서 문서로 확인**하세요. 근거 없는 추정 금지.\n\n- **회사 평균연봉 맥락화**: 이 회사의 신뢰할 만한 한국 평균연봉 공개치는 확인되지 않습니다. 빅테크 자회사라는 규모 시그널은 **회사 전반 보상수준이 낮지 않을 가능성**을 시사하나, 이는 개인 실수령과 괴리가 큰 참고치조차 못 되므로 **개인 기대 연봉은 반드시 실제 오퍼로만 판단**하세요.\n\n- **숨은 리스크**: 이 회사에 대한 **공개 리스크 신호(구조조정설·소송·규제·경영진 논란)는 이 자리 근거로는 미확인**입니다 — 면접에서 확인하세요. 구조적으로 유일하게 실체 있는 변수는 **① 모회사 MS의 조직 통합·인력 재편 사이클**(빅테크는 주기적으로 대규모 정리해고를 합니다), **② 지원 직무가 링크드인 독립 사업부인지 MS 통합 조직인지** 입니다. 후자일수록 모회사 사정에 더 직접 노출됩니다.\n\n- **주장 vs 증명 간극**: 이 회사의 대외 노출은 **\"회원 수(10억)\"라는 네트워크 규모 지표에 집중**되고, 재무·조직 구조는 표면에 잘 드러나지 않습니다. 이는 은폐라기보다 **규모를 해자로 파는 전형적 플랫폼 커뮤니케이션**입니다 — 다만 지원자 입장에선 **\"내가 들어갈 조직의 손익·인력 계획\"은 카피에 없다**는 뜻이므로, 그 공백을 면접에서 메우세요.\n\n- **한 걸음 더 — 사업 구조상 해자와 위험**: 링크드인의 마진 구조는 **채용 솔루션(기업이 인재를 찾는 유료 상품)·광고·프리미엄 구독·Learning** 이 축입니다. 회원이 늘수록 데이터 그래프가 두꺼워지고, 그게 다시 채용·광고 상품의 가치를 키우는 **선순환(네트워크 효과)** 이라 규모가 커질수록 이익이 나는 구조에 가깝습니다. **진짜 위험**은 마진이 아니라 **\"커리어 소셜그래프의 독점적 지위가 흔들릴 때\"** — 즉 새 세대가 다른 채널로 커리어 활동을 옮기거나, AI 채용 도구가 링크드인 데이터를 우회할 때입니다. 무엇이 확인되면 판단이 바뀌나: **한국 시장에서의 실사용자 활성도·기업 고객 침투율**이 낮게 확인되면, 글로벌 강자여도 \"한국 조직의 성장성\"은 별개 문제가 됩니다.\n\n---\n\n## 8. 산업·시장·경쟁 지형\n\n- **산업 규모·성장성**: 이 회사가 속한 시장은 **① 프로페셔널 소셜네트워크, ② 온라인 채용·리크루팅, ③ 온라인 러닝(스킬 교육)** 이 겹치는 영역입니다. 세 영역 모두 디지털 전환·원격근무·평생학습 흐름을 타는 **성장 파이**입니다(정확한 TAM·SAM·SOM 수치는 이 자리 근거로 확인 필요). **지원자에겐**: 정체·축소 산업이 아니라 순풍을 받는 쪽이라 고용·성장 기대의 바탕은 나쁘지 않습니다.\n\n- **이 회사의 실질 지위**: 글로벌 프로페셔널 네트워크에서 링크드인은 **명백한 리더**입니다 — 10억 회원 규모 자체가 대체 불가한 지위의 증명입니다. 다만 **한국 시장에서는 지위가 다릅니다.** 국내 채용·커리어 영역엔 사람인·잡코리아·원티드·리멤버 같은 로컬 강자가 있어, 한국 한정으로는 **니치~팔로워**에 가까울 수 있습니다(정확한 국내 점유·활성도는 확인 필요). **글로벌 리더 ≠ 한국 리더**라는 이 간극을, 지원 직무가 어느 시장을 겨냥하는지와 함께 반드시 따지세요.\n\n- **경쟁 구도**: 글로벌에선 정면 대항마가 마땅치 않은 **사실상의 카테고리 지배자**입니다. 한국에선 위 로컬 플랫폼들, 러닝 영역에선 다양한 온라인 교육 서비스와 겹칩니다. 글로벌 격차는 유지·확대 쪽, 한국 격차는 로컬 강자 대비 좁히기 어려운 쪽 — **방향이 시장마다 반대**입니다.\n\n- **시장 구조**: 글로벌 프로페셔널 네트워크는 **소수 지배(사실상 링크드인 독주)에 가까운 과점** 구조입니다. **양면 해석** — 강자에 속하면 든든하고 안정적이나, 지배적 지위가 굳으면 조직이 정체·관성에 빠질 수 있습니다. 반대로 한국 채용 시장은 다수가 겨루는 역동적 구조라 생존 압박이 큽니다.\n\n- **정성 판정**: 글로벌 관점에선 **압도적으로 이기는 쪽** — 해자는 '누구도 복제 못 하는 커리어 소셜그래프'입니다. 다만 **한국 관점에선 로컬 강자에 밀릴 수 있는 도전자**입니다. **무엇이 확인되면 판단이 바뀌나**: 지원 직무가 글로벌 프로덕트/데이터 조직이면 \"이기는 배에 탑승\", 한국 시장 개척·세일즈 조직이면 \"로컬 강자와 파이 뺏기 싸움\"이라 각오와 질문이 달라집니다.\n\n---\n\n## 6. 경영진 · 투자자·소유 구조\n\n- **창업자**: **레이드 호프먼(Reid Hoffman)** — 페이팔 마피아, 실리콘밸리의 대표적 투자자이자 사상가형 창업자입니다. 그가 그린 비전은 **\"글로벌 비즈니스 네트워크로 사람과 기회를 연결한다\"** 는 것이었고, 이 비전은 회사 카피에 지금도 관통합니다.\n\n- **현 경영진(MS 인수 후 체제)**: 인수를 계기로 경영진 변화가 있었다고 서술되나, **현 CEO·C레벨의 구체 명단은 이 자리 근거로 미확인 — 면접 전 직접 확인**하세요. 특히 **지원 직무가 보고할 조직의 리더가 링크드인 자체 라인인지, MS 통합 라인인지**를 확인하는 것이 커리어 경로 판단에 핵심입니다.\n\n- **소유·자본 구조**: 자본 구조의 결정적 사실은 하나 — **마이크로소프트의 피인수 기업(산하 사업부)** 입니다. 초기엔 페이팔 엑싯 자본과 실리콘밸리 네트워크 기반의 공격적 확장형 창업이었으나, **이미 빅테크 인수로 엑싯 사이클이 완결**됐습니다.\n\n- **그래서 지원자에게 뭘 의미하나**:\n - **고용 안정성**: 초기 스타트업의 런웨이·자금난 리스크가 없는, **대기업 자회사의 안정성·프로세스**를 뜻합니다. 반대급부로 **의사결정은 전사(MS) 전략에 종속**되고 속도는 스타트업보다 느릴 수 있습니다.\n - **보상 성격**: **비상장 지분 대박(IPO 기대)이 아니라, MS 상장주식 연동 RSU 중심의 안정적 보상**으로 기대치를 잡으세요.\n - **커리어 변수의 무게중심**: 이 회사의 미래는 **MS 클라우드·생산성(Microsoft 365·Azure·AI) 생태계와의 정렬**에 좌우됩니다. 링크드인 데이터가 MS의 AI·생산성 제품에 어떻게 엮이느냐가 곧 여러분 조직의 위상입니다 — **면접에서 \"링크드인과 MS 제품의 통합 로드맵\"을 물으면** 조직 조사를 깊이 했다는 신호가 됩니다.\n\n- **정렬 인사이트**: 창업자의 비전(\"글로벌 비즈니스 네트워크\")과 소유 구조가 시사하는 방향(MS의 전사 AI·생산성 전략에의 편입)은 **큰 틀에서 정렬**돼 있습니다 — 링크드인의 데이터는 MS의 AI 전략에 귀한 연료이기 때문입니다. 다만 **긴장이 생길 지점은 \"링크드인 고유 정체성 vs MS 통합 압력\"** — 조직이 MS에 깊이 흡수될수록 자율성은 줄고 안정성은 커지는 트레이드오프입니다. 지원 직무가 이 스펙트럼의 어디에 놓이는지가 여러분의 실제 근무 경험을 가릅니다.\n\n---\n\n## 7. 용어 · 개념 풀이\n\n- **페이팔 마피아(PayPal Mafia)** — 전자결제 기업 페이팔의 초기 창업·임원진이 엑싯 후 실리콘밸리 곳곳에서 새 회사를 세운 인맥 집단. 링크드인·테슬라·유튜브 등이 이 서사에 묶입니다.\n- **네트워크 효과** — 사용자가 늘수록 서비스 가치가 커지는 구조. 링크드인의 핵심 해자로, 회원 10억이 곧 진입장벽입니다.\n- **소셜그래프** — 사람들의 관계·인맥을 데이터로 연결한 지도. 링크드인의 경우 '커리어·직무·인맥' 그래프가 자산입니다.\n- **LinkedIn Learning** — 링크드인이 운영하는 온라인 스킬·직무 교육 플랫폼.\n- **워크포스 리포트(workforce report)·demographics** — 링크드인이 회원 데이터를 분석해 내놓는 인력시장 동향·이용자통계 자료.\n- **RSU(양도제한조건부주식)** — 회사가 일정 근무 기간(베스팅) 조건으로 지급하는 주식 보상. 빅테크 보상의 핵심 구성으로, 링크드인은 모회사 MS 주식이 대상일 가능성이 큽니다.\n- **베스팅(vesting)** — 부여된 주식·옵션이 실제 내 것이 되는 시점 조건(예: 4년에 걸쳐 분할).\n- **TAM·SAM·SOM** — 각각 전체 시장 규모·유효 시장·현실적으로 확보 가능한 몫. 시장 크기를 세 층위로 좁혀 보는 틀.\n- **엑싯(Exit)** — 창업자·투자자가 인수·상장으로 투자금을 회수하는 것. 링크드인은 MS 인수로 이미 완결됐습니다.", CO="linkedin.com", POS="", APP="https://jobrecon.100m1s.com";
+  var CARD="## 2. 공고 핵심 요건\n\n이 공고는 링크드인(LinkedIn) 플랫폼의 **로그인 화면**만 노출됩니다 — 직무명·자격요건·연차·기술스택·처우가 전혀 담기지 않아, 이 자리에서 뽑는 세부 직무를 특정할 수 없습니다. 따라서 요건 digest는 작성 불가이며, **아래 리포트는 \"링크드인이라는 회사에 지원한다\"는 전제로 회사 자체를 정찰**한 것입니다.\n\n- 실제 지원 전 **직무 상세(JD)를 반드시 재확보**하세요 — 직무명, 소속 조직(뒤에서 설명할 마이크로소프트 산하 어느 라인인지), 근무지(미국 본사 vs 한국 오피스), 연차·스택이 이 화면엔 없습니다. (공고 미제공)\n- 특히 확인할 것: **고용주체가 링크드인 코리아(한국 법인)인지, 미국 본사 직고용인지, 아니면 마이크로소프트 통합 조직인지** — 처우·비자·소속이 여기서 갈립니다. (정찰 보강)\n\n---\n\n## 3. 회사 서사 · 궤적\n\n**주인공은 \"실리콘밸리 권력이 자본과 네트워크를 재투입해 만든 플랫폼\"입니다.**\n\n- **창업 주체·현장성**: 창업자는 **레이드 호프먼(Reid Hoffman)** 으로, **페이팔 마피아(PayPal Mafia)** — 전자결제 페이팔이 2002년 이베이에 15억 달러에 매각된 뒤 그 자본과 인맥을 들고 나온 창업 집단 — 의 일원입니다. 즉 이 회사는 \"밑바닥 현장에서 페인포인트를 겪은 사람\"이 세운 게 아니라, **이미 대형 엑싯을 경험한 집단이 처음부터 '네트워크 효과'를 무기로 설계한 플랫폼**입니다. 테슬라·유튜브와 나란히 \"페이팔 이후의 새 도전\" 서사에 놓입니다. (창업자의 커리어 도메인 1차 스토리 자체는 확인 필요)\n\n- **미션·비전의 일관성**: 대외 문구는 수년간 두 축을 관통합니다 — ① **비즈니스 인맥(네트워크)**, ② **커리어·기회 연결**. 현재 카피는 **\"1B(10억) 회원이 함께하는 글로벌 비즈니스 세상\"**, **\"비즈니스 인맥을 쌓고 넓히세요. 커리어 계발에 유용한 정보와 기회의 문으로\"** 입니다. 슬로건이 흔들리지 않고 **'규모 그 자체'를 자산으로 내세우는 일관성**은 신뢰 신호입니다.\n\n- **결정적 전환점 — 지배구조 변화**: 이 회사의 서사에서 가장 중요한 사건은 **마이크로소프트(Microsoft)의 인수**입니다. \"인수를 계기로 경영진의 변화를 겪었다\"고 서술됩니다. 즉 **\"창업자 주도 독립기업 → 빅테크(MS) 산하 사업부\"** 로 지배구조가 바뀐 회사입니다. (인수 시점·금액은 이 자리 근거로는 확정 불가 — 면접 전 확인 필요. 일반적으로 알려진 MS의 링크드인 인수 사실 자체는 이 회사 정체성의 핵심)\n\n- **현재 방향**: 회원 **10억 명** 규모를 표방하며, **LinkedIn Learning(스킬·교육 학습 플랫폼)**, 채용공고·인턴십 검색, 연봉 정보, 이용자통계(demographics)·인력시장 보고서(workforce report) 분석으로 기능을 확장 중입니다. AI·에이전트 등 최신 전략 담론에 대한 이 회사 고유의 구체적 로드맵은 이 자리 근거로는 확인되지 않으므로 **면접에서 직접 물어야 할 지점**입니다.\n\n- **궤적 판정**: **버즈워드 나열이 아니라, '네트워크 효과 → 규모 축적 → 빅테크 인수'로 인과가 완결된 탄탄한 서사**입니다. 다만 지원자에겐 이 완결성이 곧 **\"엑싯 사이클이 이미 끝난 회사\"** — 초기 스타트업의 폭발적 지분 업사이드가 아니라, 성숙한 대기업 자회사의 성격 — 임을 뜻합니다.\n\n---\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n\n- **검증된 실적·체력**: 이 회사는 **마이크로소프트 산하**입니다. 이것이 재무 안정성의 결정적 사실입니다. 매출·수익성의 개별 수치는 이 자리 근거로 확정할 수 없으나(확인 필요), **소속 지붕이 세계 최대 소프트웨어 기업 중 하나**라는 점은 개별 스타트업과 비교 불가한 자금 체력·현금 유보·인프라를 의미합니다. 즉 **\"이 회사가 내년에 런웨이가 마르나\"** 같은 생존 리스크는 사실상 무의미하고, 변수는 **\"모회사 MS의 전사 전략·조직 개편\"** 쪽으로 옮겨갑니다.\n\n- **자산 기반 안정성(고용 안정성의 토대)**: 링크드인의 진짜 자산은 부동산이나 설비가 아니라 **10억 회원의 프로필·커리어·인맥 그래프(데이터)** 입니다. 이건 신규 진입자가 돈으로 살 수 없는 **네트워크 자산이자 해자**입니다. 사람들이 커리어를 옮길 때마다 스스로 갱신해주는 데이터라, 유지비 대비 가치가 축적되는 구조입니다. **자산이 두껍고(데이터·브랜드) + 모회사 자본이 든든** → 불황·적자에도 버티는 체력이 매우 높습니다. **지원자에겐 = 고용 안정성 측면에서 상위권**이라는 신호입니다.\n\n- **실질 보상·복리후생(지원자 즉시 팩터)**: 링크드인/마이크로소프트 계열의 **한국 근무 시 연봉 밴드·성과급·RSU(양도제한조건부주식) 구조는 이 자리 근거로 확인되지 않습니다 — 확인 필요.** 다만 구조적으로 짚을 것은, MS 계열 빅테크의 보상은 통상 **기본급 + 보너스 + RSU(모회사 상장주식)** 형태라, **스톡옵션 대박(비상장 지분)이 아니라 MS 주가에 연동된 안정적 주식 보상**이 핵심입니다. 실제 밴드·베스팅(vesting, 주식 지급 시점 조건) 스케줄·한국 오피스 복지는 **면접·오퍼 단계에서 문서로 확인**하세요. 근거 없는 추정 금지.\n\n- **회사 평균연봉 맥락화**: 이 회사의 신뢰할 만한 한국 평균연봉 공개치는 확인되지 않습니다. 빅테크 자회사라는 규모 시그널은 **회사 전반 보상수준이 낮지 않을 가능성**을 시사하나, 이는 개인 실수령과 괴리가 큰 참고치조차 못 되므로 **개인 기대 연봉은 반드시 실제 오퍼로만 판단**하세요.\n\n- **숨은 리스크**: 이 회사에 대한 **공개 리스크 신호(구조조정설·소송·규제·경영진 논란)는 이 자리 근거로는 미확인**입니다 — 면접에서 확인하세요. 구조적으로 유일하게 실체 있는 변수는 **① 모회사 MS의 조직 통합·인력 재편 사이클**(빅테크는 주기적으로 대규모 정리해고를 합니다), **② 지원 직무가 링크드인 독립 사업부인지 MS 통합 조직인지** 입니다. 후자일수록 모회사 사정에 더 직접 노출됩니다.\n\n- **주장 vs 증명 간극**: 이 회사의 대외 노출은 **\"회원 수(10억)\"라는 네트워크 규모 지표에 집중**되고, 재무·조직 구조는 표면에 잘 드러나지 않습니다. 이는 은폐라기보다 **규모를 해자로 파는 전형적 플랫폼 커뮤니케이션**입니다 — 다만 지원자 입장에선 **\"내가 들어갈 조직의 손익·인력 계획\"은 카피에 없다**는 뜻이므로, 그 공백을 면접에서 메우세요.\n\n- **한 걸음 더 — 사업 구조상 해자와 위험**: 링크드인의 마진 구조는 **채용 솔루션(기업이 인재를 찾는 유료 상품)·광고·프리미엄 구독·Learning** 이 축입니다. 회원이 늘수록 데이터 그래프가 두꺼워지고, 그게 다시 채용·광고 상품의 가치를 키우는 **선순환(네트워크 효과)** 이라 규모가 커질수록 이익이 나는 구조에 가깝습니다. **진짜 위험**은 마진이 아니라 **\"커리어 소셜그래프의 독점적 지위가 흔들릴 때\"** — 즉 새 세대가 다른 채널로 커리어 활동을 옮기거나, AI 채용 도구가 링크드인 데이터를 우회할 때입니다. 무엇이 확인되면 판단이 바뀌나: **한국 시장에서의 실사용자 활성도·기업 고객 침투율**이 낮게 확인되면, 글로벌 강자여도 \"한국 조직의 성장성\"은 별개 문제가 됩니다.\n\n---\n\n## 8. 산업·시장·경쟁 지형\n\n- **산업 규모·성장성**: 이 회사가 속한 시장은 **① 프로페셔널 소셜네트워크, ② 온라인 채용·리크루팅, ③ 온라인 러닝(스킬 교육)** 이 겹치는 영역입니다. 세 영역 모두 디지털 전환·원격근무·평생학습 흐름을 타는 **성장 파이**입니다(정확한 TAM(전체 시장 규모)·SAM(실제 공략 가능 시장)·SOM(단기 확보 가능 시장) 수치는 이 자리 근거로 확인 필요). **지원자에겐**: 정체·축소 산업이 아니라 순풍을 받는 쪽이라 고용·성장 기대의 바탕은 나쁘지 않습니다.\n\n- **이 회사의 실질 지위**: 글로벌 프로페셔널 네트워크에서 링크드인은 **명백한 리더**입니다 — 10억 회원 규모 자체가 대체 불가한 지위의 증명입니다. 다만 **한국 시장에서는 지위가 다릅니다.** 국내 채용·커리어 영역엔 사람인·잡코리아·원티드·리멤버 같은 로컬 강자가 있어, 한국 한정으로는 **니치~팔로워**에 가까울 수 있습니다(정확한 국내 점유·활성도는 확인 필요). **글로벌 리더 ≠ 한국 리더**라는 이 간극을, 지원 직무가 어느 시장을 겨냥하는지와 함께 반드시 따지세요.\n\n- **경쟁 구도**: 글로벌에선 정면 대항마가 마땅치 않은 **사실상의 카테고리 지배자**입니다. 한국에선 위 로컬 플랫폼들, 러닝 영역에선 다양한 온라인 교육 서비스와 겹칩니다. 글로벌 격차는 유지·확대 쪽, 한국 격차는 로컬 강자 대비 좁히기 어려운 쪽 — **방향이 시장마다 반대**입니다.\n\n- **시장 구조**: 글로벌 프로페셔널 네트워크는 **소수 지배(사실상 링크드인 독주)에 가까운 과점** 구조입니다. **양면 해석** — 강자에 속하면 든든하고 안정적이나, 지배적 지위가 굳으면 조직이 정체·관성에 빠질 수 있습니다. 반대로 한국 채용 시장은 다수가 겨루는 역동적 구조라 생존 압박이 큽니다.\n\n- **정성 판정**: 글로벌 관점에선 **압도적으로 이기는 쪽** — 해자는 '누구도 복제 못 하는 커리어 소셜그래프'입니다. 다만 **한국 관점에선 로컬 강자에 밀릴 수 있는 도전자**입니다. **무엇이 확인되면 판단이 바뀌나**: 지원 직무가 글로벌 프로덕트/데이터 조직이면 \"이기는 배에 탑승\", 한국 시장 개척·세일즈 조직이면 \"로컬 강자와 파이 뺏기 싸움\"이라 각오와 질문이 달라집니다.\n\n---\n\n## 6. 경영진 · 투자자·소유 구조\n\n- **창업자**: **레이드 호프먼(Reid Hoffman)** — 페이팔 마피아, 실리콘밸리의 대표적 투자자이자 사상가형 창업자입니다. 그가 그린 비전은 **\"글로벌 비즈니스 네트워크로 사람과 기회를 연결한다\"** 는 것이었고, 이 비전은 회사 카피에 지금도 관통합니다.\n\n- **현 경영진(MS 인수 후 체제)**: 인수를 계기로 경영진 변화가 있었다고 서술되나, **현 CEO·C레벨의 구체 명단은 이 자리 근거로 미확인 — 면접 전 직접 확인**하세요. 특히 **지원 직무가 보고할 조직의 리더가 링크드인 자체 라인인지, MS 통합 라인인지**를 확인하는 것이 커리어 경로 판단에 핵심입니다.\n\n- **소유·자본 구조**: 자본 구조의 결정적 사실은 하나 — **마이크로소프트의 피인수 기업(산하 사업부)** 입니다. 초기엔 페이팔 엑싯 자본과 실리콘밸리 네트워크 기반의 공격적 확장형 창업이었으나, **이미 빅테크 인수로 엑싯 사이클이 완결**됐습니다.\n\n- **그래서 지원자에게 뭘 의미하나**:\n - **고용 안정성**: 초기 스타트업의 런웨이·자금난 리스크가 없는, **대기업 자회사의 안정성·프로세스**를 뜻합니다. 반대급부로 **의사결정은 전사(MS) 전략에 종속**되고 속도는 스타트업보다 느릴 수 있습니다.\n - **보상 성격**: **비상장 지분 대박(IPO 기대)이 아니라, MS 상장주식 연동 RSU(양도제한 주식) 중심의 안정적 보상**으로 기대치를 잡으세요.\n - **커리어 변수의 무게중심**: 이 회사의 미래는 **MS 클라우드·생산성(Microsoft 365·Azure·AI) 생태계와의 정렬**에 좌우됩니다. 링크드인 데이터가 MS의 AI·생산성 제품에 어떻게 엮이느냐가 곧 여러분 조직의 위상입니다 — **면접에서 \"링크드인과 MS 제품의 통합 로드맵\"을 물으면** 조직 조사를 깊이 했다는 신호가 됩니다.\n\n- **정렬 인사이트**: 창업자의 비전(\"글로벌 비즈니스 네트워크\")과 소유 구조가 시사하는 방향(MS의 전사 AI·생산성 전략에의 편입)은 **큰 틀에서 정렬**돼 있습니다 — 링크드인의 데이터는 MS의 AI 전략에 귀한 연료이기 때문입니다. 다만 **긴장이 생길 지점은 \"링크드인 고유 정체성 vs MS 통합 압력\"** — 조직이 MS에 깊이 흡수될수록 자율성은 줄고 안정성은 커지는 트레이드오프입니다. 지원 직무가 이 스펙트럼의 어디에 놓이는지가 여러분의 실제 근무 경험을 가릅니다.\n\n---\n\n## 7. 용어 · 개념 풀이\n\n- **페이팔 마피아(PayPal Mafia)** — 전자결제 기업 페이팔의 초기 창업·임원진이 엑싯 후 실리콘밸리 곳곳에서 새 회사를 세운 인맥 집단. 링크드인·테슬라·유튜브 등이 이 서사에 묶입니다.\n- **네트워크 효과** — 사용자가 늘수록 서비스 가치가 커지는 구조. 링크드인의 핵심 해자로, 회원 10억이 곧 진입장벽입니다.\n- **소셜그래프** — 사람들의 관계·인맥을 데이터로 연결한 지도. 링크드인의 경우 '커리어·직무·인맥' 그래프가 자산입니다.\n- **LinkedIn Learning** — 링크드인이 운영하는 온라인 스킬·직무 교육 플랫폼.\n- **워크포스 리포트(workforce report)·demographics** — 링크드인이 회원 데이터를 분석해 내놓는 인력시장 동향·이용자통계 자료.\n- **RSU(양도제한조건부주식)** — 회사가 일정 근무 기간(베스팅) 조건으로 지급하는 주식 보상. 빅테크 보상의 핵심 구성으로, 링크드인은 모회사 MS 주식이 대상일 가능성이 큽니다.\n- **베스팅(vesting)** — 부여된 주식·옵션이 실제 내 것이 되는 시점 조건(예: 4년에 걸쳐 분할).\n- **TAM·SAM·SOM** — 각각 전체 시장 규모·유효 시장·현실적으로 확보 가능한 몫. 시장 크기를 세 층위로 좁혀 보는 틀.\n- **엑싯(Exit)** — 창업자·투자자가 인수·상장으로 투자금을 회수하는 것. 링크드인은 MS 인수로 이미 완결됐습니다.", CO="linkedin.com", POS="", APP="https://jobrecon.100m1s.com";
   var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
   if(!deck||!CARD) return;
   function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -515,7 +523,7 @@ button,input,textarea,select{font-family:inherit}
       return '<div class="story-card role-axis'+(c.first?" first":"")+'" style="'+sv+'">'+g+co+'<div class="story-kicker soft">'+esc(c.label||"")+'</div><div class="story-beat"><div class="hb-line hb-setup">'+kw(c.setup)+'</div><div class="hb-turn">'+ICw+'</div><div class="hb-line hb-subvert">'+kw(c.subvert)+'</div></div>'+bd+mn+'<div class="spacer"></div>'+an+'</div>';
     }
     // CTA 독립 슬롯 — 리포트 근거 유도(로그인 유도 전). /r/은 리포트 body가 같은 페이지 → segReport 모드 전환.
-    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 반전이 강한 '+(c.n||"몇")+'개 축만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
+    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
     return "";
   }
   deck.innerHTML=cards.map(card).join("");
@@ -523,7 +531,7 @@ button,input,textarea,select{font-family:inherit}
   document.body.classList.add("mode-story");
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
-  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);if(story)requestAnimationFrame(function(){syncH();});}
   // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
   var _hdr=document.querySelector(".stickyhdr");
   var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
@@ -545,7 +553,10 @@ button,input,textarea,select{font-family:inherit}
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
   if(cardsEl[0])cardsEl[0].classList.add("inview");
   var _cur=0,_pv=document.getElementById("storyPrev"),_nx=document.getElementById("storyNext");
-  function active(i){_cur=i;dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
+  function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
+  window.addEventListener("resize",syncH);
+  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
   // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
   function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
   dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
