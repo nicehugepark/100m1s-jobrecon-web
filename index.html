@@ -94,12 +94,16 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     display:inline-flex; align-items:center; gap:9px; }
   .brand span { color:var(--peach-deep); }
   body.scouting .brand { color:var(--fg); }
-  body.scouting .brand span { color:var(--accent); }
+  /* 🔴 결과화면 워드마크 accent = 브랜드 SoT 다크톤(#F0A575 = brand.MARK_DARK) — 파랑 클리셰 폐기.
+     첫인상(라이트 애프리콧)↔결과·/r/(다크 애프리콧)이 단일 hue, 무드는 배경으로만 분리 (REQ-060) */
+  body.scouting .brand span { color:#F0A575; }
   /* E 소프트 렌즈 마크 — 애프리콧 라운드 타일 + 돋보기(정찰 시그니처, 응원 아님) */
   .brand .lens { width:30px; height:30px; flex:0 0 auto; display:grid; place-items:center; border-radius:11px;
     background:linear-gradient(145deg,var(--peach-2),var(--peach)); box-shadow:var(--sh-soft); color:#fff; }
   .brand .lens svg { width:18px; height:18px; }
-  body.scouting .brand .lens { box-shadow:none; }
+  /* 🔴 로고(앱아이콘=판정 제외·무변경)를 워드마크 색 변경에서 격리 — 워드마크 span 규칙 특이도가
+     .brand .lens 를 이겨 lens svg(currentColor)까지 물들이던 결합 차단. before 렌더(파랑 돋보기) 보존 (REQ-060) */
+  body.scouting .brand .lens { box-shadow:none; color:var(--accent); }
   /* DSN-20260714-001 §E-1: Recon 'o' = 조준경 도트(형태 시그니처) — 색이 아닌 형태로 3서비스 흑백 동형 탈피.
      실제 'o'는 .jr-sr로 스크린리더에만 남겨 "JobRecon" 낭독 보존 */
   .brand .reco { display:inline-block; width:.6em; height:.6em; margin:0 .015em; vertical-align:-.02em;
