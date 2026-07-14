@@ -22,8 +22,6 @@ gtag('consent','default',{'ad_storage':'granted','ad_user_data':'granted','ad_pe
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b0e13;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6}
-/* 🔴 form 요소는 font-family 비상속(UA 기본 Arial/monospace) — 본문 타이포 강제 상속 (R3 ⑨ P0-1 계열·앱 index.html 동기) */
-button,input,textarea,select{font-family:inherit}
 /* 🔴 가로 오버플로우 근원 차단: 긴 '·'(U+00B7) 연결 목록(예 토스뱅크·증권·페이먼츠·인슈어런스·플레이스·모바일)은
    줄바꿈 기회가 없어 뷰포트를 넘긴다. word-break:keep-all(한국어 어절 자연 줄바꿈) + overflow-wrap:anywhere(긴
    토큰 강제 줄바꿈) 조합을 .wrap에 걸어 하위 #report·story 텍스트·meta 전부 상속(둘 다 inherited 속성).
@@ -45,7 +43,6 @@ button,input,textarea,select{font-family:inherit}
 .blk li{margin:4px 0;font-size:14.5px;color:#dbe2ea}
 .blk strong{color:#f0f4f8;font-weight:700}
 .blk code{background:#0b0e13;border:1px solid #222a35;border-radius:5px;padding:1px 5px;font-size:13px}
-#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
 .cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:12px;background:#4f8cff;color:#fff;font-weight:700;text-decoration:none;font-size:16px}
 .cta-sub{text-align:center;color:#8b97a6;font-size:12.5px;margin-bottom:4px}
 .foot{color:#6b7684;font-size:12px;text-align:center;margin-top:26px;line-height:1.6}
@@ -54,7 +51,7 @@ button,input,textarea,select{font-family:inherit}
 .stickyhdr{position:sticky;top:0;z-index:50;background:#0b0e13;margin:-20px -18px 6px;padding:16px 18px 8px}
 .stickyhdr .tag{margin:2px 0 8px}
 .stickyhdr .meta{margin-bottom:8px}
-/* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
+.stickyhdr .ad{margin:0}
 /* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
    🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
 #digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#4f8cff;color:#fff;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -75,7 +72,6 @@ button,input,textarea,select{font-family:inherit}
 /* 공고 생존(P0-a): 마감 경고 배너 + D-day/상시 칩. */
 .deadbn{background:#2a1618;border:1px solid #5a2a2e;color:#ffb4b4;border-radius:10px;padding:11px 14px;margin:0 0 14px;font-size:13.5px;font-weight:600;line-height:1.5}
 .ddaybn{display:inline-block;background:#12161d;border:1px solid #2f6b3a;color:#7fe0a0;border-radius:999px;padding:3px 11px;margin:0 0 12px;font-size:12.5px;font-weight:700}
-.ddaybn.unk{border-color:#3a4250;color:#aab6c4}  /* R3-016 미확인 = 중립 회색(경고·안심 어느 쪽도 단정 안 함) */
 /* 더 파고들기 가이드(#4) — 앱 static/index.html .dighint 이식(디자인 톤 동기)·dismissible. 리포트 모드에서만 노출. */
 .dighint{position:relative;margin:12px 0 4px;padding:11px 32px 11px 13px;font-size:13px;color:#cdd6e2;background:rgba(79,140,255,.09);border:1px solid rgba(79,140,255,.35);border-radius:10px;line-height:1.55}
 .dighint b{color:#4f8cff;font-weight:700}
@@ -90,8 +86,7 @@ body.mode-story .dighint{display:none}
 .storyview{display:none}
 body.mode-story .storyview{display:block}
 body.mode-story #report,body.mode-story .repextra{display:none!important}
-/* R5-029 스냅 상태 뷰포트 공백 해소 — JS(syncH)가 트랙h를 현재 스냅 카드 높이로 동기. 앱 index.html 미러(G6) */
-.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
+.story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px}
 .story-deck::-webkit-scrollbar{display:none}
 .story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 .story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
@@ -166,41 +161,39 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-mean mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
 .hb-turn{color:#fbbf24;height:17px;margin-left:1px}
 .hb-turn svg{width:17px;height:17px}
-/* R6-038 nav+dots 한 행 — 화살표를 카드 좌우 오버레이(top:44%·카드 높이 종속 = R5 ⑨ 교차 81% 구조 원인)에서 덱 아래 dots 행으로: 콘텐츠 safe-area 물리 분리(교차 0 구조 보장). 앱 index.html 미러(G6) */
-.story-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0 2px}
-.story-dots{display:flex;justify-content:center;gap:7px}
+.story-dots{display:flex;justify-content:center;gap:7px;margin:16px 0 2px}
 .story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .story-dots .dot::after{content:"";position:absolute;left:-3px;right:-3px;top:-10px;bottom:-10px}
 .story-dots .dot.on{width:22px;background:var(--dot-on,#4f8cff)}
 .storyview{position:relative}
 .story-nav{display:none}
 @media (hover:hover) and (pointer:fine){
-.story-nav{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
+.story-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:44%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid #222a35;background:rgba(11,14,19,.82);color:#dbe4ee;cursor:pointer;transition:opacity .2s,background .15s}
 .story-nav:hover{background:rgba(23,28,38,.95)}
+.story-nav.prev{left:-6px}.story-nav.next{right:-6px}
 .story-nav[disabled]{opacity:.22;cursor:default}
 .story-nav svg{width:20px;height:20px}
 }
 .sharebar{display:flex;justify-content:center;margin:14px 0 2px}
-/* R6-039(REQ-JOBRECON-20260713-039) 터치 히트 확장 — 시각 39.6px 유지 + ::after로 실효 44px+ (R5 조니 이진탐색 39.64~39.78 실측·R3 ⑨ P0-2 modeseg 전례).
-   -4px 사유: border 1px가 ::after containing block(padding box)을 안쪽으로 만들어 -3이 실질 -2로 동작(G9 43.98 실측) — border 감안 -4 = 실질 -3/방향 → 45.7px */
-.sharebar button{position:relative;display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.sharebar button::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px}
+.sharebar button{display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:700;color:#cfe0ff;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.35);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .sharebar button svg{width:1.15em;height:1.15em}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#171c26;border:1px solid #2a3342;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
 .sharetoast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}}
+
+button,input,textarea,select{font-family:inherit}
+#report hr,.blk hr{border:0;border-top:1px solid #222a35;margin:16px 0}
 </style>
 
 </head><body>
 <div class="wrap">
-  <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
   <div class="stickyhdr">
     <div class="brand">Job<b>Recon</b></div>
     <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
     <div class="meta"><span class="co">삼양식품</span><span class="fd">AX 데이터 인텔리전스 팀장</span><span class="ym">2026년 07월 정찰</span></div>
+    <div class="ad">AD · 광고</div>
   </div>
-  <div class="ad">AD · 광고</div>
-  <div class="ddaybn">상시</div>
+  
   <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
   <div class="modeseg" id="modeSeg" role="tablist" aria-label="보기 전환">
     <button id="segStory" type="button" role="tab" class="on">스토리</button>
@@ -209,24 +202,108 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   <!-- 스와이프 스토리 — 🔴 회사 정찰 서사만(개인 판정 제외) · 창작0(card_md 원문 추출) -->
   <div class="storyview" id="storyView">
     <div class="story-deck" id="storyDeck"></div>
-    <!-- R6-038 데스크탑 화살표(hover 포인터 전용 CSS 노출)를 dots 행으로 — 카드 콘텐츠 safe-area 물리 분리(교차 0) -->
-    <div class="story-nav-row">
-      <button class="story-nav prev" id="storyPrev" type="button" aria-label="이전 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
-      <div class="story-dots" id="storyDots"></div>
-      <button class="story-nav next" id="storyNext" type="button" aria-label="다음 카드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button>
-    </div>
+    <div class="story-dots" id="storyDots"></div>
   </div>
-  <!-- R4-023① 공유 수단 — 모드 무관 상시(개인 평결 미포함 페이지·회사 정찰만이라 공유 안전) -->
-  <div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
   <div class="dighint" id="digHintR">
     <span class="dx" id="digHintRX" title="닫기">✕</span>
     🔎 리포트에서 <b>궁금한 문장·단어를 드래그(선택)</b>하면 그 부분만 더 깊이 정찰해요. <b>내 이력 기준 적합도·평결은 앱에서</b> — 깊이 파보고, 지원 여부는 내 조건으로 결정하세요.
   </div>
-  <div id="report"><p>API Error: Connection closed mid-response. The response above may be incomplete.</p></div>
+  <div id="report"><h2 id="sec-2">공고 핵심 요건</h2>
+<ul>
+<li><strong>채용 직무</strong>: AX 데이터 인텔리전스 팀장</li>
+<li><strong>한 줄 정의</strong>: 신설 AX(AI Transformation) 전담 부서 산하 데이터인텔리전스팀을 <strong>0→1로 세우는 팀장</strong>. 전사 데이터 거버넌스·표준·품질 체계 구축과 도메인별 데이터/AI 과제 발굴·실증(PoC)을 총괄.</li>
+<li><strong>경력</strong>: 총 15년 이상 선호(유관 10년 이상 지원 가능), 학사 이상. 데이터 관리·분석 실무 또는 생산/SCM/영업 등 <strong>현업 도메인</strong> 기반으로 팀을 이끌어본 경험.</li>
+<li><strong>핵심 역량</strong>: SQL 등 데이터 조회·분석 기본기 + 비즈니스와 데이터 구조를 잇는 시야 + <strong>부서 간 상충 요구 조율</strong> 능력.</li>
+<li><strong>우대</strong>: 데이터 거버넌스·MDM(마스터데이터관리)·데이터 품질 PM/파트리더 경험, 식품·제조업 도메인 지식, BI 도구·멘토링 경험.</li>
+<li><strong>전형</strong>: 서류 → 1차 실무(화상/대면) → 2차 임원(대면) → 평판조회 → 처우협의·검진 → 최종. 경력직 3개월 수습(급여 동일). 근무지 서울 중구(명동 삼양라운드스퀘어빌딩), 연봉 협의.</li>
+</ul>
+<p>한마디로 <strong>&quot;코드 짜는 자리가 아니라, 없던 데이터 조직을 정치·조율로 세우는 자리&quot;</strong>다. 15년 선호·팀장 타이틀·거버넌스 강조가 그 성격을 못박는다.</p>
+<h2 id="sec-3">회사 서사 · 궤적</h2>
+<p>삼양식품의 서사는 <strong>두 번의 현장 관찰이 만든 회사</strong>다. 책상 기획이 아니라 오너의 직관이 히트를 만든 DNA가 핵심이다.</p>
+<p><strong>1세대(식량난 해결)</strong>: 창업자 전중윤은 식품 도메인 출신이 아니라 보험사(동방생명) 창립 멤버였다. 그러나 1960년대 식량난에 &quot;미군이 버린 음식을 끓인 꿀꿀이죽으로 끼니를 때우는&quot; 사람들을 보고 라면을 해법으로 떠올렸다. 일본 묘조식품(明星食品)을 직접 찾아가 기술을 무상 원조받고, 라인 발주비 6만 달러는 중앙정보부 인맥(김종필 독대)을 거쳐 미 농림부 차관 자금으로 마련해 <strong>1963년 9월 국내 최초 라면 &#x27;삼양라면&#x27;</strong> 을 생산했다.</p>
+<p><strong>연혁의 뼈대와 전환점</strong>:</p>
+<ul>
+<li><strong>1961</strong> 삼양제유(식용유) 설립 → 삼양공업 → <strong>1963</strong> 삼양라면 → <strong>1969</strong> 업계 최초 베트남 수출(160만 불)</li>
+<li><strong>1980년대</strong> 농심에 1위 역전당함(농심 60% vs 삼양 20%) — 이 열세는 지금도 국내 시장에 그대로 남았다</li>
+<li><strong>1989 우지 파동</strong> — 이미지 치명타. <strong>1997 대법원 무죄</strong> 확정됐으나 이미 브랜드가 크게 훼손됨</li>
+<li><strong>1997~1998</strong> 외환위기로 화의신청(사실상 부도 위기) → <strong>2005</strong> 화의종결</li>
+<li><strong>2010</strong> 전중윤 은퇴, 2세 전인장 취임(영업익 2010년 141억→2012년 76억으로 반토막날 만큼 침체)</li>
+<li><strong>2012 불닭볶음면 출시</strong> — 이 회사를 되살린 결정적 전환점. 창업주 며느리 <strong>김정수</strong>가 2010년 고교생 딸과 명동 산책 중 매운 볶음밥을 기다리는 인파를 보고 착안, 1년간 매운 소스 2톤·닭 1,200마리를 써가며 개발</li>
+<li><strong>2022</strong> 밀양 신공장 준공(수출 전용) → <strong>2023</strong> 지주사 <strong>삼양라운드스퀘어</strong>로 개칭, &#x27;맵탱&#x27; 출시</li>
+<li><strong>2025</strong> 시가총액 10조 돌파, <strong>식품업계 시총 1위</strong> → <strong>2026.1</strong> 본사 하월곡동→명동 이전 → <strong>2026.5</strong> 김정수 회장 승진, 1분기 매출 7,144억·영업익 1,771억 분기 최대</li>
+</ul>
+<p><strong>미션·비전의 일관성</strong>: 창업정신 <strong>&quot;정직과 신용&quot;</strong>(1961년부터 60여 년 반복), 선대 유지 &quot;식품으로 인간 백세시대를 열겠다&quot;, 현재 슬로건 <strong>&quot;Delicious Together&quot;</strong>·그룹 슬로건 <strong>&quot;Round Square&quot;</strong>. 다만 &quot;정직과 신용&quot;은 1989 우지 파동으로 한 번 정면 훼손된 문구이고, &quot;글로벌 종합식품기업 도약&quot;은 2023년 리브랜딩과 함께 나온 <strong>최신 버전</strong>이지 오래된 뿌리가 아니다.</p>
+<p><strong>판정</strong>: 껍데기 버즈워드가 아니라 <strong>부도 위기(1998)→창업 60년 만에 식품 시총 1위(2025)</strong> 로 이어지는 인과가 뚜렷한 탄탄한 서사다. 단 그 반등이 <strong>불닭 단일 제품에 압도적으로 얹혀</strong> 있다는 점이 다음 블록의 핵심이며, 이번 AX 부서 신설·데이터 거버넌스 0→1 채용은 바로 그 &quot;불닭 이후&quot;를 대비한 체질 전환의 일부로 읽어야 한다.</p>
+<h2 id="sec-4">실체 점검 · 숨은 리스크 · 실질 보상</h2>
+<p><strong>검증된 실적(재무 체력은 최상위권)</strong>:</p>
+<ul>
+<li>2025년 <strong>매출 2조 3,518억 원, 영업이익 5,242억 원</strong>(DART). 순익 3,886억 규모. 매출 궤적 2022 9,090억→2023 1.19조→2024 1.73조→2025 2.35조로 3년 폭증</li>
+<li><strong>영업이익률 21%대</strong>(2025 상반기 21.7%). 농심 추정 4.7%·국내 평균 6% 대비 압도적. 매출원가율 56%(농심 71%·오뚜기 82%)</li>
+<li><strong>해외 비중 급등</strong>: 2020년 57%→2024년 77%→2026년 1분기 약 80%. 2026 상반기 K라면 수출 9.35억 달러(전년 대비 +28%, 반기 역대 최대)로 삼양이 견인</li>
+<li>최근 이벤트(면접 인용 재료): <strong>우지 헤리티지 프리미엄 라인 확장</strong> — &#x27;삼양1963&#x27;, 짜장라면 <strong>&#x27;짜르르&#x27;</strong>, &#x27;큰컵 우지파개장&#x27; 등을 잇달아 출시해 불닭 편중을 국내에서 보완 시도. <strong>2027년 중국 신공장 가동</strong> 예정(증권가 목표주가 188만~195만원, &quot;식음료 최선호주&quot;)</li>
+</ul>
+<p><strong>자산 기반 안정성</strong>: 밀양 2공장(수출 전용)·원주·익산 생산설비, 2026년 이전한 명동 삼양라운드스퀘어빌딩(자가 사옥), 두꺼운 이익잉여금, 로가(식물성 콜라겐)·스콘·마크비전 등 전략적 투자 지분. <strong>불황·적자에도 버틸 체력은 확실 → 고용 안정성 토대는 강함.</strong> 단 실적이 불닭·환율·미주 경쟁에 크게 좌우되는 구조적 변동성이 상존한다.</p>
+<p><strong>실질 보상 · 복리후생(지원자 즉시 팩터 — 여기가 반전)</strong>:</p>
+<ul>
+<li>삼양식품 <strong>직원 평균 급여 2021년 4,290만→2024년 5,424만 원</strong>(3년 26.4% 증가). <strong>2024년 인상률도 9.03%로 라면 3사 중 최고</strong>(농심 2.6%·오뚜기 4.3%). 다만 절대액(5,424만 원)은 <strong>여전히 농심(6,094만 원)에 못 미침</strong> — 과거 &quot;실적은 1위, 직원 보상은 꼴찌&quot;라던 언론 지적을 인상률로 따라잡는 국면</li>
+<li>반면 오너 보상은 급증 — 김정수 회장 2024년 연봉 <strong>32억 2,200만원(전년 대비 71.7%↑)</strong>, 직원 평균의 약 35배</li>
+<li>경력직 우대로 연봉이 오르나 <strong>&quot;경력직만 높게 쳐줘 기존 장기근속자 불만&quot;</strong>·&quot;착시 현상&quot;이라는 지적 존재</li>
+<li>🔴 위 평균 5,424만원은 <strong>전 직급·생산직 포함 &#x27;회사 지표&#x27;</strong> 로, 이 공고(15년+ 팀장급)의 개인 실수령과는 괴리가 크다. 팀장 처우는 <strong>협의(공고상 연봉 &#x27;협의&#x27;)</strong> 이므로 별도 밴드로 봐야 한다. 실제 팀장급 연봉·성과급·복지는 <strong>공개 자료 미확인 → 처우협의 단계에서 반드시 확인</strong>.</li>
+</ul>
+<p><strong>숨은 리스크</strong>:</p>
+<ul>
+<li><strong>고용의 질 악화 신호</strong>: 정규직 비중 2024년 81.4%→2025년 73.3%로 하락(농심 98.1%·오뚜기 99%), 계약직이 임직원 4명 중 1명, <strong>이직·계약직 라면 3사 중 최고</strong>. 급성장의 이면. 단 이는 주로 생산직 증설 영향이라 본사 사무·전문직에 그대로 적용되진 않으므로 면접에서 직군별로 확인 필요</li>
+<li><strong>불닭 단일 제품 리스크</strong>: 불닭볶음면이 전체 매출의 약 70%(약 1.6조). 대체 브랜드 &#x27;맵탱&#x27;은 &quot;시장 관심을 못 얻는&quot; 상황. 중국의 카피 제품 범람도 리스크</li>
+<li><strong>국내 열세</strong>: 국내 점유율 여전히 10%대 초반(2024년 11.4%, 농심 56.3%·오뚜기 23.5%에 이어 3위)</li>
+<li><strong>지배구조 이슈</strong>: 내부거래 비중 47.7%(식품사 2위), 지주사 체제 후에도 사익편취 구조 미해소 지적 → 코리아 디스카운트 요인</li>
+</ul>
+<p><strong>주장 vs 증명 간극</strong>: 회사는 해외 성장·불닭 누적판매(100억 개)·수출 실적을 전면에 내세우지만, <strong>불닭 초집중 단일 제품 리스크와 국내 열세는 강조하지 않는다.</strong> &quot;종합식품기업&quot; 서사가 실체인지는 헬스케어 브랜드 &#x27;스핀들&#x27;(2026.5 론칭)·&#x27;탱글&#x27; 프로틴 파스타의 2~3년 매출로 확인해야 한다.</p>
+<p><strong>사업 구조상 진짜 위험/해자와 이 자리의 의미</strong>: 삼양의 해자는 <strong>불닭이라는 글로벌 IP 하나</strong>다. 이 자리(AX 데이터 인텔리전스)의 존재 이유가 바로 여기 있다 — 회사는 &quot;불닭 한 방&quot;의 오너 직관 의존에서 벗어나 <strong>데이터 기반 의사결정으로 다음 히트와 SCM·생산 효율을 만들려는 체질 전환</strong> 중이고, 이 팀은 그 0→1 엔진이다. <strong>기회</strong>: 전사 데이터 표준이 없는 백지 상태 → 성과를 남기면 커리어 임팩트가 크다. <strong>위험</strong>: 오너·현장 직관이 여전히 강한 조직에서 데이터 조직의 정치적 입지가 약할 수 있다 → &quot;경영진이 데이터 기반 의사결정에 실제로 얼마나 권한을 실어주는가&quot;가 이 자리 성패의 갈림길. 무엇이 확인되면 판단이 바뀌나: <strong>AX 부서의 보고라인·예산·경영진 스폰서십</strong>이 강하게 확인되면 매력도 급상승.</p>
+<h2 id="sec-8">산업·시장·경쟁 지형</h2>
+<p><strong>산업 규모·성장성</strong>: K라면 수출은 커지는 파이다. 2026 상반기 수출 9.35억 달러(+28%, 반기 최대), 연 10억 달러를 눈앞에 뒀다. <strong>글로벌 성장 산업의 순풍을 받는 위치 → 고용·성장 전망에 긍정.</strong> 단 국내 라면 시장 자체는 정체 구조(짜파게티 42년 1위 등 고착).</p>
+<p><strong>이 회사의 실질 순위·지위 — 이중적</strong>:</p>
+<ul>
+<li><strong>국내</strong>: 3위 팔로워. 2024년 점유율 11.4%(농심 56.3%·오뚜기 23.5%에 이어), 35년 이어진 농심 아성에 눌려 있음</li>
+<li><strong>글로벌·수익성</strong>: 리더급. 미주 시장 성장·21%대 영업이익률로 경쟁사 압도. &quot;기타(Others)&quot; 분류에서 5~6위권 진입, 일본 닛신 3위 자리를 위협</li>
+<li>해외 매출 약 2조 원(2024 추정)으로, 농심의 해외 매출(약 1.4조 추정)을 <strong>해외 영업 실적만 보면 삼양이 앞선다</strong></li>
+</ul>
+<p><strong>주요 경쟁사·격차</strong>: 국내 3사 구도(농심·오뚜기·삼양). 삼양은 <strong>성장·수익성에서 앞서고 국내 점유·제품 다양성에서 뒤진다.</strong> 글로벌에선 일본 도요수산·닛신·농심과 미주에서 경쟁 — 2분기 삼양 미주 매출 +35.2%인 반면 도요수산·닛신·농심은 하락. <strong>격차 방향은 삼양에 유리하게 벌어지는 중.</strong> 국내에선 오뚜기와 &#x27;프리미엄 짜장·틈새&#x27;에서 2위 격전.</p>
+<p><strong>시장 구조</strong>: 국내는 3사 과점(짜파게티 42년 1위 등 강자 고착). 🔴 구직자 양면 — <strong>과점은 강자에 속하면 든든하나 삼양은 국내에선 3위 팔로워</strong>라 이 안정성의 수혜를 국내에선 덜 받는다. 대신 <strong>글로벌에선 역동적 성장 국면</strong>의 승자 쪽에 서 있다. (특정 담합 등 확정 규제 사실 근거 없음 — 언급 안 함.)</p>
+<p><strong>정성 판정</strong>: 삼양은 <strong>&quot;국내 3위·글로벌 신흥 승자&quot;</strong> 라는 비대칭 포지션이다. 해자는 <strong>불닭이라는 대체 불가 글로벌 매운맛 IP + 21%대 초격차 수익성</strong>, 발목은 <strong>국내 열세와 불닭 단일 의존</strong>. 지원자에겐: 배가 순풍(글로벌 수출·중국 신공장)을 받고 재무 체력이 최상위권이라 <strong>고용 안정·회사 성장 기대는 강한 편</strong>이다. 다만 성장의 열매가 직원 보상으로 잘 안 내려오는 점(블록4)이 병존한다. 무엇이 확인되면 판단이 바뀌나: <strong>불닭 외 신제품(우지 프리미엄·스핀들 헬스케어)이 매출로 검증되면</strong> 구조적 취약성이 완화되고 이 데이터 조직의 전략적 무게도 커진다 — 면접에서 &quot;탈불닭 포트폴리오의 실제 성과와 조직 투자 강도&quot;를 물어라.</p>
+<h2 id="sec-6">경영진 · 투자자·소유 구조</h2>
+<p><strong>대표·경영진</strong>:</p>
+<ul>
+<li><strong>김정수 (대표이사 회장)</strong> — 창업주 전중윤의 며느리, 전인장 부인. 1994년 결혼, 1998년 외환위기·우지파동 위기 때 시아버지 권유로 입사. 전업주부 출신이나 영업본부장·부사장을 거치며 <strong>입사 초기 전국 영업소를 직접 돌고 소비자 경험을 무기로</strong> 불닭볶음면 개발을 주도. 2021년 부회장, <strong>2026년 5월 회장 승진</strong>. WSJ가 &quot;500억 달러 인스턴트 라면 산업을 뒤흔드는 여성&quot;으로 조명. 2024년 연봉 32.2억. 최근 한경협 &#x27;갓생한끼&#x27; 등 청년 멘토로도 활동</li>
+<li><strong>김동찬 (대표이사)</strong> — 각자대표(전문경영인). 2025 대한민국 신성장경영대상 시상식에서 &quot;1억 달러 수출탑으로 시작해 9억 달러 수출탑까지 받았다&quot;며 글로벌 개발 의지 표명. 상세 배경은 공개 정보 미확인 → <strong>면접 확인 권장</strong></li>
+<li><strong>전병우 (COO 전무)</strong> — 삼양家 3세(1994년생). 2019년 해외사업본부 부장 입사→2020 이사→2023 상무→2025 전무(COO)로 6년 만에 핵심 경영진. <strong>헬스케어비즈니스유닛장 겸 미토믹스(Mitomics) 연구소장.</strong> 김정수 회장이 취임 사흘 만에 20만 주 증여로 승계 시동. <strong>헬스케어 브랜드 &#x27;스핀들&#x27;(첫 제품 &#x27;근력엔 아커만시아&#x27;)의 성과가 경영능력 시험대</strong></li>
+<li><strong>전인장</strong> — 2세 회장(김정수 남편), 지분 보유 지배구조 등장</li>
+</ul>
+<p>특징: <strong>오너 일가 중심의 강한 가족경영.</strong> 김정수(2세 부인)→전병우(3세) 승계 진행 중, 전문경영인 김동찬이 각자대표로 병존. &quot;고점 승계 베팅&quot;이라는 시장 평가가 있음.</p>
+<p><strong>소유·자본 구조(코스피 상장사 003230, 1975년 상장)</strong>:</p>
+<ul>
+<li><strong>최대주주: 지주사 삼양라운드스퀘어 34.92%</strong>(특수관계인 포함 46.14%). 엠디유니콘제일차 8.76%, <strong>국민연금 11.36%</strong>, 김정수 4.33%, 전인장 3.13%, 삼양이건장학재단 1.68%</li>
+<li>오너 일가가 <strong>지주사를 통해 간접 지배</strong>하는 전형적 &quot;지주-사업회사&quot; 구조. 국민연금 등 기관은 안정 지분</li>
+<li>리스크: <strong>내부거래 47.7%(식품사 2위), 중복상장 디스카운트</strong> — 코리아 디스카운트 요인. 소액주주 이익과 오너 승계 재원이 충돌할 수 있는 긴장(&quot;고점 승계 베팅&quot;)</li>
+</ul>
+<p><strong>정렬 인사이트</strong>: 경영진 비전(&quot;글로벌 종합식품기업&quot;·헬스케어·데이터 기반 지능화)과 소유 구조(안정적 오너·지주 지배 + 국민연금)는 <strong>큰 틀에선 정렬</strong> — 급격한 M&amp;A 회수보다 안정적 장기 지배·승계가 무게중심이다. 지원자 관점: <strong>의사결정이 오너로 집중</strong>돼 있어 이 AX 데이터 조직이 힘을 받으려면 <strong>오너·3세(전병우가 이끄는 헬스케어·데이터 신사업)의 스폰서십</strong>이 관건이다. 안정성은 높으나(재무·지분 모두), <strong>성과 보상은 오너에 후하고 직원에 박한 패턴</strong>이 확인되니 처우는 협의 단계에서 냉정하게 따져라. 이 자리는 신설 조직 팀장이므로 <strong>보고라인이 CEO/COO 어디로 붙는지</strong>가 곧 조직의 정치적 무게이자 당신의 실행력이다 — 반드시 물어라.</p>
+<h2 id="sec-7">용어 · 개념 풀이</h2>
+<ul>
+<li><strong>AX (AI Transformation)</strong> — AI를 전사 업무·프로세스에 이식해 체질을 바꾸는 전환. 삼양이 신설한 전담 부서명이며, 이 팀은 그 산하 데이터 축.</li>
+<li><strong>데이터 거버넌스</strong> — 데이터의 표준·품질·소유·접근을 규정하고 관리하는 전사 체계. 이 자리의 핵심 미션(0→1 구축).</li>
+<li><strong>MDM (Master Data Management)</strong> — 고객·제품·거래처 등 핵심 &#x27;기준정보&#x27;를 전사에서 하나의 신뢰본으로 통합 관리하는 것. 우대사항.</li>
+<li><strong>PoC (Proof of Concept)</strong> — 실증. 아이디어·기술이 실제 작동·가치를 내는지 소규모로 검증하는 단계.</li>
+<li><strong>데이터 인벤토리</strong> — 회사가 보유한 데이터 자산의 목록·소재·의미를 정리한 &#x27;데이터 지도&#x27;.</li>
+<li><strong>Data-driven Decision</strong> — 경험·직관이 아닌 실시간 데이터에 근거한 의사결정. 이 조직의 존재 이유.</li>
+<li><strong>SCM (Supply Chain Management)</strong> — 원자재→생산→물류→판매 공급망 관리. 식품·제조 도메인 데이터 과제의 핵심 영역.</li>
+<li><strong>BI 도구</strong> — Tableau·Power BI 등 데이터를 시각화·분석하는 비즈니스 인텔리전스 툴. 우대.</li>
+<li><strong>각자대표</strong> — 두 명 이상의 대표가 각각 단독으로 회사를 대표·결정할 수 있는 체제. 삼양은 김정수(오너)·김동찬(전문경영인) 병존.</li>
+<li><strong>지주-사업회사 구조</strong> — 지주사(삼양라운드스퀘어)가 사업회사(삼양식품) 지분을 보유·지배하는 구조. 오너가 적은 지분으로 그룹 전체를 지배하는 지렛대.</li>
+<li><strong>우지 헤리티지</strong> — 소기름(牛脂)으로 면을 튀기는 삼양 고유 제조 기술. 1989 우지 파동의 상처이자, 지금은 &#x27;삼양1963&#x27;·&#x27;짜르르&#x27; 등 프리미엄 라인의 정면 승부 카드.</li>
+</ul></div>
   <div class="repextra">
     <div class="ad">AD · 광고</div>
     <div class="cta-sub">이 회사, 내 이력으론 지원할 가치가 있을까?</div>
-    <a class="cta" href="https://jobrecon.100m1s.com/?co=%EC%82%BC%EC%96%91%EC%8B%9D%ED%92%88&amp;pos=AX%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%84%EC%8A%A4%20%ED%8C%80%EC%9E%A5&amp;from=r">내 이력으로 적합도·평결 받기 →</a>
+    <a class="cta" href="https://jobrecon.100m1s.com">내 이력으로 적합도·평결 받기 →</a>
   </div>
   <div class="foot">JobRecon · 기업 코멘트는 DART 공시·공개 뉴스·LLM 기반 · 근거 없는 단정 없이 "확인 필요"로 안내합니다.<br>개인 평결(적합·판단)은 이 페이지에 포함되지 않습니다 — 앱에서 내 프로필 기반으로만 제공됩니다.</div>
 </div>
@@ -349,7 +426,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 </script>
 <script>
 (function(){
-  var CARD="API Error: Connection closed mid-response. The response above may be incomplete.", CO="삼양식품", POS="AX 데이터 인텔리전스 팀장", APP="https://jobrecon.100m1s.com";
+  var CARD="## 2. 공고 핵심 요건\n- **채용 직무**: AX 데이터 인텔리전스 팀장\n- **한 줄 정의**: 신설 AX(AI Transformation) 전담 부서 산하 데이터인텔리전스팀을 **0→1로 세우는 팀장**. 전사 데이터 거버넌스·표준·품질 체계 구축과 도메인별 데이터/AI 과제 발굴·실증(PoC)을 총괄.\n- **경력**: 총 15년 이상 선호(유관 10년 이상 지원 가능), 학사 이상. 데이터 관리·분석 실무 또는 생산/SCM/영업 등 **현업 도메인** 기반으로 팀을 이끌어본 경험.\n- **핵심 역량**: SQL 등 데이터 조회·분석 기본기 + 비즈니스와 데이터 구조를 잇는 시야 + **부서 간 상충 요구 조율** 능력.\n- **우대**: 데이터 거버넌스·MDM(마스터데이터관리)·데이터 품질 PM/파트리더 경험, 식품·제조업 도메인 지식, BI 도구·멘토링 경험.\n- **전형**: 서류 → 1차 실무(화상/대면) → 2차 임원(대면) → 평판조회 → 처우협의·검진 → 최종. 경력직 3개월 수습(급여 동일). 근무지 서울 중구(명동 삼양라운드스퀘어빌딩), 연봉 협의.\n\n한마디로 **\"코드 짜는 자리가 아니라, 없던 데이터 조직을 정치·조율로 세우는 자리\"**다. 15년 선호·팀장 타이틀·거버넌스 강조가 그 성격을 못박는다.\n\n## 3. 회사 서사 · 궤적\n삼양식품의 서사는 **두 번의 현장 관찰이 만든 회사**다. 책상 기획이 아니라 오너의 직관이 히트를 만든 DNA가 핵심이다.\n\n**1세대(식량난 해결)**: 창업자 전중윤은 식품 도메인 출신이 아니라 보험사(동방생명) 창립 멤버였다. 그러나 1960년대 식량난에 \"미군이 버린 음식을 끓인 꿀꿀이죽으로 끼니를 때우는\" 사람들을 보고 라면을 해법으로 떠올렸다. 일본 묘조식품(明星食品)을 직접 찾아가 기술을 무상 원조받고, 라인 발주비 6만 달러는 중앙정보부 인맥(김종필 독대)을 거쳐 미 농림부 차관 자금으로 마련해 **1963년 9월 국내 최초 라면 '삼양라면'** 을 생산했다.\n\n**연혁의 뼈대와 전환점**:\n- **1961** 삼양제유(식용유) 설립 → 삼양공업 → **1963** 삼양라면 → **1969** 업계 최초 베트남 수출(160만 불)\n- **1980년대** 농심에 1위 역전당함(농심 60% vs 삼양 20%) — 이 열세는 지금도 국내 시장에 그대로 남았다\n- **1989 우지 파동** — 이미지 치명타. **1997 대법원 무죄** 확정됐으나 이미 브랜드가 크게 훼손됨\n- **1997~1998** 외환위기로 화의신청(사실상 부도 위기) → **2005** 화의종결\n- **2010** 전중윤 은퇴, 2세 전인장 취임(영업익 2010년 141억→2012년 76억으로 반토막날 만큼 침체)\n- **2012 불닭볶음면 출시** — 이 회사를 되살린 결정적 전환점. 창업주 며느리 **김정수**가 2010년 고교생 딸과 명동 산책 중 매운 볶음밥을 기다리는 인파를 보고 착안, 1년간 매운 소스 2톤·닭 1,200마리를 써가며 개발\n- **2022** 밀양 신공장 준공(수출 전용) → **2023** 지주사 **삼양라운드스퀘어**로 개칭, '맵탱' 출시\n- **2025** 시가총액 10조 돌파, **식품업계 시총 1위** → **2026.1** 본사 하월곡동→명동 이전 → **2026.5** 김정수 회장 승진, 1분기 매출 7,144억·영업익 1,771억 분기 최대\n\n**미션·비전의 일관성**: 창업정신 **\"정직과 신용\"**(1961년부터 60여 년 반복), 선대 유지 \"식품으로 인간 백세시대를 열겠다\", 현재 슬로건 **\"Delicious Together\"**·그룹 슬로건 **\"Round Square\"**. 다만 \"정직과 신용\"은 1989 우지 파동으로 한 번 정면 훼손된 문구이고, \"글로벌 종합식품기업 도약\"은 2023년 리브랜딩과 함께 나온 **최신 버전**이지 오래된 뿌리가 아니다.\n\n**판정**: 껍데기 버즈워드가 아니라 **부도 위기(1998)→창업 60년 만에 식품 시총 1위(2025)** 로 이어지는 인과가 뚜렷한 탄탄한 서사다. 단 그 반등이 **불닭 단일 제품에 압도적으로 얹혀** 있다는 점이 다음 블록의 핵심이며, 이번 AX 부서 신설·데이터 거버넌스 0→1 채용은 바로 그 \"불닭 이후\"를 대비한 체질 전환의 일부로 읽어야 한다.\n\n## 4. 실체 점검 · 숨은 리스크 · 실질 보상\n**검증된 실적(재무 체력은 최상위권)**:\n- 2025년 **매출 2조 3,518억 원, 영업이익 5,242억 원**(DART). 순익 3,886억 규모. 매출 궤적 2022 9,090억→2023 1.19조→2024 1.73조→2025 2.35조로 3년 폭증\n- **영업이익률 21%대**(2025 상반기 21.7%). 농심 추정 4.7%·국내 평균 6% 대비 압도적. 매출원가율 56%(농심 71%·오뚜기 82%)\n- **해외 비중 급등**: 2020년 57%→2024년 77%→2026년 1분기 약 80%. 2026 상반기 K라면 수출 9.35억 달러(전년 대비 +28%, 반기 역대 최대)로 삼양이 견인\n- 최근 이벤트(면접 인용 재료): **우지 헤리티지 프리미엄 라인 확장** — '삼양1963', 짜장라면 **'짜르르'**, '큰컵 우지파개장' 등을 잇달아 출시해 불닭 편중을 국내에서 보완 시도. **2027년 중국 신공장 가동** 예정(증권가 목표주가 188만~195만원, \"식음료 최선호주\")\n\n**자산 기반 안정성**: 밀양 2공장(수출 전용)·원주·익산 생산설비, 2026년 이전한 명동 삼양라운드스퀘어빌딩(자가 사옥), 두꺼운 이익잉여금, 로가(식물성 콜라겐)·스콘·마크비전 등 전략적 투자 지분. **불황·적자에도 버틸 체력은 확실 → 고용 안정성 토대는 강함.** 단 실적이 불닭·환율·미주 경쟁에 크게 좌우되는 구조적 변동성이 상존한다.\n\n**실질 보상 · 복리후생(지원자 즉시 팩터 — 여기가 반전)**:\n- 삼양식품 **직원 평균 급여 2021년 4,290만→2024년 5,424만 원**(3년 26.4% 증가). **2024년 인상률도 9.03%로 라면 3사 중 최고**(농심 2.6%·오뚜기 4.3%). 다만 절대액(5,424만 원)은 **여전히 농심(6,094만 원)에 못 미침** — 과거 \"실적은 1위, 직원 보상은 꼴찌\"라던 언론 지적을 인상률로 따라잡는 국면\n- 반면 오너 보상은 급증 — 김정수 회장 2024년 연봉 **32억 2,200만원(전년 대비 71.7%↑)**, 직원 평균의 약 35배\n- 경력직 우대로 연봉이 오르나 **\"경력직만 높게 쳐줘 기존 장기근속자 불만\"**·\"착시 현상\"이라는 지적 존재\n- 🔴 위 평균 5,424만원은 **전 직급·생산직 포함 '회사 지표'** 로, 이 공고(15년+ 팀장급)의 개인 실수령과는 괴리가 크다. 팀장 처우는 **협의(공고상 연봉 '협의')** 이므로 별도 밴드로 봐야 한다. 실제 팀장급 연봉·성과급·복지는 **공개 자료 미확인 → 처우협의 단계에서 반드시 확인**.\n\n**숨은 리스크**:\n- **고용의 질 악화 신호**: 정규직 비중 2024년 81.4%→2025년 73.3%로 하락(농심 98.1%·오뚜기 99%), 계약직이 임직원 4명 중 1명, **이직·계약직 라면 3사 중 최고**. 급성장의 이면. 단 이는 주로 생산직 증설 영향이라 본사 사무·전문직에 그대로 적용되진 않으므로 면접에서 직군별로 확인 필요\n- **불닭 단일 제품 리스크**: 불닭볶음면이 전체 매출의 약 70%(약 1.6조). 대체 브랜드 '맵탱'은 \"시장 관심을 못 얻는\" 상황. 중국의 카피 제품 범람도 리스크\n- **국내 열세**: 국내 점유율 여전히 10%대 초반(2024년 11.4%, 농심 56.3%·오뚜기 23.5%에 이어 3위)\n- **지배구조 이슈**: 내부거래 비중 47.7%(식품사 2위), 지주사 체제 후에도 사익편취 구조 미해소 지적 → 코리아 디스카운트 요인\n\n**주장 vs 증명 간극**: 회사는 해외 성장·불닭 누적판매(100억 개)·수출 실적을 전면에 내세우지만, **불닭 초집중 단일 제품 리스크와 국내 열세는 강조하지 않는다.** \"종합식품기업\" 서사가 실체인지는 헬스케어 브랜드 '스핀들'(2026.5 론칭)·'탱글' 프로틴 파스타의 2~3년 매출로 확인해야 한다.\n\n**사업 구조상 진짜 위험/해자와 이 자리의 의미**: 삼양의 해자는 **불닭이라는 글로벌 IP 하나**다. 이 자리(AX 데이터 인텔리전스)의 존재 이유가 바로 여기 있다 — 회사는 \"불닭 한 방\"의 오너 직관 의존에서 벗어나 **데이터 기반 의사결정으로 다음 히트와 SCM·생산 효율을 만들려는 체질 전환** 중이고, 이 팀은 그 0→1 엔진이다. **기회**: 전사 데이터 표준이 없는 백지 상태 → 성과를 남기면 커리어 임팩트가 크다. **위험**: 오너·현장 직관이 여전히 강한 조직에서 데이터 조직의 정치적 입지가 약할 수 있다 → \"경영진이 데이터 기반 의사결정에 실제로 얼마나 권한을 실어주는가\"가 이 자리 성패의 갈림길. 무엇이 확인되면 판단이 바뀌나: **AX 부서의 보고라인·예산·경영진 스폰서십**이 강하게 확인되면 매력도 급상승.\n\n## 8. 산업·시장·경쟁 지형\n**산업 규모·성장성**: K라면 수출은 커지는 파이다. 2026 상반기 수출 9.35억 달러(+28%, 반기 최대), 연 10억 달러를 눈앞에 뒀다. **글로벌 성장 산업의 순풍을 받는 위치 → 고용·성장 전망에 긍정.** 단 국내 라면 시장 자체는 정체 구조(짜파게티 42년 1위 등 고착).\n\n**이 회사의 실질 순위·지위 — 이중적**:\n- **국내**: 3위 팔로워. 2024년 점유율 11.4%(농심 56.3%·오뚜기 23.5%에 이어), 35년 이어진 농심 아성에 눌려 있음\n- **글로벌·수익성**: 리더급. 미주 시장 성장·21%대 영업이익률로 경쟁사 압도. \"기타(Others)\" 분류에서 5~6위권 진입, 일본 닛신 3위 자리를 위협\n- 해외 매출 약 2조 원(2024 추정)으로, 농심의 해외 매출(약 1.4조 추정)을 **해외 영업 실적만 보면 삼양이 앞선다**\n\n**주요 경쟁사·격차**: 국내 3사 구도(농심·오뚜기·삼양). 삼양은 **성장·수익성에서 앞서고 국내 점유·제품 다양성에서 뒤진다.** 글로벌에선 일본 도요수산·닛신·농심과 미주에서 경쟁 — 2분기 삼양 미주 매출 +35.2%인 반면 도요수산·닛신·농심은 하락. **격차 방향은 삼양에 유리하게 벌어지는 중.** 국내에선 오뚜기와 '프리미엄 짜장·틈새'에서 2위 격전.\n\n**시장 구조**: 국내는 3사 과점(짜파게티 42년 1위 등 강자 고착). 🔴 구직자 양면 — **과점은 강자에 속하면 든든하나 삼양은 국내에선 3위 팔로워**라 이 안정성의 수혜를 국내에선 덜 받는다. 대신 **글로벌에선 역동적 성장 국면**의 승자 쪽에 서 있다. (특정 담합 등 확정 규제 사실 근거 없음 — 언급 안 함.)\n\n**정성 판정**: 삼양은 **\"국내 3위·글로벌 신흥 승자\"** 라는 비대칭 포지션이다. 해자는 **불닭이라는 대체 불가 글로벌 매운맛 IP + 21%대 초격차 수익성**, 발목은 **국내 열세와 불닭 단일 의존**. 지원자에겐: 배가 순풍(글로벌 수출·중국 신공장)을 받고 재무 체력이 최상위권이라 **고용 안정·회사 성장 기대는 강한 편**이다. 다만 성장의 열매가 직원 보상으로 잘 안 내려오는 점(블록4)이 병존한다. 무엇이 확인되면 판단이 바뀌나: **불닭 외 신제품(우지 프리미엄·스핀들 헬스케어)이 매출로 검증되면** 구조적 취약성이 완화되고 이 데이터 조직의 전략적 무게도 커진다 — 면접에서 \"탈불닭 포트폴리오의 실제 성과와 조직 투자 강도\"를 물어라.\n\n## 6. 경영진 · 투자자·소유 구조\n**대표·경영진**:\n- **김정수 (대표이사 회장)** — 창업주 전중윤의 며느리, 전인장 부인. 1994년 결혼, 1998년 외환위기·우지파동 위기 때 시아버지 권유로 입사. 전업주부 출신이나 영업본부장·부사장을 거치며 **입사 초기 전국 영업소를 직접 돌고 소비자 경험을 무기로** 불닭볶음면 개발을 주도. 2021년 부회장, **2026년 5월 회장 승진**. WSJ가 \"500억 달러 인스턴트 라면 산업을 뒤흔드는 여성\"으로 조명. 2024년 연봉 32.2억. 최근 한경협 '갓생한끼' 등 청년 멘토로도 활동\n- **김동찬 (대표이사)** — 각자대표(전문경영인). 2025 대한민국 신성장경영대상 시상식에서 \"1억 달러 수출탑으로 시작해 9억 달러 수출탑까지 받았다\"며 글로벌 개발 의지 표명. 상세 배경은 공개 정보 미확인 → **면접 확인 권장**\n- **전병우 (COO 전무)** — 삼양家 3세(1994년생). 2019년 해외사업본부 부장 입사→2020 이사→2023 상무→2025 전무(COO)로 6년 만에 핵심 경영진. **헬스케어비즈니스유닛장 겸 미토믹스(Mitomics) 연구소장.** 김정수 회장이 취임 사흘 만에 20만 주 증여로 승계 시동. **헬스케어 브랜드 '스핀들'(첫 제품 '근력엔 아커만시아')의 성과가 경영능력 시험대**\n- **전인장** — 2세 회장(김정수 남편), 지분 보유 지배구조 등장\n\n특징: **오너 일가 중심의 강한 가족경영.** 김정수(2세 부인)→전병우(3세) 승계 진행 중, 전문경영인 김동찬이 각자대표로 병존. \"고점 승계 베팅\"이라는 시장 평가가 있음.\n\n**소유·자본 구조(코스피 상장사 003230, 1975년 상장)**:\n- **최대주주: 지주사 삼양라운드스퀘어 34.92%**(특수관계인 포함 46.14%). 엠디유니콘제일차 8.76%, **국민연금 11.36%**, 김정수 4.33%, 전인장 3.13%, 삼양이건장학재단 1.68%\n- 오너 일가가 **지주사를 통해 간접 지배**하는 전형적 \"지주-사업회사\" 구조. 국민연금 등 기관은 안정 지분\n- 리스크: **내부거래 47.7%(식품사 2위), 중복상장 디스카운트** — 코리아 디스카운트 요인. 소액주주 이익과 오너 승계 재원이 충돌할 수 있는 긴장(\"고점 승계 베팅\")\n\n**정렬 인사이트**: 경영진 비전(\"글로벌 종합식품기업\"·헬스케어·데이터 기반 지능화)과 소유 구조(안정적 오너·지주 지배 + 국민연금)는 **큰 틀에선 정렬** — 급격한 M&A 회수보다 안정적 장기 지배·승계가 무게중심이다. 지원자 관점: **의사결정이 오너로 집중**돼 있어 이 AX 데이터 조직이 힘을 받으려면 **오너·3세(전병우가 이끄는 헬스케어·데이터 신사업)의 스폰서십**이 관건이다. 안정성은 높으나(재무·지분 모두), **성과 보상은 오너에 후하고 직원에 박한 패턴**이 확인되니 처우는 협의 단계에서 냉정하게 따져라. 이 자리는 신설 조직 팀장이므로 **보고라인이 CEO/COO 어디로 붙는지**가 곧 조직의 정치적 무게이자 당신의 실행력이다 — 반드시 물어라.\n\n## 7. 용어 · 개념 풀이\n- **AX (AI Transformation)** — AI를 전사 업무·프로세스에 이식해 체질을 바꾸는 전환. 삼양이 신설한 전담 부서명이며, 이 팀은 그 산하 데이터 축.\n- **데이터 거버넌스** — 데이터의 표준·품질·소유·접근을 규정하고 관리하는 전사 체계. 이 자리의 핵심 미션(0→1 구축).\n- **MDM (Master Data Management)** — 고객·제품·거래처 등 핵심 '기준정보'를 전사에서 하나의 신뢰본으로 통합 관리하는 것. 우대사항.\n- **PoC (Proof of Concept)** — 실증. 아이디어·기술이 실제 작동·가치를 내는지 소규모로 검증하는 단계.\n- **데이터 인벤토리** — 회사가 보유한 데이터 자산의 목록·소재·의미를 정리한 '데이터 지도'.\n- **Data-driven Decision** — 경험·직관이 아닌 실시간 데이터에 근거한 의사결정. 이 조직의 존재 이유.\n- **SCM (Supply Chain Management)** — 원자재→생산→물류→판매 공급망 관리. 식품·제조 도메인 데이터 과제의 핵심 영역.\n- **BI 도구** — Tableau·Power BI 등 데이터를 시각화·분석하는 비즈니스 인텔리전스 툴. 우대.\n- **각자대표** — 두 명 이상의 대표가 각각 단독으로 회사를 대표·결정할 수 있는 체제. 삼양은 김정수(오너)·김동찬(전문경영인) 병존.\n- **지주-사업회사 구조** — 지주사(삼양라운드스퀘어)가 사업회사(삼양식품) 지분을 보유·지배하는 구조. 오너가 적은 지분으로 그룹 전체를 지배하는 지렛대.\n- **우지 헤리티지** — 소기름(牛脂)으로 면을 튀기는 삼양 고유 제조 기술. 1989 우지 파동의 상처이자, 지금은 '삼양1963'·'짜르르' 등 프리미엄 라인의 정면 승부 카드.", CO="삼양식품", POS="AX 데이터 인텔리전스 팀장", APP="https://jobrecon.100m1s.com";
   var deck=document.getElementById("storyDeck"), dots=document.getElementById("storyDots"), seg=document.getElementById("modeSeg");
   if(!deck||!CARD) return;
   function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -376,35 +453,20 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   var AXCONJ=/(?:^|[\s,、"'\)\-])(그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])/;   // 리드 대비접속사(문장 시작/중간)
   var LEADCONJ=/^\s*(?:그러나|다만|반면|하지만|반대로|그렇지만)(?=[\s,])[\s,、]*/;   // subvert 선두 대비접속사 strip(앱 index.html _LEADCONJ mirror) — 카드 ⚠️+금색볼드+병치 3중 전환신호라 선두 접속사 잉여. 독립 선두 6개만·'…지만' 어미 미포함. iOS 안전(lookbehind 0)
   function axNlen(s){return String(s).replace(/\s/g,"").length;}
-  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){if(/\*\*$/.test(s))s=s.slice(0,-2);else if(/\*$/.test(s))s=s.slice(0,-1);else{var bi=s.indexOf("**");s=(bi>0&&/\S/.test(s.charAt(bi-1)))?"**"+s:s+"**";}}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존 — R6-034(d) 닫힘 볼드 시작 발췌 선두 보강(강조 역전 방지·앱 mirror)
-  // R6-034(a) 문두 편집 라벨 전 변형 스트립 — 구조 판정(짧은 조각≤16자+무숫자+비종결=라벨)·사실성 라벨(추정 등) 보존. 앱 index.html _axLabelStrip mirror(G6).
-  var AXLBLKEEP=/추정|잠정|명시|확인/;
-  function axIsLabel(t){t=String(t).replace(/[.。:：]\s*$/,"").trim();if(!t||t.length>16)return false;if(/\d/.test(t))return false;if(AXLBLKEEP.test(t))return false;return !/[다요죠까]$/.test(t);}
-  function axLabelStrip(s){s=String(s).trim();for(var k=0;k<2;k++){var m=s.match(/^\*\*([^*]{1,18})\*\*\s*[:：]\s*/)||s.match(/^\*\*([^*]{0,17}[.。])\*\*\s*/);if(m&&axIsLabel(m[1])){s=s.slice(m[0].length).trim();continue;}var m2=s.match(/^([^\s*][^:：.!?*]{0,15})[:：]\s+/);if(m2&&axIsLabel(m2[1])){s=s.slice(m2[0].length).trim();continue;}break;}return s;}   // 볼드 라벨 = 뒤 콜론/내부 마침표 종결만(**데이터팀**이라는 = 강조라 보존)
-  // R6-034(b) setup 문두 자립성 — 지시어·고아 보조사 문두 박탈(subvert는 setup 병치로 완화). 앱 _axHeadFree mirror(G6).
-  function axHeadFree(s){var t=String(s).trim().replace(/^[*`"“'『「\s]+/,"");if(/^(?:이건|그건|저건|이는|그는|이것|그것|이걸|그걸|이를|그를|이에|이처럼|그처럼|그래서|그러니까|그렇기에|그런데도|여기서|여기에|여기까진|여기까지는)(?=[\s은는이가을를도,]|$)/.test(t))return false;var m=t.match(/^([가-힣]{1,7}도)(?=\s)/);if(m&&!/^(?:아무도|누구도|하나도|조금도)/.test(m[1]))return false;return true;}
-  // R6-034(c) 인용부 폐합 — 미폐합 여는 부호에서 앞/뒤 중 알맹이 굵은 쪽 채택(반토막 인용 금지·인용 내부 대비 보존) → 잔여는 axWhole 재검. 앱 _axQuoteClose mirror(G6).
-  function axQuoteCut(s,at){var bf=s.slice(0,at),af=s.slice(at+1);var bn=axNlen(bf.replace(/[*`]/g,"")),an=axNlen(af.replace(/[*`]/g,""));return (an>=6&&an>bn)?af:bf;}
-  function axQuoteClose(s){s=String(s);var prs=[["“","”"],["『","』"],["「","」"],["‘","’"]];for(var i=0;i<prs.length;i++){var o=prs[i][0],c=prs[i][1];while((s.split(o).length-1)>(s.split(c).length-1)){s=axQuoteCut(s,s.lastIndexOf(o));}}if(((s.match(/"/g)||[]).length)%2){s=axQuoteCut(s,s.lastIndexOf('"'));}var prn=[["(",")"],["（","）"],["[","]"]];for(var pi=0;pi<prn.length;pi++){var po=prn[pi][0],pc=prn[pi][1];while((s.split(po).length-1)>(s.split(pc).length-1)){var k=s.lastIndexOf(po);if(k<0)break;s=s.slice(0,k).replace(/[\s,·—:：]+$/,"");}while((s.split(pc).length-1)>(s.split(po).length-1)){var k2=s.indexOf(pc);if(k2<0)break;s=s.slice(k2+1).replace(/^[\s,·—:：]+/,"");}}return axBal(s.replace(/[\s,·—:：]+$/,"").trim());}   // R7-042/051 괄호·이름 완결 by construction: 미폐합 괄호(영문 이름 부연 '서범석(Brandon B.')는 부연째 절단(본체 보존)·앱 _axQuoteClose mirror(G6)
+  function axBal(s){s=String(s).trim();if((s.match(/\*\*/g)||[]).length%2){s=/\*\*$/.test(s)?s.slice(0,-2):(/\*$/.test(s)?s.slice(0,-1):s+"**");}if((s.match(/`/g)||[]).length%2)s+="`";return s.trim();}   // 볼드/코드 짝 보존
   function axClean(s){s=String(s).trim();s=s.replace(/^\s*[→•]\s*/,"");s=s.replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=s.replace(/\s*[,，—:：]\s*(\*\*|`)?\s*$/,"$1");return axBal(s.trim());}   // P1-2 누출 정화: 선두 →•·콜론붙은 볼드라벨 + 말미 ,—: 트림(볼드/백틱 닫기 안쪽 콤마도 = 축,** → 축**)
-  // R7-052① 공간 참조 중립화 — 가로 스와이프 낱장이라 '아래/위/다음' 세로 문서 deixis 구조적 무의미. 문서-위치 지시어만 제거(내용 보존·창작0). 앱 _axDeixis mirror(G6).
-  var DEIXIS=/(?:바로\s*)?(?:아래|위|다음|앞|하단|상단|여기|이)\s*(?:의|에|에서|와\s*같이|과\s*같이|쪽의|쪽에)\s*(?=반전|전복|표|목록|내용|결과|사실|수치|그래프|차트|비교|항목|리스트|섹션|단락|문단|부분)|(?:아래|위|앞서|다음)\s*(?:에서\s*)?(?:보(?:듯|면|시)|서술(?:한|했)|언급(?:한|했)|말(?:한|했)|정리(?:한|했))[가-힣]*\s*/g;
-  function axDeixis(s){return String(s==null?"":s).replace(DEIXIS,"").replace(/\s{2,}/g," ").trim();}
-  // R7-052② payoff 없는 반전 단정 — '실제는 반대입니다'류 긴장만·데이터 미전달 subvert. 실질(숫자·비교) 동반 by construction 요구(단정만 배제). 앱 _BAREREV mirror(G6).
-  var BAREREV=/^(?:하지만|그러나|다만|반면)?\s*(?:실제|현실|사실|정작|막상)\s*(?:로는|로|은|는|론|상|적으로는|에서는|에선)?\s*(?:정?반대|(?:완전히?\s*)?다릅니다|달랐|아닙니다|아니었|그렇지\s*않|딴판)/;
   function clipWall(s){if(axNlen(s)<=90)return s;var cut=s.search(/[,，]\s/);if(cut>0&&axNlen(s.slice(0,cut))>=12)return axBal(s.slice(0,cut).trim());return s;}   // P2-2 종결부호 없는 장문 setup → 첫 주요 절만(원문 substring·창작0)
   function axLastClause(t){var re=/[.!?]\s+/g,m,last=-1;while((m=re.exec(t))!==null)last=m.index+m[0].length;if(last>0){var tail=t.slice(last).trim();if(axNlen(tail)>=3)return tail;}return String(t).trim();}   // setup 대비 직전 완결 절
   // ③ 문장 단위 대비 — 어미('…지만 B')/리드접속사(문장 시작·중간). subvert=완결 문장(종결어미 보장·잘림0). 원문 substring(창작0).
   //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 보상반전 추출). 앱 index.html _sentContrast mirror.
-  // R6-033 문형 확장 — ①인용부·괄호 닫힘 뒤 '지만'(콕스웨이브 '"데이터 엔지니어"지만') ②'A(이/가/은/는) 아니라/아니고 B'(휴톰·페이타랩·당근 §2 직무 실체 최빈 대비형·setup=명사구 lead:true). 앱 index.html _sentContrast mirror(G6).
-  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣"”'』」)\]]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var mn=s.match(/(?:[이가은는]\s*)?아니(?:라|고)[,，]?(?=\s)/);if(mn&&mn.index>=4){var st2=s.slice(0,mn.index).trim();var sub2=s.slice(mn.index+mn[0].length).replace(/^[\s,、]+/,"").trim();if(axNlen(st2)>=6&&axNlen(sub2)>=8)return {setup:axBal(st2),subvert:axBal(clip(sub2,1)),lead:true};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
+  function sentContrast(para){var ss=sentsOf(para);for(var i=0;i<ss.length;i++){var s=ss[i];var m=s.match(/[가-힣]지만(?=[\s,])/);if(m){var idx=s.indexOf(m[0]),cut=idx+m[0].length;var sub=s.slice(cut).replace(/^[\s,、]+/,"").trim();if(axNlen(s.slice(0,idx))>=5&&axNlen(sub)>=8)return {setup:axBal(s.slice(0,cut).trim()),subvert:axBal(clip(sub,1))};}var m2=s.match(AXCONJ);if(m2){var pos=s.indexOf(m2[1],m2.index);var st=s.slice(0,pos).trim(),sb=s.slice(pos).trim();if(axNlen(st)<4&&i>0)st=ss[i-1].trim();if(axNlen(st)>=4&&axNlen(sb)>=8)return {setup:axBal(axLastClause(st)),subvert:axBal(clip(sb,1))};}}return null;}
   // R3-015 비문(잘림) 게이트 — '+35.2%인' 수사 관형·관형형·비대비 연결어미·구두점 말미 차단. '…지만'은 대비 설계 산출이라 완결. 앱 _AXCUT mirror.
   var AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
   // R4-019b 종결어미 화이트리스트 — 블랙리스트가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린') 구조 차단. lead(볼드 리드 명사구)는 블랙리스트만. 앱 _AXFIN mirror(G6).
-  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐|국면)[*`"”')\]]*\s*$/;   // R6-034 '국면' 보강(완결 명사문·앱 mirror)
+  var AXFIN=/(?:[다요죠까음함됨임봄셈]|지만|[.!?…"”'』」)\]%]|\d[\d,.]*\s*(?:억|조|만|천|원|%|년|월|일|명|위|배|개|건|달러|개월|분기|시간|주|곳|팀|세|호|층|장|권)?|미지수|관건|숙제|과제|의문|물음표|상태|상황|수준|전망|추세|계획|예정|가능성|불투명|미확인|그대로|것|셈|중|편|뿐)[*`"”')\]]*\s*$/;
   function axWhole(s,lead){var t=String(s).trim().replace(/[*`]+$/,"").trim();if(!t)return false;if(AXCUT.test(t))return false;return lead?true:AXFIN.test(t);}
-  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. R6-034(a) axLabelStrip 최전단 통합. 앱 _axTrim mirror.
-  function axTrim(s,lead){s=axLabelStrip(String(s).trim()).replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
+  // 선두 볼드 콜론 라벨은 자르기 전에 제거(': ' 경계 절단이 메타 라벨만 남기는 역전 방지)·말미 구두점 strip 우선. 앱 _axTrim mirror.
+  function axTrim(s,lead){s=String(s).trim().replace(/^\*\*[^*]+\*\*\s*[:：]\s*/,"");s=axBal(s.replace(/[\s,·—:：]+$/,""));for(var k=0;k<3&&s&&!axWhole(s,lead);k++){var cut=Math.max(s.lastIndexOf(" — "),s.lastIndexOf(", "));s=cut>4?axBal(s.slice(0,cut).trim().replace(/[\s,·—:：]+$/,"")):"";}return axWhole(s,lead)?s:"";}
   // R3-013 최강 반전 우선 승격 — 문단 전 후보 중 임팩트 최고(숫자·반전어·볼드) 선택. '여기가 반전' 마커 문단 +10(리포트-카드 격차 봉쇄). 앱 mirror.
   var AXMARK=/여기가 반전/;
   // R4-022b③ 직무 관련성 가중 — 개발 직군 공고에 직무·기술축 카드 0장 방지(리포트 실존 후보만 승격·창작0). 앱 _FITKW mirror(G6).
@@ -429,8 +491,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if(!marks.length)return;
   var byId={};marks.forEach(function(mk,i){byId[mk.id]={id:mk.id,body:CARD.slice(mk.end,i+1<marks.length?marks[i+1].idx:CARD.length).trim()};});
   // R3-012 얇은 축 배제 — 카드 수 = 축 프레임(6)이 아니라 콘텐츠 밀도(임팩트+뜻줄 스코어>=3). 미달 축은 카드화 배제(리포트에만). 앱 mirror.
-  // R6-033/034: 후보 폐기 시 같은 § 차순위 재시도(3회) + 최종 산출 출력 규격 게이트(라벨0·자립·폐합·완결) + fit 한정 밀도 완화 (_mn?2:0)<(fit?1:3). 앱 _collectAxes mirror(G6).
-  var axes=[],axUsed={},axMean={},PER_AXIS=3,DECK_MAX=12;/* R7-044 밀도 상향: 축당 1장 상한 → 강점 다발 다카드화(강점 대량 소실=커버율 0.1 근원). 밀도 미달·빈 패딩 여전 배제(창작0). 순서=축 beat 유지(같은 § 인접). 앱 _collectAxes mirror(G6) */for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _u=axUsed[_sec]||(axUsed[_sec]={}),_mu=axMean[_sec]||(axMean[_sec]={});var _got=0;for(var _t=0;_t<10&&_got<PER_AXIS;_t++){var _c0=extractContrast(paras(_b.body),_u);if(!_c0)break;var _su0=axQuoteClose(axDeixis(clipWall(clip(axClean(axLabelStrip(_c0.setup)),2)))),_sv0=axQuoteClose(axDeixis(axClean(axLabelStrip(String(_c0.subvert).replace(LEADCONJ,"")))));if(!_su0||!_sv0)continue;if(!axHeadFree(_su0))continue;if(!axWhole(_su0,true)||!axWhole(_sv0,!!_c0.lead))continue;if(BAREREV.test(_sv0)&&!hasNum(_su0+" "+_sv0)&&axNlen(_sv0)<=20)continue;/* R7-052② payoff 없는 반전 단정 배제 */var _mn=extractMean(_b.body,_mu);if(axNlen(_su0)+axNlen(_sv0)<14&&!_mn)continue;if((_c0.score||0)+(_mn?2:0)<(_ky==="fit"?1:3))continue;if(_got>=1&&!(hasNum(_su0+" "+_sv0)||_mn||(_c0.score||0)>=4)&&_ky!=="fit")continue;/* R7-044 축당 2번째+ 카드는 실질(숫자 OR 뜻줄 OR score≥4) 요구 — 가장 얇은 extra만 배제(질적 반전 보존). 앱 mirror */var _label=_ky==="comp"?(COMP.test(_su0+" "+_sv0)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su0,subvert:_sv0,mean:_mn,sec:"sec-"+_sec});_got++;if(axes.length>=DECK_MAX)break;}if(axes.length>=DECK_MAX)break;}
+  var axes=[],axUsed={},axMean={};for(var ai=0;ai<AXIS_SEC.length;ai++){var _sec=AXIS_SEC[ai][0],_lb=AXIS_SEC[ai][1],_ky=AXIS_SEC[ai][2];var _b=byId[_sec];if(!_b)continue;var _c=extractContrast(paras(_b.body),axUsed[_sec]||(axUsed[_sec]={}));if(!_c)continue;var _su=clipWall(clip(axClean(_c.setup),2)),_sv=axClean(String(_c.subvert).replace(LEADCONJ,""));var _mn=extractMean(_b.body,axMean[_sec]||(axMean[_sec]={}));if(axNlen(_su)+axNlen(_sv)<14&&!_mn)continue;if((_c.score||0)+(_mn?2:0)<3)continue;var _label=_ky==="comp"?(COMP.test(_su+" "+_sv)?"실체·보상":"회사 주장 vs 실제"):_lb;axes.push({key:_ky,label:_label,setup:_su,subvert:_sv,mean:_mn,sec:"sec-"+_sec});}
   if(axes.length<3)return;   // 최소 3장 하한 — 미만이면 스토리 미노출(반쪽 덱 금지, 리포트 body만)
   // R3-015 용어 gloss — 카드 노출 텍스트 첫 등장 약어 인라인 괄호 풀이(덱 단위 1회·원문 풀이 존재 시 skip). 표준 정의=사실 정보(창작0 유지). 앱 _GLOSS mirror.
   var GLOSS=[["TAM","전체 시장 규모"],["SAM","실제 공략 가능 시장"],["SOM","단기 확보 가능 시장"],["TPV","총 결제액"],["TC","총 보상"],["WTS","웹 트레이딩 시스템"],["MTS","모바일 트레이딩 앱"],["HTS","PC 트레이딩 프로그램"],["WM","자산관리"],["PO","프로덕트 오너"],["PoC","개념 검증"],["POC","개념 검증"],["ARR","연간 반복 매출"],["MAU","월간 활성 이용자"],["DAU","일간 활성 이용자"],["GMV","총 거래액"],["CAC","고객 획득 비용"],["LTV","고객 생애 가치"],["YoY","전년 대비"],["RSU","양도제한 주식"],["FAST","광고 기반 무료 스트리밍 TV"],["SCM","공급망 관리"],["ATS","채용 관리 시스템"],["AX","AI 전환"],["DX","디지털 전환"]];
@@ -449,7 +510,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
       return '<div class="story-card role-axis'+(c.first?" first":"")+'" style="'+sv+'">'+g+co+'<div class="story-kicker soft">'+esc(c.label||"")+'</div><div class="story-beat"><div class="hb-line hb-setup">'+kw(c.setup)+'</div><div class="hb-turn">'+ICw+'</div><div class="hb-line hb-subvert">'+kw(c.subvert)+'</div></div>'+bd+mn+'<div class="spacer"></div>'+an+'</div>';
     }
     // CTA 독립 슬롯 — 리포트 근거 유도(로그인 유도 전). /r/은 리포트 body가 같은 페이지 → segReport 모드 전환.
-    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
+    if(c.kind==="cta")return '<div class="story-card allmore role-cta" style="'+sv+'">'+g+'<div class="story-kicker">'+ICs+' 더 깊이</div><div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div><div class="story-ev" style="border:0;padding:0;margin-top:12px">카드는 반전이 강한 '+(c.n||"몇")+'개 축만 추렸습니다. 숫자·출처·맥락 전부는 리포트에 있어요.</div><button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button></div>';
     return "";
   }
   deck.innerHTML=cards.map(card).join("");
@@ -457,7 +518,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   document.body.classList.add("mode-story");
   if(seg)seg.style.display="inline-flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
-  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);if(story)requestAnimationFrame(function(){syncH();});}
+  function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);}
   // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
   var _hdr=document.querySelector(".stickyhdr");
   var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
@@ -479,10 +540,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("inview");});},{root:deck,threshold:0.55});cardsEl.forEach(function(c){io.observe(c);});}else cardsEl.forEach(function(c){c.classList.add("inview");});
   if(cardsEl[0])cardsEl[0].classList.add("inview");
   var _cur=0,_pv=document.getElementById("storyPrev"),_nx=document.getElementById("storyNext");
-  // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
-  function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
-  window.addEventListener("resize",syncH);
-  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  function active(i){_cur=i;dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
   // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
   function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
   dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
