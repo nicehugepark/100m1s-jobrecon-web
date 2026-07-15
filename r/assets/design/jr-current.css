@@ -9,7 +9,7 @@ button,input,textarea,select{font-family:inherit}
    🔴 .wrap/body에 overflow-x:hidden 금지 — overflow-y가 auto로 강제돼 스크롤 컨테이너가 생기고 .stickyhdr가
    깨진다(버그B의 함정). 근원은 넘치는 텍스트를 줄바꿈시키는 것. */
 .wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
-.brand{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.brand{font-size:20px;letter-spacing:-.3px}
 /* 🔴 워드마크 accent = 브랜드 SoT 토큰(--jr-mark, 애프리콷 다크톤) — 파랑 클리셰 폐기·메인과 단일 정체성 (REQ-060) */
 .brand b{color:var(--jr-mark)}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
@@ -90,7 +90,9 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
 .story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
 .story-ev strong{color:#eef2f6;font-weight:700}
-.story-hl mark.kw,.story-ev mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+/* 🔴 형광펜 catch-all — 설정/전복 beat(.hb-line) 마크가 어느 선택자에도 안 걸려 브라우저 기본
+   노랑(#FFFF00)으로 폴백하던 결함(조니·ux "순수 옐로우") 봉쇄. 전 story-card 마크를 앰버 단일 토큰으로 (REQ-067) */
+.story-card mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
 .bwrap .tease{color:#8b97a6;font-size:12.5px}
 .story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 15px;font-size:13px;font-weight:700;color:var(--sc2);background:var(--scg);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
@@ -118,7 +120,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-name{position:relative;padding-left:18px;font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
 .story-name::before{content:"";position:absolute;left:1px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sc);transform:translateY(-50%) rotate(45deg)}
 .story-name strong{color:#eef3f8;font-weight:800}
-.story-name mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-name mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .story-card.role-subvert{background:radial-gradient(122% 84% at 84% 0%,var(--scg),transparent 50%),linear-gradient(168deg,#231a12,#160f08 74%)}
 .story-card.role-subvert::before{height:4px;opacity:1}
 .story-card .story-hl.big{font-size:25.5px;font-weight:900;line-height:1.38;color:#fff;letter-spacing:-.4px}
@@ -138,12 +140,12 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-card.role-axis.first .story-beat{margin-top:18px}
 .story-card.role-axis .story-quote{margin-top:15px;font-size:14.5px;line-height:1.62;color:#c3ccd7;padding-left:13px;border-left:3px solid var(--sc);opacity:.96}
 .story-card.role-axis .story-quote strong{color:#e8eef4}
-.story-card.role-axis .story-quote mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-card.role-axis .story-quote mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .story-mean{margin-top:16px;display:flex;gap:8px;align-items:flex-start;font-size:14.5px;line-height:1.56;font-weight:700;color:var(--sc2)}
 .story-mean svg{flex:0 0 auto;width:1.15em;height:1.15em;margin-top:2px;opacity:.9}
 .story-mean>span{flex:1 1 auto}
 .story-mean strong{color:#fff}
-.story-mean mark.kw{background:var(--scg);color:var(--sc2);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--sc)}
+.story-mean mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .hb-turn{color:#fbbf24;height:17px;margin-left:1px}
 .hb-turn svg{width:17px;height:17px}
 /* R6-038 nav+dots 한 행 — 화살표를 카드 좌우 오버레이(top:44%·카드 높이 종속 = R5 ⑨ 교차 81% 구조 원인)에서 덱 아래 dots 행으로: 콘텐츠 safe-area 물리 분리(교차 0 구조 보장). 앱 index.html 미러(G6) */
