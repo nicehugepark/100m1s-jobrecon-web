@@ -41,7 +41,7 @@ button,input,textarea,select{font-family:inherit}
 #digBtn.on{display:block;animation:digUp .18s cubic-bezier(.2,.7,.2,1)}
 @keyframes digUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @media (prefers-reduced-motion:reduce){#digBtn.on{animation:none}}
-.comment{margin:10px 0 14px;border-left:3px solid #F0A575;background:#221a12;border-radius:0 10px 10px 0;padding:10px 12px}
+.comment{margin:10px 0 14px;background:#221a12;border-radius:10px;padding:10px 12px}
 .comment .cq{font-size:12px;color:#8b97a6;margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed #33291b}
 .comment .cq b{color:#F0A575;font-weight:700}
 .comment .cx{float:right;cursor:pointer;color:#8b97a6;font-size:14px;line-height:1;margin-left:8px}
@@ -74,7 +74,6 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
 .story-deck::-webkit-scrollbar{display:none}
 .story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#F0A575;--sc2:#ffd9b5;--scg:rgba(240,165,117,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#241d14,#17110a 74%);border:1px solid #33291b;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
-.story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
 .story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
 .story-card>*:not(.ghost){position:relative;z-index:1}
 .story-card .spacer{flex:1 1 auto;min-height:12px}
@@ -87,7 +86,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-card.hook .story-co-lg{margin-top:6px;font-weight:900;line-height:1.04;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
 .story-card.hook .story-pos{margin-top:10px;font-size:15.5px;font-weight:700;color:#8b97a6;letter-spacing:-.2px}
 .story-card.hook .story-tease{margin-top:15px;color:#8b97a6;font-size:12.5px}
-.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da;border-left:3px solid var(--sc);padding-left:13px}
+.story-ev{margin-top:18px;font-size:15px;line-height:1.65;color:#c7d0da}
 .story-card.hook .story-ev{font-size:16.5px;line-height:1.6;color:#dbe4ee}
 .story-ev strong{color:#eef2f6;font-weight:700}
 /* 🔴 형광펜 catch-all — 설정/전복 beat(.hb-line) 마크가 어느 선택자에도 안 걸려 브라우저 기본
@@ -117,28 +116,26 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 /* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격. 높이 통일(가로 스냅), 밀도는 폰트·여백으로. === */
 .story-card.role-setup .story-hl,.story-card.role-context .story-hl{font-size:20px;font-weight:700;line-height:1.56;color:#dde5ef}
 .story-names{align-self:stretch;margin-top:20px;display:flex;flex-direction:column;gap:11px}
-.story-name{position:relative;padding-left:18px;font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
-.story-name::before{content:"";position:absolute;left:1px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--sc);transform:translateY(-50%) rotate(45deg)}
+.story-name{font-size:15.5px;font-weight:700;line-height:1.45;color:#d3dbe6;letter-spacing:-.2px;word-break:keep-all}
 .story-name strong{color:#eef3f8;font-weight:800}
 .story-name mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .story-card.role-subvert{background:radial-gradient(122% 84% at 84% 0%,var(--scg),transparent 50%),linear-gradient(168deg,#231a12,#160f08 74%)}
-.story-card.role-subvert::before{height:4px;opacity:1}
 .story-card .story-hl.big{font-size:25.5px;font-weight:900;line-height:1.38;color:#fff;letter-spacing:-.4px}
 .story-kicker.warn{color:#fcd34d;background:rgba(251,191,36,.15)}
 .story-kicker.soft{color:var(--sc2);opacity:.92;background:transparent;padding-left:2px;text-transform:none;letter-spacing:0;font-size:12.5px}
 .story-card.role-hook .hookbeat{margin-top:22px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(12px)}
 .story-card.role-hook.inview .hookbeat{animation:storyRise .6s .16s cubic-bezier(.2,.7,.2,1) forwards}
-.hb-line{font-size:16px;line-height:1.58;padding-left:13px;border-left:3px solid}
-.hb-setup{color:#c8d6e6;border-color:#7f9bbf}
-.hb-setup strong{color:#eaf1ff}
-.hb-subvert{color:#fde3ad;border-color:#fbbf24;font-weight:600}
-.hb-subvert strong{color:#fff2cf}
+.hb-line{font-size:16px;line-height:1.58}
+.hb-setup{color:#c8d6e6;font-style:italic}
+.hb-setup strong{color:#c5cdd8;font-weight:700}
+.hb-subvert{color:#eef2f7;font-weight:700}
+.hb-subvert strong{color:#ffffff}
 .story-card.role-axis.first{justify-content:flex-start}
 .story-card.role-axis.first .story-co-lg{margin:6px 0 4px;font-weight:900;line-height:1.05;letter-spacing:-1.2px;color:#fff;word-break:keep-all}
 .story-card.role-axis.first .story-pos{margin-bottom:8px;font-size:15px;font-weight:700;color:#8792a0;letter-spacing:-.2px}
 .story-card.role-axis .story-beat{margin-top:14px;display:flex;flex-direction:column;gap:10px}
 .story-card.role-axis.first .story-beat{margin-top:18px}
-.story-card.role-axis .story-quote{margin-top:15px;font-size:14.5px;line-height:1.62;color:#c3ccd7;padding-left:13px;border-left:3px solid var(--sc);opacity:.96}
+.story-card.role-axis .story-quote{margin-top:15px;font-size:14.5px;line-height:1.62;color:#c3ccd7;opacity:.96}
 .story-card.role-axis .story-quote strong{color:#e8eef4}
 .story-card.role-axis .story-quote mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 4px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
 .story-mean{margin-top:16px;display:flex;gap:8px;align-items:flex-start;font-size:14.5px;line-height:1.56;font-weight:700;color:var(--sc2)}
@@ -146,8 +143,8 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .story-mean>span{flex:1 1 auto}
 .story-mean strong{color:#fff}
 .story-mean mark.kw{background:var(--jr-hl-bg);color:var(--jr-hl-text);border-radius:5px;padding:0 3px;font-weight:800;box-shadow:inset 0 -2px 0 var(--jr-hl-ink)}
-.hb-turn{color:#fbbf24;height:17px;margin-left:1px}
-.hb-turn svg{width:17px;height:17px}
+.hb-turn{display:inline-flex;align-items:center;gap:6px;color:var(--sc);font-size:12px;font-weight:700;letter-spacing:.01em;margin:1px 0}
+.hb-turn svg{width:16px;height:16px}
 /* R6-038 nav+dots 한 행 — 화살표를 카드 좌우 오버레이(top:44%·카드 높이 종속 = R5 ⑨ 교차 81% 구조 원인)에서 덱 아래 dots 행으로: 콘텐츠 safe-area 물리 분리(교차 0 구조 보장). 앱 index.html 미러(G6) */
 /* R7-047 페이저 sticky — 긴 카드에서 dots·화살표가 fold 아래로 사라지지 않게 뷰포트 하단 고정 후 자연 위치 정착(콘텐츠 절단 없는 어포던스 확보). 앱 index.html 미러(G6) */
 .story-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px auto 2px;position:sticky;bottom:10px;z-index:5;width:fit-content;padding:5px 12px;border-radius:999px;background:rgba(20,16,11,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none}
