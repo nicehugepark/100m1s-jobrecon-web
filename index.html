@@ -39,13 +39,13 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   :root {
     /* 🔴 결과화면(스캐너·스토리·리포트·verdict·compare) 전용 다크 팔레트 — 무변경 유지(회귀 0).
        body.scouting(정찰 후)에서만 노출되므로 첫인상 웜 크림과 물리 분리. */
-    --bg:#0f1216; --card:#171b22; --card2:#1e232c; --line:#2a313c;
-    --fg:#e8ecf1; --dim:#9aa6b2; --accent:var(--peach-deep); --accent-rgb:240,165,117;  /* REQ-082 뉴트럴 다크 통일: 정찰 화면 accent = 다크 애프리콧(라이트/다크 OS 공통·파랑 클리셰 폐기·토큰층 REQ-032) */
+    --bg:#0A0A0B; --card:#161619; --card2:#1E1E22; --line:#26262B;   /* 토스 v3: 순수 near-black + 명도차 확대 카드(흙톤 #0f1216 폐기·경계 또렷·DOC-20260716-JDG §7) */
+    --fg:#F4F4F6; --dim:#A2A2AC; --accent:var(--peach-deep); --accent-rgb:255,158,91;  /* 토스 v3: 본문 흰 고대비 + 밝은 애프리콧 accent(선명화·골드 뭉침 해소) */
     /* 🔴 REQ-VERDICT-COLOR(078a·조니 R15 P2·brand.VERDICT_* SoT): 비추천(로즈=명확한 부정)·보류
        (중립 회색)을 분리 — 동색(#8b95a1) 폐기. NO 로즈는 스토리 색맵(#f87171)과 동일 hue(팔레트 이원 해소) */
     --yes:#31c48d; --cond:#f6a609; --no:#f87171; --hold:#8b95a1;
-    /* 🔴 형광펜(mark.kw) 하이라이트 = 웜 앰버 단일 토큰 (REQ-067·brand.HL_* SoT 정합) — beat role 색 추종 폐기 */
-    --jr-hl-ink:#fbbf24; --jr-hl-text:#fde9ad; --jr-hl-bg:rgba(251,191,36,.15);
+    /* 🔴 데이터 하이라이트(mark.kw) = 흰 볼드 + accent 언더바 (토스 v3·brand.HL_* SoT 정합·골드 폐기) — 따뜻톤 뭉침 근원 B 제거 */
+    --jr-hl-ink:rgba(255,158,91,.55); --jr-hl-text:#F4F4F6; --jr-hl-bg:transparent;
     /* 🔴 WARM-SCOPE 블록 서피스 텍스트 토큰 (REQ-077 계층 규칙) — .blk(리포트·비교 인사이트·에러)
        본문/강조/코드가 하드코딩 쿨 대신 소비. :root=결과화면 쿨(현행 verbatim·회귀 0),
        body:not(.scouting)서 웜 오버라이드(첫 화면 웜 자동 상속·아래 계층 규칙). */
@@ -55,21 +55,21 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
        웜크림 첫인상(구 #FBF5EC)·웜다크(구 #211C16) 폐기 → 메인 결과화면 --bg 뉴트럴 차콜로 통일.
        라이트/다크 OS 유저 모두 다크 첫인상. 토큰 이름(--cream/--surface/--ink…)은 유지해 WARM-SCOPE
        계층 규칙·전 소비처가 개별 색칠 없이 값만 뉴트럴로 자동 전환(REQ-032 토큰층). */
-    --cream:#0f1216; --cream-2:#151a21; --surface:#171b22; --surface-2:#1e232c;
-    /* 뉴트럴 잉크(near-white 본문 → 보조 회색) */
-    --ink:#e8ecf1; --ink-2:#b3bdc9; --w-muted:#9aa6b2; --faint:#6b7683;
-    /* 뉴트럴 경계 */
-    --w-line:#2a313c; --w-line-2:#333c48;
+    --cream:#0A0A0B; --cream-2:#161619; --surface:#161619; --surface-2:#1E1E22;
+    /* 뉴트럴 잉크(흰 고대비 본문 → 보조 회색 3단·시안 --ink/--ink-2/--ink-3) */
+    --ink:#F4F4F6; --ink-2:#C8C8D0; --w-muted:#A2A2AC; --faint:#72727C;
+    /* 뉴트럴 경계(순수 다크 위 hairline·명도차 확대) */
+    --w-line:#26262B; --w-line-2:#2E2E34;
     /* 애프리콧 = 주accent(다크 톤·brand.MARK_DARK 정합·단일 hue) */
-    --peach:#EFA575; --peach-2:#F4B98F; --peach-deep:#F0A575; --peach-ink:#F2B489;
-    --peach-tint:rgba(240,165,117,.15); --peach-line:rgba(240,165,117,.42); --cocoa:#3A2110;
+    --peach:#FF9E5B; --peach-2:#FFB681; --peach-deep:#FF9E5B; --peach-ink:#FFB681;
+    --peach-tint:rgba(255,158,91,.13); --peach-line:rgba(255,158,91,.55); --cocoa:#2A1404;
     --chip-on-fg:#F6E7D5;   /* 선택 칩(애프리콧 틴트) 위 텍스트 — 다크 밝은 톤(AA) */
     /* 세이지 = 보조(선택 항목 시맨틱·다크 톤) */
     --sage:#9BBE96; --sage-deep:#AFCFA9; --sage-tint:rgba(155,190,150,.14); --sage-line:rgba(155,190,150,.3);
     /* 뉴트럴 다크 그림자(웜틴트 폐기) · CTA 만 애프리콧 글로우 유지 */
     --sh-soft:0 6px 20px -10px rgba(0,0,0,.5), 0 2px 6px -3px rgba(0,0,0,.4);
     --sh-lift:0 14px 34px -14px rgba(0,0,0,.6), 0 4px 10px -5px rgba(0,0,0,.4);
-    --sh-cta:0 8px 20px -12px rgba(240,165,117,.18), inset 0 1px 0 rgba(255,255,255,.10);   /* REQ-084 P1-1: CTA 오렌지 과글로우 감쇠(.42→.18·blur 30→20·모던) */
+    --sh-cta:0 8px 20px -12px rgba(255,158,91,.18), inset 0 1px 0 rgba(255,255,255,.10);   /* CTA 애프리콧 글로우(감쇠·모던·토스 v3 accent 정합) */
     --r-lg:24px; --r-md:18px; --r-sm:14px;   /* 큰 라운드 */
     --ease:cubic-bezier(.22,1,.32,1); --spring:cubic-bezier(.34,1.56,.44,1);
     --round:"Fredoka",system-ui,sans-serif;
@@ -114,7 +114,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body.scouting .brand { color:var(--fg); }
   /* 🔴 결과화면 워드마크 accent = 브랜드 SoT 다크톤(#F0A575 = brand.MARK_DARK) — 파랑 클리셰 폐기.
      첫인상(라이트 애프리콧)↔결과·/r/(다크 애프리콧)이 단일 hue, 무드는 배경으로만 분리 (REQ-060) */
-  body.scouting .brand span { color:#F0A575; }
+  body.scouting .brand span { color:#FF9E5B; }
   /* REQ-084(조니 확정·DOC-20260715-JDG-002): 헤더 .lens 돋보기 배지 제거 → 워드마크 조준경 'o'로
      정찰 정체성 단일화(메인↔/r/ 워드마크 통일 — 조준경 o와 의미 중복 해소). 파비콘·앱아이콘 이미지
      파일은 무접촉(대표 결정 대기·brand.py:16). P1-3 최종 대표 확인 대상. */
@@ -129,10 +129,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .tag { color:var(--w-muted); font-size:13px; margin-top:2px; }
   body.scouting .tag { color:var(--dim); }
 
-  /* R15 HIST-LAYOUT(대표 catch f·스펙 ④): 광고 미탑재 상태의 빈 AD placeholder는 렌더하지 않는다
-     (기능 0 요소가 fresh 포함 전 상태 노출). 광고 연동 시 body.ads-live 토글로 노출 — 플래그만
-     추가하면 되도록 남긴다(placeholder 시각 노출 0·DOM 훅 보존). */
-  body:not(.ads-live) .ad { display:none !important; }
+  /* 토스 v3(DOC-20260716-JDG §7·P1-a·DSN-001-warmth §2-7): 네이티브 광고 placeholder 상시 노출.
+     대표 명시 요구("광고 지면 위치·모양까지 흡사") — 구 R15 body:not(.ads-live) display:none 은폐를
+     폐기하고 지면 모양을 첫인상부터 확정(거짓 카피 없이 '제휴 광고 자리'만·FLR-AGT-002). 실광고 연동
+     시 body.ads-live 로 실크리에이티브 교체(플래그·DOM 훅 보존). */
   /* 광고 지면 = 토스식 네이티브 카드(본문 카드 동일 radius·좌 제목/부제·우 52px 아이콘 자리·하단 dim 고지).
      승인 전 뉴트럴 placeholder(거짓 카피 미노출·FLR-AGT-002) — 실광고는 body.ads-live 로 노출 */
   .ad { margin:14px 0; border:1px solid var(--w-line); border-radius:var(--r-lg);
@@ -186,7 +186,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .req, .opt { display:inline-block; margin-left:7px; padding:2px 9px; border-radius:999px;
     font-size:11px; font-weight:600; vertical-align:1px; letter-spacing:.02em; }
   /* 토스 4층 위계: 라벨 배지 = 뉴트럴(애프리콧·세이지 → 회색). accent는 주CTA에만 (조니 지시) */
-  .req { color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line-2); }
+  /* 토스 v3(DOC-20260716-JDG §7·생기): 필수 배지 = accent-wash pill(시안 .req·'필수' 신호에 생기). 선택(.opt)은 뉴트럴 유지(위계) */
+  .req { color:var(--peach-deep); background:var(--peach-tint); border:1px solid transparent; }
   .opt { color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line-2); font-weight:600; }
   .lhelp { font-size:12px; color:var(--w-muted); margin:-2px 0 8px; line-height:1.55; }
   /* =========================================================================
@@ -195,7 +196,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   label.lreq::before, .optfields > label::before, .constraints .clabel::before, .tclabel::before {
     content:""; display:inline-block; width:8px; height:8px; margin-right:8px; vertical-align:1.5px;
     border-radius:2.5px; background:linear-gradient(145deg,var(--peach-2),var(--peach-deep)); transform:rotate(45deg); }
-  .req::before { content:"✳"; margin-right:4px; font-size:11px; line-height:1; color:var(--w-muted); vertical-align:0; }
+  .req::before { content:"✳"; margin-right:4px; font-size:11px; line-height:1; color:currentColor; vertical-align:0; }   /* 토스 v3: accent-wash pill 안 별표 = accent 상속(회색 튐 해소) */
   /* =========================================================================
      C · 조준 브래킷 — 정찰 타깃(URL/파일 입력 박스)·시그니처. 좌측 색선 제거(대표 지적 근원 회피).
      중립 프레임 + 좌상/우하 조준 마커. :focus-within 시 마커가 애프리콧으로 조여짐(JS 무의존). */
@@ -240,8 +241,11 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   button:not(:disabled):hover { transform:translateY(-3px); box-shadow:0 14px 30px -16px rgba(210,113,63,.22), inset 0 1px 0 rgba(255,255,255,.35); }   /* REQ-084 P1-1: hover 과글로우 감쇠 */
   button:not(:disabled):active { transform:translateY(-1px); }
   button:disabled { background:var(--cream-2); color:var(--faint); box-shadow:inset 0 1px 3px rgba(0,0,0,.08); cursor:not-allowed; transform:none; }
-  /* 주CTA "정찰 시작"은 입력 전(disabled)에도 애프리콧 solid 정체성 유지 — 회색 폴백 폐기(보조 뉴트럴 ghost보다 약해지던 위계 역전 해소·토스 solid CTA 톤). 비활성 = muted accent(클릭 불가 명시) */
-  #go:disabled { background:linear-gradient(140deg,var(--peach-2),var(--peach) 62%,var(--peach-deep)); color:var(--cocoa); filter:saturate(.5) brightness(.9); opacity:.72; box-shadow:none; cursor:not-allowed; transform:none; }
+  /* 토스 v3(DOC-20260716-JDG §7·근원 D): disabled 주CTA = 클린 뉴트럴(진흙 갈색 gradient 폐기 —
+     첫인상 음침 주범). 텍스트 뉴트럴 회색 + 조준경 아이콘만 accent(정직 어포던스: 클릭 불가하나
+     정찰 tool 정체성 유지). active(URL 입력) = 선명 애프리콧 solid(기본 button gradient·회색 폴백 없음). */
+  #go:disabled { background:var(--surface-2); color:var(--w-muted); border:1px solid var(--w-line-2); filter:none; opacity:1; box-shadow:none; cursor:not-allowed; transform:none; }
+  #go:disabled .go-scope { color:var(--peach-deep); }
   button.secondary { background:var(--surface); color:var(--ink-2); border:1px solid var(--w-line-2);
     box-shadow:var(--sh-soft); margin-top:10px; font-size:14px; padding:12px; font-weight:400; }
   body.scouting button { padding:13px; font-family:inherit; font-size:16px; font-weight:700;
@@ -795,7 +799,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      미니멀). 과투명 .55/.26 애프리콧이 다크 위 브라운으로 읽히던 '세피아 착시' 소거. */
   .blob { position:absolute; border-radius:50%; filter:blur(72px); opacity:1; }
   .blob.b1 { top:-26vh; left:50%; transform:translateX(-50%); width:96vw; height:72vw; max-width:760px; max-height:540px;
-    background:radial-gradient(circle at 50% 32%,rgba(240,165,117,.06),rgba(240,165,117,0) 70%); }
+    background:radial-gradient(circle at 50% 32%,rgba(255,158,91,.06),rgba(255,158,91,0) 70%); }
   .blob.b2, .blob.b3 { display:none; }
   @keyframes drift1 { to { transform:translate(-16px,20px) scale(1.06); } }
   @keyframes drift2 { to { transform:translate(18px,-14px) scale(1.08); } }
@@ -804,22 +808,21 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .hero { padding:24px 2px 2px; }
   body.scouting .hero { display:none; }
   .hero .h1 { font-family:var(--kr); font-weight:400; font-size:31px; line-height:1.34; letter-spacing:-.01em; margin:0; color:var(--ink); }
-  /* Hero 강조 = 뉴트럴 회색 형광펜(애프리콧 아님·조니 지시). 텍스트 ink 굵게 + 회색 마커 박스(토스식) */
-  .hero .h1 em { font-family:var(--serif); font-style:normal; font-weight:700; color:var(--ink); position:relative; white-space:nowrap; }
-  .hero .h1 em::after { content:""; position:absolute; left:-2px; right:-2px; bottom:2px; height:42%; border-radius:4px; background:rgba(154,166,178,.30); z-index:-1; }
+  /* 토스 v3(DOC-20260716-JDG §7·근원 C): hero 강조 = accent 텍스트 단일 강조. 회색 형광펜 마커(구
+     rgba(154,166,178,.30))는 칙칙 근원 → 폐기. 서브카피 앰버 형광펜과 함께 '이중 하이라이트' 소멸. */
+  .hero .h1 em { font-family:var(--serif); font-style:normal; font-weight:700; color:var(--peach-deep); position:relative; white-space:nowrap; }
   .hero .sub { margin:15px 0 0; font-size:14.5px; line-height:1.75; color:var(--ink-2); max-width:35ch; }
-  /* REQ-082 조니 요건 ⑤: 서브카피 형광펜 = 앰버 인텔 하이라이트(구 세이지 --sage-tint 폐기 —
-     다크 통일서 흰박스 붕괴 봉쇄·brand.HL_* SoT 정합). 정찰 시그니처(앰버 하이라이트) 강화. */
-  .hero .sub b { color:var(--ink); font-weight:400; box-shadow:inset 0 -9px 0 var(--jr-hl-bg); }
+  /* 토스 v3(근원 C): 서브카피 강조 = 흰 볼드(앰버 형광펜 폐기·이중 하이라이트 해소·시안 .herosub .w) */
+  .hero .sub b { color:var(--ink); font-weight:600; }
 
   /* 내 정보·조건 접힘(대표 확정: 첫인상 접힘) — 목업 more 컴포넌트 */
   .more { margin-top:16px; background:var(--surface); border:1px solid var(--w-line); border-radius:var(--r-lg); box-shadow:var(--sh-soft); overflow:hidden; }
   .more-row { width:100%; margin:0; background:none; border:0; cursor:pointer; color:var(--ink); text-align:left;
     display:flex; align-items:center; gap:13px; padding:17px; box-shadow:none; border-radius:0; font-family:var(--kr); font-weight:400; transition:none; }
   .more-row:hover { transform:none; }
-  /* 내 정보 "+" = 뉴트럴 원형(애프리콧 → 회색·토스 보조 톤·조니 지시) */
-  .more-plus { width:32px; height:32px; flex:0 0 auto; display:grid; place-items:center; border-radius:11px;
-    background:var(--surface-2); color:var(--w-muted); border:1px solid var(--w-line-2); transition:transform .4s var(--spring); }
+  /* 토스 v3(DOC-20260716-JDG §7·생기 F): 내 정보 "+" = 둥근 accent-wash 칩 + accent 플러스(냉철 tool 계열·시안 .ico) */
+  .more-plus { width:38px; height:38px; flex:0 0 auto; display:grid; place-items:center; border-radius:13px;
+    background:var(--peach-tint); color:var(--peach-deep); border:1px solid transparent; transition:transform .4s var(--spring); }
   .more-plus svg { width:17px; height:17px; }
   .more.open .more-plus { transform:rotate(135deg); }
   .more-txt { flex:1; min-width:0; }
@@ -1423,14 +1426,14 @@ function _stripMetaTalk(t){ return String(t==null?"":t).replace(_METAPAREN,""); 
 
 // 카드별 시맨틱 악센트 — [sc(악센트), sc2(밝은 변주·텍스트 대비), scg(글로우 rgba)] · 순수 비주얼(창작0 무관)
 const _STORY_PAL = {
-  hook:['#F0A575','#ffd9b5','rgba(240,165,117,.16)'], 2:['#34d399','#bff3da','rgba(52,211,153,.15)'],
+  hook:['#FF9E5B','#FFB681','rgba(255,158,91,.16)'], 2:['#34d399','#bff3da','rgba(52,211,153,.15)'],
   3:['#a78bfa','#e0d7ff','rgba(167,139,250,.16)'], 4:['#fbbf24','#fde9ad','rgba(251,191,36,.15)'],
-  8:['#F0A575','#ffd9b5','rgba(240,165,117,.16)'], 6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],   /* REQ-084: hook/8 파랑·시안 → 애프리콧(dead 경로이나 파랑 DOM 0 by-construction) */
-  gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'], allmore:['#F0A575','#ffd9b5','rgba(240,165,117,.18)'] };
+  8:['#FF9E5B','#FFB681','rgba(255,158,91,.16)'], 6:['#fb7185','#ffd4dc','rgba(251,113,133,.15)'],   /* REQ-084: hook/8 파랑·시안 → 애프리콧(dead 경로이나 파랑 DOM 0 by-construction) */
+  gap:['#fb923c','#ffdcb8','rgba(251,146,60,.16)'], allmore:['#FF9E5B','#FFB681','rgba(255,158,91,.18)'] };
 const _STORY_VC = { YES:['#34d399','#c7f5db','rgba(52,211,153,.18)'], 조건부:['#fbbf24','#fdebae','rgba(251,191,36,.17)'],
   NO:['#f87171','#ffd3d3','rgba(248,113,113,.17)'], 판단보류:['#94a3b8','#e2e8f0','rgba(148,163,184,.15)'] };
 // REQ-084(조니): 축별 6-hue(파랑·시안·앰버·그린·오렌지·로즈) 폐기 → 애프리콧 단일. 축 변별 = 중립 pill + AXIS_SEC 라벨 텍스트(정보손실 0·파랑 DOM 0)
-const _AP_PAL = ['#F0A575','#ffd9b5','rgba(240,165,117,.16)'];
+const _AP_PAL = ['#FF9E5B','#FFB681','rgba(255,158,91,.16)'];
 const _STORY_AXPAL = { pivot:_AP_PAL, fit:_AP_PAL, culture:_AP_PAL, comp:_AP_PAL, runway:_AP_PAL, risk:_AP_PAL };
 function _storyPal(c){
   if (c.kind === "verdict") return _STORY_VC[c.badge] || _STORY_VC["판단보류"];
