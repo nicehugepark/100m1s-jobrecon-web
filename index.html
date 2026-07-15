@@ -23,12 +23,19 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
 <meta property="og:description" content="공고 하나로 회사의 숨은 진실 + 나 맞춤 지원가치 판단. 구직자 편에서." />
 <meta property="og:url" content="https://jobrecon.100m1s.com/" />
 <meta name="twitter:card" content="summary_large_image" />
-<!-- E 소프트 톤(대표 채택 2026-07-14) 타이포: Fredoka(둥근 라틴 워드마크)+고운돋움(웜 KR 본문)+고운바탕(웜 세리프 강조).
-     CSP 미설정 확인 → CDN 로드(목업 방식). display=swap로 FOIT 방지. self-host 전환은 후속 성능/프라이버시 최적화 트랙. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<!-- 🔴 타이포 self-host 전환(타치코마 2026-07-15 — Google Fonts cross-origin 폐기: 외부 의존·방문자
+     IP 구글 노출·self-containment). E 소프트 톤 3서체 전부 self-host 로 시각 무변화:
+     · Fredoka 600 = 워드마크 글리프("JobRecon") subset 1.5KB(brand SoT 정합) — .ad b "AD"는
+       subset 밖이라 system 폴백(원칙: 워드마크만 Fredoka).
+     · 고운돋움 400(--kr 본문)·고운바탕 400/700(--serif 강조) = KS X 1001 완성형 2,350자+ASCII+자모+
+       상용부호 subset woff2(149/197/163KB·총 509KB·OFL) — 본문 서체 렌더 무변화(무드 회귀 0).
+       KSX 밖 희귀 음절·한자만 시스템 폴백. Pages 캐시로 재방문 0 비용. 원본 = 소스 레포
+       src/jobrecon/recon/fonts/ (build_design_css.py 가 CSS 와 함께 웹레포 복사). -->
 <style>
+  @font-face{font-family:'Fredoka';font-style:normal;font-weight:600;font-display:swap;src:url(/r/assets/design/fredoka-600-jobrecon.woff2) format('woff2');unicode-range:U+4a,U+52,U+62-63,U+65,U+6e-6f}
+  @font-face{font-family:'Gowun Dodum';font-style:normal;font-weight:400;font-display:swap;src:url(/r/assets/design/gowun-dodum-400-ksx.woff2) format('woff2')}
+  @font-face{font-family:'Gowun Batang';font-style:normal;font-weight:400;font-display:swap;src:url(/r/assets/design/gowun-batang-400-ksx.woff2) format('woff2')}
+  @font-face{font-family:'Gowun Batang';font-style:normal;font-weight:700;font-display:swap;src:url(/r/assets/design/gowun-batang-700-ksx.woff2) format('woff2')}
   :root {
     /* 🔴 결과화면(스캐너·스토리·리포트·verdict·compare) 전용 다크 팔레트 — 무변경 유지(회귀 0).
        body.scouting(정찰 후)에서만 노출되므로 첫인상 웜 크림과 물리 분리. */
