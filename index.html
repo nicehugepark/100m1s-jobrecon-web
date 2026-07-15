@@ -2459,6 +2459,25 @@ function initAds() {
     + (slot ? ' data-ad-slot="' + slot + '"' : "") + ' data-ad-format="auto" data-full-width-responsive="true"></ins>';
   try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 }
+// 🔴 광고 차단기 빈 박스 방지(대표 실기기 catch 2026-07-16 01:25): 콘텐츠 차단기가 광고성 셀렉터
+// (.ad·#ad·.ad-body 등) 내부를 숨기면 rounded 컨테이너(border·radius·padding)만 남아 '내용 없는 빈
+// 박스'가 노출된다(순정 chromium·webkit 은 placeholder 정상 — 차단기 사용자만 발생). 렌더 텍스트가
+// 비면 컨테이너째 collapse → 정상 사용자는 placeholder 유지(v3 광고 지면 노출), 차단기 사용자는 빈
+// 박스 0. 실 AdSense(<ins>) 슬롯은 AdSense 가 채움/collapse 관리하므로 제외.
+function collapseEmptyAdBoxes() {
+  var boxes = document.querySelectorAll(".ad");
+  for (var i = 0; i < boxes.length; i++) {
+    var el = boxes[i];
+    if (el.querySelector("ins.adsbygoogle")) continue;
+    el.style.display = (el.innerText || "").trim() ? "" : "none";
+  }
+}
+(function () {
+  // 차단기 코스메틱 필터는 로드 타이밍이 제각각 → load 후 지연 재확인
+  function run() { collapseEmptyAdBoxes(); setTimeout(collapseEmptyAdBoxes, 700); setTimeout(collapseEmptyAdBoxes, 2000); }
+  if (document.readyState === "complete") run();
+  else window.addEventListener("load", run);
+})();
 // R4-023② /r/ CTA 착지 컨텍스트 — ?co=회사&pos=직군 수신 시 공고 컨텍스트 유지(홈 맨땅 던지기 해소).
 // 회사명·직군만(개인정보 0 — URL 파라미터 규칙 준수). 프리필=placeholder·안내 문구·포커스, 입력값 주입은 없음(사실만).
 function applyRefPrefill() {
