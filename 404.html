@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>페이지를 찾을 수 없습니다 · JobRecon</title>
+<!-- GitHub Pages 루트 404.html 자동 서빙. 폰트는 /r/assets/design/ self-host(외부 요청 0·brand SoT 정합). -->
+<style>
+@font-face{font-family:'Fredoka';font-style:normal;font-weight:600;font-display:swap;src:url(/r/assets/design/fredoka-600-jobrecon.woff2) format('woff2');unicode-range:U+4a,U+52,U+62-63,U+65,U+6e-6f}
+@font-face{font-family:'Gowun Dodum';font-style:normal;font-weight:400;font-display:swap;src:url(/r/assets/design/gowun-dodum-400-ksx.woff2) format('woff2')}
+:root{
+  --cream:#FBF5EC;--surface:#FFFCF7;--ink:#3A322B;--muted:#7C7062;
+  --peach:#EC9A6B;--peach-deep:#D4713F;--peach-line:#F1C6A5;--line:#EFE4D2;
+  --round:"Fredoka",system-ui,sans-serif;
+  --kr:"Gowun Dodum",-apple-system,"Apple SD Gothic Neo",sans-serif;
+}
+@media(prefers-color-scheme:dark){:root{
+  --cream:#211C16;--surface:#2C261F;--ink:#F2EADD;--muted:#A2937F;
+  --peach:#EFA575;--peach-deep:#F0A575;--peach-line:rgba(239,165,117,.42);--line:rgba(255,246,233,.12);
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--cream);color:var(--ink);font-family:var(--kr);
+  -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:24px;line-height:1.65}
+.box{max-width:440px;width:100%;text-align:center}
+/* 워드마크 락업 = 메인/brand SoT 동형(Job + Rec[조준경 o]n · 애프리콧 단일 hue) */
+.brand{font-family:var(--round);font-size:22px;font-weight:600;letter-spacing:-.01em;color:var(--ink);
+  display:inline-flex;align-items:center;gap:9px;justify-content:center}
+.brand span{color:var(--peach-deep)}
+.brand .lens{width:32px;height:32px;flex:0 0 auto;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(145deg,var(--peach),var(--peach-deep));color:#fff}
+.brand .lens svg{width:19px;height:19px}
+.brand .reco{display:inline-block;width:.58em;height:.58em;margin:0 .02em;vertical-align:-.02em;
+  box-sizing:border-box;border:2px solid currentColor;border-radius:50%;position:relative}
+.brand .reco::before{content:"";position:absolute;inset:0;margin:auto;width:2px;height:2px;border-radius:50%;background:currentColor}
+.jr-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tag{margin-top:6px;font-size:13px;color:var(--muted)}
+.code{margin-top:34px;font-family:var(--round);font-size:60px;font-weight:600;color:var(--peach-deep);letter-spacing:.02em;line-height:1}
+h1{margin-top:12px;font-size:19px;font-weight:700;color:var(--ink)}
+p{margin-top:10px;font-size:14.5px;color:var(--muted)}
+.home{display:inline-block;margin-top:28px;padding:13px 26px;background:var(--peach-deep);color:#fff;
+  text-decoration:none;border-radius:14px;font-size:15px;font-weight:700;
+  box-shadow:0 12px 30px -10px rgba(210,113,63,.48)}
+.home:hover{filter:brightness(1.05)}
+</style>
+</head>
+<body>
+<main class="box">
+  <div class="brand"><span class="lens" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.6" stroke="currentColor" stroke-width="1.7"/><path d="M15.6 15.6 20.5 20.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M8 10.6l2 2 3.6-3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Job<span>Rec<span class="reco" aria-hidden="true"></span><span class="jr-sr">o</span>n</span></div>
+  <div class="tag">구직자 편 취업 정찰</div>
+  <div class="code">404</div>
+  <h1>페이지를 찾을 수 없습니다</h1>
+  <p>주소가 바뀌었거나 정찰 페이지가 만료됐을 수 있어요.<br>홈에서 다시 정찰을 시작해 보세요.</p>
+  <a class="home" href="/">홈으로 돌아가기</a>
+</main>
+</body>
+</html>
