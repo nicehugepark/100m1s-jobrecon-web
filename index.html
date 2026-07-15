@@ -162,8 +162,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body.scouting .anchor.pinned { border-bottom-color:var(--line); box-shadow:0 6px 14px -8px rgba(0,0,0,.6); }
   /* R15 HIST-LAYOUT(대표 catch d·13:33): 첫 화면(비-scouting)엔 앵커에 회사·직군 meta가 비어
      brand+tag만 sticky로 떠 스크롤 시 헤더 주변 공백·비침이 생긴다 → 첫 화면은 일반 흐름으로
-     고정 해제(부유 근원 제거). 결과화면(scouting) sticky는 보존(회귀 0). */
-  body:not(.scouting) .anchor.pinned { position:static; margin:0; box-shadow:none; border-bottom:0; }
+     고정 해제(부유 근원 제거). 결과화면(scouting) sticky는 보존(회귀 0).
+     REQ-080(대표 catch·근원): .anchor 불투명 크림 배경(sticky 정찰모드 전용)이 첫 화면에 누출되어
+     장식 블롭(웜 애프리콧 글로우)을 가리고 평평한 크림 '헤더 밴드'를 그린다 → 로고 좌상단만 채우고
+     빈 우상단이 과다 여백으로 보임. 첫 화면 배경을 투명 리셋해 밴드를 근원 제거(로고·서브타이틀은
+     연속된 웜 지면 위로) — 정찰모드 opaque 배경(위 body.scouting .anchor)은 불변 = 회귀 0. */
+  body:not(.scouting) .anchor.pinned { position:static; margin:0; background:transparent; box-shadow:none; border-bottom:0; }
   /* (R4-023③) .anchor.pinned .ad 슬림 룰 제거 — AD는 sticky 밖(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
   .ad-infeed { margin:12px 0; }                            /* 리포트 인피드 광고(트랙 B-1) */
   /* 복귀 완료 게이트(트랙 B-2) — 이탈 후 돌아온 사용자에게 광고 1회 후 리포트 공개 */
