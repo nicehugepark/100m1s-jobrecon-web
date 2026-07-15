@@ -305,6 +305,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     padding:14px 16px; margin:10px 0; }
   .blk h3 { margin:0 0 6px; font-size:15px; }
   .blk .body { font-size:14.5px; color:var(--blk-fg); }  /* WARM-SCOPE: 하드코딩 #dbe2ea → 토큰(첫 화면 웜 상속) */
+  /* 🔴 비교 인사이트 heading(## 결정 축·## 축별 Head-to-Head·## 최종 추천) 위계 — WARM-SCOPE 토큰만
+     소비(개별 색칠 금지·REQ-032 로직 단위). 섹션 구분은 하단 웜라인 리듬(좌측 accent 편향 회피). 첫 heading 여백 0. */
+  .blk .body h2, .blk .body h3 { color:var(--blk-strong); font-weight:800; line-height:1.34; word-break:keep-all; }
+  .blk .body h2 { font-size:15.5px; margin:16px 0 7px; padding-bottom:5px; border-bottom:1px solid var(--line); }
+  .blk .body h3 { font-size:14.5px; margin:12px 0 5px; }
+  .blk .body > h2:first-child, .blk .body > h3:first-child { margin-top:0; }
   .blk .body ul, .blk .body ol { margin:6px 0; padding-left:20px; }
   .blk .body ul ul, .blk .body ul ol, .blk .body ol ul, .blk .body ol ol { margin:2px 0; }
   .blk .body li { margin:3px 0; }
@@ -1093,6 +1099,11 @@ function renderMd(t) {
     const line = raw.replace(/\s+$/, "");
     // 🔴 hr(---/***/___) → <hr> — 미처리 시 "---" 리터럴 노출 (R3 ⑧① P0). /r/ page.py md_to_html과 동기 (FLR-20260428-TEC-001).
     if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { closeTo(0); html += "<hr>"; continue; }
+    // 🔴 heading(#{1,6}) → <h2>/<h3> — page.py md_to_html과 동기 (FLR-20260428-TEC-001 한쪽 누락 방지).
+    //    "## 결정 축"·"## 축별 Head-to-Head"·"## 최종 추천"(compare.md 형식 지시·숫자 없는 heading)을 위계로.
+    //    미처리 시 "## …" 리터럴 노출 (R16 MD-HEADING P1 — hr "---" R3 ⑧① P0 동형). 계약 테스트로 봉쇄.
+    const hm = line.match(/^(#{1,6})\s+(.*)$/);
+    if (hm) { closeTo(0); const lv = hm[1].length <= 2 ? 2 : 3; html += "<h" + lv + ">" + mdInline(hm[2]) + "</h" + lv + ">"; continue; }
     const bm = line.match(/^(\s*)[-•]\s+(.*)$/);       // 불릿
     const nm = line.match(/^(\s*)\d+\.\s+(.*)$/);       // 번호
     if (bm || nm) {
