@@ -41,9 +41,15 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
        body.scouting(정찰 후)에서만 노출되므로 첫인상 웜 크림과 물리 분리. */
     --bg:#0f1216; --card:#171b22; --card2:#1e232c; --line:#2a313c;
     --fg:#e8ecf1; --dim:#9aa6b2; --accent:var(--peach-deep); --accent-rgb:212,113,63;  /* REQ-063 웜 통일: 정찰 화면 accent = 애프리콧(파랑 클리셰 폐기·토큰층 REQ-032) */
-    --yes:#31c48d; --cond:#f6a609; --no:#8b95a1; --hold:#8b95a1;
+    /* 🔴 REQ-VERDICT-COLOR(078a·조니 R15 P2·brand.VERDICT_* SoT): 비추천(로즈=명확한 부정)·보류
+       (중립 회색)을 분리 — 동색(#8b95a1) 폐기. NO 로즈는 스토리 색맵(#f87171)과 동일 hue(팔레트 이원 해소) */
+    --yes:#31c48d; --cond:#f6a609; --no:#f87171; --hold:#8b95a1;
     /* 🔴 형광펜(mark.kw) 하이라이트 = 웜 앰버 단일 토큰 (REQ-067·brand.HL_* SoT 정합) — beat role 색 추종 폐기 */
     --jr-hl-ink:#fbbf24; --jr-hl-text:#fde9ad; --jr-hl-bg:rgba(251,191,36,.15);
+    /* 🔴 WARM-SCOPE 블록 서피스 텍스트 토큰 (REQ-077 계층 규칙) — .blk(리포트·비교 인사이트·에러)
+       본문/강조/코드가 하드코딩 쿨 대신 소비. :root=결과화면 쿨(현행 verbatim·회귀 0),
+       body:not(.scouting)서 웜 오버라이드(첫 화면 웜 자동 상속·아래 계층 규칙). */
+    --blk-fg:#dbe2ea; --blk-strong:#f0f4f8; --blk-code-bg:#0f1319;
 
     /* ── E 소프트(첫인상 폼) 웜 크림 캔버스 — 라이트 기본 ── */
     --cream:#FBF5EC; --cream-2:#F5EBDC; --surface:#FFFCF7; --surface-2:#FEF7EE;
@@ -91,6 +97,18 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     -webkit-font-smoothing:antialiased; line-height:1.6;
     transition:background .35s var(--ease); }
   body.scouting { background:var(--bg); color:var(--fg); }
+  /* ═══ WARM-SCOPE 계층 규칙 (REQ-077 · 조니 R15 신규 P1 유일 차단) ═════════════════════════
+     근원 해결 = 표면 색칠이 아닌 계층 규칙. 첫 화면(body:not(.scouting)) = 웜 크림 지면. 이 지면에서
+     렌더되는 모든 블록(비교 인사이트 #compareInsight .blk·에러 .blk·향후 신규 블록)이 결과화면용
+     쿨 서피스 토큰(--card/--card2/--line/--fg/--dim/--blk-*)을 소비하더라도 웜 서피스 토큰으로
+     자동 매핑한다 — 개별 셀렉터 색칠 금지(REQ-032 로직 단위). @media(dark)가 웜 토큰을 웜 다크로
+     자동 전환 → 라이트=웜 서피스·다크=웜 다크가 by-construction. 경계: body.scouting(정찰 결과·
+     의도된 쿨 다크)은 :root 원값 유지(무회귀). R13 OG→R14 이력→R15 인사이트 동형 3연발 구조 봉쇄. */
+  body:not(.scouting) {
+    --card:var(--surface); --card2:var(--surface-2); --line:var(--w-line);
+    --fg:var(--ink); --dim:var(--w-muted);
+    --blk-fg:var(--ink); --blk-strong:var(--ink); --blk-code-bg:var(--cream-2);
+  }
   ::selection { background:var(--peach-tint); color:var(--peach-ink); }
   /* 🔴 form 요소는 font-family 비상속(UA 기본: textarea=monospace·input=Arial) — 본문 타이포 강제 상속.
      placeholder 전각식 공백·괄호 리듬 붕괴 해소 (R3 ⑨ P0-1). /r/ page.py CSS와 동기. */
@@ -233,9 +251,11 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      카드 10개(hue 반전)를 제거한다. @media(dark)가 이 토큰을 웜 다크로 자동 전환 → 라이트=웜
      서피스·다크=웜 다크가 by-construction. 카드 전체를 칠하고 좌측 색선 강조는 쓰지 않는다. */
   #compare .row { display:flex; align-items:center; gap:10px; padding:11px 13px; background:var(--surface); border:1px solid var(--w-line); border-radius:var(--r-sm); margin:7px 0; box-shadow:var(--sh-soft); }
-  #compare .mini { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; color:#08110c; white-space:nowrap; }
+  /* HIST-ALIGN (REQ-078c·조니 R15 P2): 배지 고정폭 — 평결 텍스트 길이차(YES↔판단보류)로 회사명(.ttl)
+     시작 정렬선이 행마다 어긋나던 것 통일. min-width=최장 배지(판단보류) 수용 + 중앙 정렬. */
+  #compare .mini { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; color:#08110c; white-space:nowrap; min-width:58px; text-align:center; box-sizing:border-box; }
   #compare .mini.YES{background:var(--yes)} #compare .mini.조건부{background:var(--cond)}
-  #compare .mini.NO{background:var(--no);color:#fff} #compare .mini.판단보류{background:var(--hold);color:#fff}
+  #compare .mini.NO{background:var(--no)} #compare .mini.판단보류{background:var(--hold)}  /* VERDICT-COLOR: 로즈/회색 + 다크 잉크(AA) */
   /* R15 HIST-LAYOUT(대표 catch d): 제목 잘림 해소 — 회사(강조 1줄)·직무(dim 2줄 허용)를 세로 분리.
      nowrap+ellipsis 단일 줄(직무 과반 소실)을 폐기. 정찰 시점은 회사명 옆 dim(dedup 보조 정보). */
   #compare .ttl { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; text-decoration:none; }
@@ -278,17 +298,17 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .verdict { display:none; align-items:center; gap:10px; margin:12px 0; }
   .badge { font-weight:800; font-size:14px; padding:6px 12px; border-radius:999px; color:#08110c; }
   .badge.YES{background:var(--yes)} .badge.조건부{background:var(--cond)}
-  .badge.NO{background:var(--no);color:#fff} .badge.판단보류{background:var(--hold);color:#fff}
+  .badge.NO{background:var(--no)} .badge.판단보류{background:var(--hold)}  /* VERDICT-COLOR: 로즈/회색 + 다크 잉크(AA) */
   .verdict .vt { color:var(--dim); font-size:13px; }
 
   .blocks .blk { background:var(--card); border:1px solid var(--line); border-radius:14px;
     padding:14px 16px; margin:10px 0; }
   .blk h3 { margin:0 0 6px; font-size:15px; }
-  .blk .body { font-size:14.5px; color:#dbe2ea; }
+  .blk .body { font-size:14.5px; color:var(--blk-fg); }  /* WARM-SCOPE: 하드코딩 #dbe2ea → 토큰(첫 화면 웜 상속) */
   .blk .body ul, .blk .body ol { margin:6px 0; padding-left:20px; }
   .blk .body ul ul, .blk .body ul ol, .blk .body ol ul, .blk .body ol ol { margin:2px 0; }
   .blk .body li { margin:3px 0; }
-  .blk .body code { background:#0f1319; border:1px solid var(--line); border-radius:5px;
+  .blk .body code { background:var(--blk-code-bg); border:1px solid var(--line); border-radius:5px;  /* WARM-SCOPE: #0f1319 → 토큰 */
     padding:1px 5px; font-size:12.5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
   /* 텍스트 선택 → 추가분석. 🔴 하단 중앙 고정 플로팅 — 선택지점 팝업을 버려 iOS/Android
      네이티브 선택메뉴(복사·찾기 callout)와 구조적 비겹침(#2), 하단 고정이라 상단 sticky 헤더와
@@ -401,7 +421,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   }
   .blk .body .ln { margin:5px 0; }
   .blk .body hr { border:0; border-top:1px solid var(--line); margin:12px 0; }
-  .blk .body strong { color:#f0f4f8; font-weight:700; }
+  .blk .body strong { color:var(--blk-strong); font-weight:700; }  /* WARM-SCOPE: #f0f4f8 → 토큰 */
 
   /* 인라인 SVG 아이콘(이모지 대체) — currentColor·14px 기준. 냉정/날카로움 */
   /* vivid 그라데이션 아이콘: 각 요소가 fill/stroke를 명시(자기기술) → 컨테이너 기본값은 지오메트리만.
@@ -610,7 +630,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     border-radius:999px; color:#08110c; }
   .story-badge.lg { font-size:17px; padding:10px 22px; box-shadow:0 10px 28px -8px var(--scg); }
   .story-badge.YES{background:var(--yes)} .story-badge.조건부{background:var(--cond)}
-  .story-badge.NO{background:var(--no);color:#fff} .story-badge.판단보류{background:var(--hold);color:#fff}
+  .story-badge.NO{background:var(--no)} .story-badge.판단보류{background:var(--hold)}  /* VERDICT-COLOR: 로즈/회색 + 다크 잉크(AA) */
   .bwrap { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
   .bwrap .tease { color:var(--dim); font-size:12.5px; }
   .story-verdict-why { margin-top:16px; font-size:15px; line-height:1.65; color:#dbe2ea; }
@@ -695,7 +715,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* R7-047 페이저 sticky — 긴 카드에서 dots·화살표가 fold 아래로 사라지지 않게 뷰포트 하단 고정 후 자연 위치 정착(콘텐츠 절단 없는 어포던스 확보). /r/ page.py 미러(G6) */
   .story-nav-row { display:flex; align-items:center; justify-content:center; gap:12px; margin:12px auto 2px;
     position:sticky; bottom:10px; z-index:5; width:fit-content; padding:5px 12px; border-radius:999px;
-    background:rgba(15,18,22,.8); background:color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+    background:rgba(15,18,22,.8); background:color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    pointer-events:none; }
+  /* PAGER-GAP (REQ-078d·조니 R15 P2): sticky 페이저 pill이 통과 구간(데스크탑 마우스·낮은 뷰포트)에서
+     아래 인터랙티브 콘텐츠(근거원문 등) 클릭을 가로채지 않게 — pill 배경·여백은 pointer 투과, 실제
+     도트·화살표만 수용(겹침 시 양보). /r/ page.py 동일 미러(발행본은 재렌더 후속·DevOps 트랙). */
+  .story-nav-row .dot, .story-nav-row .story-nav { pointer-events:auto; }
   /* 진행 도트 — 활성 도트는 현재 카드색(JS 주입). 마진은 row가 소유 */
   .story-dots { display:flex; justify-content:center; gap:7px; }
   /* R4-021② dot=클릭 이동 타겟 — 시각 7px 유지 + ::after 히트 확장(터치·마우스 공용, R3 ⑨ P0-2 전례) */
