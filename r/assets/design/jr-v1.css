@@ -150,7 +150,9 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 .hb-turn svg{width:17px;height:17px}
 /* R6-038 nav+dots 한 행 — 화살표를 카드 좌우 오버레이(top:44%·카드 높이 종속 = R5 ⑨ 교차 81% 구조 원인)에서 덱 아래 dots 행으로: 콘텐츠 safe-area 물리 분리(교차 0 구조 보장). 앱 index.html 미러(G6) */
 /* R7-047 페이저 sticky — 긴 카드에서 dots·화살표가 fold 아래로 사라지지 않게 뷰포트 하단 고정 후 자연 위치 정착(콘텐츠 절단 없는 어포던스 확보). 앱 index.html 미러(G6) */
-.story-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px auto 2px;position:sticky;bottom:10px;z-index:5;width:fit-content;padding:5px 12px;border-radius:999px;background:rgba(11,14,19,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.story-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px auto 2px;position:sticky;bottom:10px;z-index:5;width:fit-content;padding:5px 12px;border-radius:999px;background:rgba(11,14,19,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none}
+/* PAGER-GAP (REQ-078d·조니 R15 P2): sticky 페이저 pill이 통과 구간에서 아래 인터랙티브 콘텐츠(근거원문 등) 클릭을 가로채지 않게 — pill 배경·여백 pointer 투과, 도트·화살표만 수용(양보). 앱 index.html 미러 */
+.story-nav-row .dot,.story-nav-row .story-nav{pointer-events:auto}
 .story-dots{display:flex;justify-content:center;gap:7px}
 .story-dots .dot{position:relative;width:7px;height:7px;border-radius:999px;background:#222a35;transition:width .25s,background .25s;cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* R7-047 dot 실효 터치 세로 44px+ (7+19*2=45 — 시각 7px 유지·가로는 dot 간 겹침 없는 ±3px 상한). REQ-039 공유 버튼과 동일 ::after 확장 패턴 */
