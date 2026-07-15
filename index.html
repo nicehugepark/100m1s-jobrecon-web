@@ -40,7 +40,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     /* 🔴 결과화면(스캐너·스토리·리포트·verdict·compare) 전용 다크 팔레트 — 무변경 유지(회귀 0).
        body.scouting(정찰 후)에서만 노출되므로 첫인상 웜 크림과 물리 분리. */
     --bg:#0f1216; --card:#171b22; --card2:#1e232c; --line:#2a313c;
-    --fg:#e8ecf1; --dim:#9aa6b2; --accent:var(--peach-deep); --accent-rgb:212,113,63;  /* REQ-063 웜 통일: 정찰 화면 accent = 애프리콧(파랑 클리셰 폐기·토큰층 REQ-032) */
+    --fg:#e8ecf1; --dim:#9aa6b2; --accent:var(--peach-deep); --accent-rgb:240,165,117;  /* REQ-082 뉴트럴 다크 통일: 정찰 화면 accent = 다크 애프리콧(라이트/다크 OS 공통·파랑 클리셰 폐기·토큰층 REQ-032) */
     /* 🔴 REQ-VERDICT-COLOR(078a·조니 R15 P2·brand.VERDICT_* SoT): 비추천(로즈=명확한 부정)·보류
        (중립 회색)을 분리 — 동색(#8b95a1) 폐기. NO 로즈는 스토리 색맵(#f87171)과 동일 hue(팔레트 이원 해소) */
     --yes:#31c48d; --cond:#f6a609; --no:#f87171; --hold:#8b95a1;
@@ -51,44 +51,34 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
        body:not(.scouting)서 웜 오버라이드(첫 화면 웜 자동 상속·아래 계층 규칙). */
     --blk-fg:#dbe2ea; --blk-strong:#f0f4f8; --blk-code-bg:#0f1319;
 
-    /* ── E 소프트(첫인상 폼) 웜 크림 캔버스 — 라이트 기본 ── */
-    --cream:#FBF5EC; --cream-2:#F5EBDC; --surface:#FFFCF7; --surface-2:#FEF7EE;
-    /* 웜 잉크(따뜻한 차콜) */
-    --ink:#3A322B; --ink-2:#5F554A; --w-muted:#7C7062; --faint:#A99B8A;
-    /* 부드러운 웜 경계 */
-    --w-line:#EFE4D2; --w-line-2:#E6D8C2;
-    /* 애프리콧 = 주accent */
-    --peach:#EC9A6B; --peach-2:#F2AE83; --peach-deep:#D4713F; --peach-ink:#B5541F;
-    --peach-tint:#FBE7D6; --peach-line:#F1C6A5; --cocoa:#4A2A16;
-    --chip-on-fg:#4A2A16;   /* 선택 칩(애프리콧 틴트) 위 텍스트 — 다크서 밝은 톤 오버라이드(AA) */
-    /* 세이지 = 보조 */
-    --sage:#7FA07C; --sage-deep:#5E8159; --sage-tint:#E9F0E4; --sage-line:#CADEC2;
-    /* 웜틴트 부드러운 그림자 */
-    --sh-soft:0 6px 20px -10px rgba(150,96,54,.22), 0 2px 6px -3px rgba(150,96,54,.12);
-    --sh-lift:0 14px 34px -14px rgba(150,96,54,.30), 0 4px 10px -5px rgba(150,96,54,.14);
-    --sh-cta:0 12px 30px -10px rgba(210,113,63,.48), inset 0 1px 0 rgba(255,255,255,.4);
+    /* ── 첫인상 폼 캔버스 = 모던 뉴트럴 다크 (REQ-082 조니 확정 · VRD-REQ082-jony) ──
+       웜크림 첫인상(구 #FBF5EC)·웜다크(구 #211C16) 폐기 → 메인 결과화면 --bg 뉴트럴 차콜로 통일.
+       라이트/다크 OS 유저 모두 다크 첫인상. 토큰 이름(--cream/--surface/--ink…)은 유지해 WARM-SCOPE
+       계층 규칙·전 소비처가 개별 색칠 없이 값만 뉴트럴로 자동 전환(REQ-032 토큰층). */
+    --cream:#0f1216; --cream-2:#151a21; --surface:#171b22; --surface-2:#1e232c;
+    /* 뉴트럴 잉크(near-white 본문 → 보조 회색) */
+    --ink:#e8ecf1; --ink-2:#b3bdc9; --w-muted:#9aa6b2; --faint:#6b7683;
+    /* 뉴트럴 경계 */
+    --w-line:#2a313c; --w-line-2:#333c48;
+    /* 애프리콧 = 주accent(다크 톤·brand.MARK_DARK 정합·단일 hue) */
+    --peach:#EFA575; --peach-2:#F4B98F; --peach-deep:#F0A575; --peach-ink:#F2B489;
+    --peach-tint:rgba(240,165,117,.15); --peach-line:rgba(240,165,117,.42); --cocoa:#3A2110;
+    --chip-on-fg:#F6E7D5;   /* 선택 칩(애프리콧 틴트) 위 텍스트 — 다크 밝은 톤(AA) */
+    /* 세이지 = 보조(선택 항목 시맨틱·다크 톤) */
+    --sage:#9BBE96; --sage-deep:#AFCFA9; --sage-tint:rgba(155,190,150,.14); --sage-line:rgba(155,190,150,.3);
+    /* 뉴트럴 다크 그림자(웜틴트 폐기) · CTA 만 애프리콧 글로우 유지 */
+    --sh-soft:0 6px 20px -10px rgba(0,0,0,.5), 0 2px 6px -3px rgba(0,0,0,.4);
+    --sh-lift:0 14px 34px -14px rgba(0,0,0,.6), 0 4px 10px -5px rgba(0,0,0,.4);
+    --sh-cta:0 12px 30px -10px rgba(240,165,117,.42), inset 0 1px 0 rgba(255,255,255,.14);
     --r-lg:24px; --r-md:18px; --r-sm:14px;   /* 큰 라운드 */
     --ease:cubic-bezier(.22,1,.32,1); --spring:cubic-bezier(.34,1.56,.44,1);
     --round:"Fredoka",system-ui,sans-serif;
     --kr:"Gowun Dodum",-apple-system,"Apple SD Gothic Neo",sans-serif;
     --serif:"Gowun Batang","Nanum Myeongjo",serif;
   }
-  /* E 소프트 웜 다크(첫인상 폼만·온기 유지·AA) — 결과화면 --bg 등과 별개 토큰 */
-  @media (prefers-color-scheme:dark){
-    :root{
-      --cream:#211C16; --cream-2:#2A241D; --surface:#2C261F; --surface-2:#28221B;
-      --ink:#F2EADD; --ink-2:#C7BAA7; --w-muted:#A2937F; --faint:#7C6F5E;
-      --w-line:rgba(255,246,233,.09); --w-line-2:rgba(255,246,233,.15);
-      --peach:#EFA575; --peach-2:#F4B98F; --peach-deep:#F0A575; --peach-ink:#F2B489;
-      --accent-rgb:240,165,117;  /* 다크 정찰 화면 accent rgb(애프리콧 다크톤) */
-      --peach-tint:rgba(239,165,117,.15); --peach-line:rgba(239,165,117,.42);
-      --cocoa:#3A2110; --chip-on-fg:#F6E7D5;
-      --sage:#9BBE96; --sage-deep:#AFCFA9; --sage-tint:rgba(155,190,150,.14); --sage-line:rgba(155,190,150,.3);
-      --sh-soft:0 6px 20px -10px rgba(0,0,0,.5), 0 2px 6px -3px rgba(0,0,0,.4);
-      --sh-lift:0 14px 34px -14px rgba(0,0,0,.6), 0 4px 10px -5px rgba(0,0,0,.4);
-      --sh-cta:0 12px 30px -10px rgba(210,113,63,.5), inset 0 1px 0 rgba(255,255,255,.18);
-    }
-  }
+  /* REQ-082(조니 확정): 첫인상·결과화면 모두 뉴트럴 다크로 통일 → 무드별(@media dark) 첫인상
+     오버라이드 폐기. 라이트/다크 OS 유저 모두 :root 뉴트럴 다크를 동일하게 본다(구 웜다크 #211C16
+     팔레트 제거). blob 다크 opacity 조정만 .blob base 값으로 이관(아래). */
   * { box-sizing:border-box; }
   /* E 소프트 첫인상 = 웜 크림(라이트/다크). 정찰 시작(body.scouting) → 결과화면 다크(--bg) 복귀.
      결과 요소는 정찰 전 전부 display:none이므로 첫인상엔 폼+블롭만 노출 → 목업 완전 재현 + 결과 회귀 0. */
@@ -158,7 +148,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .anchor { background:var(--cream); }
   body.scouting .anchor { background:var(--bg); }
   .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -4px; padding:6px 4px 4px;
-    border-bottom:1px solid var(--w-line); box-shadow:0 6px 16px -10px rgba(150,96,54,.3); }
+    border-bottom:1px solid var(--w-line); box-shadow:0 6px 16px -10px rgba(0,0,0,.3); }
   body.scouting .anchor.pinned { border-bottom-color:var(--line); box-shadow:0 6px 14px -8px rgba(0,0,0,.6); }
   /* R15 HIST-LAYOUT(대표 catch d·13:33): 첫 화면(비-scouting)엔 앵커에 회사·직군 meta가 비어
      brand+tag만 sticky로 떠 스크롤 시 헤더 주변 공백·비침이 생긴다 → 첫 화면은 일반 흐름으로
@@ -242,7 +232,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     box-shadow:var(--sh-lift), var(--sh-cta); transition:transform .22s var(--spring),box-shadow .28s var(--ease),filter .25s; }
   button:not(:disabled):hover { transform:translateY(-3px); box-shadow:0 22px 46px -14px rgba(210,113,63,.5), inset 0 1px 0 rgba(255,255,255,.45); }
   button:not(:disabled):active { transform:translateY(-1px); }
-  button:disabled { background:var(--cream-2); color:var(--faint); box-shadow:inset 0 1px 3px rgba(150,96,54,.08); cursor:not-allowed; transform:none; }
+  button:disabled { background:var(--cream-2); color:var(--faint); box-shadow:inset 0 1px 3px rgba(0,0,0,.08); cursor:not-allowed; transform:none; }
   button.secondary { background:var(--surface); color:var(--ink-2); border:1px solid var(--w-line-2);
     box-shadow:var(--sh-soft); margin-top:10px; font-size:14px; padding:12px; font-weight:400; }
   body.scouting button { padding:13px; font-family:inherit; font-size:16px; font-weight:700;
@@ -790,19 +780,19 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      ============================================================ */
   /* .wrap을 블롭 위로 — 첫인상 콘텐츠가 배경 블롭보다 앞 */
   .wrap { position:relative; z-index:1; }
-  /* 부드러운 웜 블롭 배경(첫인상만) */
+  /* REQ-082: 입구 애프리콧·앰버 오로라(첫인상만·뉴트럴 다크 위 모던 오로라 = 조니 요건 ⑥·⑧).
+     구 세이지(b2)·웜크림(b3) hue 폐기 → 애프리콧 단일 액센트 + 앰버 인텔 hue 로 통일. */
   .bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   body.scouting .bg { display:none; }
-  .blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; }
+  .blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:.5; }
   .blob.b1 { top:-14vh; right:-20vw; width:78vw; height:78vw; max-width:560px; max-height:560px;
-    background:radial-gradient(circle at 40% 40%,rgba(242,174,131,.55),rgba(242,174,131,0) 70%); animation:drift1 22s var(--ease) infinite alternate; }
+    background:radial-gradient(circle at 40% 40%,rgba(240,165,117,.55),rgba(240,165,117,0) 70%); animation:drift1 22s var(--ease) infinite alternate; }
   .blob.b2 { bottom:-16vh; left:-22vw; width:70vw; height:70vw; max-width:520px; max-height:520px;
-    background:radial-gradient(circle at 50% 50%,rgba(127,160,124,.34),rgba(127,160,124,0) 70%); animation:drift2 26s var(--ease) infinite alternate; }
+    background:radial-gradient(circle at 50% 50%,rgba(240,165,117,.26),rgba(240,165,117,0) 70%); animation:drift2 26s var(--ease) infinite alternate; }
   .blob.b3 { top:34vh; left:34vw; width:52vw; height:52vw; max-width:380px; max-height:380px;
-    background:radial-gradient(circle at 50% 50%,rgba(255,236,214,.7),rgba(255,236,214,0) 68%); animation:drift1 30s var(--ease) infinite alternate-reverse; }
+    background:radial-gradient(circle at 50% 50%,rgba(251,191,36,.18),rgba(251,191,36,0) 68%); animation:drift1 30s var(--ease) infinite alternate-reverse; }
   @keyframes drift1 { to { transform:translate(-16px,20px) scale(1.06); } }
   @keyframes drift2 { to { transform:translate(18px,-14px) scale(1.08); } }
-  @media (prefers-color-scheme:dark){ .blob { opacity:.4; } }
 
   /* 히어로(정찰 보이스 — 응원·위로 배제, 냉철 팩트) */
   .hero { padding:24px 2px 2px; }
@@ -811,7 +801,9 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .hero .h1 em { font-family:var(--serif); font-style:normal; font-weight:700; color:var(--peach-deep); position:relative; white-space:nowrap; }
   .hero .h1 em::after { content:""; position:absolute; left:1px; right:1px; bottom:-2px; height:7px; border-radius:8px; background:var(--peach-tint); z-index:-1; }
   .hero .sub { margin:15px 0 0; font-size:14.5px; line-height:1.75; color:var(--ink-2); max-width:35ch; }
-  .hero .sub b { color:var(--ink); font-weight:400; box-shadow:inset 0 -9px 0 var(--sage-tint); }
+  /* REQ-082 조니 요건 ⑤: 서브카피 형광펜 = 앰버 인텔 하이라이트(구 세이지 --sage-tint 폐기 —
+     다크 통일서 흰박스 붕괴 봉쇄·brand.HL_* SoT 정합). 정찰 시그니처(앰버 하이라이트) 강화. */
+  .hero .sub b { color:var(--ink); font-weight:400; box-shadow:inset 0 -9px 0 var(--jr-hl-bg); }
 
   /* 내 정보·조건 접힘(대표 확정: 첫인상 접힘) — 목업 more 컴포넌트 */
   .more { margin-top:16px; background:var(--surface); border:1px solid var(--w-line); border-radius:var(--r-lg); box-shadow:var(--sh-soft); overflow:hidden; }
@@ -879,7 +871,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   <!-- 히어로(정찰 보이스 — 응원·위로 배제, 냉철 팩트) -->
   <section class="hero">
     <h1 class="h1">이 회사, <em>지원할 가치</em>가 있을까?</h1>
-    <p class="sub">공고 링크 하나면 됩니다. <b>회사가 먼저 말하지 않는 것</b>까지, DART 공시와 공개 뉴스로 정찰합니다.</p>
+    <p class="sub">공고 링크 하나면 됩니다. 좋은 말은 회사가 이미 했으니, <b>나머지 절반</b>을 정찰합니다.</p>
   </section>
 
   <div class="card">
