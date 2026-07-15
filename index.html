@@ -125,6 +125,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .tag { color:var(--w-muted); font-size:13px; margin-top:2px; }
   body.scouting .tag { color:var(--dim); }
 
+  /* R15 HIST-LAYOUT(대표 catch f·스펙 ④): 광고 미탑재 상태의 빈 AD placeholder는 렌더하지 않는다
+     (기능 0 요소가 fresh 포함 전 상태 노출). 광고 연동 시 body.ads-live 토글로 노출 — 플래그만
+     추가하면 되도록 남긴다(placeholder 시각 노출 0·DOM 훅 보존). */
+  body:not(.ads-live) .ad { display:none !important; }
   .ad { margin:14px 0; border:1.5px dashed var(--w-line-2); border-radius:var(--r-md);
     background:var(--surface-2); color:var(--faint);
     text-align:center; padding:17px; font-size:11px; letter-spacing:.06em; }
@@ -138,6 +142,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -4px; padding:6px 4px 4px;
     border-bottom:1px solid var(--w-line); box-shadow:0 6px 16px -10px rgba(150,96,54,.3); }
   body.scouting .anchor.pinned { border-bottom-color:var(--line); box-shadow:0 6px 14px -8px rgba(0,0,0,.6); }
+  /* R15 HIST-LAYOUT(대표 catch d·13:33): 첫 화면(비-scouting)엔 앵커에 회사·직군 meta가 비어
+     brand+tag만 sticky로 떠 스크롤 시 헤더 주변 공백·비침이 생긴다 → 첫 화면은 일반 흐름으로
+     고정 해제(부유 근원 제거). 결과화면(scouting) sticky는 보존(회귀 0). */
+  body:not(.scouting) .anchor.pinned { position:static; margin:0; box-shadow:none; border-bottom:0; }
   /* (R4-023③) .anchor.pinned .ad 슬림 룰 제거 — AD는 sticky 밖(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
   .ad-infeed { margin:12px 0; }                            /* 리포트 인피드 광고(트랙 B-1) */
   /* 복귀 완료 게이트(트랙 B-2) — 이탈 후 돌아온 사용자에게 광고 1회 후 리포트 공개 */
@@ -220,22 +228,36 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   body.scouting button:not(:disabled):hover { transform:none; }
   body.scouting button:disabled { opacity:.5; background:var(--accent); color:#fff; }
   body.scouting button.secondary { background:var(--card2); color:var(--fg); border:1px solid var(--line); font-weight:700; }
-  #compare .row { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--card); border:1px solid var(--line); border-radius:10px; margin:6px 0; }
-  #compare .mini { font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; color:#08110c; white-space:nowrap; }
+  /* R15 HIST-TONE(대표 catch a): 이력 리스트 = 첫 화면(웜 크림) 구성요소. 결과화면 전용 쿨 다크
+     토큰(--card/--line/--fg) 소비를 폐기하고 첫인상 웜 서피스 토큰을 소비 — 웜 크림 위 쿨 네이비
+     카드 10개(hue 반전)를 제거한다. @media(dark)가 이 토큰을 웜 다크로 자동 전환 → 라이트=웜
+     서피스·다크=웜 다크가 by-construction. 카드 전체를 칠하고 좌측 색선 강조는 쓰지 않는다. */
+  #compare .row { display:flex; align-items:center; gap:10px; padding:11px 13px; background:var(--surface); border:1px solid var(--w-line); border-radius:var(--r-sm); margin:7px 0; box-shadow:var(--sh-soft); }
+  #compare .mini { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px; color:#08110c; white-space:nowrap; }
   #compare .mini.YES{background:var(--yes)} #compare .mini.조건부{background:var(--cond)}
   #compare .mini.NO{background:var(--no);color:#fff} #compare .mini.판단보류{background:var(--hold);color:#fff}
-  #compare a { color:var(--fg); text-decoration:none; font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  #compare a:hover { color:var(--accent); }
-  #compare .pgtag { flex:0 0 auto; font-size:10.5px; color:var(--accent); border:1px solid var(--peach-line);
-    background:rgba(var(--accent-rgb),.08); border-radius:999px; padding:3px 9px; white-space:nowrap; text-decoration:none; }
-  #compare .pgtag:hover { background:rgba(var(--accent-rgb),.18); }
-  #compare .ttl { color:var(--fg); font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  /* R15 HIST-LAYOUT(대표 catch d): 제목 잘림 해소 — 회사(강조 1줄)·직무(dim 2줄 허용)를 세로 분리.
+     nowrap+ellipsis 단일 줄(직무 과반 소실)을 폐기. 정찰 시점은 회사명 옆 dim(dedup 보조 정보). */
+  #compare .ttl { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; text-decoration:none; }
+  #compare .ttl .co { font-size:14px; font-weight:700; color:var(--ink); line-height:1.3; word-break:keep-all; overflow-wrap:anywhere; }
+  #compare .ttl .co .when { font-weight:400; font-size:11px; color:var(--faint); }
+  #compare .ttl .pos { font-size:12.5px; color:var(--w-muted); line-height:1.35; word-break:keep-all; overflow-wrap:anywhere;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  a.ttl:hover .co { color:var(--peach-deep); }
+  /* 정찰 페이지 도달 칩 — 터치 27→44px(::after 투명 히트박스, 시각 크기 유지·조건 칩 h44 정합) */
+  #compare .pgtag { position:relative; flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:11px; color:var(--peach-deep); border:1px solid var(--peach-line);
+    background:var(--peach-tint); border-radius:999px; padding:5px 10px; white-space:nowrap; text-decoration:none; }
+  #compare .pgtag::after { content:""; position:absolute; inset:-9px -6px; }
+  #compare .pgtag:hover { background:rgba(var(--accent-rgb),.2); }
+  /* 미발행(발행 대기) 상태 — 버튼 무단 부재 금지(대표 catch c): 도달 불가를 dim 상태로 명시 */
+  #compare .pgtag.pgtag-pending { color:var(--faint); border-color:var(--w-line-2); background:transparent; cursor:default; }
+  #compare .pgtag.pgtag-pending::after { content:none; }
   /* 방금 정찰한 공고 — 평결순에서 아래로 밀려도 즉시 찾게: 강조 테두리+글로우(2.2s 후 정착)+지속 배경 틴트 */
-  #compare .row.just { border-color:var(--accent); background:linear-gradient(90deg,rgba(var(--accent-rgb),.16),rgba(var(--accent-rgb),.05)); animation:jrJust 2.2s ease-out 1; }
-  #compare .jbadge { flex:0 0 auto; font-size:10px; font-weight:800; color:#fff; background:var(--accent); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  #compare .row.just { border-color:var(--peach-deep); background:linear-gradient(90deg,var(--peach-tint),var(--surface)); animation:jrJust 2.2s ease-out 1; }
+  #compare .jbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:10px; font-weight:800; color:#fff; background:var(--peach-deep); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
   /* 파일 업로드 공고 표식 — 원문 링크 없음을 조용히 알리는 중립 dim 배지(강조 아님) */
-  #compare .fbadge { flex:0 0 auto; font-size:10px; font-weight:700; color:var(--dim); background:var(--card2); border:1px solid var(--line); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
-  @keyframes jrJust { 0%{box-shadow:0 0 0 2px var(--accent) inset,0 0 14px 2px rgba(var(--accent-rgb),.5);} 60%{box-shadow:0 0 0 2px var(--accent) inset,0 0 6px 1px rgba(var(--accent-rgb),.25);} 100%{box-shadow:0 0 0 1px var(--accent) inset;} }
+  #compare .fbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:10px; font-weight:700; color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  @keyframes jrJust { 0%{box-shadow:0 0 0 2px var(--peach-deep) inset,0 0 14px 2px rgba(var(--accent-rgb),.5);} 60%{box-shadow:0 0 0 2px var(--peach-deep) inset,0 0 6px 1px rgba(var(--accent-rgb),.25);} 100%{box-shadow:var(--sh-soft),0 0 0 1px var(--peach-deep) inset;} }
 
   .constraints { margin-top:16px; padding:0; background:none; border:0; border-radius:0; }
   .crow { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:8px; }
@@ -719,7 +741,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     #compare .mini { font-size:12px; }
     #compare .pgtag { font-size:12px; }
     #compare .jbadge, #compare .fbadge { font-size:12px; }
-    #compare a, #compare .ttl { font-size:14px; }
+    #compare .ttl .co { font-size:15px; } #compare .ttl .pos { font-size:13px; }
     .foot { font-size:12px; }
     .blk .body code { font-size:13px; }
     .tocchip { font-size:13px; }
@@ -796,8 +818,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
 </div>
 <!-- JobRecon vivid 아이콘 공유 그라데이션 (네임스페이스 jrico/jricoW — id 충돌 방지) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <!-- R15 HIST-TONE(대표 catch a): 파랑→시안→보라 쿨 그라디언트 폐기 → 애프리콧 웜 그라디언트.
+       메인 웜크림 첫인상과 한 시각 언어(브랜드 accent = 애프리콧 단일 hue·brand.MARK 정합). -->
   <linearGradient id="jrico" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#4f8cff"/><stop offset=".55" stop-color="#38bdf8"/><stop offset="1" stop-color="#a78bfa"/>
+    <stop offset="0" stop-color="#F2AE83"/><stop offset=".55" stop-color="#EC9A6B"/><stop offset="1" stop-color="#D4713F"/>
   </linearGradient>
   <linearGradient id="jricoW" x1="0" y1="0" x2="1" y2="1">
     <stop offset="0" stop-color="#fcd34d"/><stop offset="1" stop-color="#f59e0b"/>
@@ -968,7 +992,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   </div>
 
   <div id="compareWrap" style="display:none">
-    <div class="clabel" style="margin-top:22px; font-size:13px;">비교 · 내가 정찰한 공고 (평결순)</div>
+    <div class="clabel" style="margin-top:22px; font-size:13px;">내가 정찰한 공고 · 지원가치 높은 순</div>
     <div id="compare"></div>
     <button id="compareBtn" class="secondary" style="display:none; margin-top:12px"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.4l-2.4 4.8a2.4 2.4 0 0 0 4.8 0z" fill="url(#jrico)" opacity=".18"/><path d="M19 7.4l-2.4 4.8a2.4 2.4 0 0 0 4.8 0z" fill="url(#jrico)" opacity=".18"/><path d="M12 3.4v16.2M6.5 19.6h11M5 7.4h14" stroke="url(#jrico)" stroke-width="1.5" stroke-linecap="round"/><path d="M5 7.4l-2.4 4.8a2.4 2.4 0 0 0 4.8 0z" fill="none" stroke="url(#jrico)" stroke-width="1.25" stroke-linejoin="round"/><path d="M19 7.4l-2.4 4.8a2.4 2.4 0 0 0 4.8 0z" fill="none" stroke="url(#jrico)" stroke-width="1.25" stroke-linejoin="round"/><circle cx="12" cy="4" r="1.5" fill="url(#jrico)"/></svg> 내 기준으로 비교 인사이트 보기</button>
     <div class="blocks" id="compareInsight"></div>
@@ -2264,6 +2288,15 @@ const CMP_LABEL = { "YES":"추천", "조건부":"조건부", "NO":"비추천", "
 function hostLabel(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } }
 // 이력 표시 회사명 정리(옛 저장 레코드 대응) — 서버 _clean_company와 동일 취지(㈜·주식회사 등 제거)
 function cleanCo(n) { return ((n || "").replace(/㈜|\(주\)|\(유\)|\(재\)|주식회사|유한회사|유한책임회사/g, "").replace(/\s{2,}/g, " ").trim()) || (n || ""); }
+// R15 HIST: 정찰 시점 표기(dedup 보조 — 같은 회사 다른 시점 구별). KST 고정(브라우저 로컬 무관).
+function fmtWhen(sec) {
+  try {
+    const toKst = (d) => new Date(d.getTime() + (d.getTimezoneOffset() + 540) * 60000);
+    const k = toKst(new Date(sec * 1000)), nk = toKst(new Date());
+    const m = k.getMonth() + 1, day = k.getDate();
+    return k.getFullYear() === nk.getFullYear() ? `${m}/${day}` : `${String(k.getFullYear()).slice(2)}.${m}.`;
+  } catch (e) { return ""; }
+}
 // 방금 정찰한 회사·직무 라벨 — 아래 loadCompare의 row 라벨(cleanCo(company)·position)과 동일 규칙으로 계산해 매칭
 function curScoutLabel() {
   const cur = (metaEl.textContent || "").replace("정찰 대상", "").trim();  // "회사 · 직무" 또는 "회사"
@@ -2282,25 +2315,25 @@ async function loadCompare(justLabel) {
     if (!items.length) { compareWrap.style.display = "none"; return; }
     compareEl.innerHTML = items.map(it => {
       const lv = it.verdict_level || "판단보류";
+      const co = cleanCo(it.company) || hostLabel(it.job_url);
+      const pos = it.position || "";
       const coLabel = [cleanCo(it.company), it.position].filter(Boolean).join(" · ");
-      const title = esc(coLabel || hostLabel(it.job_url));
       const isJust = !!justLabel && coLabel === justLabel;  // 방금 정찰한 공고와 일치
-      // 🔴 원문·정찰 페이지 둘 다 접근(대표 catch): 타이틀=원문 공고(URL이면), 칩=정찰 페이지(있으면)
+      const when = it.created_at ? fmtWhen(it.created_at) : "";
+      // 🔴 HIST-LAYOUT(대표 catch d): 회사(강조 1줄)·직무(dim 2줄)·시점 세로 분리 — 잘림 해소+위계
+      const ttlInner =
+        `<span class="co">${esc(co)}${when ? ` <span class="when">· ${esc(when)}</span>` : ""}</span>` +
+        (pos ? `<span class="pos">${esc(pos)}</span>` : "");
+      // 타이틀=원문 공고(URL이면 링크), 파일 업로드(원문 링크 없음)는 텍스트+파일 배지
       const key = it.page_key, isUrl = it.job_url && /^https?:/i.test(it.job_url);
-      let titleHref = "", chip = "", fileBadge = "";
-      if (isUrl) {
-        titleHref = esc(it.job_url);
-        if (key) chip = ` <a class="pgtag" href="/r/${encodeURIComponent(key)}.html" target="_blank" rel="noopener">정찰 페이지</a>`;
-      } else if (key) {
-        // 파일 업로드 공고=원문 링크 없음 → 제목은 일반 텍스트로 두고, 정찰 페이지는 URL 행과 동일하게 버튼(pgtag)으로 노출.
-        // (기존엔 제목 자체가 /r/ 링크가 되고 버튼은 숨겨져 다른 행과 불일치·제목이 조용히 정찰 페이지로 가는 혼란)
-        chip = ` <a class="pgtag" href="/r/${encodeURIComponent(key)}.html" target="_blank" rel="noopener">정찰 페이지</a>`;
-        fileBadge = '<span class="fbadge">파일</span>';
-      }
-      // key도 URL도 없는 극단 케이스(정찰 페이지 없음)는 titleHref/chip 모두 빈 값 → 제목 일반 텍스트(기존 동작 유지)
-      const titleEl = titleHref
-        ? `<a href="${titleHref}" target="_blank" rel="noopener">${title}</a>`
-        : `<span class="ttl">${title}</span>`;
+      const titleEl = isUrl
+        ? `<a class="ttl" href="${esc(it.job_url)}" target="_blank" rel="noopener">${ttlInner}</a>`
+        : `<span class="ttl">${ttlInner}</span>`;
+      const fileBadge = (!isUrl && (it.job_url || "").startsWith("upload:")) ? '<span class="fbadge">파일</span>' : "";
+      // 🔴 HIST-PAGEKEY(대표 catch c): 정찰 페이지 도달 — 발행본 있으면 버튼, 미발행이면 상태 명시(무단 부재 금지)
+      const chip = key
+        ? ` <a class="pgtag" href="/r/${encodeURIComponent(key)}.html" target="_blank" rel="noopener">정찰 페이지</a>`
+        : ` <span class="pgtag pgtag-pending" title="정찰 페이지 발행 대기">발행 대기</span>`;
       const justBadge = isJust ? '<span class="jbadge">방금</span>' : "";
       return `<div class="row${isJust ? " just" : ""}"><span class="mini ${lv}">${esc(CMP_LABEL[lv] || lv)}</span>${justBadge}${fileBadge}${titleEl}${chip}</div>`;
     }).join("");
