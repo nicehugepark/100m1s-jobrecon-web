@@ -1934,6 +1934,17 @@ async function analyze() {
   // R7-047 폼 검증 에러 = 트리거 인접 인라인(#formErr) — 결과 영역 status(AD 슬롯 아래·1스크린 이격)로 보내지 않는다
   if (!job_url && !useFile) { $("formErr").innerHTML = '<span class="err">공고 링크를 입력하거나 공고 파일을 업로드해 주세요.</span>'; return; }
   $("formErr").innerHTML = "";
+  // 🔴 재시도 = 중복 job 방지(대표 catch 2026-07-17): 동일 URL 정찰이 서버에서 진행 중(JOB_KEY 20분 내)이면
+  //   신규 /analyze/start를 만들지 않고 그 job에 attach(이어받기) — 화면 리셋 없이 폴링 재개.
+  //   백엔드도 동일 키 진행 중 job이면 기존 job_id를 반환(이중 방어)하나, 프론트 attach가 리셋 UX까지 막는다.
+  if (!useFile && job_url) {
+    let _act = null; try { _act = JSON.parse(localStorage.getItem(JOB_KEY) || "null"); } catch (e) {}
+    if (_act && _act.job_id && _act.job_url === job_url && Date.now() - (_act.ts || 0) < 20*60*1000) {
+      if (_pollTimer) return;                       // 이미 그 job을 폴링 중 — 이중 시작 금지
+      enterResultMode(); statusEl.textContent = "진행 중이던 정찰을 이어받는 중…"; scanStart();
+      _curJobId = _act.job_id; showCancel(true); go.disabled = true; pollJob(_act.job_id); return;
+    }
+  }
   await ensureAPI();  // 백엔드 주소 확정(api.txt 자동발행 대응)
   const constraints = readConstraints();
   saveProfile(profileText, constraints);  // 직접 입력만 저장(다음 방문 복원 — 병합본은 저장 안 함)
@@ -2027,32 +2038,34 @@ function pollJob(job_id) {
   let _lastProgressT = Date.now();      // 마지막으로 백엔드가 '진행'한 시각(무한 로딩 차단 기준)
   let _lastStatus = "";                 // 직전 백엔드 스테이지 문구(값이 바뀌면 = 살아있음)
   let _pollFails = 0;                   // poll HTTP 연속 실패 카운터(응답 성공 시 리셋)
+  let _slow = false;                     // 정체 감지 → 저속(backoff) 폴링 모드. 중단 아님.
   function endPoll() { stopPoll(); scanStop(); showCancel(false); localStorage.removeItem(JOB_KEY); syncGo(); }
-  function pollStalled() {               // 진짜 정체만 도달. job_id·JOB_KEY는 유지 → 재시도로 폴링 재개(P1-10 보존).
-    stopPoll(); scanStop(); showCancel(false); syncGo();
-    if (_pollFull) {
-      // 리포트가 이미 부분 렌더 중 → 상단 빨강 에러 금지(내용 뜨는데 '지연'은 모순). 담백한 이어받기 안내만.
-      statusEl.innerHTML = '리포트를 이어받는 중… 오래 걸리면 '
-        + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
-    } else {
-      statusEl.innerHTML = '<span class="err">정찰이 예상보다 오래 걸립니다.</span> '
-        + '<a href="#" id="retryPoll" style="color:var(--accent);font-weight:700;text-decoration:none">재시도</a>';
-    }
-    const rp = $("retryPoll");
-    if (rp) rp.addEventListener("click", (e) => {
-      e.preventDefault(); statusEl.textContent = ""; scanStart(); showCancel(true); go.disabled = true; pollJob(job_id);
-    });
+  // 🔴 타임아웃 ≠ 중단 UI (대표 catch 2026-07-17 13:26 "오래 걸린다면서 중단해버리면 어떻게 해"):
+  //   구 pollStalled는 stopPoll+scanStop 후 "예상보다 오래 걸립니다. 재시도"로 진행 카드를 교체 —
+  //   서버 job은 계속 도는데 사용자에겐 중단으로 보였다(CJ올리브영 실사고). 폴링·진행 카드·취소
+  //   버튼을 전부 유지하고 문구만 정직 전환 + 간격 2s→5s backoff. 서버 완료 시 저장(saved)되어
+  //   비교 목록에 반영되는 구조(실측: analyze_stream→saved.save_analysis→GET /saved) — 안내에 명시.
+  //   종결은 자연 경로가 담당: done / error / cancelled / unknown_job(서버 TTL 20분 만료).
+  function pollSlowdown() {
+    if (_slow) return;
+    _slow = true;
+    statusEl.innerHTML = '생각보다 오래 걸리고 있습니다 — <b>계속 확인 중입니다.</b> '
+      + '이 화면을 닫아도 정찰은 계속되고, 완료되면 아래 비교 목록에 반영됩니다.';
+  }
+  function markProgress() {              // 진행 재개 → 고속 폴링 복귀 + 지연 안내 해제
+    _lastProgressT = Date.now();
+    if (_slow) { _slow = false; statusEl.textContent = ""; }
   }
   const tick = async () => {
-    if (Date.now() - _lastProgressT > STALL_MS) { pollStalled(); return; }  // 총경과 아님 — 진행 정체로 판정
+    if (Date.now() - _lastProgressT > STALL_MS) pollSlowdown();  // 정체 = 저속·정직 안내(폴링은 계속)
     let ev;
     try {
       const r = await fetch(API + "/analyze/poll/" + job_id, { cache:"no-store" });
       ev = await r.json();
       _pollFails = 0;                    // 응답 도착 → 연속 실패 리셋
     } catch (e) {
-      if (++_pollFails >= FAIL_STALL) { pollStalled(); return; }  // 연결 실패가 지속되면 정체로 간주
-      _pollTimer = setTimeout(tick, 2500); return;  // 일시 실패(백그라운드 등) → 중단 말고 재시도
+      if (++_pollFails >= FAIL_STALL) pollSlowdown();  // 연결 실패 지속도 중단 금지 — 저속으로 계속 재시도
+      _pollTimer = setTimeout(tick, _slow ? 5000 : 2500); return;  // 일시 실패(백그라운드 등) → 중단 말고 재시도
     }
     if (ev.error === "unknown_job") {
       exitResultMode();
@@ -2061,14 +2074,14 @@ function pollJob(job_id) {
     }
     if (ev.cancelled) { exitResultMode(); statusEl.textContent = "정찰을 취소했습니다."; endPoll(); return; }  // FR-053
     if (typeof ev.status === "string" && ev.status !== _lastStatus) {  // 백엔드 스테이지 변화 = 진행(살아있음)
-      _lastStatus = ev.status; _lastProgressT = Date.now();
+      _lastStatus = ev.status; markProgress();
     }
     if (ev.meta) { _lastMeta = ev.meta; renderMeta(ev.meta); renderDeadlineBanner(ev); }   // 마감배너(필드 있으면·graceful)
     if (ev.page && ev.page.url) _pageUrl = ev.page.url;  // Phase 2: 고정 URL 정찰 페이지(공유용, FR-056)
     if (typeof ev.text === "string" && ev.text !== _pollFull) {
       const wasEmpty = !_pollFull;
       _pollFull = ev.text; renderBlocks(_pollFull);
-      _lastProgressT = Date.now();       // 리포트 스트리밍 진행 = 살아있음
+      markProgress();                    // 리포트 스트리밍 진행 = 살아있음(저속 모드 해제)
       if (_pollFull) { $("scanner").classList.add("has-content"); if (wasEmpty) scanVerdict(); }  // 카드 도착 → 평결 단계
     }
     if (ev.error) { reconFail(ev.error); endPoll(); return; }   // 입력부 인접 표면 + 성공 칩 모순 제거(DOC-20260717-JDG-001)
@@ -2093,7 +2106,7 @@ function pollJob(job_id) {
       }
       return;
     }
-    _pollTimer = setTimeout(tick, 2000);
+    _pollTimer = setTimeout(tick, _slow ? 5000 : 2000);   // 정체 시 backoff(2s→5s) — 폴링은 계속
   };
   tick();
 }
