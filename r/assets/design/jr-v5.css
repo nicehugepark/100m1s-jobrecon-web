@@ -47,15 +47,24 @@ button,input,textarea,select{font-family:inherit}
 /* DQA-20260717: #5c636d(~2.8:1)·11px → #8A95A3(≥4.5:1)·12px — 노출 고지 텍스트 (앱 .ad-note 미러) */
 .ad-note{margin-top:13px;font-size:12px;color:#8A95A3}
 .ad .adsbygoogle{display:block;min-height:52px}
-/* 🔴 단일 헤더 시스템(대표 지시 16:02): 메인 .anchor.pinned와 동일 스펙 — sticky top0 z50·불투명 bg 풀블리드
+/* 🔴 단일 헤더 시스템(대표 지시 16:02): 메인 .anchor.pinned와 동일 스펙 — sticky top0 z50·풀블리드
    (wrap padding 전체 음수 마진 = 비침 0)·상하 padding 10/8·border-bottom 1px(경계 명료·그림자 폐기).
-   backdrop-filter 미사용(불투명이라 blur 이득 0·모바일 성능 비용만) — dev 판단.
-   480px 미디어 tag 12.5px = 메인 반응형 스케일 미러(헤더 높이 px 완전 정합 103px) */
+   480px 미디어 tag 12.5px = 메인 반응형 스케일 미러(헤더 높이 px 완전 정합 105px) */
 .stickyhdr{position:sticky;top:0;z-index:50;background:#0A0A0B;margin:-20px -18px 6px;padding:10px 18px 8px;border-bottom:1px solid #26262B}
+/* 🔴 글래스 전환(대표 정정 07-17 17:32 "투명도가 필요하다" — 완전 불투명 solid 정정): 반투명 .78 + blur frosted.
+   @supports 폴백 = 위 불투명 solid 유지(backdrop 미지원 시 지저분한 비침 회귀 금지 — REQ-080 뿌리).
+   blur 는 헤더 단일 요소만(성능·-webkit- = 사파리 필수·대표 모바일). 메인 body.scouting .anchor.pinned 미러. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+.stickyhdr{background:rgba(10,10,11,.78);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1)}
+}
 .stickyhdr .tag{margin:2px 0 6px}
 .stickyhdr .meta{margin:0}
 @media (max-width:480px){.tag{font-size:12.5px}}
-/* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
+/* (R4-023③ → 대표 직접 지시 07-17 17:33 override) 광고 sticky 상단 고정 — "스크롤할 때 광고가 넘어가서
+   안 보이면 안 된다". client 설정 시에만 .ad-stick 부여(_ad_slot 분기): 헤더(105px 고정 스펙) 직하 고정.
+   미설정(현재) placeholder 는 비고정 유지 — 빈 지면 상시 점유 방지(대표 "지금은 꺼져 있긴 하지" 인지).
+   R4-023③ 판정 파생(sticky 밖)을 대표 지시로 override — 이력 본 주석+spec 명시. z49 = 헤더(z50) 아래. */
+.ad-stick{position:sticky;top:105px;z-index:49}
 /* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
    🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
 #digBtn{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:none;z-index:90;width:auto;margin:0;padding:11px 20px;font-size:14px;font-weight:700;border:0;border-radius:999px;background:#FF9E5B;color:#2A1404;box-shadow:0 10px 30px -6px rgba(0,0,0,.7);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}

@@ -467,14 +467,21 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
 })();
 </script>
 <script>
-function collapseEmptyAdBoxes(){
+function collapseEmptyAdBoxes(final){
   var boxes=document.querySelectorAll('.ad');
   for(var i=0;i<boxes.length;i++){var el=boxes[i];
-    if(el.querySelector('ins.adsbygoogle'))continue;
+    var ins=el.querySelector('ins.adsbygoogle');
+    if(ins){
+      /* AD sticky(ad-stick) 도입으로 차단기 빈 프레임이 '상단 고정' 잔존하는 최악 케이스 봉쇄(07-17 17:33 #3):
+         load+2s 최종 타이밍에 data-ad-status 부재 && 크리에이티브 iframe 부재(AdSense 미작동=차단기·로드실패 —
+         fill 시 status attr+iframe 둘 다 삽입. height 검사는 .adsbygoogle min-height:52px 룰로 불가 실측)
+         → 컨테이너째 collapse. status 있으면 AdSense 가 관리하므로 불간섭. 앱 collapseEmptyAdBoxes 미러. */
+      if(final&&!ins.getAttribute('data-ad-status')&&!ins.querySelector('iframe')){el.style.display='none';}
+      continue;}
     el.style.display=(el.innerText||'').trim()?'':'none';}
 }
 (function(){
-  function run(){collapseEmptyAdBoxes();setTimeout(collapseEmptyAdBoxes,700);setTimeout(collapseEmptyAdBoxes,2000);}
+  function run(){collapseEmptyAdBoxes();setTimeout(collapseEmptyAdBoxes,700);setTimeout(function(){collapseEmptyAdBoxes(true);},2000);}
   if(document.readyState==='complete')run();else window.addEventListener('load',run);
 })();
 </script>

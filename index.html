@@ -164,6 +164,18 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -16px; padding:10px 16px 8px;
     border-bottom:1px solid var(--w-line); }
   body.scouting .anchor.pinned { border-bottom-color:var(--line); }
+  /* 🔴 글래스 전환(대표 정정 07-17 17:32 "투명도가 필요하다" — 완전 불투명 solid 정정): scouting sticky 만
+     반투명 .78 + blur frosted. @supports 폴백 = 위 불투명 solid 유지(미지원 시 지저분한 비침 회귀 금지 —
+     REQ-080 뿌리). rgba(10,10,11)=--bg #0A0A0B 리터럴(--bg-rgb 토큰 부재). 첫 화면(static·투명) 무접촉.
+     blur 는 헤더 단일 요소만(성능·-webkit- 사파리 필수). /r/ .stickyhdr 미러. */
+  @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+    body.scouting .anchor.pinned { background:rgba(10,10,11,.78);
+      -webkit-backdrop-filter:blur(16px) saturate(1.1); backdrop-filter:blur(16px) saturate(1.1); }
+  }
+  /* (R4-023③ → 대표 직접 지시 07-17 17:33 override) 광고 sticky 상단 고정 — "스크롤할 때 광고가 넘어가서
+     안 보이면 안 된다". AdSense client 설정 시(initAds가 body.ads-on 부여)에만 scouting 결과 화면에서
+     헤더(105px 고정 스펙) 직하 고정. 미설정(현재) placeholder 비고정 유지 — 빈 지면 상시 점유 방지. z49=헤더 아래. */
+  body.ads-on.scouting #ad { position:sticky; top:105px; z-index:49; }
   /* R15 HIST-LAYOUT(대표 catch d·13:33): 첫 화면(비-scouting)엔 앵커에 회사·직군 meta가 비어
      brand+tag만 sticky로 떠 스크롤 시 헤더 주변 공백·비침이 생긴다 → 첫 화면은 일반 흐름으로
      고정 해제(부유 근원 제거). 결과화면(scouting) sticky는 보존(회귀 0).
@@ -2558,6 +2570,7 @@ $("shareBtn").addEventListener("click", shareResult);
 function initAds() {
   const client = window.JOBRECON_ADSENSE_CLIENT, slot = window.JOBRECON_ADSENSE_SLOT;
   if (!client) return;
+  document.body.classList.add("ads-on");   // 🔴 AD sticky 분기(대표 지시 07-17 17:33): client 설정 시에만 scouting에서 #ad 헤더 직하 고정(CSS body.ads-on.scouting #ad)
   const s = document.createElement("script");
   s.async = true; s.crossOrigin = "anonymous";
   s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(client);
@@ -2571,17 +2584,25 @@ function initAds() {
 // 박스'가 노출된다(순정 chromium·webkit 은 placeholder 정상 — 차단기 사용자만 발생). 렌더 텍스트가
 // 비면 컨테이너째 collapse → 정상 사용자는 placeholder 유지(v3 광고 지면 노출), 차단기 사용자는 빈
 // 박스 0. 실 AdSense(<ins>) 슬롯은 AdSense 가 채움/collapse 관리하므로 제외.
-function collapseEmptyAdBoxes() {
+function collapseEmptyAdBoxes(final) {
   var boxes = document.querySelectorAll(".ad");
   for (var i = 0; i < boxes.length; i++) {
     var el = boxes[i];
-    if (el.querySelector("ins.adsbygoogle")) continue;
+    var ins = el.querySelector("ins.adsbygoogle");
+    if (ins) {
+      // AD sticky(ads-on) 도입으로 차단기 빈 프레임이 '상단 고정' 잔존하는 최악 케이스 봉쇄(07-17 17:33 #3):
+      // load+2s 최종 타이밍에 data-ad-status 부재 && 크리에이티브 iframe 부재(AdSense 미작동=차단기·로드실패 —
+      // fill 시 status attr+iframe 둘 다 삽입. height 검사는 .adsbygoogle min-height:52px 룰 때문에 불가 실측)
+      // → 컨테이너 collapse. status 있으면 filled/unfilled 를 AdSense 가 관리하므로 불간섭. /r/ _AD_COLLAPSE_JS 미러.
+      if (final && !ins.getAttribute("data-ad-status") && !ins.querySelector("iframe")) { el.style.display = "none"; }
+      continue;
+    }
     el.style.display = (el.innerText || "").trim() ? "" : "none";
   }
 }
 (function () {
   // 차단기 코스메틱 필터는 로드 타이밍이 제각각 → load 후 지연 재확인
-  function run() { collapseEmptyAdBoxes(); setTimeout(collapseEmptyAdBoxes, 700); setTimeout(collapseEmptyAdBoxes, 2000); }
+  function run() { collapseEmptyAdBoxes(); setTimeout(collapseEmptyAdBoxes, 700); setTimeout(function () { collapseEmptyAdBoxes(true); }, 2000); }
   if (document.readyState === "complete") run();
   else window.addEventListener("load", run);
 })();
