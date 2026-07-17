@@ -305,4 +305,30 @@ button,input,textarea,select{font-family:inherit}
   digBtn.addEventListener("touchend",runDig);
 })();
 </script>
+
+<!-- jr-share-static v1 -->
+<style>
+.sharebar{display:flex;justify-content:center;margin:14px 0 2px}
+.sharebar button{position:relative;display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:600;color:#cbd1da;background:transparent;border:1px solid #63646E;border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px}
+.sharebar button svg{width:1.15em;height:1.15em}
+.sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#222329;border:1px solid #2E2E34;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
+.sharetoast.on{opacity:1}
+</style>
+<div class="sharebar"><button id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17.5" cy="6" r="2.5" fill="currentColor"/><circle cx="17.5" cy="18" r="2.5" fill="currentColor"/></svg> 이 정찰 공유 · 링크 복사</button></div>
+<script>
+(function(){
+  var shareBtn=document.getElementById("shareLink");
+  function _toast(msg){var t=document.getElementById("shareToast");if(!t){t=document.createElement("div");t.id="shareToast";t.className="sharetoast";document.body.appendChild(t);}t.textContent=msg;t.classList.add("on");clearTimeout(_toast._t);_toast._t=setTimeout(function(){t.classList.remove("on");},2200);}
+  function _copyFallback(u){var ta=document.createElement("textarea");ta.value=u;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(ta);_toast(ok?"링크가 복사됐어요":"복사 실패 — 주소창에서 복사해 주세요");}
+  function doShare(){
+    var t="네이버파이낸셜 — 2026년 07월 정찰",url="https://jobrecon.100m1s.com/r/네이버파이낸셜-etc-202607.html";
+    if(navigator.share){navigator.share({title:t,url:url}).catch(function(){});return;}
+    var pl=t+"\n"+url;
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(pl).then(function(){_toast("링크가 복사됐어요");},function(){_copyFallback(pl);});return;}
+    _copyFallback(pl);
+  }
+  if(shareBtn)shareBtn.addEventListener("click",doShare);
+})();
+</script>
 </body></html>
