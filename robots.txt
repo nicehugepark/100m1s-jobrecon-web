@@ -1,7 +1,7 @@
-# JobRecon — 홈페이지·서비스 소개(/about.html)·발행본 목록(/r/)은 검색 노출(색인).
-# 개별 정찰 결과(/r/*.html)는 각 페이지 noindex 메타로 검색 비노출(대표 결정 2026-07-09,
-# 해제는 대표 법무 판단 — page.py §7b.4). 크롤은 허용해야 크롤러가 noindex를 읽고 제외한다.
-# sitemap에는 발행본 전수 등재(AdSense 준비 ② 2026-07-17) — 색인 여부는 페이지 메타가 우선.
+# JobRecon — 홈페이지·서비스 소개(/about.html)는 검색 노출(색인·sitemap 이 2건만).
+# /r/ 계열 전체(개별 정찰 결과 + 발행본 목록 /r/)는 각 페이지 noindex 메타로 검색 비노출
+# (대표 법무 결정 2026-07-09·명예훼손 방지, 해제는 대표 판단 — page.py §7b.4).
+# 크롤은 허용해야 크롤러가 noindex를 읽고 색인에서 제외한다. 열람은 서비스 내 링크·공유로만.
 User-agent: *
 Allow: /
 Sitemap: https://jobrecon.100m1s.com/sitemap.xml
