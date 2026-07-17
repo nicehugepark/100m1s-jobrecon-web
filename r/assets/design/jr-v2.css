@@ -13,11 +13,13 @@ button,input,textarea,select{font-family:inherit}
 /* 🔴 워드마크 accent = 브랜드 SoT 토큰(--jr-mark, 애프리콷 다크톤) — 파랑 클리셰 폐기·메인과 단일 정체성 (REQ-060) */
 .brand b{color:var(--jr-mark)}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
-/* 정찰 대상 카드 — 토스 카드(radius 20·뉴트럴·애프리콧 0). ym 1줄화(nowrap·우측 정렬) */
-/* DQA-20260716: 카드 경계 = card_edge 토큰(vs bg 3.37:1) — 배경 명도차만으론 3:1 물리 불가(다크 정체성 보존) */
-.meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px;border:1px solid #33291b;background:#1d1710;border-radius:20px;padding:16px 18px;margin-bottom:16px}
-.meta .co{font-size:18px;font-weight:800;letter-spacing:-.02em}
-.meta .fd{font-size:14px;color:#8b97a6;font-weight:500}
+/* 정찰 대상 = 헤더 내 텍스트 라인 — 🔴 단일 헤더 시스템(대표 지시 2026-07-17 16:02·큐 3-4j): 메인 #meta
+   텍스트 문법과 병치 동일(15px·700). 구 토스 카드 문법(border+surface+radius 20+padding 16px 18px)은
+   헤더 상시 점유 157.6px(메인 65px 대비 2.4배)의 주범이라 폐기 — 헤더 밖 카드(.blk·.ad)는 불변.
+   ym 1줄화(nowrap·우측 정렬) 유지. .meta 사용처 = .stickyhdr 내 1곳(마크업 무변경·CSS만) */
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0}   /* 명시 리셋 — _CRITICAL_CSS(인라인 선행) 구 카드 속성이 속성 부재 시 노출되는 캐스케이드 봉쇄 */
+.meta .co{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.meta .fd{font-size:12.5px;color:#8b97a6;font-weight:500}
 .meta .ym{font-size:12px;color:#8A95A3;font-weight:600;margin-left:auto;white-space:nowrap;text-align:right;flex:0 0 auto}
 .blk{border:1px solid #33291b;background:#1d1710;border-radius:12px;padding:14px 16px;margin:12px 0}
 .blk h2{font-size:16px;margin:0 0 8px;color:#f0f4f8}
@@ -28,7 +30,7 @@ button,input,textarea,select{font-family:inherit}
 .blk strong{color:#f0f4f8;font-weight:700}
 .blk code{background:#14100b;border:1px solid #33291b;border-radius:5px;padding:1px 5px;font-size:13px}
 #report hr,.blk hr{border:0;border-top:1px solid #33291b;margin:16px 0}
-.cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:12px;background:#F0A575;color:#2a1608;font-weight:700;text-decoration:none;font-size:16px}
+.cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:18px;background:linear-gradient(180deg,#ffd9b5,#F0A575);color:#2a1608;font-weight:700;text-decoration:none;font-size:16px}   /* 버튼 위계 R1(button-system spec P2): Primary 토큰 통일 — 메인 #go 그라데이션·r18 정합(평면 r12 이원 폐기) */
 .cta-sub{text-align:center;color:#8b97a6;font-size:12.5px;margin-bottom:4px}
 /* DQA-20260716: #6b7684(4.29:1) → #8A95A3(6.51:1) — 12px AA 4.5:1 충족 */
 .foot{color:#8A95A3;font-size:12px;text-align:center;margin-top:26px;line-height:1.6}
@@ -43,9 +45,14 @@ button,input,textarea,select{font-family:inherit}
 /* DQA-20260717: #5c636d(~2.8:1)·11px → #8A95A3(≥4.5:1)·12px — 노출 고지 텍스트 (앱 .ad-note 미러) */
 .ad-note{margin-top:13px;font-size:12px;color:#8A95A3}
 .ad .adsbygoogle{display:block;min-height:52px}
-.stickyhdr{position:sticky;top:0;z-index:50;background:#14100b;margin:-20px -18px 6px;padding:16px 18px 8px}
-.stickyhdr .tag{margin:2px 0 8px}
-.stickyhdr .meta{margin-bottom:8px}
+/* 🔴 단일 헤더 시스템(대표 지시 16:02): 메인 .anchor.pinned와 동일 스펙 — sticky top0 z50·불투명 bg 풀블리드
+   (wrap padding 전체 음수 마진 = 비침 0)·상하 padding 10/8·border-bottom 1px(경계 명료·그림자 폐기).
+   backdrop-filter 미사용(불투명이라 blur 이득 0·모바일 성능 비용만) — dev 판단.
+   480px 미디어 tag 12.5px = 메인 반응형 스케일 미러(헤더 높이 px 완전 정합 103px) */
+.stickyhdr{position:sticky;top:0;z-index:50;background:#14100b;margin:-20px -18px 6px;padding:10px 18px 8px;border-bottom:1px solid #33291b}
+.stickyhdr .tag{margin:2px 0 6px}
+.stickyhdr .meta{margin:0}
+@media (max-width:480px){.tag{font-size:12.5px}}
 /* (R4-023③) .stickyhdr .ad 룰 제거 — AD는 sticky 밖 배치(뷰포트 상시 점유 해소), .ad 기본 스타일 사용 */
 /* 텍스트 선택 → 더 파고들기(앱 이식·자족). 개인 평결 미포함·회사 심화만.
    🔴 하단 중앙 고정 플로팅 — 선택지점 팝업 폐기로 iOS/Android 네이티브 선택메뉴와 비겹침(#2)+상단 sticky와 위치 자체 비겹침(#3). 앱 static/index.html과 동기. */
@@ -115,8 +122,8 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .bwrap .tease{color:#8b97a6;font-size:12.5px}
 /* 근거 원문 = 뉴트럴 ghost pill(애프리콧 틴트 → 투명+뉴트럴 보더·토스 보조 액션 톤) */
 /* DQA-20260717: ghost 버튼 보더 #33291b 1.31:1 → card_edge(형태 인지 UI = edge 이원 규칙 미러) */
-.story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 14px;font-size:12.5px;font-weight:600;color:#cbd1da;background:transparent;border:1px solid #33291b;border-radius:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent}
-.story-anchor svg{color:#8b97a6}
+.story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 14px;font-size:12.5px;font-weight:700;color:#ffd9b5;background:rgba(240,165,117,.16);border:0;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent}   /* 버튼 위계 P1(button-system spec): 메인·/r/ 근거 원문 = accent-wash r999 한 문법 통일(뉴트럴 outline r13 이원 폐기 — 카드 내 유일 액션이라 wash 허용) */
+.story-anchor svg{color:#F0A575}
 /* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, ::after 확장) */
 .story-anchor::after{content:"";position:absolute;left:0;right:0;top:-5px;bottom:-5px}
 .story-anchor svg{width:1.1em;height:1.1em}
@@ -195,7 +202,7 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 /* R6-039(REQ-JOBRECON-20260713-039) 터치 히트 확장 — 시각 39.6px 유지 + ::after로 실효 44px+ (R5 조니 이진탐색 39.64~39.78 실측·R3 ⑨ P0-2 modeseg 전례).
    -4px 사유: border 1px가 ::after containing block(padding box)을 안쪽으로 만들어 -3이 실질 -2로 동작(G9 43.98 실측) — border 감안 -4 = 실질 -3/방향 → 45.7px */
 /* 이 정찰 공유 = 뉴트럴 ghost(애프리콧 틴트 → 투명+뉴트럴 보더·주CTA solid 1개 원칙 = 공유는 보조) */
-.sharebar button{position:relative;display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:600;color:#cbd1da;background:transparent;border:1px solid #33291b;border-radius:13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sharebar button{position:relative;display:inline-flex;align-items:center;gap:7px;width:auto;padding:10px 18px;font-size:13.5px;font-weight:600;color:#cbd1da;background:transparent;border:1px solid #33291b;border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}   /* 버튼 위계 R2(button-system spec P1): Secondary r12 단일(r13 파편 폐기) */
 .sharebar button::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px}
 .sharebar button svg{width:1.15em;height:1.15em}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#241d14;border:1px solid #3a3020;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
