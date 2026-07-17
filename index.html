@@ -1364,12 +1364,16 @@ function _axLastClause(t){ const re=/[.!?]\s+/g; let m, last=-1; while((m=re.exe
 // ③ 문장 단위 대비 — 어미('…지만 B') 또는 리드접속사(문장 시작/중간). subvert=완결 문장(종결어미 보장·잘림0). setup은 접속사 앞(대비 보존). 전부 원문 substring(창작0).
 //    R3-013: 접속사가 문장 선두(그러나 …)면 setup=직전 완결 문장(삼양 '급여 26.4% 증가. 그러나 증가율 최저' 보상반전 추출).
 // R6-033 문형 확장(REQ-JOBRECON-20260713-033): ①'지만' 앞 문자군에 인용부·괄호 닫힘 추가 — 콕스웨이브 '"데이터 엔지니어"지만' 유형(§2 직무 실체 서술의 표준형)이 [가-힣]지만에 안 걸려 직무축 카드 0장이던 근원 하나.
-//    ②'A(이/가/은/는) 아니라/아니고, B' 대비 — 휴톰 '빅데이터형이 아니라 …실무형'·페이타랩 '인프라팀이 아니라 …데이터팀'·당근 '신입용은 아니고 …' — §2 직무 실체 문단의 최빈 대비 문형.
-//    R9-057 극성 보존(REQ-JOBRECON-20260713-057): setup=부정어(아니라/아니고)까지 포함(원문 substring·창작0)·lead:true — 부정어 탈락 시 setup이 부정 대상 B를 정반대 긍정 단정으로 종결=없던 허수아비 주장(조니 R8 P0·toss '자산은 부동산'·daangn·lunit 6건). 극성 반전 구조적 불가.
-function _sentContrast(para){ const ss=_storySents(para); for(let i=0;i<ss.length;i++){ const s=ss[i]; const m=s.match(/[가-힣"”'』」)\]]지만(?=[\s,])/); if(m){ const idx=s.indexOf(m[0]), cut=idx+m[0].length; const sub=s.slice(cut).replace(/^[\s,、]+/,"").trim(); if(_axNlen(s.slice(0,idx))>=5 && _axNlen(sub)>=8) return { setup:_axBal(s.slice(0,cut).trim()), subvert:_axBal(_clipSent(sub,1)) }; } const mn=s.match(/(?:[이가은는]\s*)?아니(?:라|고)[,，]?(?=\s)/); if(mn && mn.index>=4){ const _me=mn.index+mn[0].length; const st=s.slice(0,_me).replace(/[,，]\s*$/,"").trim(); const sub2=s.slice(_me).replace(/^[\s,、]+/,"").trim(); if(_axNlen(st)>=6 && _axNlen(sub2)>=8) return { setup:_axBal(st), subvert:_axBal(_clipSent(sub2,1)), lead:true }; } const m2=s.match(_AXCONJ); if(m2){ const pos=s.indexOf(m2[1],m2.index); let setup=s.slice(0,pos).trim(); const sub=s.slice(pos).trim(); if(_axNlen(setup)<4 && i>0) setup=ss[i-1].trim(); if(_axNlen(setup)>=4 && _axNlen(sub)>=8) return { setup:_axBal(_axLastClause(setup)), subvert:_axBal(_clipSent(sub,1)) }; } } return null; }
+//    ② R10 재설계(2026-07-17 고영 카드01 대표 catch·REQ-052 동형): "A가 아니라 B다"는 단일 문장 자체가 완결 대비 — 구 ②의 중간 분할
+//    (setup="…아니라" 미완결 절단 + R9-057 lead:true 완결성 우회)이 "그런데"를 같은 문장 주어부·술어부 사이에 끼워 서사 파탄
+//    (고영 '정체성은 영업이나 유행이 아니라 ↳그런데 측정 기술 그 자체이며'). R10 = 분할 금지·통짜 승격: subvert=문장 통째(잘림0)·
+//    setup=직전 완결 문장(R3-013 접속사 선두 패턴과 동형·직전 문장 없으면 후보 포기 — 억지 setup 생성 금지). '그런데' 전환은 서로 다른
+//    명제(문장) 경계에만 — setup·subvert 각각 독립 완결 문장(lead 우회 폐지). R9-057 허수아비(부정어 탈락 극성 반전)는 분할 소멸로 원천 해소(취지 상위 보존).
+function _sentContrast(para){ const ss=_storySents(para); for(let i=0;i<ss.length;i++){ const s=ss[i]; const m=s.match(/[가-힣"”'』」)\]]지만(?=[\s,])/); if(m){ const idx=s.indexOf(m[0]), cut=idx+m[0].length; const sub=s.slice(cut).replace(/^[\s,、]+/,"").trim(); if(_axNlen(s.slice(0,idx))>=5 && _axNlen(sub)>=8) return { setup:_axBal(s.slice(0,cut).trim()), subvert:_axBal(_clipSent(sub,1)) }; } const mn=s.match(/(?:[이가은는]\s*)?아니(?:라|고)[,，]?(?=\s)/); if(mn && mn.index>=4 && i>0){ const st=ss[i-1].trim(); if(_axNlen(st)>=6 && _axNlen(s.trim())>=8) return { setup:_axBal(_axLastClause(st)), subvert:_axBal(_clipSent(s.trim(),1)) }; } const m2=s.match(_AXCONJ); if(m2){ const pos=s.indexOf(m2[1],m2.index); let setup=s.slice(0,pos).trim(); const sub=s.slice(pos).trim(); if(_axNlen(setup)<4 && i>0) setup=ss[i-1].trim(); if(_axNlen(setup)>=4 && _axNlen(sub)>=8) return { setup:_axBal(_axLastClause(setup)), subvert:_axBal(_clipSent(sub,1)) }; } } return null; }
 // R3-015 비문(잘림) 게이트 — 말미가 수사 관형('+35.2%인')·관형형·비대비 연결어미·구두점이면 미완결(삼양 card3 비문 차단).
 //    '…지만'은 대비 구조 설계 산출이라 완결 취급. iOS 안전(lookbehind 0).
-const _AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|[,·—:])$/;
+//    R10: 대비 내장 연결어미 꼬리(아니라/아니고/라기보다/보다는) 추가 — 유사 분할이 재생겨도 절단 조각은 _axWhole이 구조 차단(lead:true도 _AXCUT은 검사).
+const _AXCUT=/(?:[%)\d]인|하는|되는|라는|이라는|하던|되던|하고|하며|으며|이고|이며|면서|는데|은데|인데|아니라|아니고|라기보다|보다는|[,·—:])$/;
 // R4-019b 종결어미 화이트리스트 — 블랙리스트(_AXCUT)가 못 잡는 미등재 절단형(관형 '…추세인'·'…올린' = "A한 반면 B" 앞 관형절)을 구조 차단.
 //    허용: ①종결어미(다/요/죠/까/음/함/됨/임/봄/셈)+말미부호opt ②구두점·닫는괄호·인용부호 ③숫자·수치단위(발췌 수치) ④'…지만'(대비 설계 산출)
 //    ⑤명사문 서술어로 흔한 종결 명사(미지수/관건/전망 등 — 데이터 실측 보강). 문장 절단 위험 경로(_sentContrast)에만 엄격 적용,
