@@ -26,22 +26,25 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
 .wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;letter-spacing:-.3px}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
-.meta{display:flex;flex-wrap:nowrap;align-items:center;height:26px;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0;min-width:0;overflow:hidden}
+.meta{display:block;height:54px;margin:0;border:0;background:transparent;border-radius:0;padding:0;min-width:0;overflow:hidden}
+.meta .mrow{display:flex;flex-wrap:nowrap;align-items:center;height:26px;gap:8px;min-width:0;overflow:hidden}
+.meta .mrow2{height:24px;margin-top:4px}
 .meta .chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;background:rgba(255,158,91,.12);color:#FF9E5B;padding:3px 9px;border-radius:999px;white-space:nowrap}
 .meta .chip svg{width:12px;height:12px}
 .meta .co{font-size:15px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.meta .fd{font-size:12.5px;color:#8b97a6;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.meta .ym{font-size:12px;color:#8b97a6;margin-left:auto;white-space:nowrap}
 #report h2{font-size:16px;color:#f0f4f8}#report h3{font-size:14px;color:#dbe2ea}#report p,#report li{color:#dbe2ea;font-size:15px}
 .cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:18px;background:linear-gradient(180deg,#FFB681,#FF9E5B);color:#2A1404;font-weight:700;text-decoration:none;font-size:16px}   /* 버튼 위계 R1(button-system spec P2): Primary 토큰 통일 — 메인 #go 그라데이션·r18 정합(평면 r12 이원 폐기) */
 .foot{color:#8A95A3;font-size:12px;text-align:center;margin-top:26px}
-</style><link rel="stylesheet" href="/r/assets/design/jr-current.css">
+</style><link rel="stylesheet" href="/r/assets/design/jr-current.css?v=552284cd">
 
 </head><body>
 <div class="wrap">
   <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
   <div class="stickyhdr">
     <div class="brand">Job<b>Rec<span class="reco" aria-hidden="true"></span><span class="jr-sr">o</span>n</b></div>
-    <div class="tag">구직자 편 취업 정찰</div><!-- 단일 헤더: 메인·404와 동일 tag 문구(긴 태그라인은 OG desc 보존) -->
-    <div class="meta"><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4" fill="currentColor" opacity=".14"/><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><path d="M12 1.6v3.4M12 19v3.4M1.6 12h3.4M19 12h3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 정찰 대상</span><span class="co">루닛(Lunit)</span><span class="fd">[영어 우대] Senior Data Platform Engineer</span><span class="ym">2026년 07월 정찰</span></div><!-- 헤더 구성 통일(대표 재지적 07-17 17:13): 메인 renderMeta와 동일 슬롯 [chip·co·fd·ym] — 공유 유입 첫 화면에 '정찰 대상' 라벨 = 즉시 규정. 아이콘 = 메인 IC.target 동형(그라데이션 defs 대신 currentColor) -->
+    <!-- 2줄 위계(대표 catch 07-17 18:10): tag는 헤더에서 제거(회사명 공간 양보·28px 상쇄 = 105px 불변).
+         줄1 = 칩+회사명 비잘림 / 줄2 = 직군 ellipsis+정찰월. 메인 renderMeta 미러. -->
+    <div class="meta"><div class="mrow"><span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4" fill="currentColor" opacity=".14"/><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><path d="M12 1.6v3.4M12 19v3.4M1.6 12h3.4M19 12h3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 정찰 대상</span><span class="co">루닛(Lunit)</span></div><div class="mrow mrow2"><span class="fd">[영어 우대] Senior Data Platform Engineer</span><span class="ym">2026년 07월 정찰</span></div></div>
   </div>
   <div class="ddaybn">상시</div>
   <!-- 2뷰 토글 [스토리 | 리포트] — 스토리 빌드 성공 시 JS가 노출. 기본 스토리 모드(공유 첫인상). -->
@@ -436,6 +439,9 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
   if(seg)seg.style.display="flex";
   var cardsEl=[].slice.call(deck.querySelectorAll(".story-card"));
   function setMode(story){document.body.classList.toggle("mode-story",story);document.body.classList.toggle("mode-report",!story);var a=document.getElementById("segStory"),b=document.getElementById("segReport");if(a)a.classList.toggle("on",story);if(b)b.classList.toggle("on",!story);if(story)requestAnimationFrame(function(){syncH();});}
+  // 🔴 회사명 절대 비잘림 안전장치(2줄 위계·대표 catch 07-17 18:10): 넘침 감지 시 폰트 15→13 1단 축소.
+  //   전수 39개 분포상 15px 수납 확인 — 미래 초장문 회사명 대비 최후 방어(그래도 넘치면 CSS ellipsis). 앱 renderMeta 미러.
+  (function(){var c=document.querySelector(".stickyhdr .co");if(c&&c.scrollWidth>c.clientWidth+1){c.style.fontSize="13px";}})();
   // 🔴 sticky 헤더(.stickyhdr = JobRecon+정찰대상+AD 통합)에 안 가리게 offset 실측 스크롤. block:"start" scrollIntoView는 offset 0이라 파묻힘.
   var _hdr=document.querySelector(".stickyhdr");
   var _reTarget=null,_reUntil=0,_lastH=_hdr?_hdr.getBoundingClientRect().height:0;
@@ -460,13 +466,16 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
   // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
   function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
   window.addEventListener("resize",syncH);
-  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  function active(i,scrolling){_cur=i;if(!scrolling)syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
   // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
   function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
   dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
   if(_pv)_pv.onclick=function(){goTo(_cur-1);};
   if(_nx)_nx.onclick=function(){goTo(_cur+1);};
-  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  // iOS 스와이프 3결함 fix(대표 실기기 catch 07-17): ① 인덱스 stride=카드폭+gap 실측 — clientWidth 나눗셈은 gap 14px 누적(카드 4장+ 42px+)으로 인덱스 오판 ② 스크롤 중 syncH(트랙h 변경) 금지 — iOS Safari는 스냅 진행 중 스크롤 컨테이너 리사이즈(transition:height 포함) 시 스냅 취소·카드 반 잘린 중간 정지(정착 실패 근원). 스크롤 정지 140ms 후에만 트랙h 동기. 앱 index.html 미러(G6)
+  var _hT=0;
+  function _stride(){return cardsEl.length>1?Math.max(1,cardsEl[1].offsetLeft-cardsEl[0].offsetLeft):Math.max(1,deck.clientWidth);}
+  deck.onscroll=function(){var i=Math.max(0,Math.min(cardsEl.length-1,Math.round(deck.scrollLeft/_stride())));if(i!==_cur)active(i,true);clearTimeout(_hT);_hT=setTimeout(syncH,140);};
   active(0);
   // R4-023① /r/ 공유 수단 — navigator.share(모바일) → clipboard(폴백) → 구형 execCommand. 개인 평결 미포함 페이지라 공유 안전.
   var shareBtn=document.getElementById("shareLink");

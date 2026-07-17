@@ -17,10 +17,17 @@ button,input,textarea,select{font-family:inherit}
    텍스트 문법과 병치 동일(15px·700). 구 토스 카드 문법(border+surface+radius 20+padding 16px 18px)은
    헤더 상시 점유 157.6px(메인 65px 대비 2.4배)의 주범이라 폐기 — 헤더 밖 카드(.blk·.ad)는 불변.
    ym 1줄화(nowrap·우측 정렬) 유지. .meta 사용처 = .stickyhdr 내 1곳(마크업 무변경·CSS만) */
-.meta{display:flex;flex-wrap:nowrap;align-items:center;height:26px;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0;min-width:0;overflow:hidden}   /* 명시 리셋(_CRITICAL_CSS 캐스케이드 봉쇄) + 🔴 1줄 불변(대표 재지적 07-17 17:13): nowrap+ellipsis+고정 height 26px·center — 상태·텍스트 길이·폰트 메트릭 무관 헤더 높이 고정(baseline 정렬은 메인↔/r/ 1.4px 미세 이원 실측·전체 직무명은 title·본문 보존 = 누락 아님) */
+/* 🔴 2줄 위계 재설계(대표 실기기 catch 07-17 18:10 — 토스 /r/ 회사명 "토.." 잘림 = 1줄 강제가 정보 위계 파괴):
+   줄1 = 칩+회사명(절대 비잘림 — 최우선 폭·전수 39개 분포 최장 "토스증권(toss securities)" 실폭 ~190px 수납·
+   극단 안전장치 = JS 넘침 감지 시 폰트 15→13 1단 축소) / 줄2 = 직군(잘림 허용 ellipsis)+정찰월(우측 고정).
+   높이 54px(26+4+24) 고정 — scouting/발행 헤더에서 tag(28px) 숨김과 정확 상쇄 → 헤더 105px by construction 불변.
+   메인 #meta 미러. */
+.meta{display:block;height:54px;margin:0;border:0;background:transparent;border-radius:0;padding:0;min-width:0;overflow:hidden}   /* 명시 리셋 = _CRITICAL_CSS 캐스케이드 봉쇄 유지 */
+.meta .mrow{display:flex;flex-wrap:nowrap;align-items:center;height:26px;gap:8px;min-width:0;overflow:hidden}
+.meta .mrow2{height:24px;margin-top:4px}
 .meta .chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;background:rgba(79,140,255,.12);color:#4f8cff;padding:3px 9px;border-radius:999px;white-space:nowrap}   /* 메인 #meta .chip 동일 문법(accent-wash·버튼 위계 P0 — 필=행동 전용) */
 .meta .chip svg{width:12px;height:12px}
-.meta .co{font-size:15px;font-weight:700;letter-spacing:-.01em;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meta .co{font-size:15px;font-weight:700;letter-spacing:-.01em;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}   /* ellipsis = 물리 한계 최후 방어만(전수 분포상 미도달 — JS 1단 축소 선행) */
 .meta .fd{font-size:12.5px;color:#8b97a6;font-weight:500;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .meta .ym{font-size:12px;color:#8A95A3;font-weight:600;margin-left:auto;white-space:nowrap;text-align:right;flex:0 0 auto}
 .blk{border:1px solid #222a35;background:#12161d;border-radius:12px;padding:14px 16px;margin:12px 0}
@@ -57,7 +64,6 @@ button,input,textarea,select{font-family:inherit}
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
 .stickyhdr{background:rgba(11,14,19,.78);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1)}
 }
-.stickyhdr .tag{margin:2px 0 6px}
 .stickyhdr .meta{margin:0}
 @media (max-width:480px){.tag{font-size:12.5px}}
 /* (R4-023③ → 대표 직접 지시 07-17 17:33 override) 광고 sticky 상단 고정 — "스크롤할 때 광고가 넘어가서
@@ -109,7 +115,7 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
 .story-deck::-webkit-scrollbar{display:none}
 /* DQA-20260716: 카드 경계 = card_edge 토큰(vs bg 3.37:1·WCAG 1.4.11 boundary) — 카드 윤곽 소실(구 1.10:1) 해소 */
-.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#cfe0ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#cfe0ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 /* 대형 배경 숫자 = 뉴트럴 dim(애프리콧 → 흰색 저투명·토스 톤·조니 지시) */
 .story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:#fff;opacity:.045;pointer-events:none;font-variant-numeric:tabular-nums}
 .story-card>*:not(.ghost){position:relative;z-index:1}

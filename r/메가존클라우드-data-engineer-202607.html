@@ -93,7 +93,7 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
 /* R5-029 스냅 상태 뷰포트 공백 해소 — JS(syncH)가 트랙h를 현재 스냅 카드 높이로 동기. 앱 index.html 미러(G6) */
 .story-deck{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 2px 2px;margin:2px -2px;transition:height .3s cubic-bezier(.2,.7,.2,1)}
 .story-deck::-webkit-scrollbar{display:none}
-.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
+.story-card{position:relative;flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;box-sizing:border-box;min-height:34vh;display:flex;flex-direction:column;overflow:hidden;--sc:#4f8cff;--sc2:#bcd4ff;--scg:rgba(79,140,255,.16);background:radial-gradient(130% 88% at 86% 2%,var(--scg),transparent 56%),linear-gradient(168deg,#171c26,#0e1219 74%);border:1px solid #222a35;border-radius:20px;padding:26px 22px 24px;box-shadow:0 1px 0 rgba(255,255,255,.035) inset,0 20px 46px -26px rgba(0,0,0,.78)}
 .story-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--sc),transparent 72%);opacity:.92}
 .story-card .ghost{position:absolute;right:10px;bottom:-24px;z-index:0;font-size:168px;font-weight:900;line-height:.76;letter-spacing:-.06em;color:var(--sc);opacity:.08;pointer-events:none;font-variant-numeric:tabular-nums}
 .story-card>*:not(.ghost){position:relative;z-index:1}
@@ -587,13 +587,13 @@ body.mode-story #report,body.mode-story .repextra{display:none!important}
   // R5-029 트랙h = 현재 스냅 카드 높이 동기(+6 = deck 상하 패딩) — 짧은 카드 스냅 시 하단~dots 공백 해소. 앱 index.html 미러(G6).
   function syncH(){var c=cardsEl[_cur];if(c&&c.offsetHeight)deck.style.height=(c.offsetHeight+6)+"px";}
   window.addEventListener("resize",syncH);
-  function active(i){_cur=i;syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
+  function active(i,scrolling){_cur=i;if(!scrolling)syncH();dots.querySelectorAll(".dot").forEach(function(d,j){d.classList.toggle("on",j===i);});if(cardsEl[i])dots.style.setProperty("--dot-on",getComputedStyle(cardsEl[i]).getPropertyValue("--sc").trim());if(_pv)_pv.disabled=(i<=0);if(_nx)_nx.disabled=(i>=cardsEl.length-1);}
   // R4-021② dot 클릭·데스크탑 화살표 → 카드 스냅 이동(scrollLeft 실측 변화 — 현행 dot 클릭 무효 해소). 앱 index.html mirror.
   function goTo(i){i=Math.max(0,Math.min(cardsEl.length-1,i));var c=cardsEl[i];if(c)deck.scrollTo({left:c.offsetLeft-cardsEl[0].offsetLeft,behavior:"smooth"});}
   dots.onclick=function(e){var t=e.target.closest?e.target.closest(".dot"):null;if(!t)return;var ds=[].slice.call(dots.querySelectorAll(".dot"));var i=ds.indexOf(t);if(i>=0)goTo(i);};
   if(_pv)_pv.onclick=function(){goTo(_cur-1);};
   if(_nx)_nx.onclick=function(){goTo(_cur+1);};
-  deck.onscroll=function(){active(Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth)));};
+  var _hT=0;function _stride(){return cardsEl.length>1?Math.max(1,cardsEl[1].offsetLeft-cardsEl[0].offsetLeft):Math.max(1,deck.clientWidth);}deck.onscroll=function(){var i=Math.max(0,Math.min(cardsEl.length-1,Math.round(deck.scrollLeft/_stride())));if(i!==_cur)active(i,true);clearTimeout(_hT);_hT=setTimeout(syncH,140);};
   active(0);
   // R4-023① /r/ 공유 수단 — navigator.share(모바일) → clipboard(폴백) → 구형 execCommand. 개인 평결 미포함 페이지라 공유 안전.
   var shareBtn=document.getElementById("shareLink");

@@ -548,7 +548,13 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .sharetoast.on { opacity:1; transform:translate(-50%,0); }
   /* 🔴 헤더 구성 통일(대표 재지적 07-17 17:13): /r/ .meta와 동일 슬롯 [chip·co·fd·ym] + 1줄 불변
      (nowrap+ellipsis — 상태·텍스트 길이 무관 헤더 높이 고정. 전체 직무명은 결과 카드·title 보존 = 누락 아님) */
-  #meta { display:none; align-items:center; height:26px; gap:8px; flex-wrap:nowrap; min-width:0; overflow:hidden; margin:0; }   /* 고정 height 26px·center — baseline 폰트 메트릭 1.4px 이원 소거(/r/ .meta 동일) */
+  /* 🔴 2줄 위계(대표 catch 07-17 18:10 — 토스 회사명 "토.." 잘림 = 1줄 강제의 위계 파괴): 줄1 26px =
+     칩+회사명 비잘림(넘침 시 JS 폰트 1단 축소) / 줄2 24px = 직군 ellipsis+정찰월. 높이 54px 고정 —
+     scouting 헤더에서 tag(28px) 숨김과 정확 상쇄 = 헤더 105px by construction 불변. /r/ .meta 미러 */
+  #meta { display:none; height:54px; min-width:0; overflow:hidden; margin:0; }
+  #meta .mrow { display:flex; flex-wrap:nowrap; align-items:center; height:26px; gap:8px; min-width:0; overflow:hidden; }
+  #meta .mrow2 { height:24px; margin-top:4px; }
+  body.scouting .anchor .tag { display:none; }   /* 결과 헤더 = 정찰 대상 정보 우선(회사명 공간 양보) — 첫 화면 tag 유지(REQ-080 무접촉) */
   #meta .co { font-size:15px; font-weight:700; color:#e2e8ef; letter-spacing:-.01em; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   #meta .fd { font-size:12.5px; color:var(--dim); font-weight:500; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   #meta .ym { font-size:12px; color:var(--dim); font-weight:600; margin-left:auto; white-space:nowrap; text-align:right; flex:0 0 auto; }
@@ -650,7 +656,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     transition:height .3s cubic-bezier(.2,.7,.2,1); }
   .story-deck::-webkit-scrollbar { display:none; }
   /* 색은 JS가 카드별 --sc(악센트)·--sc2(밝은 변주·텍스트 대비용)·--scg(글로우 rgba) 주입. 본문은 밝은 회색 고정(WCAG AA). */
-  .story-card { position:relative; flex:0 0 100%; scroll-snap-align:center; box-sizing:border-box;
+  .story-card { position:relative; flex:0 0 100%; scroll-snap-align:center; scroll-snap-stop:always; box-sizing:border-box;
     min-height:34vh; display:flex; flex-direction:column; overflow:hidden;
     --sc:var(--peach-deep); --sc2:#ffd9b5; --scg:rgba(var(--accent-rgb),.16);
     background:
@@ -1196,11 +1202,16 @@ function renderMeta(m) {
   if (!co && !pos) return;
   const d = new Date();
   const ym = d.getFullYear() + "년 " + String(d.getMonth() + 1).padStart(2, "0") + "월 정찰";
-  metaEl.innerHTML = '<span class="chip">' + IC.target + ' 정찰 대상</span>'
-    + (co ? '<span class="co">' + esc(co) + '</span>' : '')
+  // 🔴 2줄 위계(대표 catch 07-17 18:10 — 토스 회사명 "토.." 잘림): 줄1 = 칩+회사명 비잘림 /
+  //    줄2 = 직군 ellipsis+정찰월. /r/ .meta 마크업 미러. 회사명 넘침 시 폰트 15→13 1단 축소(최후 방어).
+  metaEl.innerHTML = '<div class="mrow"><span class="chip">' + IC.target + ' 정찰 대상</span>'
+    + (co ? '<span class="co">' + esc(co) + '</span>' : '') + '</div>'
+    + '<div class="mrow mrow2">'
     + (pos ? '<span class="fd">' + esc(pos) + '</span>' : '')
-    + '<span class="ym">' + ym + '</span>';
-  metaEl.style.display = "flex";
+    + '<span class="ym">' + ym + '</span></div>';
+  metaEl.style.display = "block";
+  const _co = metaEl.querySelector(".co");
+  if (_co && _co.scrollWidth > _co.clientWidth + 1) _co.style.fontSize = "13px";
 }
 
 function renderBlocks(text) {
@@ -1649,9 +1660,9 @@ function _wireStory(){
   const syncH = () => { const c = cards[_cur]; if (c && c.offsetHeight) deck.style.height = (c.offsetHeight + 6) + "px"; };
   deck._syncH = syncH;
   if (!window._deckHSync){ window._deckHSync = 1; window.addEventListener("resize", () => { const d = $("storyDeck"); if (d && d._syncH) d._syncH(); }); }
-  const setActive = i => {
+  const setActive = (i, scrolling) => {
     _cur = i;
-    syncH();
+    if (!scrolling) syncH();
     dots.querySelectorAll(".dot").forEach((d, j) => d.classList.toggle("on", j === i));
     if (cards[i]) dots.style.setProperty("--dot-on", getComputedStyle(cards[i]).getPropertyValue("--sc").trim());
     const pv = $("storyPrev"), nx = $("storyNext");   // R4-021② 끝단 비활성
@@ -1664,7 +1675,14 @@ function _wireStory(){
   const pv = $("storyPrev"), nx = $("storyNext");
   if (pv) pv.onclick = () => goTo(_cur - 1);
   if (nx) nx.onclick = () => goTo(_cur + 1);
-  deck.onscroll = () => setActive(Math.round(deck.scrollLeft / Math.max(1, deck.clientWidth)));
+  // iOS 스와이프 3결함 fix(대표 실기기 catch 07-17): ① 인덱스 stride=카드폭+gap 실측 — clientWidth 나눗셈은 gap 14px 누적(카드 4장+ 42px+)으로 인덱스 오판 ② 스크롤 중 syncH(트랙h 변경) 금지 — iOS Safari는 스냅 진행 중 스크롤 컨테이너 리사이즈(transition:height 포함) 시 스냅 취소·카드 반 잘린 중간 정지(정착 실패 근원). 스크롤 정지 140ms 후에만 트랙h 동기. /r/ page.py 미러(G6)
+  let _hT = 0;
+  const _stride = () => cards.length > 1 ? Math.max(1, cards[1].offsetLeft - cards[0].offsetLeft) : Math.max(1, deck.clientWidth);
+  deck.onscroll = () => {
+    const i = Math.max(0, Math.min(cards.length - 1, Math.round(deck.scrollLeft / _stride())));
+    if (i !== _cur) setActive(i, true);
+    clearTimeout(_hT); _hT = setTimeout(syncH, 140);
+  };
   setActive(0);
 }
 function setStoryMode(mode){
