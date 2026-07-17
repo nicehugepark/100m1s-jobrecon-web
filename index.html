@@ -161,15 +161,19 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      (그림자 폐기 — /r/과 문법 통일). backdrop-filter 미사용(불투명·모바일 성능) */
   .anchor { background:var(--cream); }
   body.scouting .anchor { background:var(--bg); }
-  .anchor.pinned { position:sticky; top:0; z-index:50; margin:0 -16px; padding:10px 16px 8px;
+  /* 🔴 sticky 밀림 수술(대표 실기기 catch 07-17 19:21 ①): 구 margin-top 0 = 헤더 문서 시작 y가 wrap
+     padding-top(16px/모바일 13px)만큼 내려가 있어 스크롤 0~13px 동안 헤더가 "따라 올라간 뒤" 고정
+     (양 엔진 rect.top 13→0 프레임 실측). /r/ .stickyhdr(-20px)와 동일하게 wrap padding-top 전체 음수
+     마진 → 문서 y=0 시작 = 스크롤 즉시 고정(밀림 0). 첫 화면은 REQ-080 룰(margin:0 리셋) 무접촉. */
+  .anchor.pinned { position:sticky; top:0; z-index:50; margin:-16px -16px 0; padding:10px 16px 8px;
     border-bottom:1px solid var(--w-line); }
   body.scouting .anchor.pinned { border-bottom-color:var(--line); }
-  /* 🔴 글래스 전환(대표 정정 07-17 17:32 "투명도가 필요하다" — 완전 불투명 solid 정정): scouting sticky 만
-     반투명 .78 + blur frosted. @supports 폴백 = 위 불투명 solid 유지(미지원 시 지저분한 비침 회귀 금지 —
-     REQ-080 뿌리). rgba(10,10,11)=--bg #0A0A0B 리터럴(--bg-rgb 토큰 부재). 첫 화면(static·투명) 무접촉.
-     blur 는 헤더 단일 요소만(성능·-webkit- 사파리 필수). /r/ .stickyhdr 미러. */
+  /* 🔴 글래스(대표 정정 07-17 17:32 "투명도가 필요하다" + 19:21 ② 체감 부족): 다크 콘텐츠 위 "검정 위
+     검정"이라 .78 체감 0 → .65 하향(blur 16px 유지 = 가독 방어). @supports 폴백 = 불투명 solid 유지
+     (미지원 시 비침 회귀 금지 — REQ-080 뿌리). rgba(10,10,11)=--bg 리터럴(--bg-rgb 토큰 부재).
+     첫 화면(static·투명) 무접촉. blur 는 헤더 단일 요소만(성능). /r/ .stickyhdr 미러. */
   @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
-    body.scouting .anchor.pinned { background:rgba(10,10,11,.78);
+    body.scouting .anchor.pinned { background:rgba(10,10,11,.65);
       -webkit-backdrop-filter:blur(16px) saturate(1.1); backdrop-filter:blur(16px) saturate(1.1); }
   }
   /* (R4-023③ → 대표 직접 지시 07-17 17:33 override) 광고 sticky 상단 고정 — "스크롤할 때 광고가 넘어가서
@@ -818,7 +822,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* 🔴 P1-6 모바일(390px 우선·대표 주 사용자) — 본문 하한 15px·메타 하한 12px + iOS 자동줌 방지(input≥16px) */
   @media (max-width: 480px) {
     .wrap { padding:13px; }
-    .anchor.pinned { margin:0 -13px; padding:10px 13px 8px; }   /* 단일 헤더: wrap padding 13px 풀블리드 동기(비침 0) */
+    .anchor.pinned { margin:-13px -13px 0; padding:10px 13px 8px; }   /* 단일 헤더: wrap padding 13px 풀블리드 동기(비침 0) + 밀림 수술: 문서 y=0 시작(모바일 -13px) */
     .blk .body { font-size:15px; }
     details.blk > summary { font-size:15.5px; }
     .vwhy { font-size:15px; }
