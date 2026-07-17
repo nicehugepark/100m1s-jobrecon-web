@@ -26,8 +26,8 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
 .wrap{max-width:720px;margin:0 auto;padding:20px 18px 48px;word-break:keep-all;overflow-wrap:anywhere}
 .brand{font-size:20px;letter-spacing:-.3px}
 .tag{color:#8b97a6;font-size:13px;margin:2px 0 16px}
-.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;border:1px solid #63646E;background:#1E1F24;border-radius:12px;padding:12px 14px;margin-bottom:16px}
-.meta .co{font-size:18px;font-weight:800}.meta .fd{font-size:14px;color:#c3ccd6}.meta .ym{font-size:12px;color:#8b97a6;margin-left:auto}
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0}
+.meta .co{font-size:15px;font-weight:700}.meta .fd{font-size:12.5px;color:#8b97a6}.meta .ym{font-size:12px;color:#8b97a6;margin-left:auto}
 #report h2{font-size:16px;color:#f0f4f8}#report h3{font-size:14px;color:#dbe2ea}#report p,#report li{color:#dbe2ea;font-size:15px}
 .cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:18px;background:linear-gradient(180deg,#FFB681,#FF9E5B);color:#2A1404;font-weight:700;text-decoration:none;font-size:16px}   /* 버튼 위계 R1(button-system spec P2): Primary 토큰 통일 — 메인 #go 그라데이션·r18 정합(평면 r12 이원 폐기) */
 .foot{color:#8A95A3;font-size:12px;text-align:center;margin-top:26px}
@@ -38,7 +38,7 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
   <!-- R4-023③ AD는 sticky 밖(아래 배치) — 모바일 뷰포트 상시 점유 해소(R3 조니 2심 채택 · 광고 존치는 유지·위치만) -->
   <div class="stickyhdr">
     <div class="brand">Job<b>Rec<span class="reco" aria-hidden="true"></span><span class="jr-sr">o</span>n</b></div>
-    <div class="tag">구직자 편 취업 정찰 · 회사가 안 알려주는 숨은 진실</div>
+    <div class="tag">구직자 편 취업 정찰</div><!-- 단일 헤더: 메인·404와 동일 tag 문구(긴 태그라인은 OG desc 보존) -->
     <div class="meta"><span class="co">고영테크놀러지</span><span class="fd">AI/ML 엔지니어</span><span class="ym">2026년 07월 정찰</span></div>
   </div>
   <div class="ddaybn">상시</div>
