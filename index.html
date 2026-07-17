@@ -720,11 +720,19 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .story-cta { width:auto; margin:22px 0 0; padding:13px 24px; font-size:15px; font-weight:800;
     background:var(--sc); color:#08110c; border:0; border-radius:12px; cursor:pointer;
     box-shadow:0 12px 30px -10px var(--scg); }
+  /* 마무리 카드 Secondary 공유 CTA — button-system R2 (share-slot spec §2). accent 필은 Primary 1개 유지. /r/ page.py 미러(G6) */
+  .story-share { display:inline-flex; align-items:center; justify-content:center; gap:7px;
+    width:auto; margin:10px 0 0; padding:12px 22px; min-height:46px;
+    font-size:15px; font-weight:700; line-height:1; color:#CDD6E2;
+    background:transparent; border:1px solid #63646E; border-radius:12px; cursor:pointer; }
+  .story-share svg { width:16px; height:16px; flex:none; }
+  .story-share:hover { border-color:var(--sc); }
+  .story-share:focus-visible { outline:2px solid var(--sc); outline-offset:2px; }
   /* 진입 stagger 모션 — active(inview) 카드만 (릴스 리듬) */
   .story-card .story-kicker, .story-card .story-hl, .story-card .story-ev,
   .story-card .story-co-lg, .story-card .story-pos, .story-card .story-tease,
   .story-card .bwrap, .story-card .story-verdict-why, .story-card .story-angle,
-  .story-card .story-names, .story-card .story-anchor, .story-card .story-cta { opacity:0; transform:translateY(12px); }
+  .story-card .story-names, .story-card .story-anchor, .story-card .story-cta, .story-card .story-share { opacity:0; transform:translateY(12px); }
   .story-card.inview .story-kicker { animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards; }
   .story-card.inview .story-co-lg { animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards; }
   .story-card.inview .story-pos { animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -737,6 +745,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .story-card.inview .story-angle { animation:storyRise .55s .3s cubic-bezier(.2,.7,.2,1) forwards; }
   .story-card.inview .story-anchor { animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards; }
   .story-card.inview .story-cta { animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards; }
+  .story-card.inview .story-share { animation:storyRise .5s .28s cubic-bezier(.2,.7,.2,1) forwards; }
   @keyframes storyRise { to { opacity:1; transform:none; } }
   /* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격·해소=평결. 높이는 통일(가로 스냅), 밀도는 폰트·여백으로. === */
   .story-card.role-setup .story-hl, .story-card.role-context .story-hl { font-size:20px; font-weight:700; line-height:1.56; color:#dde5ef; }
@@ -815,7 +824,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   @media (prefers-reduced-motion:reduce){
     .story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .bwrap,
     .story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,
-    .story-card .story-verdict-why,.story-card .story-angle,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{
+    .story-card .story-verdict-why,.story-card .story-angle,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .story-share,.story-card .hookbeat{
       opacity:1!important;transform:none!important;animation:none!important; }
     .story-deck{ transition:none; } }
 
@@ -1640,6 +1649,7 @@ function _renderStoryCard(c, i){
       <div class="story-hl">리포트에서 보상·리스크 근거 더 보기</div>
       <div class="story-ev" style="border:0;padding:0;margin-top:12px">이 회사 정찰의 숫자·출처·맥락 전문은 리포트에 있어요.</div>
       <button class="story-cta" id="storyToReport">리포트 근거 더 보기 →</button>
+      <button class="story-share" type="button" id="storyShare" style="display:none"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8.2 10.9l7.2-3.7M8.2 13.1l7.2 3.7"/><circle cx="6" cy="12" r="2.5"/><circle cx="17.5" cy="6" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg> 이 정찰 공유하기</button>
     </div>`;
   }
   return "";
@@ -1650,6 +1660,8 @@ function _wireStory(){
     btn.addEventListener("click", () => { setStoryMode("report"); const t = $(btn.dataset.sec); if (t){ if (t.tagName === "DETAILS") t.open = true; scrollToEl(t, true); } else landOnVerdict(); });
   });
   const cta = $("storyToReport"); if (cta) cta.addEventListener("click", () => { setStoryMode("report"); landOnVerdict(); });
+  // share-slot spec §5: 마무리 카드 공유 CTA — 기존 shareResult(_pageUrl FR-056) 재사용(신규 로직 0). 노출 게이트는 done 블록(buildStory 직후).
+  const shSt = $("storyShare"); if (shSt) shSt.addEventListener("click", shareResult);
   const cards = [...deck.querySelectorAll(".story-card")];
   // 진입 stagger — 뷰포트(덱) 안으로 들어온 카드에 .inview (릴스 리듬). 첫 카드 즉시.
   if ("IntersectionObserver" in window){
@@ -2188,6 +2200,10 @@ function pollJob(job_id) {
       if (_pollFull) {
         const _lvl = (_pollFull.match(/\[(YES|조건부|NO)\]/) || [])[1] || null;
         const _built = buildStory(_pollFull, ev.meta || _lastMeta, _lvl);  // EXTRACTIVE 카드 덱(원문 추출·창작 0)
+        // share-slot spec §5: 마무리 카드 공유 CTA 노출 게이트 — _pageUrl(발행본) 있을 때만(발행 대기=숨김·죽은 버튼 금지).
+        // #shareBtn 게이트와 같은 done 시점이되 buildStory "직후"여야 함(덱 innerHTML 재렌더가 게이트보다 뒤면 display:none 회귀).
+        // 노출 = 카드 높이 +56 → syncH 1회 재호출(스크롤 중 아님·140ms 디바운스 경로와 충돌 없음).
+        if (_built && _pageUrl) { const _shS = $("storyShare"); if (_shS) { _shS.style.display = ""; const _dk = $("storyDeck"); if (_dk && _dk._syncH) _dk._syncH(); } }
         if (!_leftDuringJob) {                            // 🔴 완료 착지 = 스토리 모드(landOnVerdict 로직 유지·뷰만 스토리로)
           if (_built) { setStoryMode("story"); landOnStory(); }
           else landOnVerdict();
@@ -2572,10 +2588,13 @@ function shareToast(msg) {
 }
 async function shareResult() {
   // 🔴 개인 평결(조건부/YES/NO)은 공유에 미포함 — 프라이버시(정찰 페이지와 동일). 회사·직무만.
-  const meta = cleanCo((metaEl.textContent || "").replace("정찰 대상", "").trim());  // "회사 · 직무"
-  // 🔴 제목=필수 정보(회사·분야·정체=취업 정찰, 카드 미표시 방어). 본문=브랜드 보이스 한 줄(카드가 회사·분야·직무를 짐).
+  // 🔴 공유 텍스트 = 구조화 소스(_lastMeta.company/.position) 조립 — metaEl.textContent 파생 금지
+  //    (span 경계 공백 소실 "3MSenior…Asia2026년" + ym 연접 "정찰 취업 정찰" 중복, 대표 카톡 실사고 07-17 20:21).
+  //    단일 포맷(3줄 상한): "{회사} · {직무} — {yyyy년 mm월} 정찰" / "아는 만큼만 결정할 수 있다." / URL — /r/ page.py doShare 미러(G6)
   // 조니 2심 재확정(2026-07-09, "저렴" 반려 후): 냉소·썸네일어휘·홈쇼핑대구 제거 → 비인칭 잠언(격). 개인 평결 미포함.
-  const title = (meta ? meta + " " : "") + "취업 정찰";
+  const _co = cleanCo((_lastMeta && _lastMeta.company) || ""), _pos = (_lastMeta && _lastMeta.position) || "";
+  const _d = new Date(), _ym = _d.getFullYear() + "년 " + String(_d.getMonth() + 1).padStart(2, "0") + "월";
+  const title = (_co ? _co + (_pos ? " · " + _pos : "") + " — " : "") + _ym + " 정찰";
   const text = "아는 만큼만 결정할 수 있다.";
   const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL(FR-056)
   try {
