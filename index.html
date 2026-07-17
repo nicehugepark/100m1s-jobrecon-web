@@ -169,12 +169,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     border-bottom:1px solid var(--w-line); }
   body.scouting .anchor.pinned { border-bottom-color:var(--line); }
   /* 🔴 글래스(대표 정정 07-17 17:32 "투명도가 필요하다" + 19:21 ② 체감 부족): 다크 콘텐츠 위 "검정 위
-     검정"이라 .78 체감 0 → .65 하향(blur 16px 유지 = 가독 방어). @supports 폴백 = 불투명 solid 유지
+     검정"이라 .78 체감 0 → .52 하향(대표 19:35 "더 티가 나게"·blur 20px 상향 = 가독 방어·투명도 우선). @supports 폴백 = 불투명 solid 유지
      (미지원 시 비침 회귀 금지 — REQ-080 뿌리). rgba(10,10,11)=--bg 리터럴(--bg-rgb 토큰 부재).
      첫 화면(static·투명) 무접촉. blur 는 헤더 단일 요소만(성능). /r/ .stickyhdr 미러. */
   @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
-    body.scouting .anchor.pinned { background:rgba(10,10,11,.65);
-      -webkit-backdrop-filter:blur(16px) saturate(1.1); backdrop-filter:blur(16px) saturate(1.1); }
+    body.scouting .anchor.pinned { background:rgba(10,10,11,.52);
+      -webkit-backdrop-filter:blur(20px) saturate(1.1); backdrop-filter:blur(20px) saturate(1.1); }
   }
   /* (R4-023③ → 대표 직접 지시 07-17 17:33 override) 광고 sticky 상단 고정 — "스크롤할 때 광고가 넘어가서
      안 보이면 안 된다". AdSense client 설정 시(initAds가 body.ads-on 부여)에만 scouting 결과 화면에서
