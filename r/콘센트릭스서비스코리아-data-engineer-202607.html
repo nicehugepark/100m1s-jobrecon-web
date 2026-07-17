@@ -35,7 +35,7 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
 #report h2{font-size:16px;color:#f0f4f8}#report h3{font-size:14px;color:#dbe2ea}#report p,#report li{color:#dbe2ea;font-size:15px}
 .cta{display:block;text-align:center;margin:20px 0 8px;padding:15px;border-radius:18px;background:linear-gradient(180deg,#FFB681,#FF9E5B);color:#2A1404;font-weight:700;text-decoration:none;font-size:16px}   /* 버튼 위계 R1(button-system spec P2): Primary 토큰 통일 — 메인 #go 그라데이션·r18 정합(평면 r12 이원 폐기) */
 .foot{color:#8A95A3;font-size:12px;text-align:center;margin-top:26px}
-</style><link rel="stylesheet" href="/r/assets/design/jr-current.css?v=57a54f38">
+</style><link rel="stylesheet" href="/r/assets/design/jr-current.css?v=27d53bb9">
 
 </head><body>
 <div class="wrap">
@@ -481,13 +481,12 @@ body{margin:0;background:#0A0A0B;color:#e6edf3;font-family:-apple-system,BlinkMa
   function _copyFallback(u){var ta=document.createElement("textarea");ta.value=u;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(ta);_toast(ok?"링크가 복사됐어요":"복사 실패 — 주소창에서 복사해 주세요");}
   // share-slot spec §5: 리스너 본문 doShare 추출 — 하단 shareLink + 마무리 카드 storyShare 이중 바인딩(동일 동작·신규 로직 0)
   // 🔴 공유 텍스트 = 구조화 소스(CO/POS/YM 박제) 조립 — document.title 파생 금지(접미 "취업 정찰 — JobRecon" 중복·무구분 연접, 대표 카톡 실사고 07-17 20:21).
-  //    단일 포맷(3줄 상한): "{회사} · {직무} — {yyyy년 mm월} 정찰" / "아는 만큼만 결정할 수 있다." / URL — 앱 index.html shareResult 미러(G6)
+  //    단일 포맷(2줄·대표 지시 07-17 21:34 태그라인 줄 제거): "{회사} · {직무} — {yyyy년 mm월} 정찰" / URL — 앱 index.html shareResult 미러(G6)
   function doShare(){
     var lk=document.querySelector('link[rel="canonical"]');var url=(lk&&lk.href)||location.href;
     var t=(CO?CO+(POS?" · "+POS:"")+" — ":"")+YM+" 정찰";
-    var tx="아는 만큼만 결정할 수 있다.";
-    if(navigator.share){navigator.share({title:t,text:tx,url:url}).catch(function(){});return;}
-    var pl=t+"\n"+tx+"\n"+url;
+    if(navigator.share){navigator.share({title:t,url:url}).catch(function(){});return;}
+    var pl=t+"\n"+url;
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(pl).then(function(){_toast("링크가 복사됐어요");},function(){_copyFallback(pl);});return;}
     _copyFallback(pl);
   }

@@ -108,6 +108,10 @@ body.mode-story .dighint{display:none}
 .storyview{display:none}
 body.mode-story .storyview{display:block}
 body.mode-story #report,body.mode-story .repextra{display:none!important}
+/* 🔴 스토리 탭 = 마무리 카드 CTA 전담 (대표 catch 07-17 21:37 — 카드 공유 + 하단 공유 병존 중복 수술).
+   mode-story는 스토리 덱 렌더 시에만 부여(3축 미만 미부여) = "마무리 카드 존재 시" by construction.
+   리포트 탭(mode-report) = 하단 sharebar가 유일 공유 수단으로 유지. 앱은 기존 body.mode-story #shareBtn 룰이 동일 역할(index.html 647). */
+body.mode-story .sharebar{display:none!important}
 /* 스토리 흐름 광고 카드 = 스토리 모드에서만(리포트 모드는 repextra 내 광고). 스토리 미빌드 시 숨김 */
 .adwrap-story{display:none}
 body.mode-story .adwrap-story{display:block;margin:2px 0 4px}

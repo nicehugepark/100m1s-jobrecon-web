@@ -2590,18 +2590,16 @@ async function shareResult() {
   // 🔴 개인 평결(조건부/YES/NO)은 공유에 미포함 — 프라이버시(정찰 페이지와 동일). 회사·직무만.
   // 🔴 공유 텍스트 = 구조화 소스(_lastMeta.company/.position) 조립 — metaEl.textContent 파생 금지
   //    (span 경계 공백 소실 "3MSenior…Asia2026년" + ym 연접 "정찰 취업 정찰" 중복, 대표 카톡 실사고 07-17 20:21).
-  //    단일 포맷(3줄 상한): "{회사} · {직무} — {yyyy년 mm월} 정찰" / "아는 만큼만 결정할 수 있다." / URL — /r/ page.py doShare 미러(G6)
-  // 조니 2심 재확정(2026-07-09, "저렴" 반려 후): 냉소·썸네일어휘·홈쇼핑대구 제거 → 비인칭 잠언(격). 개인 평결 미포함.
+  //    단일 포맷(2줄·대표 지시 07-17 21:34 태그라인 줄 제거): "{회사} · {직무} — {yyyy년 mm월} 정찰" / URL — /r/ page.py doShare 미러(G6)
   const _co = cleanCo((_lastMeta && _lastMeta.company) || ""), _pos = (_lastMeta && _lastMeta.position) || "";
   const _d = new Date(), _ym = _d.getFullYear() + "년 " + String(_d.getMonth() + 1).padStart(2, "0") + "월";
   const title = (_co ? _co + (_pos ? " · " + _pos : "") + " — " : "") + _ym + " 정찰";
-  const text = "아는 만큼만 결정할 수 있다.";
   const url = _pageUrl || (location.origin + location.pathname);  // Phase 2: 고정 정찰 페이지 URL(FR-056)
   try {
-    if (navigator.share) { await navigator.share({ title, text, url }); return; }
+    if (navigator.share) { await navigator.share({ title, url }); return; }
   } catch (e) { if (e && e.name === "AbortError") return; }
   try {
-    await navigator.clipboard.writeText(title + "\n" + text + "\n" + url);
+    await navigator.clipboard.writeText(title + "\n" + url);
     shareToast("링크가 복사됐어요");
   } catch (e) { shareToast("이 환경에선 공유를 지원하지 않아요"); }
 }
