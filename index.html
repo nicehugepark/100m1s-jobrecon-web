@@ -40,6 +40,10 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     /* 🔴 결과화면(스캐너·스토리·리포트·verdict·compare) 전용 다크 팔레트 — 무변경 유지(회귀 0).
        body.scouting(정찰 후)에서만 노출되므로 첫인상 웜 크림과 물리 분리. */
     --bg:#0A0A0B; --card:#161619; --card2:#1E1E22; --line:#26262B;   /* 토스 v3: 순수 near-black + 명도차 확대 카드(흙톤 #0f1216 폐기·경계 또렷·DOC-20260716-JDG §7) */
+    --card-edge:#63646E; --dot-off:#6E6E78;   /* DQA-20260716 시인성: 카드 경계 3.37:1·dot 비활성 3.92:1(구 --line 재사용 1.31:1 해소) — brand.py v5 card_edge/dot_off 미러(G6) */
+    /* DQA-20260717 전수감사 이원 규칙: 인지 필요한 UI 형태 경계 = --edge(vs bg 3.37:1) / 순수 장식 hairline·구분선만 --line.
+       --on-accent = accent(#FF9E5B) 위 텍스트 전용 다크 코코아(8.5:1) — 구 color:#fff(2.04:1) 전 CTA 붕괴 봉쇄. brand.py v5 accent_ink 미러(G6) */
+    --edge:#63646E; --on-accent:#2A1404;
     --fg:#F4F4F6; --dim:#A2A2AC; --accent:var(--peach-deep); --accent-rgb:255,158,91;  /* 토스 v3: 본문 흰 고대비 + 밝은 애프리콧 accent(선명화·골드 뭉침 해소) */
     /* 🔴 REQ-VERDICT-COLOR(078a·조니 R15 P2·brand.VERDICT_* SoT): 비추천(로즈=명확한 부정)·보류
        (중립 회색)을 분리 — 동색(#8b95a1) 폐기. NO 로즈는 스토리 색맵(#f87171)과 동일 hue(팔레트 이원 해소) */
@@ -57,7 +61,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
        계층 규칙·전 소비처가 개별 색칠 없이 값만 뉴트럴로 자동 전환(REQ-032 토큰층). */
     --cream:#0A0A0B; --cream-2:#161619; --surface:#161619; --surface-2:#1E1E22;
     /* 뉴트럴 잉크(흰 고대비 본문 → 보조 회색 3단·시안 --ink/--ink-2/--ink-3) */
-    --ink:#F4F4F6; --ink-2:#C8C8D0; --w-muted:#A2A2AC; --faint:#72727C;
+    --ink:#F4F4F6; --ink-2:#C8C8D0; --w-muted:#A2A2AC; --faint:#72727C;   /* DQA-20260717: --faint(3.8:1)는 placeholder·disabled 전용 — 노출 텍스트(상태·날짜·고지)는 --dim 이상 의무 */
     /* 뉴트럴 경계(순수 다크 위 hairline·명도차 확대) */
     --w-line:#26262B; --w-line-2:#2E2E34;
     /* 애프리콧 = 주accent(다크 톤·brand.MARK_DARK 정합·단일 hue) */
@@ -142,8 +146,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .ad-row .ad-body b { display:block; font-family:var(--kr); font-size:15px; font-weight:700; color:var(--ink); letter-spacing:-.01em; line-height:1.35; }
   .ad-row .ad-body span { display:block; margin-top:5px; font-size:12.5px; color:var(--w-muted); line-height:1.45; }
   .ad-icon { width:52px; height:52px; border-radius:14px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
-    font-size:11px; font-weight:700; color:var(--w-muted); background:radial-gradient(120% 120% at 30% 20%,#2b323d,#1a1f27); border:1px solid var(--w-line-2); }
-  .ad-note { margin-top:13px; font-size:11px; color:var(--faint); }
+    font-size:12px; font-weight:700; color:var(--w-muted); background:radial-gradient(120% 120% at 30% 20%,#2b323d,#1a1f27); border:1px solid var(--w-line-2); }
+  .ad-note { margin-top:13px; font-size:12px; color:var(--dim); }   /* DQA-20260717: --faint 3.8:1·11px → --dim 7.1:1·12px (노출 텍스트) */
   .ad .adsbygoogle { display:block; min-height:52px; }
   /* .ad-infeed(리포트 인피드)는 단순 텍스트 유지 — 중앙 정렬 카드 */
   .ad-infeed { text-align:center; letter-spacing:.06em; font-size:11px; }
@@ -184,7 +188,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* R7-048 폼 위계 — 필수(URL) 라벨은 본문색·선택은 dim 유지 + 배지·헬퍼로 괄호 주석 스택 분해 */
   label.lreq { color:var(--ink); font-weight:400; }
   .req, .opt { display:inline-block; margin-left:7px; padding:2px 9px; border-radius:999px;
-    font-size:11px; font-weight:600; vertical-align:1px; letter-spacing:.02em; }
+    font-size:12px; font-weight:600; vertical-align:1px; letter-spacing:.02em; }   /* DQA-20260717: 12px 하한 */
   /* 토스 4층 위계: 라벨 배지 = 뉴트럴(애프리콧·세이지 → 회색). accent는 주CTA에만 (조니 지시) */
   /* 토스 v3(DOC-20260716-JDG §7·생기): 필수 배지 = accent-wash pill(시안 .req·'필수' 신호에 생기). 선택(.opt)은 뉴트럴 유지(위계) */
   .req { color:var(--peach-deep); background:var(--peach-tint); border:1px solid transparent; }
@@ -248,11 +252,16 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   #go:disabled .go-scope { color:var(--peach-deep); }
   button.secondary { background:var(--surface); color:var(--ink-2); border:1px solid var(--w-line-2);
     box-shadow:var(--sh-soft); margin-top:10px; font-size:14px; padding:12px; font-weight:400; }
+  /* DQA-20260717 P0: 정찰 모드 버튼 기본값 color #fff on accent = 2.04:1 전 CTA 붕괴(gateBtn·seg·reopen 관통)
+     → --on-accent(다크 코코아 8.5:1). 캐스케이드 피해자(.reopen·.story-anchor)는 아래 특이성 복원 */
   body.scouting button { padding:13px; font-family:inherit; font-size:16px; font-weight:700;
-    background:var(--accent); color:#fff; border-radius:10px; box-shadow:none; }
+    background:var(--accent); color:var(--on-accent); border-radius:10px; box-shadow:none; }
   body.scouting button:not(:disabled):hover { transform:none; }
-  body.scouting button:disabled { opacity:.5; background:var(--accent); color:#fff; }
-  body.scouting button.secondary { background:var(--card2); color:var(--fg); border:1px solid var(--line); font-weight:700; }
+  body.scouting button:disabled { opacity:.5; background:var(--accent); color:var(--on-accent); }
+  body.scouting button.secondary { background:var(--card2); color:var(--fg); border:1px solid var(--edge); font-weight:700; }
+  /* DQA-20260717: 세컨더리 의도 복원 — body.scouting button 기본값(accent 필)에 덮여 accent 필로 렌더되던 캐스케이드 해소 */
+  body.scouting button.reopen { background:var(--card2); color:#cdd6e2; border:1px solid var(--edge); }
+  body.scouting button.story-anchor { background:var(--scg); color:var(--sc2); border:0; }
   /* R15 HIST-TONE(대표 catch a): 이력 리스트 = 첫 화면(웜 크림) 구성요소. 결과화면 전용 쿨 다크
      토큰(--card/--line/--fg) 소비를 폐기하고 첫인상 웜 서피스 토큰을 소비 — 웜 크림 위 쿨 네이비
      카드 10개(hue 반전)를 제거한다. @media(dark)가 이 토큰을 웜 다크로 자동 전환 → 라이트=웜
@@ -267,7 +276,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      nowrap+ellipsis 단일 줄(직무 과반 소실)을 폐기. 정찰 시점은 회사명 옆 dim(dedup 보조 정보). */
   #compare .ttl { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; text-decoration:none; }
   #compare .ttl .co { font-size:14px; font-weight:700; color:var(--ink); line-height:1.3; word-break:keep-all; overflow-wrap:anywhere; }
-  #compare .ttl .co .when { font-weight:400; font-size:11px; color:var(--faint); }
+  #compare .ttl .co .when { font-weight:400; font-size:12px; color:var(--dim); }   /* DQA-20260717: --faint 3.8:1·11px → --dim·12px */
   #compare .ttl .pos { font-size:12.5px; color:var(--w-muted); line-height:1.35; word-break:keep-all; overflow-wrap:anywhere;
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   a.ttl:hover .co { color:var(--peach-deep); }
@@ -277,13 +286,13 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   #compare .pgtag::after { content:""; position:absolute; inset:-9px -6px; }
   #compare .pgtag:hover { background:rgba(var(--accent-rgb),.2); }
   /* 미발행(발행 대기) 상태 — 버튼 무단 부재 금지(대표 catch c): 도달 불가를 dim 상태로 명시 */
-  #compare .pgtag.pgtag-pending { color:var(--faint); border-color:var(--w-line-2); background:transparent; cursor:default; }
+  #compare .pgtag.pgtag-pending { color:var(--dim); border-color:var(--edge); background:transparent; cursor:default; }   /* DQA-20260717: 상태 정보 --faint 3.8:1 → --dim (--faint는 placeholder 전용) */
   #compare .pgtag.pgtag-pending::after { content:none; }
   /* 방금 정찰한 공고 — 평결순에서 아래로 밀려도 즉시 찾게: 강조 테두리+글로우(2.2s 후 정착)+지속 배경 틴트 */
   #compare .row.just { border-color:var(--peach-deep); background:linear-gradient(90deg,var(--peach-tint),var(--surface)); animation:jrJust 2.2s ease-out 1; }
-  #compare .jbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:10px; font-weight:800; color:#fff; background:var(--peach-deep); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  #compare .jbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:12px; font-weight:800; color:var(--on-accent); background:var(--peach-deep); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
   /* 파일 업로드 공고 표식 — 원문 링크 없음을 조용히 알리는 중립 dim 배지(강조 아님) */
-  #compare .fbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:10px; font-weight:700; color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }
+  #compare .fbadge { flex:0 0 auto; align-self:flex-start; margin-top:1px; font-size:12px; font-weight:700; color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line); padding:2px 7px; border-radius:999px; white-space:nowrap; letter-spacing:.02em; }   /* DQA-20260717: 10→12px (감사표 밖·jbadge 동일 결함) */
   @keyframes jrJust { 0%{box-shadow:0 0 0 2px var(--peach-deep) inset,0 0 14px 2px rgba(var(--accent-rgb),.5);} 60%{box-shadow:0 0 0 2px var(--peach-deep) inset,0 0 6px 1px rgba(var(--accent-rgb),.25);} 100%{box-shadow:var(--sh-soft),0 0 0 1px var(--peach-deep) inset;} }
 
   .constraints { margin-top:16px; padding:0; background:none; border:0; border-radius:0; }
@@ -328,7 +337,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      위치 자체가 안 겹침(#3). 네이티브 callout 억제는 OS 제어 불가 → '위치 분리'가 유일 견고책. */
   #digBtn { position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 18px);
     transform:translateX(-50%); display:none; z-index:90; width:auto; margin:0; padding:11px 20px;
-    font-size:14px; font-weight:700; border:0; border-radius:999px; background:var(--accent); color:#fff;
+    font-size:14px; font-weight:700; border:0; border-radius:999px; background:var(--accent); color:var(--on-accent);
     box-shadow:0 10px 30px -6px rgba(0,0,0,.7); cursor:pointer; white-space:nowrap;
     -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
   #digBtn.on { display:block; animation:digUp .18s cubic-bezier(.2,.7,.2,1); }
@@ -357,13 +366,13 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .scan-stage { font-size:15px; font-weight:800; color:var(--fg); line-height:1.3; }
   .scan-sub { font-size:12.5px; color:var(--dim); margin-top:2px; }
   .scan-sub b { color:var(--accent); font-variant-numeric:tabular-nums; }
-  .scan-bar { height:4px; border-radius:99px; background:#1c2230; margin:14px 0 12px; overflow:hidden; }
+  .scan-bar { height:4px; border-radius:99px; background:var(--edge); margin:14px 0 12px; overflow:hidden; }   /* DQA-20260717: 트랙 #1c2230 ≈1.5:1 → --edge 3.37:1(fill=accent 9.7:1과 구분 유지) */
   .scan-bar span { display:block; height:100%; width:34%; border-radius:99px;
     background:linear-gradient(90deg,transparent,var(--accent),transparent); animation:scanbar 1.5s ease-in-out infinite; }
   @keyframes scanbar { 0%{transform:translateX(-130%)} 100%{transform:translateX(420%)} }
   .scan-steps { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px; }
-  .scan-steps .st { font-size:11.5px; padding:4px 9px; border-radius:99px; border:1px solid var(--line);
-    color:var(--dim); background:#141922; transition:all .3s; }
+  .scan-steps .st { font-size:12px; padding:4px 9px; border-radius:99px; border:1px solid var(--edge);
+    color:var(--dim); background:#141922; transition:all .3s; }   /* DQA-20260717: 보더 --line 1.31:1 → --edge 3.37:1·11.5→12px */
   .scan-steps .st.done { color:var(--peach-2); border-color:var(--peach-line); opacity:.8; }
   .scan-steps .st.done::before { content:"✓ "; }
   .scan-steps .st.active { color:#fff; border-color:var(--accent); background:rgba(var(--accent-rgb),.18);
@@ -390,7 +399,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .pbox #url { padding:14px 15px; font-size:15px; min-height:44px; }
   .pbox textarea#profile:focus, .pbox #url:focus { outline:none; box-shadow:none; border:0; }
   .pbox-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    padding:8px 10px; border-top:1px solid var(--w-line); background:var(--surface-2); }
+    padding:8px 10px; border-top:1px solid var(--edge); background:var(--surface-2); }   /* DQA-20260717: URL박스 폼 경계 1.2:1 → --edge */
   /* 공고 파일 업로드 = 뉴트럴 ghost(애프리콧 보더/텍스트 → 회색·토스 보조 액션. 주CTA만 accent) */
   .attach { position:relative; z-index:1; display:inline-flex; align-items:center; gap:6px; width:auto; min-height:38px;
     margin:0; padding:0 14px; font-family:var(--kr); font-size:12.5px; font-weight:400; color:var(--ink-2);
@@ -481,16 +490,17 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .condchips-row { display:flex; flex-wrap:wrap; gap:9px; }
   /* A · 소프트 필 — 선택 상태 토글(조건 칩). 무선 틴트 면(부드러움). border 제거 → on/off를 "면"으로만
      구분. 접근성 이중부호화(면 + 체크서클 + 글자색). JS(_mkCondChip)가 .tick 주입(무변경). */
+  /* DQA-20260717: 다크 리맵에서 cream-2=카드 동일색(1.0:1) → "면으로만 구분" 붕괴. --edge 보더로 형태 복원(on은 accent 틴트 면 유지) */
   .condchip { position:relative; display:inline-flex; align-items:center; gap:9px; width:auto; margin:0; min-height:44px;
     padding:0 16px 0 12px; font-family:var(--kr); font-size:13.5px; color:var(--ink-2);
-    background:var(--cream-2); border:0;
+    background:var(--cream-2); border:1px solid var(--edge);
     border-radius:999px; cursor:pointer; user-select:none; transition:all .24s var(--ease);
     -webkit-tap-highlight-color:transparent; }
   .condchip .tick { width:21px; height:21px; flex:0 0 auto; border-radius:50%; border:0;
     background:rgba(120,80,40,.09); display:grid; place-items:center; color:#fff; transition:all .24s var(--spring); }
   .condchip .tick svg { width:12px; height:12px; opacity:0; transform:scale(.4); transition:all .24s var(--spring); }
   .condchip:hover { background:var(--peach-tint); color:var(--ink); }
-  .condchip.on { background:var(--peach-tint); color:var(--chip-on-fg); font-weight:400; }
+  .condchip.on { background:var(--peach-tint); color:var(--chip-on-fg); font-weight:400; border-color:var(--peach-line); }
   .condchip.on .tick { background:var(--peach); box-shadow:0 3px 8px -3px rgba(210,113,63,.5); }
   .condchip.on .tick svg { opacity:1; transform:scale(1); }
   .condchip.custom { background:var(--peach-tint); color:var(--chip-on-fg); }
@@ -509,12 +519,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     padding:10px 16px; border-radius:10px; opacity:0; pointer-events:none; transition:all .2s; }
   .sharetoast.on { opacity:1; transform:translate(-50%,0); }
   #meta { display:none; margin:12px 0 2px; font-size:15px; color:#e2e8ef; font-weight:600; }
-  #meta .chip { font-size:11px; font-weight:800; background:var(--accent); color:#fff; padding:3px 9px; border-radius:999px; margin-right:8px; vertical-align:middle; }
+  #meta .chip { font-size:12px; font-weight:800; background:var(--accent); color:var(--on-accent); padding:3px 9px; border-radius:999px; margin-right:8px; vertical-align:middle; }
   .status { color:var(--dim); font-size:13px; min-height:18px; padding:2px; }
   .err { color:#ff6b6b; }
   .cursor::after { content:"▋"; color:var(--accent); animation:blink 1s steps(1) infinite; }
   @keyframes blink { 50%{opacity:0} }
-  .foot { color:var(--w-muted); font-size:11.5px; text-align:center; margin:20px 0 8px; line-height:1.7; }
+  .foot { color:var(--w-muted); font-size:12px; text-align:center; margin:20px 0 8px; line-height:1.7; }   /* DQA-20260717: 12px 하한(1280 포함) */
   body.scouting .foot { color:var(--dim); }
 
   /* === 라운드1 반영(조니 2심 P0-b·P1-4·P1-6·P1-10) — 결과 위계·착지·목차·접기·마감·모바일 === */
@@ -572,7 +582,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   /* === 스와이프 스토리 (2뷰 토글 · EXTRACTIVE 카드 덱) — 다크·390px·창작 0 === */
   /* 세그먼트 토글 [스토리 | 리포트] — 리포트 완료(has-story) 시에만 노출 */
   .modeseg { display:none; gap:4px; margin:12px 0 4px; padding:4px;
-    background:var(--card2); border:1px solid var(--line); border-radius:999px; width:fit-content; }
+    background:var(--card2); border:1px solid var(--edge); border-radius:999px; width:fit-content; }   /* DQA-20260717: --line 1.31:1 → --edge */
   body.has-story .modeseg { display:inline-flex; }
   .modeseg button { position:relative; width:auto; margin:0; padding:0 20px; min-height:38px; font-size:13.5px; font-weight:700;
     border-radius:999px; background:transparent; color:var(--dim); border:0; cursor:pointer;
@@ -607,8 +617,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     --sc:var(--peach-deep); --sc2:#ffd9b5; --scg:rgba(var(--accent-rgb),.16);
     background:
       radial-gradient(130% 88% at 86% 2%, var(--scg), transparent 56%),
-      linear-gradient(168deg,#171c26,#0e1219 74%);
-    border:1px solid var(--line); border-radius:20px; padding:26px 22px 24px;
+      linear-gradient(168deg,#222329,#1B1C20 74%);   /* DQA-20260716: v1 잔재(#171c26,#0e1219 파랑기) → v5 승격값(brand.py surface3/surface3b 미러) */
+    border:1px solid var(--card-edge); border-radius:20px; padding:26px 22px 24px;
     box-shadow:0 1px 0 rgba(255,255,255,.035) inset, 0 20px 46px -26px rgba(0,0,0,.78); }
   /* REQ-084(조니): 상단 3px 색선 바 제거 — 색선 규율(brand.py:15) 정합 */
   /* 고스트 인덱스 넘버 — 하단 빈 공간을 진행감 워터마크로(릴스식 밀도) */
@@ -690,7 +700,7 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .story-name mark.kw { background:var(--jr-hl-bg); color:var(--jr-hl-text); border-radius:5px; padding:0 4px; font-weight:800; box-shadow:inset 0 -2px 0 var(--jr-hl-ink); }
   .story-card.role-subvert { background:
       radial-gradient(122% 84% at 84% 0%, var(--scg), transparent 50%),
-      linear-gradient(168deg,#1b191d,#0f0d11 74%); }
+      linear-gradient(168deg,#24252A,#1B1C20 74%); }   /* DQA-20260716: v1 잔재 → v5 승격값(surface_sub/_sub_b 미러) */
   .story-card .story-hl.big { font-size:25.5px; font-weight:900; line-height:1.38; color:#fff; letter-spacing:-.4px; }
   .story-kicker.warn { color:#fcd34d; background:rgba(251,191,36,.15); }
   .story-kicker.soft { color:var(--sc2); opacity:.92; background:transparent; padding-left:2px; text-transform:none; letter-spacing:0; font-size:12.5px; }
@@ -733,12 +743,14 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      도트·화살표만 수용(겹침 시 양보). /r/ page.py 동일 미러(발행본은 재렌더 후속·DevOps 트랙). */
   .story-nav-row .dot, .story-nav-row .story-nav { pointer-events:auto; }
   /* 진행 도트 — 활성 도트는 현재 카드색(JS 주입). 마진은 row가 소유 */
-  .story-dots { display:flex; justify-content:center; gap:7px; }
-  /* R4-021② dot=클릭 이동 타겟 — 시각 7px 유지 + ::after 히트 확장(터치·마우스 공용, R3 ⑨ P0-2 전례) */
-  .story-dots .dot { position:relative; width:7px; height:7px; border-radius:999px; background:var(--line);
+  /* DQA-20260716: gap 7→17px = dot 중심간격 24px(WCAG 2.5.8 AA spacing). page.py _STORY_CSS 미러(G6) */
+  .story-dots { display:flex; justify-content:center; gap:17px; }
+  /* R4-021② dot=클릭 이동 타겟 — 시각 7px 유지 + ::after 히트 확장(터치·마우스 공용, R3 ⑨ P0-2 전례)
+     DQA-20260716: 비활성 = --dot-off(3.92:1) — 구 --line 재사용(1.31:1) 해소 */
+  .story-dots .dot { position:relative; width:7px; height:7px; border-radius:999px; background:var(--dot-off);
     transition:width .25s,background .25s; cursor:pointer; -webkit-tap-highlight-color:transparent; }
-  /* R7-047 dot 실효 터치 세로 44px+ (7+19*2=45 — 시각 7px 유지·가로는 dot 간 겹침 없는 ±3px 상한). REQ-039 공유 버튼과 동일 ::after 확장 패턴 */
-  .story-dots .dot::after { content:""; position:absolute; left:-3px; right:-3px; top:-19px; bottom:-19px; }
+  /* R7-047 dot 실효 터치 세로 44px+ (7+19*2=45 — 시각 7px 유지). 가로 = 겹침 없는 상한 ±8.5px(중심간격 24px). REQ-039 공유 버튼과 동일 ::after 확장 패턴 */
+  .story-dots .dot::after { content:""; position:absolute; left:-8.5px; right:-8.5px; top:-19px; bottom:-19px; }
   .story-dots .dot.on { width:22px; background:var(--dot-on,var(--accent)); }
   /* R4-021② 데스크탑 마우스-only 도달성 — hover 포인터 환경에서만 좌우 화살표(카드 2~5 도달 불가 해소). 터치는 스와이프 유지. */
   .storyview { position:relative; }
@@ -827,8 +839,8 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
   .more.open .more-plus { transform:rotate(135deg); }
   .more-txt { flex:1; min-width:0; }
   .more-txt .m1 { font-size:14.5px; font-weight:400; color:var(--ink); }
-  .more-txt .m2 { font-size:11.5px; color:var(--w-muted); margin-top:2px; line-height:1.5; }
-  .more-tag { font-size:11px; color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line-2);
+  .more-txt .m2 { font-size:12px; color:var(--w-muted); margin-top:2px; line-height:1.5; }
+  .more-tag { font-size:12px; color:var(--w-muted); background:var(--surface-2); border:1px solid var(--w-line-2);
     border-radius:999px; padding:3px 10px; flex:0 0 auto; }
   .more-body { max-height:0; opacity:0; overflow:hidden; transition:max-height .55s var(--ease), opacity .4s var(--ease); }
   .more.open .more-body { max-height:2000px; opacity:1; }
@@ -1951,7 +1963,12 @@ async function analyze() {
     pollJob(data.job_id);
   } catch (e) {
     scanStop(); exitResultMode();
-    statusEl.innerHTML = `<span class="err">오류: ${esc(String(e.message||e))}</span>`;
+    // 🔴 raw fetch 에러("Failed to fetch" 등 기술 문자열) 사용자 노출 금지 — graceful 한국어 + 재시도
+    //   (대표 실기기 catch 2026-07-16 23:46. 모바일이 응답 대기 중 연결을 끊으면 e.message가 그대로 떴다)
+    statusEl.innerHTML = '<span class="err">연결이 잠시 불안정했습니다.</span> '
+      + '<a href="#" id="retryGo" style="color:var(--accent);font-weight:700;text-decoration:none">다시 시도</a>';
+    const rg = $("retryGo");
+    if (rg) rg.addEventListener("click", (ev) => { ev.preventDefault(); analyze(); });
     syncGo();
   }
 }
@@ -2506,17 +2523,32 @@ $("url").addEventListener("input", () => {
     if (u && /^https?:\/\/\S+$/.test(u)) detectPosting(u);
   }, 400);
 });
-// 공고 URL 감지(붙여넣기·정찰 공용): /posting/detect → 회사·직무 피드백, 다직무면 드롭다운(FR-055)
+// 공고 URL 감지(붙여넣기·정찰 공용): /posting/detect/start → poll → 회사·직무 피드백, 다직무면 드롭다운(FR-055)
+// 🔴 동기 /posting/detect는 리다이렉트+JS렌더+비전으로 최대 ~1분 — 모바일이 응답 대기 중 연결을 끊어
+//   "Failed to fetch"가 났다(대표 실기기 catch 2026-07-16). job+poll 전환 — 폴링은 순간 단절을 견딘다.
+//   구 백엔드(재시작 전·start 미지원 404/405)면 기존 동기 detect로 폴백(배포 순서 안전).
 let _detSeq = 0;
 async function detectPosting(job_url) {
   if (_jd && _jd.fromUrl === job_url) return _jd._det || null;  // 이미 감지함
   const seq = ++_detSeq;
   await ensureAPI();
-  $("jdChip").innerHTML = '<span class="srcchip"><span class="st">' + IC.busy + ' 공고 확인 중…</span></span>';
+  const t0 = Date.now();
+  const busyChip = () => {   // 진행 표시 — 5초 넘으면 경과초(오래 걸려도 죽지 않았음을 화면이 말한다)
+    const s = Math.round((Date.now() - t0) / 1000);
+    $("jdChip").innerHTML = '<span class="srcchip"><span class="st">' + IC.busy + ' 공고 확인 중…' + (s >= 5 ? " " + s + "초" : "") + '</span></span>';
+  };
+  busyChip();
   let det = null;
   try {
-    const r = await fetch(API + "/posting/detect", { method: "POST", headers: authHeaders(), body: JSON.stringify({ job_url }) });
-    det = await r.json();
+    const r = await fetch(API + "/posting/detect/start", { method: "POST", headers: authHeaders(), body: JSON.stringify({ job_url }) });
+    if (r.status === 404 || r.status === 405) {
+      // 구 백엔드 폴백 — 비동기 미지원(서버 재시작 전)이면 기존 동기 detect
+      const r2 = await fetch(API + "/posting/detect", { method: "POST", headers: authHeaders(), body: JSON.stringify({ job_url }) });
+      det = await r2.json();
+    } else {
+      const j = await r.json();
+      det = (j && j.det_id) ? await pollDetect(j.det_id, seq, busyChip) : null;  // {error}(429 등) → null(칩 비움·기존 동작)
+    }
   } catch (e) { det = null; }
   if (seq !== _detSeq) return det;  // 그 사이 URL 바뀜 → 갱신 안 함
   if (!det) { $("jdChip").innerHTML = ""; return null; }
@@ -2533,6 +2565,25 @@ async function detectPosting(job_url) {
     $("jdChip").innerHTML = '<span class="srcchip"><span class="st">' + IC.check + ' ' + esc(meta || "공고 인식됨") + ' — 아래 정찰 시작</span></span>';
   }
   return det;
+}
+
+// detect job 폴링 — 1.5초 간격·최대 120초(실측 56s + 여유). 순간 단절은 재시도(모바일 백그라운드 내성),
+// URL이 바뀌면(seq 변화) 조용히 중단. 실패·타임아웃 = null → 단일 정찰 흐름 graceful(기존 동작).
+async function pollDetect(det_id, seq, onTick) {
+  const DEADLINE = 120000; const t0 = Date.now(); let fails = 0;
+  while (Date.now() - t0 < DEADLINE) {
+    await new Promise(res => setTimeout(res, 1500));
+    if (seq !== _detSeq) return null;   // 그 사이 URL 바뀜 → 이 결과는 안 씀
+    if (onTick) onTick();
+    try {
+      const r = await fetch(API + "/posting/detect/poll/" + det_id, { cache: "no-store" });
+      const s = await r.json();
+      fails = 0;
+      if (s && s.error === "unknown_job") return null;
+      if (s && s.done) return s.result || null;
+    } catch (e) { if (++fails >= 8) return null; }  // 연속 8회(≈12초) 단절만 포기 — 순간 끊김은 계속
+  }
+  return null;
 }
 </script>
 </body>

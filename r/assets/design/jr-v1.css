@@ -39,8 +39,9 @@ button,input,textarea,select{font-family:inherit}
 .ad-row .ad-body{flex:1;min-width:0}
 .ad-row .ad-body b{display:block;font-size:15px;font-weight:700;color:#dfe4ea;letter-spacing:-.02em;line-height:1.35}
 .ad-row .ad-body span{display:block;margin-top:5px;font-size:12.5px;color:#8b97a6;line-height:1.45}
-.ad-icon{width:52px;height:52px;border-radius:14px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#8b97a6;background:radial-gradient(120% 120% at 30% 20%,#2b323d,#1a1f27);border:1px solid #222a35}
-.ad-note{margin-top:13px;font-size:11px;color:#5c636d}
+.ad-icon{width:52px;height:52px;border-radius:14px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#8b97a6;background:radial-gradient(120% 120% at 30% 20%,#2b323d,#1a1f27);border:1px solid #222a35}
+/* DQA-20260717: #5c636d(~2.8:1)·11px → #8A95A3(≥4.5:1)·12px — 노출 고지 텍스트 (앱 .ad-note 미러) */
+.ad-note{margin-top:13px;font-size:12px;color:#8A95A3}
 .ad .adsbygoogle{display:block;min-height:52px}
 .stickyhdr{position:sticky;top:0;z-index:50;background:#0b0e13;margin:-20px -18px 6px;padding:16px 18px 8px}
 .stickyhdr .tag{margin:2px 0 8px}
@@ -113,6 +114,7 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .bwrap{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
 .bwrap .tease{color:#8b97a6;font-size:12.5px}
 /* 근거 원문 = 뉴트럴 ghost pill(애프리콧 틴트 → 투명+뉴트럴 보더·토스 보조 액션 톤) */
+/* DQA-20260717: ghost 버튼 보더 #222a35 1.31:1 → card_edge(형태 인지 UI = edge 이원 규칙 미러) */
 .story-anchor{position:relative;align-self:flex-start;width:auto;margin:18px 0 0;padding:9px 14px;font-size:12.5px;font-weight:600;color:#cbd1da;background:transparent;border:1px solid #222a35;border-radius:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent}
 .story-anchor svg{color:#8b97a6}
 /* 🔴 터치 히트 확장: 시각 34px 유지 + 유효 히트 44px (R3 ⑨ P0-2 — 스토리 카드 심미 동결, ::after 확장) */
