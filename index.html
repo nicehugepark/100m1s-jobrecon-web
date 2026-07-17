@@ -534,8 +534,14 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
     background:#0b0e13; border:1px solid var(--line); color:var(--fg); font-size:13px;
     padding:10px 16px; border-radius:10px; opacity:0; pointer-events:none; transition:all .2s; }
   .sharetoast.on { opacity:1; transform:translate(-50%,0); }
-  #meta { display:none; margin:12px 0 2px; font-size:15px; color:#e2e8ef; font-weight:700; }   /* 단일 헤더: /r/ .meta .co(15px·700)와 동일 위계 */
-  #meta .chip { font-size:12px; font-weight:800; background:rgba(var(--accent-rgb),.12); color:var(--accent); padding:3px 9px; border-radius:999px; margin-right:8px; vertical-align:middle; }   /* 🔴 버튼 위계 P0(button-system spec·대표 catch 07-17 13:18): 비인터랙티브 라벨이 Primary 문법(accent 필) 착용 → accent-wash 강등(.req와 동일 문법 — 필=행동 전용). 완전 회색화는 앵커 상실이라 기각(spec §3-1) */
+  /* 🔴 헤더 구성 통일(대표 재지적 07-17 17:13): /r/ .meta와 동일 슬롯 [chip·co·fd·ym] + 1줄 불변
+     (nowrap+ellipsis — 상태·텍스트 길이 무관 헤더 높이 고정. 전체 직무명은 결과 카드·title 보존 = 누락 아님) */
+  #meta { display:none; align-items:center; height:26px; gap:8px; flex-wrap:nowrap; min-width:0; overflow:hidden; margin:0; }   /* 고정 height 26px·center — baseline 폰트 메트릭 1.4px 이원 소거(/r/ .meta 동일) */
+  #meta .co { font-size:15px; font-weight:700; color:#e2e8ef; letter-spacing:-.01em; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #meta .fd { font-size:12.5px; color:var(--dim); font-weight:500; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #meta .ym { font-size:12px; color:var(--dim); font-weight:600; margin-left:auto; white-space:nowrap; text-align:right; flex:0 0 auto; }
+  #meta .chip { font-size:12px; font-weight:800; background:rgba(var(--accent-rgb),.12); color:var(--accent); padding:3px 9px; border-radius:999px; white-space:nowrap; flex:0 0 auto; display:inline-flex; align-items:center; gap:4px; }   /* 🔴 버튼 위계 P0(button-system spec·대표 catch 07-17 13:18): 비인터랙티브 라벨이 Primary 문법(accent 필) 착용 → accent-wash 강등(.req와 동일 문법 — 필=행동 전용). 완전 회색화는 앵커 상실이라 기각(spec §3-1). 선언 선두 순서 = test_brand_sot 칩 contract verbatim */
+  #meta .chip svg { width:12px; height:12px; }
   .status { color:var(--dim); font-size:13px; min-height:18px; padding:2px; }
   .err { color:#ff6b6b; }
   .cursor::after { content:"▋"; color:var(--accent); animation:blink 1s steps(1) infinite; }
@@ -1172,10 +1178,17 @@ function renderMd(t) {
   return html;
 }
 function renderMeta(m) {
-  const parts = [m && m.company, m && m.position].filter(Boolean);
-  if (!parts.length) return;
-  metaEl.innerHTML = '<span class="chip">' + IC.target + ' 정찰 대상</span>' + esc(parts.join(" · "));
-  metaEl.style.display = "block";
+  // 🔴 헤더 구성 통일(대표 재지적 07-17 17:13): /r/ .meta와 동일 슬롯 [chip·co·fd·ym] + 1줄 불변(ellipsis).
+  //    ym = 정찰 시점 사실(현재 년월 — /r/ 발행월과 동일 의미·왜곡 0).
+  const co = m && m.company, pos = m && m.position;
+  if (!co && !pos) return;
+  const d = new Date();
+  const ym = d.getFullYear() + "년 " + String(d.getMonth() + 1).padStart(2, "0") + "월 정찰";
+  metaEl.innerHTML = '<span class="chip">' + IC.target + ' 정찰 대상</span>'
+    + (co ? '<span class="co">' + esc(co) + '</span>' : '')
+    + (pos ? '<span class="fd">' + esc(pos) + '</span>' : '')
+    + '<span class="ym">' + ym + '</span>';
+  metaEl.style.display = "flex";
 }
 
 function renderBlocks(text) {

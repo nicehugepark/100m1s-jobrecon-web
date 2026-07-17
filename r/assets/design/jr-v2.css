@@ -17,9 +17,11 @@ button,input,textarea,select{font-family:inherit}
    텍스트 문법과 병치 동일(15px·700). 구 토스 카드 문법(border+surface+radius 20+padding 16px 18px)은
    헤더 상시 점유 157.6px(메인 65px 대비 2.4배)의 주범이라 폐기 — 헤더 밖 카드(.blk·.ad)는 불변.
    ym 1줄화(nowrap·우측 정렬) 유지. .meta 사용처 = .stickyhdr 내 1곳(마크업 무변경·CSS만) */
-.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0}   /* 명시 리셋 — _CRITICAL_CSS(인라인 선행) 구 카드 속성이 속성 부재 시 노출되는 캐스케이드 봉쇄 */
-.meta .co{font-size:15px;font-weight:700;letter-spacing:-.01em}
-.meta .fd{font-size:12.5px;color:#8b97a6;font-weight:500}
+.meta{display:flex;flex-wrap:nowrap;align-items:center;height:26px;gap:8px;margin:0;border:0;background:transparent;border-radius:0;padding:0;min-width:0;overflow:hidden}   /* 명시 리셋(_CRITICAL_CSS 캐스케이드 봉쇄) + 🔴 1줄 불변(대표 재지적 07-17 17:13): nowrap+ellipsis+고정 height 26px·center — 상태·텍스트 길이·폰트 메트릭 무관 헤더 높이 고정(baseline 정렬은 메인↔/r/ 1.4px 미세 이원 실측·전체 직무명은 title·본문 보존 = 누락 아님) */
+.meta .chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;background:rgba(240,165,117,.12);color:#F0A575;padding:3px 9px;border-radius:999px;white-space:nowrap}   /* 메인 #meta .chip 동일 문법(accent-wash·버튼 위계 P0 — 필=행동 전용) */
+.meta .chip svg{width:12px;height:12px}
+.meta .co{font-size:15px;font-weight:700;letter-spacing:-.01em;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meta .fd{font-size:12.5px;color:#8b97a6;font-weight:500;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .meta .ym{font-size:12px;color:#8A95A3;font-weight:600;margin-left:auto;white-space:nowrap;text-align:right;flex:0 0 auto}
 .blk{border:1px solid #33291b;background:#1d1710;border-radius:12px;padding:14px 16px;margin:12px 0}
 .blk h2{font-size:16px;margin:0 0 8px;color:#f0f4f8}
