@@ -147,7 +147,12 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .story-card.allmore{align-items:center;justify-content:center;text-align:center}
 .story-card.allmore .story-hl{text-align:center}
 .story-cta{display:inline-block;width:auto;margin:22px 0 0;padding:13px 24px;font-size:15px;font-weight:800;background:var(--sc);color:#08110c;border:0;border-radius:12px;cursor:pointer;text-decoration:none;box-shadow:0 12px 30px -10px var(--scg)}
-.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta{opacity:0;transform:translateY(12px)}
+/* 마무리 카드 Secondary 공유 CTA — button-system R2 (share-slot spec §2). accent 필은 Primary 1개 유지 */
+.story-share{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:auto;margin:10px 0 0;padding:12px 22px;min-height:46px;font-size:15px;font-weight:700;line-height:1;color:#CDD6E2;background:transparent;border:1px solid #63646E;border-radius:12px;cursor:pointer}
+.story-share svg{width:16px;height:16px;flex:none}
+.story-share:hover{border-color:var(--sc)}
+.story-share:focus-visible{outline:2px solid var(--sc);outline-offset:2px}
+.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .story-share{opacity:0;transform:translateY(12px)}
 .story-card.inview .story-kicker{animation:storyRise .5s .03s cubic-bezier(.2,.7,.2,1) forwards}
 .story-card.inview .story-co-lg{animation:storyRise .6s .08s cubic-bezier(.2,.7,.2,1) forwards}
 .story-card.inview .story-pos{animation:storyRise .55s .15s cubic-bezier(.2,.7,.2,1) forwards}
@@ -158,6 +163,7 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .story-card.inview .bwrap{animation:storyRise .55s .17s cubic-bezier(.2,.7,.2,1) forwards}
 .story-card.inview .story-anchor{animation:storyRise .5s .38s cubic-bezier(.2,.7,.2,1) forwards}
 .story-card.inview .story-cta{animation:storyRise .5s .2s cubic-bezier(.2,.7,.2,1) forwards}
+.story-card.inview .story-share{animation:storyRise .5s .28s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes storyRise{to{opacity:1;transform:none}}
 /* === 조니식 역할별 밀도·리듬(FR-061c) — 설정=여백(숨 들이쉼)·전복=타격. 높이 통일(가로 스냅), 밀도는 폰트·여백으로. === */
 .story-card.role-setup .story-hl,.story-card.role-context .story-hl{font-size:20px;font-weight:700;line-height:1.56;color:#dde5ef}
@@ -224,4 +230,4 @@ body.mode-story .adwrap-story{display:block;margin:2px 0 4px}
 .sharebar button svg{width:1.15em;height:1.15em}
 .sharetoast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);transform:translateX(-50%);z-index:95;background:#241d14;border:1px solid #3a3020;color:#dbe4ee;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s}
 .sharetoast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
+@media (prefers-reduced-motion:reduce){.story-card .story-kicker,.story-card .story-hl,.story-card .story-ev,.story-card .story-co-lg,.story-card .story-pos,.story-card .story-tease,.story-card .bwrap,.story-card .story-names,.story-card .story-anchor,.story-card .story-cta,.story-card .story-share,.story-card .hookbeat{opacity:1!important;transform:none!important;animation:none!important}.story-deck{transition:none}}
