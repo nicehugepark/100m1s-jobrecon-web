@@ -2058,9 +2058,20 @@ function exitResultMode() { document.body.classList.remove("scouting"); }
 //   남아 '성공 배지 + 에러문 동시'(상태 모순)가 되지 않게 URL 유래 칩은 리셋(파일 업로드 칩은 보존).
 function reconFail(msg) {
   scanStop(); exitResultMode();
-  if (_jd && _jd.fromUrl) { _jd = null; $("jdChip").innerHTML = ""; }
   statusEl.textContent = "";
-  $("formErr").innerHTML = '<span class="err">' + esc(msg) + '</span>';
+  // 🔴 상한 도달·일시 지연류('지연' 문구) = '이어서 정찰'(상류 캐시 재사용 → 딥리서치 스킵·카드만 재생성).
+  //   재정찰은 같은 URL을 다시 analyze() — posting/gather/시드/공시 캐시가 히트해 실제 '이어서'가 된다.
+  //   하드 에러(공고 없음·로그인 필요·잘못된 요청)는 재개해도 무의미 → 버튼 미노출. 문구는 냉철 정찰
+  //   보이스(사실 안내·응원조 아님).
+  const resumable = /지연/.test(msg || "");
+  if (!resumable && _jd && _jd.fromUrl) { _jd = null; $("jdChip").innerHTML = ""; }  // 하드 에러만 감지칩 리셋(재개는 focus 보존)
+  let html = '<span class="err">' + esc(msg) + '</span>';
+  if (resumable) {
+    html += ' <a href="#" id="resumeGo" style="color:var(--accent);font-weight:700;text-decoration:none">이어서 정찰하기</a>'
+          + '<div style="margin-top:5px;font-size:.86em;color:var(--dim)">완료된 자료는 재사용해요 — 처음부터 다시 하지 않아요.</div>';
+  }
+  $("formErr").innerHTML = html;
+  if (resumable) { const rg = $("resumeGo"); if (rg) rg.addEventListener("click", (ev) => { ev.preventDefault(); analyze(); }); }
   $("formErr").scrollIntoView({ behavior: "smooth", block: "center" });
   syncGo();
 }
