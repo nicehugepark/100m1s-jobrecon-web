@@ -304,6 +304,12 @@ gtag('js',new Date());gtag('config','G-NLKWNGHTJM');
      특이성에 밀려 흰색으로 렌더되던 회귀(코드 의도가 라이브에 죽어있던 것). 스킨은 R2(투명+보더+r12) 유지·색만 로즈. */
   body.scouting button.cancelbtn { color:#e8b4b4; border-color:#5a3a3a; }
   body.scouting button.cancelbtn:hover { border-color:#a05050; color:#f4cccc; }
+  /* 마무리 카드 공유 = Secondary outline 특이성 복원(버튼 위계 07-18 대표 실기기 catch). body.scouting
+     button accent 필 캐스케이드(287)가 .story-share(background:transparent) 를 덮어 정찰완료 카드에서
+     리포트 CTA(.story-cta = Primary accent 필)와 동일 accent 필로 렌더되던 위계붕괴 봉쇄. border 는
+     .story-share 원정의(1px solid #63646E)가 유효(body.scouting button 은 border 미지정)이라 미포함.
+     #CDD6E2 = .story-share 원 color. /r/ 발행본은 body.scouting 부재로 애초 정상 outline(page.py 미러 G6). */
+  body.scouting button.story-share { background:transparent; color:#CDD6E2; }
   /* R15 HIST-TONE(대표 catch a): 이력 리스트 = 첫 화면(웜 크림) 구성요소. 결과화면 전용 쿨 다크
      토큰(--card/--line/--fg) 소비를 폐기하고 첫인상 웜 서피스 토큰을 소비 — 웜 크림 위 쿨 네이비
      카드 10개(hue 반전)를 제거한다. @media(dark)가 이 토큰을 웜 다크로 자동 전환 → 라이트=웜
