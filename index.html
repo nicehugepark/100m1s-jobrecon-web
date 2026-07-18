@@ -2231,7 +2231,7 @@ function pollJob(job_id) {
     }
     if (ev.error) { reconFail(ev.error); endPoll(); return; }   // 입력부 인접 표면 + 성공 칩 모순 제거(DOC-20260717-JDG-001)
     if (ev.done) {
-      statusEl.textContent = _pollFull ? "정찰 완료." : "정찰이 종료됐습니다.";
+      statusEl.textContent = _pollFull ? "" : "정찰이 종료됐습니다.";   // A안(대표 07-18): 완료 시 고아 "정찰 완료." 제거 — 탭+카드가 완료 전달. 실패/취소만 상태 노출
       if (!_pollFull) exitResultMode();                  // 결과 없이 종료 → 폼 복귀
       if (_pollFull) extractProfileCard(_lastCombined.v);  // 프로필 카드(성공=원문 숨김/실패·얇으면 원문 폴백) FR-047
       if (_pollFull) $("shareBtn").style.display = "block";  // 공유 버튼(FR-048)
